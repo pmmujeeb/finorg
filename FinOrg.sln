@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FinOrg", "Finance\FinOrg.csproj", "{0DD57819-FB94-443F-9652-1C577A84677A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8103F9F3-CF8E-4387-82CE-AB65FFA478D1}"
+	ProjectSection(SolutionItems) = preProject
+		Finance\FrmAccTrans.cs = Finance\FrmAccTrans.cs
+		Finance\FrmAccTrans.Designer.cs = Finance\FrmAccTrans.Designer.cs
+		Finance\FrmAccTrans.resx = Finance\FrmAccTrans.resx
+		..\ZoomERP\ZoomERP\FrmItemMaster1.cs = ..\ZoomERP\ZoomERP\FrmItemMaster1.cs
+		..\ZoomERP\ZoomERP\FrmItemMaster1.Designer.cs = ..\ZoomERP\ZoomERP\FrmItemMaster1.Designer.cs
+		..\ZoomERP\ZoomERP\FrmItemMaster1.resx = ..\ZoomERP\ZoomERP\FrmItemMaster1.resx
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{0DD57819-FB94-443F-9652-1C577A84677A}.Debug|x86.ActiveCfg = Debug|x86
+		{0DD57819-FB94-443F-9652-1C577A84677A}.Debug|x86.Build.0 = Debug|x86
+		{0DD57819-FB94-443F-9652-1C577A84677A}.Release|x86.ActiveCfg = Release|x86
+		{0DD57819-FB94-443F-9652-1C577A84677A}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
