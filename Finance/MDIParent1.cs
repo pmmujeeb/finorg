@@ -14,7 +14,7 @@ using ADODB;
 using System.Reflection;
 namespace FinOrg
 {
-    public partial class MDIParent1 : Form
+    public partial class MDIParent1 : FinOrgForm
     {
         SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
         SqlConnection Conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);

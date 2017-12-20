@@ -56,8 +56,16 @@ namespace FinOrg
 			foreach (Control c in f.GetAllControlChildren())
 			{
 				if (c.IsTranslatableControl())
-				{
 					c.Text = Translations[f.ControlDefaultValues[c.Name]];
+
+				// Apply on ToolStrips
+				if (c.GetType().IsSubclassOf(typeof(ToolStrip)))
+				{
+					foreach (ToolStripItem toolStripItem in ((ToolStrip)c).GetAllToolStripItems())
+					{
+						if (!string.IsNullOrEmpty(toolStripItem.Name))
+							toolStripItem.Text = Translations[f.ControlDefaultValues[toolStripItem.Name]];
+					}
 				}
 			}
 		}
@@ -71,8 +79,20 @@ namespace FinOrg
 			f.ControlDefaultValues = new Dictionary<string, string>();
 
 			foreach (Control c in f.GetAllControlChildren())
-				if (c.IsTranslatableControl())
-					f.ControlDefaultValues.Add(c.Name, c.Text);
+			{
+				if (c.IsTranslatableControl() && !string.IsNullOrEmpty(c.Name))
+					f.ControlDefaultValues.Add(c.Name, c.Text.Simplified());
+
+				// if Control is a type of ToolStrip, iterate for ToolStripItem
+				if (c.GetType().IsSubclassOf(typeof(ToolStrip))) {
+					foreach (ToolStripItem toolStripItem in ((ToolStrip)c).GetAllToolStripItems())
+					{
+						if (!string.IsNullOrEmpty(toolStripItem.Name))
+							f.ControlDefaultValues.Add(toolStripItem.Name, toolStripItem.Text.Simplified());
+					}
+				}
+
+			}
 
 			// ControlDefaultValues loaded
 			// LazyLoad these in Languages
@@ -139,7 +159,10 @@ namespace FinOrg
 				typeof(Button),
 				typeof(CheckBox),
 				typeof(RadioButton),
-				typeof(MenuItem)
+				typeof(ToolStripMenuItem),
+				typeof(ToolStripButton),
+				typeof(ToolStrip),
+				typeof(DataGridView)
 			}.Contains(ctrl.GetType());
 		}
 
@@ -154,10 +177,10 @@ namespace FinOrg
 			if (ControlDefaultValues.Count <= 0)
 				return;
 			SqlConnection con = FinOrgForm.getSqlConnection();
+			SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO TRANSLATIONS (text, {0}) VALUES ", currentLanguage), con);
 			try
 			{
 				con.Open();
-				SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO TRANSLATIONS (text, {0}) VALUES ", currentLanguage), con);
 				int i = 0; // dictionary doesnt have proper index to loop with forloop
 				foreach (KeyValuePair<string, string> e in ControlDefaultValues)
 				{
@@ -178,7 +201,7 @@ namespace FinOrg
 			} catch (Exception e)
 			{
 				con.Close();
-				MessageBox.Show(e.Message, "FinOrg: Languages InsertFormTranslations");
+				MessageBox.Show(e.Message + "\n" + cmd.CommandText, "FinOrg: Languages InsertFormTranslations");
 			}
 		}
 

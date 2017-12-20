@@ -101,5 +101,13 @@ namespace FinOrg
 				yield return next;
 			}
 		}
+
+		public static string Simplified(this string s, bool lower = false)
+		{
+			if (lower)
+				return s.ToLower().Trim();
+			else
+				return s.Trim();
+		}
 	}
 }
