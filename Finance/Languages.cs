@@ -4,7 +4,6 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Forms;
 
 namespace FinOrg
@@ -42,9 +41,8 @@ namespace FinOrg
                 {                    
                     con.Close();
                     System.Windows.MessageBox.Show(e.Message);
-                    System.Windows.Application.Current.Shutdown();
                 } 
-            });   
+            }).Start();
         }
 
         /// <summary>
@@ -56,15 +54,20 @@ namespace FinOrg
             Thread t = new Thread(() => 
             {
                 // Get a list of items to fetch
-                string[] items = ControlDefaultValues.Values.Except(Translations.Keys).ToArray();
+                IEnumerable<string> items = ControlDefaultValues.Values;
+                if (Translations != null)
+                    items = items.Except(Translations.Keys).ToArray();
                 SqlConnection con = FinOrgForm.getSqlConnection();
                 try
                 {
                     con.Open();
-                    SqlCommand cmd = new SqlCommand(string.Format("SELECT text, {0} FROM TRANSLATIONS WHERE text IN ({keys});", currentLanguage), con);
+                    SqlCommand cmd = new SqlCommand(string.Format("SELECT text, {0} FROM TRANSLATIONS WHERE text IN ({{keys}});", currentLanguage), con);
                     cmd.AddArrayParameters(items, "keys");
+                    MessageBox.Show(cmd.CommandText);
                     using (SqlDataReader reader = cmd.ExecuteReader())
                     {
+                        if (Translations == null)
+                            Translations = new Dictionary<string, string>();
                         while(reader.Read())
                         {
                             Translations.Add(reader["text"].ToString(), reader[currentLanguage].ToString());

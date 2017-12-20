@@ -23,13 +23,18 @@ namespace FinOrg
         protected void InitLanguage()
         {
             ControlDefaultValues = new Dictionary<string, string>();
-            foreach (Control c in Controls)
-            {
-                // Proceed only if this control is translatable
-                if (!Languages.IsTranslatableControl(c)) continue;
 
-                ControlDefaultValues.Add(c.Name, c.Text);            
-            }
+			var controls = new Queue<Control>();
+			controls.Enqueue(this);
+			do {
+				Control t = controls.Dequeue();
+				if (Languages.IsTranslatableControl(t))
+					ControlDefaultValues.Add(t.Name, t.Text);
+
+				foreach (Control c in t.Controls)
+					controls.Enqueue(c);
+
+			} while (controls.Count > 0);
 
             // ControlDefaultValues loaded
             // LazyLoad these in Languages

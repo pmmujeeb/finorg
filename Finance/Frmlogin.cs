@@ -14,7 +14,7 @@ using CrystalDecisions.CrystalReports.Engine;
 
 namespace FinOrg
 {
-    public partial class Frmlogin : Form
+    public partial class Frmlogin : FinOrgForm
     {
         SqlConnection Conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
         DataTable dt = new DataTable();

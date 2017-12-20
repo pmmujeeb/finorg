@@ -88,7 +88,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FinOrgExtensions.cs" />
-    <Compile Include="FinOrgForm.cs" />
+    <Compile Include="FinOrgForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FrmAccounts.cs">
       <SubType>Form</SubType>
     </Compile>
