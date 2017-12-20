@@ -87,6 +87,8 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FinOrgExtensions.cs" />
+    <Compile Include="FinOrgForm.cs" />
     <Compile Include="FrmAccounts.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -319,6 +321,7 @@
       <DependentUpon>Frmwrhouse.cs</DependentUpon>
     </Compile>
     <Compile Include="Gvar.cs" />
+    <Compile Include="Languages.cs" />
     <Compile Include="MDIParent1.cs">
       <SubType>Form</SubType>
     </Compile>
