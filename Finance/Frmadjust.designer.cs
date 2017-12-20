@@ -33,23 +33,16 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmService));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frmadjust));
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
             this.txtinvno = new System.Windows.Forms.TextBox();
             this.label9 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.txtcusname = new System.Windows.Forms.TextBox();
-            this.txtcustomer = new System.Windows.Forms.TextBox();
             this.txttrn = new System.Windows.Forms.TextBox();
             this.txtrefno = new System.Windows.Forms.TextBox();
             this.dt1 = new System.Windows.Forms.DateTimePicker();
-            this.txttotal = new System.Windows.Forms.TextBox();
             this.txttrn_type = new System.Windows.Forms.TextBox();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.lbluser = new System.Windows.Forms.ToolStripLabel();
@@ -60,23 +53,11 @@
             this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
             this.dgv1 = new System.Windows.Forms.DataGridView();
             this.txtpriv = new System.Windows.Forms.TextBox();
-            this.txtdscamt = new System.Windows.Forms.TextBox();
             this.txtnetamt = new System.Windows.Forms.TextBox();
-            this.lblcustomer = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.GrdLookup = new System.Windows.Forms.DataGridView();
             this.grdcuslookup = new System.Windows.Forms.DataGridView();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
-            this.dgvpaid = new System.Windows.Forms.DataGridView();
-            this.label13 = new System.Windows.Forms.Label();
-            this.txtbalance = new System.Windows.Forms.TextBox();
-            this.lstpaid = new System.Windows.Forms.ListBox();
-            this.txtcash = new System.Windows.Forms.TextBox();
-            this.label14 = new System.Windows.Forms.Label();
-            this.txtchange = new System.Windows.Forms.TextBox();
-            this.label15 = new System.Windows.Forms.Label();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btndelete = new System.Windows.Forms.Button();
@@ -89,43 +70,21 @@
             this.btnnew = new System.Windows.Forms.Button();
             this.cmbtrntype = new System.Windows.Forms.ComboBox();
             this.btnsave = new System.Windows.Forms.Button();
+            this.txtcustomer = new System.Windows.Forms.TextBox();
             this.lblmsg = new System.Windows.Forms.Label();
-            this.label17 = new System.Windows.Forms.Label();
-            this.txtacbalance = new System.Windows.Forms.TextBox();
-            this.cmbsalesagent = new System.Windows.Forms.ComboBox();
+            this.cmbwarehouse = new System.Windows.Forms.ComboBox();
             this.lblsaleperson = new System.Windows.Forms.Label();
             this.lblinvstatus = new System.Windows.Forms.Label();
             this.txtremarks = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
             this.nyear = new System.Windows.Forms.TextBox();
-            this.btnupload = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            this.panelremote = new System.Windows.Forms.Panel();
-            this.btndownload = new System.Windows.Forms.Button();
-            this.label20 = new System.Windows.Forms.Label();
-            this.label19 = new System.Windows.Forms.Label();
-            this.txtremoteinvno = new System.Windows.Forms.TextBox();
-            this.btnremote = new System.Windows.Forms.Button();
-            this.btncurrency = new System.Windows.Forms.Button();
-            this.txtrate = new System.Windows.Forms.TextBox();
-            this.cmbcurrency = new System.Windows.Forms.ComboBox();
-            this.lblcurrency = new System.Windows.Forms.Label();
-            this.label21 = new System.Windows.Forms.Label();
-            this.txtdiscprcnt = new System.Windows.Forms.TextBox();
-            this.pnlpaid = new System.Windows.Forms.Panel();
             this.chkprintview = new System.Windows.Forms.CheckBox();
-            this.txtvatamt = new System.Windows.Forms.TextBox();
-            this.txtvatpcnt = new System.Windows.Forms.TextBox();
-            this.label10 = new System.Windows.Forms.Label();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GrdLookup)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdcuslookup)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvpaid)).BeginInit();
             this.groupBox1.SuspendLayout();
-            this.panelremote.SuspendLayout();
-            this.pnlpaid.SuspendLayout();
             this.SuspendLayout();
             // 
             // label5
@@ -136,9 +95,9 @@
             this.label5.ImeMode = System.Windows.Forms.ImeMode.On;
             this.label5.Location = new System.Drawing.Point(523, 134);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(97, 19);
+            this.label5.Size = new System.Drawing.Size(83, 19);
             this.label5.TabIndex = 9;
-            this.label5.Text = "Invoice Date";
+            this.label5.Text = "Entry Date";
             // 
             // label6
             // 
@@ -187,9 +146,9 @@
             this.label9.ImeMode = System.Windows.Forms.ImeMode.On;
             this.label9.Location = new System.Drawing.Point(12, 75);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(100, 19);
+            this.label9.Size = new System.Drawing.Size(76, 19);
             this.label9.TabIndex = 11;
-            this.label9.Text = "Invoice No.";
+            this.label9.Text = "Doc. No.";
             // 
             // textBox1
             // 
@@ -204,35 +163,6 @@
             this.textBox1.DoubleClick += new System.EventHandler(this.textBox1_DoubleClick);
             this.textBox1.Enter += new System.EventHandler(this.textBox1_Enter);
             this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
-            // 
-            // txtcusname
-            // 
-            this.txtcusname.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.txtcusname.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtcusname.Font = new System.Drawing.Font("Tahoma", 11.25F);
-            this.txtcusname.ForeColor = System.Drawing.Color.Red;
-            this.txtcusname.Location = new System.Drawing.Point(199, 104);
-            this.txtcusname.Name = "txtcusname";
-            this.txtcusname.Size = new System.Drawing.Size(318, 26);
-            this.txtcusname.TabIndex = 28;
-            // 
-            // txtcustomer
-            // 
-            this.txtcustomer.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.txtcustomer.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtcustomer.Font = new System.Drawing.Font("Tahoma", 11.25F);
-            this.txtcustomer.ForeColor = System.Drawing.Color.Red;
-            this.txtcustomer.Location = new System.Drawing.Point(118, 104);
-            this.txtcustomer.Name = "txtcustomer";
-            this.txtcustomer.Size = new System.Drawing.Size(81, 26);
-            this.txtcustomer.TabIndex = 0;
-            this.txtcustomer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtcustomer.TextChanged += new System.EventHandler(this.txtcustomer_TextChanged);
-            this.txtcustomer.DoubleClick += new System.EventHandler(this.txtcustomer_DoubleClick);
-            this.txtcustomer.Enter += new System.EventHandler(this.txtcustomer_Enter);
-            this.txtcustomer.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtcustomer_KeyDown);
-            this.txtcustomer.Leave += new System.EventHandler(this.txtcustomer_Leave);
-            this.txtcustomer.Validated += new System.EventHandler(this.txtcustomer_Validated);
             // 
             // txttrn
             // 
@@ -267,21 +197,6 @@
             this.dt1.TabIndex = 2;
             this.dt1.ValueChanged += new System.EventHandler(this.dt1_ValueChanged);
             // 
-            // txttotal
-            // 
-            this.txttotal.AcceptsReturn = true;
-            this.txttotal.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.txttotal.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txttotal.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txttotal.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txttotal.Location = new System.Drawing.Point(1115, 508);
-            this.txttotal.Name = "txttotal";
-            this.txttotal.Size = new System.Drawing.Size(142, 27);
-            this.txttotal.TabIndex = 30;
-            this.txttotal.TabStop = false;
-            this.txttotal.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txttotal.TextChanged += new System.EventHandler(this.txttotal_TextChanged);
-            // 
             // txttrn_type
             // 
             this.txttrn_type.Font = new System.Drawing.Font("Tahoma", 11.25F);
@@ -313,9 +228,6 @@
             this.toolStrip.TabIndex = 27;
             this.toolStrip.Text = "ToolStrip";
             this.toolStrip.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.toolStrip_ItemClicked);
-            this.toolStrip.RegionChanged += new System.EventHandler(this.toolStrip_RegionChanged);
-            this.toolStrip.Enter += new System.EventHandler(this.toolStrip_Enter);
-            this.toolStrip.Validated += new System.EventHandler(this.toolStrip_Validated);
             // 
             // lbluser
             // 
@@ -394,46 +306,18 @@
             this.txtpriv.TabIndex = 31;
             this.txtpriv.Visible = false;
             // 
-            // txtdscamt
-            // 
-            this.txtdscamt.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.txtdscamt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtdscamt.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtdscamt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtdscamt.Location = new System.Drawing.Point(892, 510);
-            this.txtdscamt.Name = "txtdscamt";
-            this.txtdscamt.Size = new System.Drawing.Size(95, 27);
-            this.txtdscamt.TabIndex = 8;
-            this.txtdscamt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtdscamt.TextChanged += new System.EventHandler(this.txtdscamt_TextChanged);
-            this.txtdscamt.Enter += new System.EventHandler(this.txtdscamt_Enter);
-            this.txtdscamt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtdscamt_KeyDown);
-            this.txtdscamt.Leave += new System.EventHandler(this.txtdscamt_Leave);
-            // 
             // txtnetamt
             // 
             this.txtnetamt.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.txtnetamt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtnetamt.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtnetamt.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txtnetamt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.txtnetamt.Location = new System.Drawing.Point(1116, 542);
             this.txtnetamt.Name = "txtnetamt";
             this.txtnetamt.ReadOnly = true;
-            this.txtnetamt.Size = new System.Drawing.Size(140, 36);
+            this.txtnetamt.Size = new System.Drawing.Size(140, 27);
             this.txtnetamt.TabIndex = 35;
             this.txtnetamt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // lblcustomer
-            // 
-            this.lblcustomer.AutoSize = true;
-            this.lblcustomer.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.lblcustomer.ForeColor = System.Drawing.Color.Black;
-            this.lblcustomer.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.lblcustomer.Location = new System.Drawing.Point(12, 107);
-            this.lblcustomer.Name = "lblcustomer";
-            this.lblcustomer.Size = new System.Drawing.Size(82, 19);
-            this.lblcustomer.TabIndex = 36;
-            this.lblcustomer.Text = "Customer ";
             // 
             // label2
             // 
@@ -481,32 +365,6 @@
             this.grdcuslookup.Size = new System.Drawing.Size(867, 199);
             this.grdcuslookup.TabIndex = 39;
             this.grdcuslookup.Visible = false;
-            this.grdcuslookup.DoubleClick += new System.EventHandler(this.GrdcusLookup_DoubleClick);
-            this.grdcuslookup.KeyDown += new System.Windows.Forms.KeyEventHandler(this.grdcuslookup_KeyDown);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.label3.ForeColor = System.Drawing.Color.Black;
-            this.label3.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label3.Location = new System.Drawing.Point(999, 510);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(111, 19);
-            this.label3.TabIndex = 40;
-            this.label3.Text = "Gross Amount";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.label4.ForeColor = System.Drawing.Color.Black;
-            this.label4.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label4.Location = new System.Drawing.Point(769, 513);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(70, 19);
-            this.label4.TabIndex = 41;
-            this.label4.Text = "Discount";
             // 
             // label7
             // 
@@ -514,147 +372,11 @@
             this.label7.Font = new System.Drawing.Font("Tahoma", 12F);
             this.label7.ForeColor = System.Drawing.Color.Black;
             this.label7.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label7.Location = new System.Drawing.Point(1015, 544);
+            this.label7.Location = new System.Drawing.Point(995, 544);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(95, 19);
+            this.label7.Size = new System.Drawing.Size(117, 19);
             this.label7.TabIndex = 42;
-            this.label7.Text = "Net Amount";
-            // 
-            // dgvpaid
-            // 
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.White;
-            this.dgvpaid.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
-            this.dgvpaid.BackgroundColor = System.Drawing.Color.DeepSkyBlue;
-            this.dgvpaid.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.Single;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.DeepSkyBlue;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Tahoma", 10F);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvpaid.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
-            this.dgvpaid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvpaid.GridColor = System.Drawing.Color.Silver;
-            this.dgvpaid.Location = new System.Drawing.Point(3, 3);
-            this.dgvpaid.Name = "dgvpaid";
-            dataGridViewCellStyle7.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.DeepSkyBlue;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle7.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle7.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgvpaid.RowHeadersDefaultCellStyle = dataGridViewCellStyle7;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.dgvpaid.RowsDefaultCellStyle = dataGridViewCellStyle8;
-            this.dgvpaid.RowTemplate.DividerHeight = 1;
-            this.dgvpaid.RowTemplate.Height = 25;
-            this.dgvpaid.Size = new System.Drawing.Size(531, 134);
-            this.dgvpaid.TabIndex = 9;
-            this.dgvpaid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvpaid_CellContentClick);
-            this.dgvpaid.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvpaid_CellEnter);
-            this.dgvpaid.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvpaid_CellLeave);
-            this.dgvpaid.CellValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvpaid_CellValidated);
-            this.dgvpaid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvpaid_CellValueChanged);
-            this.dgvpaid.Enter += new System.EventHandler(this.dgvpaid_Enter);
-            this.dgvpaid.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgvpaid_KeyDown);
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label13.ForeColor = System.Drawing.Color.DarkRed;
-            this.label13.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label13.Location = new System.Drawing.Point(540, 576);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(85, 25);
-            this.label13.TabIndex = 47;
-            this.label13.Text = "Balance";
-            this.label13.Visible = false;
-            // 
-            // txtbalance
-            // 
-            this.txtbalance.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.txtbalance.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtbalance.Font = new System.Drawing.Font("Tahoma", 18F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtbalance.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtbalance.Location = new System.Drawing.Point(631, 571);
-            this.txtbalance.Name = "txtbalance";
-            this.txtbalance.ReadOnly = true;
-            this.txtbalance.Size = new System.Drawing.Size(134, 36);
-            this.txtbalance.TabIndex = 48;
-            this.txtbalance.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtbalance.Visible = false;
-            this.txtbalance.TextChanged += new System.EventHandler(this.txtbalance_TextChanged);
-            // 
-            // lstpaid
-            // 
-            this.lstpaid.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.lstpaid.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.lstpaid.FormattingEnabled = true;
-            this.lstpaid.Location = new System.Drawing.Point(261, 29);
-            this.lstpaid.Name = "lstpaid";
-            this.lstpaid.Size = new System.Drawing.Size(273, 80);
-            this.lstpaid.TabIndex = 49;
-            this.lstpaid.Visible = false;
-            this.lstpaid.DoubleClick += new System.EventHandler(this.lstpaid_DoubleClick);
-            this.lstpaid.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lstpaid_KeyDown);
-            // 
-            // txtcash
-            // 
-            this.txtcash.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.txtcash.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtcash.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtcash.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtcash.Location = new System.Drawing.Point(1116, 582);
-            this.txtcash.Name = "txtcash";
-            this.txtcash.Size = new System.Drawing.Size(140, 33);
-            this.txtcash.TabIndex = 8;
-            this.txtcash.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtcash.TextChanged += new System.EventHandler(this.txtcash_TextChanged);
-            this.txtcash.Enter += new System.EventHandler(this.txtcash_Enter);
-            this.txtcash.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtcash_KeyDown);
-            this.txtcash.Leave += new System.EventHandler(this.txtcash_Leave);
-            // 
-            // label14
-            // 
-            this.label14.AutoSize = true;
-            this.label14.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label14.ForeColor = System.Drawing.Color.BlueViolet;
-            this.label14.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label14.Location = new System.Drawing.Point(1053, 582);
-            this.label14.Name = "label14";
-            this.label14.Size = new System.Drawing.Size(57, 25);
-            this.label14.TabIndex = 51;
-            this.label14.Text = "Cash";
-            this.label14.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // txtchange
-            // 
-            this.txtchange.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.txtchange.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtchange.Font = new System.Drawing.Font("Tahoma", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtchange.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtchange.Location = new System.Drawing.Point(854, 572);
-            this.txtchange.Name = "txtchange";
-            this.txtchange.ReadOnly = true;
-            this.txtchange.Size = new System.Drawing.Size(134, 33);
-            this.txtchange.TabIndex = 54;
-            this.txtchange.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label15.ForeColor = System.Drawing.Color.Blue;
-            this.label15.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label15.Location = new System.Drawing.Point(768, 576);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(85, 25);
-            this.label15.TabIndex = 53;
-            this.label15.Text = "Balance";
+            this.label7.Text = "Adjust Amount";
             // 
             // groupBox1
             // 
@@ -670,6 +392,7 @@
             this.groupBox1.Controls.Add(this.btnsave);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.txtcustomer);
             this.groupBox1.Controls.Add(this.txttrn);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -817,7 +540,7 @@
             // 
             this.cmbtrntype.Font = new System.Drawing.Font("Tahoma", 10F);
             this.cmbtrntype.FormattingEnabled = true;
-            this.cmbtrntype.Location = new System.Drawing.Point(965, 34);
+            this.cmbtrntype.Location = new System.Drawing.Point(990, 44);
             this.cmbtrntype.Name = "cmbtrntype";
             this.cmbtrntype.Size = new System.Drawing.Size(152, 24);
             this.cmbtrntype.TabIndex = 57;
@@ -841,6 +564,17 @@
             this.btnsave.UseVisualStyleBackColor = true;
             this.btnsave.Click += new System.EventHandler(this.btnsave_Click);
             // 
+            // txtcustomer
+            // 
+            this.txtcustomer.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.txtcustomer.Font = new System.Drawing.Font("Tahoma", 11.25F);
+            this.txtcustomer.Location = new System.Drawing.Point(914, 32);
+            this.txtcustomer.Name = "txtcustomer";
+            this.txtcustomer.Size = new System.Drawing.Size(116, 26);
+            this.txtcustomer.TabIndex = 17;
+            this.txtcustomer.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txtcustomer.Visible = false;
+            // 
             // lblmsg
             // 
             this.lblmsg.AutoSize = true;
@@ -854,40 +588,16 @@
             this.lblmsg.TabIndex = 56;
             this.lblmsg.Text = "**";
             // 
-            // label17
+            // cmbwarehouse
             // 
-            this.label17.AutoSize = true;
-            this.label17.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
-            this.label17.ForeColor = System.Drawing.Color.Brown;
-            this.label17.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label17.Location = new System.Drawing.Point(523, 78);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(73, 19);
-            this.label17.TabIndex = 59;
-            this.label17.Text = "Balance";
-            // 
-            // txtacbalance
-            // 
-            this.txtacbalance.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.txtacbalance.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtacbalance.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Bold);
-            this.txtacbalance.Location = new System.Drawing.Point(632, 75);
-            this.txtacbalance.Name = "txtacbalance";
-            this.txtacbalance.ReadOnly = true;
-            this.txtacbalance.Size = new System.Drawing.Size(188, 26);
-            this.txtacbalance.TabIndex = 60;
-            this.txtacbalance.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // cmbsalesagent
-            // 
-            this.cmbsalesagent.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.cmbsalesagent.Font = new System.Drawing.Font("Tahoma", 10F);
-            this.cmbsalesagent.FormattingEnabled = true;
-            this.cmbsalesagent.Location = new System.Drawing.Point(632, 104);
-            this.cmbsalesagent.Name = "cmbsalesagent";
-            this.cmbsalesagent.Size = new System.Drawing.Size(188, 24);
-            this.cmbsalesagent.TabIndex = 1;
-            this.cmbsalesagent.SelectedIndexChanged += new System.EventHandler(this.cmbtrntype_SelectedIndexChanged);
+            this.cmbwarehouse.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.cmbwarehouse.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.cmbwarehouse.FormattingEnabled = true;
+            this.cmbwarehouse.Location = new System.Drawing.Point(118, 103);
+            this.cmbwarehouse.Name = "cmbwarehouse";
+            this.cmbwarehouse.Size = new System.Drawing.Size(188, 24);
+            this.cmbwarehouse.TabIndex = 1;
+            this.cmbwarehouse.SelectedIndexChanged += new System.EventHandler(this.cmbtrntype_SelectedIndexChanged);
             // 
             // lblsaleperson
             // 
@@ -895,11 +605,11 @@
             this.lblsaleperson.Font = new System.Drawing.Font("Tahoma", 12F);
             this.lblsaleperson.ForeColor = System.Drawing.Color.Black;
             this.lblsaleperson.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.lblsaleperson.Location = new System.Drawing.Point(523, 105);
+            this.lblsaleperson.Location = new System.Drawing.Point(9, 104);
             this.lblsaleperson.Name = "lblsaleperson";
-            this.lblsaleperson.Size = new System.Drawing.Size(98, 19);
+            this.lblsaleperson.Size = new System.Drawing.Size(94, 19);
             this.lblsaleperson.TabIndex = 58;
-            this.lblsaleperson.Text = "Sales Person";
+            this.lblsaleperson.Text = "Ware House";
             // 
             // lblinvstatus
             // 
@@ -964,263 +674,17 @@
             this.nyear.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nyear.TextChanged += new System.EventHandler(this.nyear_TextChanged);
             // 
-            // btnupload
-            // 
-            this.btnupload.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnupload.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
-            this.btnupload.ForeColor = System.Drawing.Color.Navy;
-            this.btnupload.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnupload.ImageList = this.imageList1;
-            this.btnupload.Location = new System.Drawing.Point(24, 70);
-            this.btnupload.Name = "btnupload";
-            this.btnupload.Size = new System.Drawing.Size(86, 32);
-            this.btnupload.TabIndex = 62;
-            this.btnupload.Text = "&Upload";
-            this.btnupload.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnupload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnupload.UseVisualStyleBackColor = true;
-            // 
-            // comboBox1
-            // 
-            this.comboBox1.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.comboBox1.Font = new System.Drawing.Font("Tahoma", 10F);
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(128, 7);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(128, 24);
-            this.comboBox1.TabIndex = 63;
-            // 
-            // panelremote
-            // 
-            this.panelremote.Controls.Add(this.btndownload);
-            this.panelremote.Controls.Add(this.btnupload);
-            this.panelremote.Controls.Add(this.comboBox1);
-            this.panelremote.Controls.Add(this.label20);
-            this.panelremote.Controls.Add(this.label19);
-            this.panelremote.Controls.Add(this.txtremoteinvno);
-            this.panelremote.Location = new System.Drawing.Point(559, 363);
-            this.panelremote.Name = "panelremote";
-            this.panelremote.Size = new System.Drawing.Size(276, 114);
-            this.panelremote.TabIndex = 64;
-            this.panelremote.Visible = false;
-            // 
-            // btndownload
-            // 
-            this.btndownload.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btndownload.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
-            this.btndownload.ForeColor = System.Drawing.Color.Navy;
-            this.btndownload.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btndownload.Location = new System.Drawing.Point(128, 70);
-            this.btndownload.Name = "btndownload";
-            this.btndownload.Size = new System.Drawing.Size(128, 32);
-            this.btndownload.TabIndex = 62;
-            this.btndownload.Text = "&DownLoad";
-            this.btndownload.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btndownload.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btndownload.UseVisualStyleBackColor = true;
-            // 
-            // label20
-            // 
-            this.label20.AutoSize = true;
-            this.label20.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label20.ForeColor = System.Drawing.Color.DarkRed;
-            this.label20.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label20.Location = new System.Drawing.Point(23, 41);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(83, 18);
-            this.label20.TabIndex = 47;
-            this.label20.Text = "Invoice No.";
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label19.ForeColor = System.Drawing.Color.DarkRed;
-            this.label19.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label19.Location = new System.Drawing.Point(25, 13);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(53, 18);
-            this.label19.TabIndex = 47;
-            this.label19.Text = "Branch";
-            // 
-            // txtremoteinvno
-            // 
-            this.txtremoteinvno.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.txtremoteinvno.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtremoteinvno.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtremoteinvno.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtremoteinvno.Location = new System.Drawing.Point(128, 37);
-            this.txtremoteinvno.Name = "txtremoteinvno";
-            this.txtremoteinvno.Size = new System.Drawing.Size(128, 27);
-            this.txtremoteinvno.TabIndex = 7;
-            this.txtremoteinvno.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtremoteinvno.TextChanged += new System.EventHandler(this.txtdscamt_TextChanged);
-            this.txtremoteinvno.Enter += new System.EventHandler(this.txtdscamt_Enter);
-            this.txtremoteinvno.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtdscamt_KeyDown);
-            this.txtremoteinvno.Leave += new System.EventHandler(this.txtdscamt_Leave);
-            // 
-            // btnremote
-            // 
-            this.btnremote.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btnremote.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
-            this.btnremote.ForeColor = System.Drawing.Color.Navy;
-            this.btnremote.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btnremote.Location = new System.Drawing.Point(559, 471);
-            this.btnremote.Name = "btnremote";
-            this.btnremote.Size = new System.Drawing.Size(86, 32);
-            this.btnremote.TabIndex = 62;
-            this.btnremote.Text = "&Remote";
-            this.btnremote.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btnremote.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btnremote.UseVisualStyleBackColor = true;
-            this.btnremote.Visible = false;
-            this.btnremote.Click += new System.EventHandler(this.btnremote_Click);
-            // 
-            // btncurrency
-            // 
-            this.btncurrency.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.btncurrency.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
-            this.btncurrency.ForeColor = System.Drawing.Color.Navy;
-            this.btncurrency.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.btncurrency.ImageIndex = 4;
-            this.btncurrency.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.btncurrency.Location = new System.Drawing.Point(547, 536);
-            this.btncurrency.Name = "btncurrency";
-            this.btncurrency.Size = new System.Drawing.Size(27, 24);
-            this.btncurrency.TabIndex = 95;
-            this.btncurrency.TabStop = false;
-            this.btncurrency.Text = "+";
-            this.btncurrency.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.btncurrency.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
-            this.btncurrency.UseVisualStyleBackColor = true;
-            this.btncurrency.Visible = false;
-            this.btncurrency.Click += new System.EventHandler(this.btncurrency_Click);
-            // 
-            // txtrate
-            // 
-            this.txtrate.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtrate.Font = new System.Drawing.Font("Tahoma", 11F);
-            this.txtrate.Location = new System.Drawing.Point(631, 540);
-            this.txtrate.Name = "txtrate";
-            this.txtrate.Size = new System.Drawing.Size(134, 25);
-            this.txtrate.TabIndex = 11;
-            this.txtrate.Visible = false;
-            // 
-            // cmbcurrency
-            // 
-            this.cmbcurrency.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.cmbcurrency.DisplayMember = "Unit_id";
-            this.cmbcurrency.FormattingEnabled = true;
-            this.cmbcurrency.Location = new System.Drawing.Point(631, 513);
-            this.cmbcurrency.Name = "cmbcurrency";
-            this.cmbcurrency.Size = new System.Drawing.Size(134, 21);
-            this.cmbcurrency.TabIndex = 10;
-            this.cmbcurrency.ValueMember = "Unit_id";
-            this.cmbcurrency.Visible = false;
-            this.cmbcurrency.SelectedIndexChanged += new System.EventHandler(this.cmbcurrency_SelectedIndexChanged);
-            // 
-            // lblcurrency
-            // 
-            this.lblcurrency.AutoSize = true;
-            this.lblcurrency.Font = new System.Drawing.Font("Tahoma", 11F);
-            this.lblcurrency.ForeColor = System.Drawing.Color.Purple;
-            this.lblcurrency.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.lblcurrency.Location = new System.Drawing.Point(554, 512);
-            this.lblcurrency.Name = "lblcurrency";
-            this.lblcurrency.Size = new System.Drawing.Size(71, 18);
-            this.lblcurrency.TabIndex = 96;
-            this.lblcurrency.Text = "Currency ";
-            this.lblcurrency.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblcurrency.Visible = false;
-            // 
-            // label21
-            // 
-            this.label21.AutoSize = true;
-            this.label21.Font = new System.Drawing.Font("Tahoma", 11F);
-            this.label21.ForeColor = System.Drawing.Color.Purple;
-            this.label21.ImeMode = System.Windows.Forms.ImeMode.NoControl;
-            this.label21.Location = new System.Drawing.Point(580, 542);
-            this.label21.Name = "label21";
-            this.label21.Size = new System.Drawing.Size(38, 18);
-            this.label21.TabIndex = 97;
-            this.label21.Text = "Rate";
-            this.label21.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.label21.Visible = false;
-            // 
-            // txtdiscprcnt
-            // 
-            this.txtdiscprcnt.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.txtdiscprcnt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtdiscprcnt.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtdiscprcnt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtdiscprcnt.Location = new System.Drawing.Point(855, 510);
-            this.txtdiscprcnt.Name = "txtdiscprcnt";
-            this.txtdiscprcnt.Size = new System.Drawing.Size(41, 27);
-            this.txtdiscprcnt.TabIndex = 7;
-            this.txtdiscprcnt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtdiscprcnt.TextChanged += new System.EventHandler(this.txtdiscprcnt_TextChanged);
-            this.txtdiscprcnt.Enter += new System.EventHandler(this.txtdscamt_Enter);
-            this.txtdiscprcnt.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtdscamt_KeyDown);
-            this.txtdiscprcnt.Leave += new System.EventHandler(this.txtdscamt_Leave);
-            // 
-            // pnlpaid
-            // 
-            this.pnlpaid.Controls.Add(this.lstpaid);
-            this.pnlpaid.Controls.Add(this.dgvpaid);
-            this.pnlpaid.Location = new System.Drawing.Point(0, 530);
-            this.pnlpaid.Name = "pnlpaid";
-            this.pnlpaid.Size = new System.Drawing.Size(537, 137);
-            this.pnlpaid.TabIndex = 98;
-            // 
             // chkprintview
             // 
             this.chkprintview.AutoSize = true;
-            this.chkprintview.Location = new System.Drawing.Point(855, 616);
+            this.chkprintview.Location = new System.Drawing.Point(869, 548);
             this.chkprintview.Name = "chkprintview";
             this.chkprintview.Size = new System.Drawing.Size(73, 17);
             this.chkprintview.TabIndex = 99;
             this.chkprintview.Text = "View Print";
             this.chkprintview.UseVisualStyleBackColor = true;
             // 
-            // txtvatamt
-            // 
-            this.txtvatamt.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.txtvatamt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtvatamt.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtvatamt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtvatamt.Location = new System.Drawing.Point(892, 540);
-            this.txtvatamt.Name = "txtvatamt";
-            this.txtvatamt.Size = new System.Drawing.Size(95, 27);
-            this.txtvatamt.TabIndex = 10;
-            this.txtvatamt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtvatamt.TextChanged += new System.EventHandler(this.txtvatamt_TextChanged);
-            // 
-            // txtvatpcnt
-            // 
-            this.txtvatpcnt.BackColor = System.Drawing.Color.DeepSkyBlue;
-            this.txtvatpcnt.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.txtvatpcnt.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.txtvatpcnt.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.txtvatpcnt.Location = new System.Drawing.Point(855, 540);
-            this.txtvatpcnt.Name = "txtvatpcnt";
-            this.txtvatpcnt.Size = new System.Drawing.Size(41, 27);
-            this.txtvatpcnt.TabIndex = 9;
-            this.txtvatpcnt.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.txtvatpcnt.TextChanged += new System.EventHandler(this.txtvatpcnt_TextChanged);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.label10.ForeColor = System.Drawing.Color.Black;
-            this.label10.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label10.Location = new System.Drawing.Point(808, 543);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(32, 19);
-            this.label10.TabIndex = 41;
-            this.label10.Text = "Vat";
-            // 
-            // FrmService
+            // Frmadjust
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoScroll = true;
@@ -1228,60 +692,33 @@
             this.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.ClientSize = new System.Drawing.Size(1148, 712);
             this.Controls.Add(this.chkprintview);
-            this.Controls.Add(this.pnlpaid);
-            this.Controls.Add(this.label21);
-            this.Controls.Add(this.btncurrency);
-            this.Controls.Add(this.txtrate);
-            this.Controls.Add(this.cmbcurrency);
-            this.Controls.Add(this.lblcurrency);
-            this.Controls.Add(this.panelremote);
-            this.Controls.Add(this.btnremote);
             this.Controls.Add(this.lblinvstatus);
             this.Controls.Add(this.GrdLookup);
             this.Controls.Add(this.grdcuslookup);
             this.Controls.Add(this.label16);
-            this.Controls.Add(this.label17);
             this.Controls.Add(this.nyear);
-            this.Controls.Add(this.txtacbalance);
             this.Controls.Add(this.lblsaleperson);
-            this.Controls.Add(this.cmbsalesagent);
+            this.Controls.Add(this.cmbwarehouse);
             this.Controls.Add(this.lblmsg);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.txtchange);
-            this.Controls.Add(this.label15);
-            this.Controls.Add(this.txtcash);
-            this.Controls.Add(this.label14);
-            this.Controls.Add(this.txtbalance);
-            this.Controls.Add(this.label13);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.label7);
-            this.Controls.Add(this.label10);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.lblcustomer);
-            this.Controls.Add(this.txtcusname);
             this.Controls.Add(this.txtremarks);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.txtnetamt);
-            this.Controls.Add(this.txtcustomer);
-            this.Controls.Add(this.txtvatpcnt);
-            this.Controls.Add(this.txtdiscprcnt);
-            this.Controls.Add(this.txtvatamt);
-            this.Controls.Add(this.txtdscamt);
             this.Controls.Add(this.dgv1);
             this.Controls.Add(this.txtrefno);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.dt1);
             this.Controls.Add(this.txtpriv);
             this.Controls.Add(this.label9);
-            this.Controls.Add(this.txttotal);
             this.Controls.Add(this.txtinvno);
             this.Controls.Add(this.txttrn_type);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
-            this.Name = "FrmService";
+            this.Name = "Frmadjust";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "POS";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
@@ -1294,12 +731,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgv1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.GrdLookup)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdcuslookup)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvpaid)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
-            this.panelremote.ResumeLayout(false);
-            this.panelremote.PerformLayout();
-            this.pnlpaid.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1320,30 +753,14 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
         private System.Windows.Forms.TextBox txttrn;
         private System.Windows.Forms.DataGridView dgv1;
-        
-        private System.Windows.Forms.TextBox txttotal;
         public System.Windows.Forms.TextBox txtpriv;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
-       private System.Windows.Forms.TextBox txtcusname;
-       private System.Windows.Forms.TextBox txtcustomer;
-       private System.Windows.Forms.TextBox txtdscamt;
        private System.Windows.Forms.TextBox txtnetamt;
-       private System.Windows.Forms.Label lblcustomer;
        private System.Windows.Forms.Label label2;
        private System.Windows.Forms.DataGridView GrdLookup;
        private System.Windows.Forms.DataGridView grdcuslookup;
-       private System.Windows.Forms.Label label3;
-       private System.Windows.Forms.Label label4;
        private System.Windows.Forms.Label label7;
-       private System.Windows.Forms.DataGridView dgvpaid;
-       private System.Windows.Forms.Label label13;
-       private System.Windows.Forms.TextBox txtbalance;
-       private System.Windows.Forms.ListBox lstpaid;
-       private System.Windows.Forms.TextBox txtcash;
-       private System.Windows.Forms.Label label14;
-       private System.Windows.Forms.TextBox txtchange;
-       private System.Windows.Forms.Label label15;
        private System.Windows.Forms.ColorDialog colorDialog1;
        private System.Windows.Forms.GroupBox groupBox1;
        private System.Windows.Forms.Button btnsave;
@@ -1359,9 +776,7 @@
        private System.Windows.Forms.Label lblmsg;
        private System.Windows.Forms.ComboBox cmbtrntype;
        private System.Windows.Forms.Label lbltrntype;
-       private System.Windows.Forms.Label label17;
-       private System.Windows.Forms.TextBox txtacbalance;
-       private System.Windows.Forms.ComboBox cmbsalesagent;
+       private System.Windows.Forms.ComboBox cmbwarehouse;
        private System.Windows.Forms.Label lblsaleperson;
        private System.Windows.Forms.Button btndelete;
        private System.Windows.Forms.Label lblinvstatus;
@@ -1369,24 +784,7 @@
        private System.Windows.Forms.Label label1;
        private System.Windows.Forms.Label label16;
        private System.Windows.Forms.TextBox nyear;
-       private System.Windows.Forms.Button btnupload;
-       private System.Windows.Forms.ComboBox comboBox1;
-       private System.Windows.Forms.Panel panelremote;
-       private System.Windows.Forms.Button btndownload;
-       private System.Windows.Forms.Label label20;
-       private System.Windows.Forms.Label label19;
-       private System.Windows.Forms.TextBox txtremoteinvno;
-       private System.Windows.Forms.Button btnremote;
-       private System.Windows.Forms.Button btncurrency;
-       private System.Windows.Forms.TextBox txtrate;
-       private System.Windows.Forms.ComboBox cmbcurrency;
-       private System.Windows.Forms.Label lblcurrency;
-       private System.Windows.Forms.Label label21;
-       private System.Windows.Forms.TextBox txtdiscprcnt;
-       private System.Windows.Forms.Panel pnlpaid;
        private System.Windows.Forms.CheckBox chkprintview;
-       private System.Windows.Forms.TextBox txtvatamt;
-       private System.Windows.Forms.TextBox txtvatpcnt;
-       private System.Windows.Forms.Label label10;
+       private System.Windows.Forms.TextBox txtcustomer;
     }
 }

@@ -286,5 +286,27 @@ namespace FinOrg
 
         }
 
+        private void btnlang_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (btnlang.Tag == "0")
+                {
+                    btnlang.Text = "English";
+                    btnlang.Tag = "1";
+                }
+                else
+                {
+                    btnlang.Text = "عربي";
+                    btnlang.Tag = "0";
+                }
+
+            }
+            catch
+            {
+
+            }
+        }
+
     }
 }

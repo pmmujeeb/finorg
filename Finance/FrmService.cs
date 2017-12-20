@@ -4198,15 +4198,15 @@ namespace FinOrg
 
                 sql = "SELECT CUS_AC_TYPE,SUP_AC_TYPE FROM AC_OPTIONS WHERE  ac_options.ID =1";
 
-                rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                // 
-                object sl = 0;
-                object pr = 0;
-                if (rec.RecordCount > 0)
-                {
-                    sl = rec.Fields[0].Value;
-                    pr = rec.Fields[1].Value;
-                }
+                //rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
+                //// 
+                //object sl = 0;
+                //object pr = 0;
+                //if (rec.RecordCount > 0)
+                //{
+                //    sl = rec.Fields[0].Value;
+                //    pr = rec.Fields[1].Value;
+                //}
 
                 sql = "select  cast(Acc_No as Varchar) as Code ,Acc_Name as Name,Acc_aName as Ar_Name from Accounts ";
                 switch (txttrn_type.Text)
@@ -4216,7 +4216,7 @@ namespace FinOrg
                         {
                             rec = new ADODB.Recordset();
 
-                            sql = "select  cast(Acc_No as Varchar) as Code ,Acc_Name as Name,Acc_aName as Ar_Name from Accounts where  acc_type_code=" + pr;
+                            sql = "select  cast(Acc_No as Varchar) as Code ,Acc_Name as Name,Acc_aName as Ar_Name from Accounts where  acc_type_code=3";// +pr;
                             break;
                         }
                     case "6":
@@ -4224,7 +4224,7 @@ namespace FinOrg
                         {
                             rec = new ADODB.Recordset();
 
-                            sql = "select  cast(Acc_No as Varchar) as Code ,Acc_Name as Name,Acc_aName as Ar_Name from Accounts where  acc_type_code=" + sl;
+                            sql = "select  cast(Acc_No as Varchar) as Code ,Acc_Name as Name,Acc_aName as Ar_Name from Accounts where  acc_type_code=2"; // +sl;
                             break;
                         }
 
@@ -4396,8 +4396,8 @@ namespace FinOrg
                         break;
 
                     default:
-                        if (!grdcuslookup.Visible)
-                            txtcustomer_DoubleClick(sender, null);
+                        //if (!grdcuslookup.Visible)
+                        //    txtcustomer_DoubleClick(sender, null);
 
                         break;
 

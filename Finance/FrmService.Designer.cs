@@ -472,13 +472,13 @@
             this.grdcuslookup.AllowUserToDeleteRows = false;
             dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.grdcuslookup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
-            this.grdcuslookup.BackgroundColor = System.Drawing.Color.DeepSkyBlue;
+            this.grdcuslookup.BackgroundColor = System.Drawing.Color.White;
             this.grdcuslookup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdcuslookup.Location = new System.Drawing.Point(118, 174);
             this.grdcuslookup.Name = "grdcuslookup";
             this.grdcuslookup.ReadOnly = true;
             this.grdcuslookup.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grdcuslookup.Size = new System.Drawing.Size(867, 199);
+            this.grdcuslookup.Size = new System.Drawing.Size(867, 314);
             this.grdcuslookup.TabIndex = 39;
             this.grdcuslookup.Visible = false;
             this.grdcuslookup.DoubleClick += new System.EventHandler(this.GrdcusLookup_DoubleClick);

@@ -11,6 +11,7 @@ using System.Configuration;
 using System.Data.SqlClient;
 //using Microsoft.VisualBasic;
 using ADODB;
+using System.Reflection;
 namespace FinOrg
 {
     public partial class MDIParent1 : Form
@@ -22,7 +23,7 @@ namespace FinOrg
         DataView dv = new DataView();
         SqlCommand cmd = new SqlCommand();
         SqlDataAdapter ada = new SqlDataAdapter();
-       
+        bool menumatch = false;
         SqlCommand cmd1 = new SqlCommand();
         int mnutype = 0;
         
@@ -36,6 +37,7 @@ namespace FinOrg
             enablemenu();
             //return;
            
+
             switch(Gvar.menu_dock)
             {
                 case "Left":
@@ -1222,8 +1224,9 @@ namespace FinOrg
             childForm.MdiParent = this;
             //childForm.Text = "Window " + childFormNumber++;
             childForm.Text = "Raw Meterial Master Screen";
-
-            childForm.Show();
+                        childForm.Show();
+         
+            
         }
 
         private void menuToolStripMenuItem_Click(object sender, EventArgs e)
@@ -1797,10 +1800,260 @@ namespace FinOrg
             childForm.Text = "GL Voucher Entry/Edit Screen";
             childForm.Show();
         }
+
+        private void mnuitemadjust_Click(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void mnuadjustaddition_Click(object sender, EventArgs e)
+        {
+            Gvar._trntype = -2;
+            Gvar.invno = "0";
+            if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111";
+            else
+            {
+                if (mnuadjustaddition.Tag == null)
+                {
+                    Gvar.frm_priv = "100";
+                }
+                else
+                {
+                    Gvar.frm_priv = mnuadjustaddition.Tag.ToString();
+                }
+
+            }
+            //childForm.Text = "Window " + childFormNumber++;
+
+            Form childForm = new Frmadjust();
+            childForm.MdiParent = this;
+
+
+            childForm.Text = "Adjust entry Item Addition Entry Screen";
+
+            childForm.Show();
+        }
+
+        private void mnuadjustdeletion_Click(object sender, EventArgs e)
+        {
+            Gvar._trntype = 17;
+            Gvar.invno = "0";
+            if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111";
+            else
+            {
+                if (mnuadjustdeletion.Tag == null)
+                {
+                    Gvar.frm_priv = "100";
+                }
+                else
+                {
+                    Gvar.frm_priv = mnuadjustdeletion.Tag.ToString();
+                }
+
+            }
+            //childForm.Text = "Window " + childFormNumber++;
+
+            Form childForm = new Frmadjust();
+            childForm.MdiParent = this;
+
+
+            childForm.Text = "Adjust entry Item Deletion Entry Screen";
+
+            childForm.Show();
+        }
+
+        private void MDIParent1_Enter(object sender, EventArgs e)
+        {
+            dgmenu.Visible = true;
+        }
+
+        
+        private void MDIParent1_Leave(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MDIParent1_Activated(object sender, EventArgs e)
+        {
+            dgmenu.Height = this.Height;
+            dgmenu.Top = menuStrip.Top + menuStrip.Height + 2;
+
+        }
+
+        private void MDIParent1_DoubleClick(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MDIParent1_Validated(object sender, EventArgs e)
+        {
+
+        }
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+
+            try
+            {
+                int ky = msg.WParam.ToInt32();
+                if (msg.WParam.ToInt32() == 18 )
+                {
+                    if (dgmenu.Width == 200)
+                    {
+                        dgmenu.Width = 2;
+                        dgmenu.Focus();
+
+                    }
+                    else
+                    {
+                        dgmenu.Width = 200;
+                        dgmenu.Columns[0].Width = 197;
+                    }
+                    
+                }
+
+                
+
+
+
+
+
+
+
+
+                    return true;
+               
+                //return base.ProcessCmdKey(ref msg, Keys.Up);
+                //return base.ProcessCmdKey(ref msg, keyData);
+
+
+                return base.ProcessCmdKey(ref msg, keyData);
+            }
+            catch
+            {
+                return base.ProcessCmdKey(ref msg, keyData);
+
+            }
+        }
+        private void MDIParent1_Layout(object sender, LayoutEventArgs e)
+        {
+
+        }
+
+        private void MDIParent1_MouseMove(object sender, MouseEventArgs e)
+        {
+
+        }
+
+        private void dgmenu_MouseMove(object sender, MouseEventArgs e)
+        {
+            dgmenu.Width = 200;
+            dgmenu.Columns[0].Width = 197;
+            dgmenu.Focus();
+        }
+
+        private void dgmenu_MouseLeave(object sender, EventArgs e)
+        {
+            dgmenu.Width = 2;
+        }
+
+        private void dgmenu_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            menumatch = false;
+            foreach (ToolStripMenuItem toolSripItem in menuStrip.Items)
+            {
+              
+            if (toolSripItem.HasDropDownItems)                 
+            {
+             bool fnd =   SerachSubMenuStripItems(toolSripItem, "mnuadjustdeletion");
+                if (fnd)
+                {
+                    return;
+
+                }
+
+            }
+
+        
+        }
+        }
         
 
         
-        
+         private bool SerachSubMenuStripItems(ToolStripMenuItem menuItem, string menu_name) 
+        {            
+
+            int hd_det = 0;
+           
+            ToolStripMenuItem submenu;
+            if (menuItem.HasDropDownItems)                 
+            {              
+                foreach (ToolStripItem toolSripItem in menuItem.DropDownItems)   
+                {
+                    if (menumatch)
+                    {
+                        return true;
+                    }
+                    //call recursively   
+                    hd_det = 1;
+                    if (toolSripItem is ToolStripSeparator) continue;
+                    submenu = (ToolStripMenuItem)toolSripItem;
+                    if (submenu.HasDropDownItems ) hd_det = 0;
+                    if (toolSripItem is ToolStripMenuItem)
+                    { 
+                        if(toolSripItem.Name == menu_name)
+                        {
+                            menumatch = true;
+                            toolSripItem.PerformClick();
+
+                            return true;
+                        }
+                    }
+
+                {
+                    if (!menumatch)
+                    SerachSubMenuStripItems((ToolStripMenuItem)toolSripItem, menu_name);
+                   
+                }           
+                }
+               
+            }
+            return false;  
+        }
+
+         private void mnuxpressmenu_Click(object sender, EventArgs e)
+         {
+             {
+                 Form childForm = new Frmxmenu();
+                 childForm.MdiParent = this;
+                 //childForm.Text = "Window " + childFormNumber++;
+                 childForm.Text = "Users Xpress Menu Screen";
+                 childForm.Show();
+             }
+         }
+
+         private void btnlang_Click(object sender, EventArgs e)
+         {
+             try
+             {
+                 if (btnlang.Tag=="0")
+                 {
+                     btnlang.Text = "English";
+                     btnlang.Tag = "1";
+                 }
+                 else
+                 {
+                     btnlang.Text = "عربي";
+                     btnlang.Tag = "0";
+                 }
+
+             }
+             catch
+             {
+
+             }
+
+         }
+
 
        
       

@@ -1,6 +1,6 @@
 ﻿namespace FinOrg
 {
-    partial class Frmuserpriv
+    partial class Frmxmenu
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frmuserpriv));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Frmxmenu));
             this.dgv1 = new System.Windows.Forms.DataGridView();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -250,7 +250,7 @@
             this.txtpriv.TabIndex = 26;
             this.txtpriv.Visible = false;
             // 
-            // Frmuserpriv
+            // Frmxmenu
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(892, 535);
@@ -261,7 +261,7 @@
             this.Controls.Add(this.cmbmenu);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.dgv1);
-            this.Name = "Frmuserpriv";
+            this.Name = "Frmxmenu";
             this.Text = "Frmuserpriv";
             this.Load += new System.EventHandler(this.Frmuserpriv_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dgv1)).EndInit();
