@@ -17,7 +17,8 @@ namespace FinOrg
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
-			InitLanguage();
+			if (!DesignMode) // Necessary
+				InitLanguage();
 		}
 
 		protected void InitLanguage()
