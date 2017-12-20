@@ -25,12 +25,12 @@ namespace FinOrg
 			ControlDefaultValues = new Dictionary<string, string>();
 
 			foreach (Control c in this.GetAllChildren())
-				if (Languages.IsTranslatableControl(c))
+				if (c.IsTranslatableControl())
 					ControlDefaultValues.Add(c.Name, c.Text);
 
 			// ControlDefaultValues loaded
 			// LazyLoad these in Languages
-			Languages.LazyLoadTranslations(ControlDefaultValues);
+			Languages.LazyLoadTranslations(this);
 		}
 
 		public static SqlConnection getSqlConnection()

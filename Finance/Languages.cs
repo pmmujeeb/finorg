@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Threading;
 
 namespace FinOrg
 {
@@ -46,16 +45,26 @@ namespace FinOrg
 			}).Start();
 		}
 
+		public static void ApplyTranslation(FinOrgForm f) {
+			foreach (Control c in f.GetAllChildren())
+			{
+				if (c.IsTranslatableControl())
+				{
+					c.Text = Translations[f.ControlDefaultValues[c.Name]];
+				}
+			}
+		}
+
 		/// <summary>
 		/// Lazy Loads the text for each form
 		/// </summary>
 		/// <param name="ControlDefaultValues">A dictionary with ControlName-Text pairs</param>
-		public static Thread LazyLoadTranslations(Dictionary<string, string> ControlDefaultValues)
+		public static Thread LazyLoadTranslations(FinOrgForm f)
 		{
 			Thread t = new Thread(() =>
 			{
 				// Get a list of items to fetch
-				IEnumerable<string> items = ControlDefaultValues.Values;
+				IEnumerable<string> items = f.ControlDefaultValues.Values;
 				if (Translations != null)
 					items = items.Except(Translations.Keys).ToArray();
 				SqlConnection con = FinOrgForm.getSqlConnection();
@@ -81,7 +90,13 @@ namespace FinOrg
 					System.Windows.MessageBox.Show(e.Message, "FinOrg Languages LazyLoadTranslations");
 				}
 				if (COPY_KEY_VALUES) // Copies the value from form to database currentLanguage field
-					InsertFormTranslations(ControlDefaultValues);
+					InsertFormTranslations(f.ControlDefaultValues);
+
+				// Apply Translation
+				f.BeginInvoke(new Action(() =>
+				{
+					ApplyTranslation(f);
+				}));
 			});
 			// finish  this fast
 			t.Priority = ThreadPriority.Highest;
@@ -91,7 +106,7 @@ namespace FinOrg
 
 
 		// Returns true if Control is translatable
-		public static bool IsTranslatableControl(Control ctrl)
+		public static bool IsTranslatableControl(this Control ctrl)
 		{
 			return new Type[] {
 				typeof(Label),
