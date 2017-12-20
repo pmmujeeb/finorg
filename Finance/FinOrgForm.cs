@@ -8,25 +8,26 @@ using System.Windows.Forms;
 
 namespace FinOrg
 {
-    public class FinOrgForm : Form
-    {
+	public class FinOrgForm : Form
+	{
 
-        // <ControlName, DefaultValue>
-        public Dictionary<string, string> ControlDefaultValues { get; set; }
+		// <ControlName, DefaultValue>
+		public Dictionary<string, string> ControlDefaultValues { get; set; }
 
-        protected override void OnLoad(EventArgs e)
-        {
-            base.OnLoad(e);
-            InitLanguage();
-        }
+		protected override void OnLoad(EventArgs e)
+		{
+			base.OnLoad(e);
+			InitLanguage();
+		}
 
-        protected void InitLanguage()
-        {
-            ControlDefaultValues = new Dictionary<string, string>();
+		protected void InitLanguage()
+		{
+			ControlDefaultValues = new Dictionary<string, string>();
 
 			var controls = new Queue<Control>();
 			controls.Enqueue(this);
-			do {
+			do
+			{
 				Control t = controls.Dequeue();
 				if (Languages.IsTranslatableControl(t))
 					ControlDefaultValues.Add(t.Name, t.Text);
@@ -36,14 +37,14 @@ namespace FinOrg
 
 			} while (controls.Count > 0);
 
-            // ControlDefaultValues loaded
-            // LazyLoad these in Languages
-            Languages.LazyLoadTranslations(ControlDefaultValues);
-        }
+			// ControlDefaultValues loaded
+			// LazyLoad these in Languages
+			Languages.LazyLoadTranslations(ControlDefaultValues);
+		}
 
-        public static SqlConnection getSqlConnection()
-        {
-            return new SqlConnection(ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
-        }
-    }
+		public static SqlConnection getSqlConnection()
+		{
+			return new SqlConnection(ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
+		}
+	}
 }
