@@ -322,6 +322,12 @@
     <Compile Include="Frmwrhouse.designer.cs">
       <DependentUpon>Frmwrhouse.cs</DependentUpon>
     </Compile>
+    <Compile Include="Frmxmenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Frmxmenu.Designer.cs">
+      <DependentUpon>Frmxmenu.cs</DependentUpon>
+    </Compile>
     <Compile Include="Gvar.cs" />
     <Compile Include="Languages.cs" />
     <Compile Include="MDIParent1.cs">
@@ -451,6 +457,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Frmwrhouse.resx">
       <DependentUpon>Frmwrhouse.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Frmxmenu.resx">
+      <DependentUpon>Frmxmenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MDIParent1.resx">
       <DependentUpon>MDIParent1.cs</DependentUpon>

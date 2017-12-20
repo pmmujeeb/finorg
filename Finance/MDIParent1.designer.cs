@@ -36,6 +36,7 @@
             this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
             this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.userPrivelegesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuxpressmenu = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuUpdateStock = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator28 = new System.Windows.Forms.ToolStripSeparator();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -85,6 +86,9 @@
             this.creditSalesReturnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.mnutransferMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuitemadjust = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuadjustaddition = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuadjustdeletion = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuinventoryReport = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuStock = new System.Windows.Forms.ToolStripMenuItem();
@@ -184,6 +188,7 @@
             this.salesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.cmbMainMenu = new System.Windows.Forms.ComboBox();
             this.btnarow = new System.Windows.Forms.Button();
+            this.btnlang = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -216,15 +221,15 @@
             // MainMenu
             // 
             this.MainMenu.Name = "MainMenu";
-            this.MainMenu.Size = new System.Drawing.Size(107, 22);
-            this.MainMenu.Text = "MainMenu ";
-            this.MainMenu.Visible = false;
+            this.MainMenu.Size = new System.Drawing.Size(38, 22);
+            this.MainMenu.Text = "...";
             // 
             // toolStripMenuItem13
             // 
             this.toolStripMenuItem13.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.usersToolStripMenuItem,
             this.userPrivelegesToolStripMenuItem,
+            this.mnuxpressmenu,
             this.mnuUpdateStock,
             this.toolStripSeparator28,
             this.settingsToolStripMenuItem});
@@ -249,6 +254,13 @@
             this.userPrivelegesToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
             this.userPrivelegesToolStripMenuItem.Text = "User Priveleges";
             this.userPrivelegesToolStripMenuItem.Click += new System.EventHandler(this.userPrivelegesToolStripMenuItem_Click);
+            // 
+            // mnuxpressmenu
+            // 
+            this.mnuxpressmenu.Name = "mnuxpressmenu";
+            this.mnuxpressmenu.Size = new System.Drawing.Size(203, 22);
+            this.mnuxpressmenu.Text = "Xpress Menu";
+            this.mnuxpressmenu.Click += new System.EventHandler(this.mnuxpressmenu_Click);
             // 
             // mnuUpdateStock
             // 
@@ -308,6 +320,7 @@
             this.salesToolStripMenuItem,
             this.toolStripSeparator11,
             this.mnutransferMenuItem,
+            this.mnuitemadjust,
             this.toolStripSeparator16,
             this.mnuinventoryReport,
             this.toolStripSeparator17,
@@ -654,6 +667,30 @@
             this.mnutransferMenuItem.Size = new System.Drawing.Size(223, 22);
             this.mnutransferMenuItem.Text = "Transfer Items";
             this.mnutransferMenuItem.Click += new System.EventHandler(this.mnutransferMenuItem_Click);
+            // 
+            // mnuitemadjust
+            // 
+            this.mnuitemadjust.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.mnuadjustaddition,
+            this.mnuadjustdeletion});
+            this.mnuitemadjust.Name = "mnuitemadjust";
+            this.mnuitemadjust.Size = new System.Drawing.Size(223, 22);
+            this.mnuitemadjust.Text = "Item Adjustment";
+            this.mnuitemadjust.Click += new System.EventHandler(this.mnuitemadjust_Click);
+            // 
+            // mnuadjustaddition
+            // 
+            this.mnuadjustaddition.Name = "mnuadjustaddition";
+            this.mnuadjustaddition.Size = new System.Drawing.Size(145, 22);
+            this.mnuadjustaddition.Text = "Addition";
+            this.mnuadjustaddition.Click += new System.EventHandler(this.mnuadjustaddition_Click);
+            // 
+            // mnuadjustdeletion
+            // 
+            this.mnuadjustdeletion.Name = "mnuadjustdeletion";
+            this.mnuadjustdeletion.Size = new System.Drawing.Size(145, 22);
+            this.mnuadjustdeletion.Text = "Deletion";
+            this.mnuadjustdeletion.Click += new System.EventHandler(this.mnuadjustdeletion_Click);
             // 
             // toolStripSeparator16
             // 
@@ -1456,16 +1493,18 @@
             this.priv,
             this.Code});
             this.dgmenu.GridColor = System.Drawing.Color.Maroon;
-            this.dgmenu.Location = new System.Drawing.Point(864, 61);
+            this.dgmenu.Location = new System.Drawing.Point(0, 93);
             this.dgmenu.MultiSelect = false;
             this.dgmenu.Name = "dgmenu";
             this.dgmenu.ReadOnly = true;
             this.dgmenu.RowHeadersVisible = false;
             this.dgmenu.RowTemplate.Height = 40;
             this.dgmenu.RowTemplate.ReadOnly = true;
-            this.dgmenu.Size = new System.Drawing.Size(208, 578);
+            this.dgmenu.Size = new System.Drawing.Size(2, 535);
             this.dgmenu.TabIndex = 1;
-            this.dgmenu.Visible = false;
+            this.dgmenu.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgmenu_CellContentClick);
+            this.dgmenu.MouseLeave += new System.EventHandler(this.dgmenu_MouseLeave);
+            this.dgmenu.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgmenu_MouseMove);
             // 
             // Menu
             // 
@@ -1499,7 +1538,7 @@
             this.cmbMainMenu.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmbMainMenu.ForeColor = System.Drawing.Color.Blue;
             this.cmbMainMenu.FormattingEnabled = true;
-            this.cmbMainMenu.Location = new System.Drawing.Point(262, 67);
+            this.cmbMainMenu.Location = new System.Drawing.Point(0, 56);
             this.cmbMainMenu.Name = "cmbMainMenu";
             this.cmbMainMenu.Size = new System.Drawing.Size(209, 31);
             this.cmbMainMenu.TabIndex = 0;
@@ -1519,15 +1558,27 @@
             this.btnarow.Visible = false;
             this.btnarow.Click += new System.EventHandler(this.btnarow_Click);
             // 
+            // btnlang
+            // 
+            this.btnlang.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnlang.Location = new System.Drawing.Point(1172, 0);
+            this.btnlang.Name = "btnlang";
+            this.btnlang.Size = new System.Drawing.Size(59, 28);
+            this.btnlang.TabIndex = 69;
+            this.btnlang.Tag = "0";
+            this.btnlang.Text = "عربي";
+            this.btnlang.UseVisualStyleBackColor = true;
+            this.btnlang.Click += new System.EventHandler(this.btnlang_Click);
+            // 
             // MDIParent1
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
             this.BackColor = System.Drawing.Color.White;
             this.ClientSize = new System.Drawing.Size(1231, 714);
+            this.Controls.Add(this.btnlang);
             this.Controls.Add(this.btnarow);
             this.Controls.Add(this.cmbMainMenu);
-            this.Controls.Add(this.dgmenu);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.lstmenu);
             this.Controls.Add(this.lstpriv);
@@ -1535,6 +1586,7 @@
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.menuStrip);
+            this.Controls.Add(this.dgmenu);
             this.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1546,10 +1598,17 @@
             this.Text = "Finance and Inventory System";
             this.TransparencyKey = System.Drawing.Color.White;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Activated += new System.EventHandler(this.MDIParent1_Activated);
             this.Deactivate += new System.EventHandler(this.MDIParent1_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MDIParent1_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MDIParent1_FormClosed);
             this.Load += new System.EventHandler(this.MDIParent1_Load);
+            this.DoubleClick += new System.EventHandler(this.MDIParent1_DoubleClick);
+            this.Enter += new System.EventHandler(this.MDIParent1_Enter);
+            this.Layout += new System.Windows.Forms.LayoutEventHandler(this.MDIParent1_Layout);
+            this.Leave += new System.EventHandler(this.MDIParent1_Leave);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MDIParent1_MouseMove);
+            this.Validated += new System.EventHandler(this.MDIParent1_Validated);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.toolStrip.ResumeLayout(false);
@@ -1719,6 +1778,11 @@
         private System.Windows.Forms.ToolStripMenuItem mnuglentrysetting;
         private System.Windows.Forms.ToolStripMenuItem mnusetting;
         private System.Windows.Forms.ToolStripMenuItem mnuglvoucher;
+        private System.Windows.Forms.ToolStripMenuItem mnuitemadjust;
+        private System.Windows.Forms.ToolStripMenuItem mnuadjustaddition;
+        private System.Windows.Forms.ToolStripMenuItem mnuadjustdeletion;
+        private System.Windows.Forms.ToolStripMenuItem mnuxpressmenu;
+        private System.Windows.Forms.Button btnlang;
         //private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
         //private Microsoft.VisualBasic.PowerPacks.RectangleShape b1;
     }

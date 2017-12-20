@@ -47,6 +47,7 @@
             this.cmdchange = new System.Windows.Forms.Button();
             this.cmdcancel = new System.Windows.Forms.Button();
             this.cmdok = new System.Windows.Forms.Button();
+            this.btnlang = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.panel3.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -179,6 +180,7 @@
             // panel2
             // 
             this.panel2.BackColor = System.Drawing.Color.LightGray;
+            this.panel2.Controls.Add(this.btnlang);
             this.panel2.Controls.Add(this.cmdchange);
             this.panel2.Controls.Add(this.cmdcancel);
             this.panel2.Controls.Add(this.cmdok);
@@ -199,7 +201,7 @@
             // 
             // cmdcancel
             // 
-            this.cmdcancel.Location = new System.Drawing.Point(225, 32);
+            this.cmdcancel.Location = new System.Drawing.Point(157, 32);
             this.cmdcancel.Name = "cmdcancel";
             this.cmdcancel.Size = new System.Drawing.Size(129, 36);
             this.cmdcancel.TabIndex = 1;
@@ -211,13 +213,24 @@
             // 
             this.cmdok.AutoEllipsis = true;
             this.cmdok.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.cmdok.Location = new System.Drawing.Point(96, 32);
+            this.cmdok.Location = new System.Drawing.Point(32, 32);
             this.cmdok.Name = "cmdok";
             this.cmdok.Size = new System.Drawing.Size(104, 36);
             this.cmdok.TabIndex = 0;
             this.cmdok.Text = "&OK";
             this.cmdok.UseVisualStyleBackColor = true;
             this.cmdok.Click += new System.EventHandler(this.cmdok_Click);
+            // 
+            // btnlang
+            // 
+            this.btnlang.Location = new System.Drawing.Point(300, 33);
+            this.btnlang.Name = "btnlang";
+            this.btnlang.Size = new System.Drawing.Size(81, 35);
+            this.btnlang.TabIndex = 70;
+            this.btnlang.Tag = "0";
+            this.btnlang.Text = "عربي";
+            this.btnlang.UseVisualStyleBackColor = true;
+            this.btnlang.Click += new System.EventHandler(this.btnlang_Click);
             // 
             // Frmlogin
             // 
@@ -264,5 +277,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button cmdchange;
+        private System.Windows.Forms.Button btnlang;
     }
 }

@@ -60,7 +60,7 @@ namespace FinOrg
                 InitializeComponent(); txtpriv.Text = Gvar.frm_priv.ToString();
                 load_form();
                 load_ini();
-                txtcustomer.Focus();
+                cmbwarehouse.Focus();
                 
 
 
@@ -105,18 +105,7 @@ namespace FinOrg
                 adalkp.Fill(rec_options);
                 object a = rec_options.Rows[0]["auto_next_line"];
 
-                if (rec_options.Rows[0]["show_remote"].ToString() == "1")
-                    btnremote.Visible = true;
-
-                if (rec_options.Rows[0]["show_upload"].ToString() == "1")
-                    btnupload.Visible = true;
-
-                if (rec_options.Rows[0]["show_upload"].ToString() == "1")
-                    btnupload.Visible = true;
-                if (rec_options.Rows[0]["cash_rec_show"].ToString() == "1")
-                    pnlpaid.Visible = true;
-                else
-                    pnlpaid.Visible = false;
+               
 
 
                 EXCLUDE_ITM_cAT = "-0";
@@ -146,77 +135,18 @@ namespace FinOrg
                 lbltrntype.Text = cmbtrntype.Text;
 
 
-                sql = "SELECT  ACC_NO,ACC_NAME FROM ACCOUNTS  WHERE ACC_TYPE_CODE= (SELECT  EMP_AC_TYPE FROM AC_OPTIONS WHERE  ac_options.ID =1) union select 0 , 'Direct' order by 1 ";
+                sql = "SELECT  WR_CODE,WR_NAME FROM WRHOUSE_MASTER";
                 SqlDataAdapter sales = new SqlDataAdapter(sql, Conn);
-                DataTable dtsales = new DataTable("SaleType");
+                DataTable dtsales = new DataTable("WHOUSE");
                 sales.Fill(dtsales);
-                cmbsalesagent.DisplayMember = "ACC_NAME";
-                cmbsalesagent.ValueMember = "ACC_NO";
+                cmbwarehouse.DisplayMember = "WR_NAME";
+                cmbwarehouse.ValueMember = "WR_CODE";
 
-                cmbsalesagent.DataSource = dtsales;
-                cmbsalesagent.SelectedIndex = 0;
+                cmbwarehouse.DataSource = dtsales;
+                cmbwarehouse.SelectedIndex = 0;
                 dt1.Value = DateTime.Now;
 
-                //string myTempFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "pos.txt");
-                //if(System.IO.File.Exists(myTempFile))
-                //{
-                //    dgv1.CellLeave -= dgv1_CellLeave;
-                //    dgv1.CellEnter -= dgv1_CellEnter;
-                //    string text = System.IO.File.ReadAllText(myTempFile);
-                //    dgv1.BeginEdit(true);
-                //    string [] grid  = text.Split('|');
-                //    int i=0;
-                //    foreach (string line in grid)
-                //    {
-                //        string [] rw =line.Split(',');
-
-                //    int j=0;
-                //    dgv1.Rows.Add();
-                //    foreach (string col in rw)
-                //    {
-                //        dgv1[j++,i].Value = col.ToString();
-
-                //    }
-                //        i++;
-
-
-                //    }
-                //    dgv1.EndEdit();
-                //    dgv1.CellLeave += dgv1_CellLeave;
-                //    dgv1.CellEnter += dgv1_CellEnter;
-
-                //                }
-
-
-                sql = "select CURRENCY_code,CURRENCY_code +' : ' +  cast(CURRENCY_RATE as varchar) AS CURRENCY from currency_master ";
-
-                SqlDataAdapter adacurr = new SqlDataAdapter(sql, Conn);
-                DataTable dtcurr = new DataTable("currency");
-                adacurr.Fill(dtcurr);
-
-                cmbcurrency.DisplayMember = "CURRENCY";
-                cmbcurrency.ValueMember = "CURRENCY_code";
-
-                cmbcurrency.DataSource = dtcurr;
-                cmbcurrency.SelectedIndex = 0;
-
-                if (trn == 1 | trn == 2)
-                {
-                    dgv1.Columns["cost"].Visible = true;
-                    dgv1.Columns["cost"].HeaderCell.Value = "Sale Price";
-                    dgv1.Columns["cost"].ReadOnly = false;
-                    
-                }
-                else
-                    if (rec_options.Rows[0]["show_sale_col"].ToString() == "1")
-                    {
-                        dgv1.Columns["cost"].Visible = true;
-                        dgv1.Columns["cost"].HeaderCell.Value = "Cost";
-                        //dgv1.Columns["cost"].ReadOnly = false;
-                    }
-
-
-              
+               
 
                 if(bg_color!=null)
                 set_bgcolor(bg_color);
@@ -238,41 +168,7 @@ namespace FinOrg
                 Conn.Close();
                 Conn.Open();
 
-                //sql = "select Proj_code, Proj_name from proj_master";
-
-                //SqlDataAdapter ada1 = new SqlDataAdapter(sql, Conn);
-                /////ada.TableMappings.Add("Table", "Leaders");
-
-                //DataSet ds = new DataSet();
-
-
-
-
-
-                //SqlCommandBuilder cmdBldr = new SqlCommandBuilder(ada);
-
-
-                //ds2.AcceptChanges();
-
-                ////set the table as the datasource for the grid in order to show that data in the grid
-
-                //// dgv1.Columns[0].DataPropertyName = "LEADER_NAME";
-
-                //               sql = "select [Col1],[Col2],[Col3] FROM [Grid_Master] where col='1'";
-                //               //sql = "select [Col1],[Col2],[Col3],[Col4],[Col5],[Col6],[Col7],[Col8],[Col9],[Col10],[Col11],[Col12],[Col13],[Col],[ColId] FROM [Grid_Master] where col='1'";
-                //ada = new SqlDataAdapter(sql, Conn);
-                //               DataTable dt = new DataTable("Grid_Master");
-                //               dt.AcceptChanges();
-                //               ada.Fill(ds2, "Grid_Master");
-                //               dgv1.Visible = true;
-                //               dv.AllowEdit = true;
-                //               dv.AllowNew = true;
-                //               dv.AllowDelete = true;
-
-                //              ;
-
-                //               dgv1.DataSource = ds2.Tables[0];
-                //               // dgv1.Refresh();
+               
 
                 DataGridViewTextBoxColumn Col1 = new DataGridViewTextBoxColumn();
                 Col1.HeaderText = "Col1";
@@ -294,10 +190,11 @@ namespace FinOrg
                 dgv1.Columns.Add(txt7);
 
                 DataGridViewTextBoxColumn txt2 = new DataGridViewTextBoxColumn();
-                txt2.HeaderText = "Price";
+                txt2.HeaderText = "changes";
                 txt2.DefaultCellStyle = dgv1.DefaultCellStyle;
+                
                 dgv1.Columns.Add(txt2);
-
+                
                 DataGridViewTextBoxColumn txtdsc = new DataGridViewTextBoxColumn();
                 txtdsc.HeaderText = "disc";
                 txtdsc.DefaultCellStyle = dgv1.DefaultCellStyle;
@@ -384,11 +281,11 @@ namespace FinOrg
                 dgv1.Columns[0].HeaderText = "Item Code";
                 dgv1.Columns[1].HeaderText = "Description";
                 dgv1.Columns[2].HeaderText = "Unit";
-                dgv1.Columns[3].HeaderText = "Qty";
-                dgv1.Columns[4].HeaderText = "Price";
+                dgv1.Columns[3].HeaderText = "Actual Stock";
+                dgv1.Columns[6].HeaderText = "Changes";
                 dgv1.Columns[5].HeaderText = "Disc.";
-                dgv1.Columns[6].HeaderText = "Cost";
-                dgv1.Columns[7].HeaderText = "Remarks";
+                dgv1.Columns[7].HeaderText = "Cost";
+                dgv1.Columns[4].HeaderText = "Remarks";
 
 
                 dgv1.Columns[8].HeaderText = "Total";
@@ -403,10 +300,10 @@ namespace FinOrg
 
                 dgv1.Columns[2].Name = "unit";
                 dgv1.Columns[3].Name = "qty";
-                dgv1.Columns[4].Name = "Price";
+                dgv1.Columns[7].Name = "cost";
                 dgv1.Columns[5].Name = "disc";
-                dgv1.Columns[6].Name = "cost";
-                dgv1.Columns[7].Name = "remarks";
+                dgv1.Columns[6].Name = "changes";
+                dgv1.Columns[4].Name = "remarks";
 
 
 
@@ -426,12 +323,14 @@ namespace FinOrg
                 dgv1.Columns[19].Name = "vat";
                 dgv1.Columns[20].Name = "vat%";
 
-                dgv1.Columns[6].Visible = false;
+                dgv1.Columns[5].Visible = false;
+                //dgv1.Columns[4].Visible = false;
+                dgv1.Columns[6].Visible = true;
                 dgv1.Columns[10].Visible = false;
                 // dgv1.Columns[9].Visible = false;
                 dgv1.Columns[11].Visible = false;
 
-
+                
                 dgv1.Columns[12].Visible = false;
                 dgv1.Columns[13].Visible = false;
                 dgv1.Columns[14].Visible = false;
@@ -440,7 +339,7 @@ namespace FinOrg
                 dgv1.Columns[16].Visible = false;
                 dgv1.Columns[17].Visible = false;
                 dgv1.Columns[18].Visible = false;
-                dgv1.Columns[19].Visible = true;
+                dgv1.Columns[19].Visible = false;
                 dgv1.Columns[20].Visible = false;
 
  //               dgv1.Columns[1].ReadOnly = true;
@@ -457,74 +356,26 @@ namespace FinOrg
                 dgv1.Columns[0].Width = 170;
                 dgv1.Columns[1].Width = 300;
                 dgv1.Columns[3].Width = 60;
-                dgv1.Columns[4].Width = 60;
+                dgv1.Columns[6].Width = 80;
                 dgv1.Columns[5].Width = 60;
-                dgv1.Columns[6].Width = 60;
-                dgv1.Columns[7].Width = 200;
+                //dgv1.Columns[6].Width = 60;
+                dgv1.Columns[4].Width = 200;
                 dgv1.Columns[9].Width = 80;
                 dgv1.Columns[9].Width = 100;
                 txttrn_type.Text = Gvar.trntype.ToString();
+                //dgv1.Columns[7].DefaultCellStyle.BackColor = Color.Beige;
+               // dgv1.Columns[7].InheritedStyle.BackColor = Color.Beige;
+               // Style.ApplyStyle(this.dataGridView1.Columns[1].DefaultCellStyle);
 
-
-                DataGridViewComboBoxColumn dgvCboColumn = new DataGridViewComboBoxColumn();
+                
 
 
                 Conn.Close();
                 Conn.Open();
-                sql = "select acc_no,acc_name from accounts inner join ac_options on   ac_options.ID =1 AND acc_type_code=cash_ac_type where acc_no <>  " + Gvar.sale_acno;
-                SqlDataAdapter ada3 = new SqlDataAdapter(sql, Conn);
-                ada3 = new SqlDataAdapter(sql, Conn);
-                //ada3.Fill(dt);
-                DataSet siteds = new DataSet();
-
-                ada3.Fill(siteds, "pay_by");
-
-
-                dgvpaid.CellValueChanged -= dgvpaid_CellValueChanged;
-
-                DataGridViewTextBoxColumn txt20 = new DataGridViewTextBoxColumn();
-                DataGridViewTextBoxColumn txt21 = new DataGridViewTextBoxColumn();
-                DataGridViewTextBoxColumn txt22 = new DataGridViewTextBoxColumn();
-                DataGridViewTextBoxColumn txt23 = new DataGridViewTextBoxColumn();
-                dgvpaid.Columns.Add(txt20);
-                dgvpaid.Columns.Add(txt21);
-                dgvpaid.Columns.Add(txt22);
-                dgvpaid.Columns.Add(txt23);
-                dgvpaid.Columns[0].Name = "amount";
-                dgvpaid.Columns[1].Name = "paid";
-                dgvpaid.Columns[2].Name = "paidby";
-                dgvpaid.Columns[3].Name = "paidac";
-                dgvpaid.Columns[0].HeaderText = "Amount";
-                dgvpaid.Columns[1].HeaderText = "Paid";
-                dgvpaid.Columns[2].HeaderText = "Paid By";
-                dgvpaid.Columns[2].Width = 250;
-                dgvpaid.Columns[3].Visible = false;
-                lstpaid.Width = 250;
-
-
-                dgvpaid.Columns[0].Frozen = true;
-                dgvpaid.Columns[0].ReadOnly = true;
-
-
-                ////ada1.Fill(ds, "proj_master");
-                ////projdv.Table = dt;
-                lstpaid.DisplayMember = "acc_name";
-                lstpaid.ValueMember = "acc_no";
-                lstpaid.DataSource = siteds.Tables[0];
-                //lstpaid.Left=dgvpaid.Colum
-
-                //       var cellRectangle = dgvpaid.GetCellDisplayRectangle(dgvpaid.CurrentCell.ColumnIndex, dgvpaid.CurrentCell.RowIndex, true);
-
-                set_initAC();
-                
-                //lstpaid.Top = dgvpaid.Top + cellRectangle.Top;
-                //dgvpaid.Columns.Add(dgvCboColumn);
-                //dgvpaid.Columns[2].Width = 300;
-                //dgvpaid.Columns[2].HeaderText = "Paid As";
-
                
 
-                dgvpaid.CellValueChanged += dgvpaid_CellValueChanged;
+               
+                
                 
             }
 
@@ -537,82 +388,7 @@ namespace FinOrg
             }
         }
 
-        private void set_initAC()
-    {
-         try
-
-
-            {
-
-             switch(txttrn_type.Text)
-                 {
-                     case "1":
-                         {
-                             txtcustomer.Text = Gvar.pur_acno;
-                             txtcusname.Text = "Cash Purchase";
-                             lblcustomer.Text = "Supplier";
-                            
-                             break;
-                         }
-
-                     case "2":
-                         {
-                             txtcustomer.Text =  Gvar.pur_acno;
-                             txtcusname.Text = "Cash Purchase";
-                             lblcustomer.Text = "Supplier";
-                         }
-                         break;
-                     case "6":
-                         {
-                             txtcustomer.Text = Gvar.sale_acno.ToString();
-                             txtcusname.Text = "Cash Customer";
-                             break;
-                         }
-                     case "7":
-                         {
-                             txtcustomer.Text = Gvar.sale_acno.ToString();
-                             txtcusname.Text = "Cash Customer";
-                             lblcustomer.Text = "Customer";
-                         }
-                         break;
-                     case "3":
-                     case "4":
-                         {
-                             txtcustomer.Text = Gvar.sale_acno.ToString();
-                             txtcusname.Text = "Cash Customer";
-                             lblsaleperson.Visible = false;
-                             cmbsalesagent.Visible = false;
-                             dgvpaid.Visible = false;
-                             //txtcash.Visible = false;
-                            // label14.Visible = false;
-                             label9.Text = "Return No.";
-                         }
-                         break;
-                     case "8":
-                         break;
-                     case "9":
-                         {
-                             txtcustomer.Text = Gvar.pur_acno;
-                             txtcusname.Text = "Cash Purchase AC";
-                             lblsaleperson.Visible = false;
-                             cmbsalesagent.Visible = false;
-                             dgvpaid.Visible = false;
-                             //txtcash.Visible = false;
-                             //label14.Visible = false;
-                             label9.Text = "Return No.";
-                             lblcustomer.Text = "Supplier";
-                         }
-                         break;
-                        
-                 }
-    }
-        catch(Exception ex)
-         {
-
-         }
-
-
-    }
+        
         private void get_invno()
         {
             try
@@ -960,12 +736,7 @@ namespace FinOrg
                     }
 
 
-                    if (lstpaid.Visible)
-                    {
-                        lstpaid.Visible = false;
-                        dgvpaid.Focus();
-                    }
-                    //e.Handled = true;
+                    
 
                     break;
 
@@ -1051,57 +822,6 @@ namespace FinOrg
 
                 }
 
-
-
-
-
-
-
-            }
-
-            if (lstpaid.Visible)
-            {
-
-                switch (e.KeyCode)
-                {
-
-
-
-                    case Keys.Up:
-
-                        int crow = lstpaid.SelectedIndex;
-                        int mros = lstpaid.Items.Count;
-                        // this.dgv1.CurrentCell = this.dgv1[crow+1, 0];
-
-                        //  dgv1.CurrentRow.Index = dgv1.CurrentRow.Index + 1;
-                        if (crow > 0)
-                            lstpaid.SelectedIndex = crow - 1;
-
-                        e.Handled = false;
-
-                        break;
-                    case Keys.Down:
-
-                        crow = lstpaid.SelectedIndex;
-                        mros = lstpaid.Items.Count;
-                        // this.dgv1.CurrentCell = this.dgv1[crow+1, 0];
-
-                        //  dgv1.CurrentRow.Index = dgv1.CurrentRow.Index + 1;
-                        if (crow < mros - 1)
-                            lstpaid.SelectedIndex = crow + 1;
-                        e.Handled = true;
-
-                        break;
-
-
-
-
-
-
-
-
-
-                }
 
             }
         }
@@ -1206,7 +926,7 @@ namespace FinOrg
                                 dgv1.CurrentCell = dgv1["unit", last_row];
                                 dgv1.BeginEdit(false);
                                 dgv1["unit", dblclk_row].Value = GrdLookup.Rows[lkprow].Cells[0].Value;
-                                 dgv1["price", dblclk_row].Value = 0;
+                                 dgv1["changes", dblclk_row].Value = 0;
                                
                                 dgv1.EndEdit();
                                 search_data(dgv1["barcode", dblclk_row].Value.ToString(), dgv1["unit", dblclk_row].Value.ToString());
@@ -1243,62 +963,7 @@ namespace FinOrg
         }
 
 
-        //protected override bool ProcessDialogKey(Keys keyData)
-        //{
-        //    if (keyData == Keys.Enter)
-        //        return base.ProcessDialogKey(Keys.Tab);
-        //    else
-        //        return base.ProcessDialogKey(keyData);
-        //}
-
-
-        //protected override bool ProcessDialogKey(Keys keyData)
-        //{
-        //    if (keyData == Keys.Enter)
-        //    {
-        //        int col = dgv1.CurrentCell.ColumnIndex;
-        //        int row = dgv1.CurrentCell.RowIndex;
-
-        //        if (row != dgv1.NewRowIndex)
-        //        {
-        //            if (col == (dgv1.Columns.Count - 1))
-        //            {
-        //                col = -1;
-        //                row++;
-        //            }
-        //            dgv1.CurrentCell = dgv1[col + 1, row];
-        //        }
-        //        return true;
-        //    }
-        //    return base.ProcessDialogKey(keyData);
-        //}
-
-        //protected override void OnKeyDown(KeyEventArgs e)
-        //{
-        //    if (e.KeyData == Keys.Enter)
-        //    {
-        //        int col = dgv1.CurrentCell.ColumnIndex;
-        //        int row = dgv1.CurrentCell.RowIndex;
-
-        //        if (row != dgv1.NewRowIndex)
-        //        {
-        //            if (col == (dgv1.Columns.Count - 1))
-        //            {
-        //                col = -1;
-        //                row++;
-        //            }
-        //            dgv1.CurrentCell = dgv1[col + 1, row];
-        //        }
-        //        e.Handled = true;
-        //    }
-        //    base.OnKeyDown(e);
-        //}
-
-
-
-
-        //ublic class CustomDataGrid : DataGrid
-        // {
+        
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
 
@@ -1356,62 +1021,11 @@ namespace FinOrg
 
                
 
-                //if (acntrl == "dgv1" && cur_col=="Description" && dgv1["barcode",cur_row].Value.ToString() !="999")
-                //{
-                //   switch( msg.WParam.ToInt32())
-                //   {
-                //       case  (int)Keys.Enter :
-                //       case (int)Keys.Right:
-                //       case (int)Keys.Up:
-                //       case (int)Keys.Down:
-                //       case (int)Keys.Left:
-                       
-
-
-
-
-                //           break;
-                //       default:
-                //           return true;
-
-                //    }
-
+              
                     
                 //}
 
-                if (msg.WParam.ToInt32() == (int)Keys.Enter && acntrl == "dgvpaid" && !lstpaid.Visible)
-                {
-                    // SendKeys.Send("{Tab}");
-
-                    keyData = Keys.Tab;
-                    if (dgvpaid.CurrentCell == dgvpaid["paidby", dgvpaid.CurrentCell.RowIndex])
-                    {
-                        if (dgvpaid.CurrentCell.RowIndex < dgvpaid.RowCount - 1)
-                        {
-                            dgvpaid.CurrentCell = dgvpaid["amount", dgvpaid.CurrentCell.RowIndex + 1];
-                        }
-                        else
-                        {
-                            if (dgvpaid.CurrentCell.ColumnIndex == 2 && dgvpaid.CurrentCell.RowIndex == dgvpaid.RowCount - 1)
-                            {
-                                txtcash.Focus();
-                                return true;
-                            }
-
-                            dgvpaid.CurrentCell = dgv1["amount", dgvpaid.CurrentCell.RowIndex];
-                        }
-
-                    }
-                    else
-                    {
-
-                        SendKeys.Send("{Right}");
-                    }
-                    return true;
-                }
-                //return base.ProcessCmdKey(ref msg, Keys.Up);
-                //return base.ProcessCmdKey(ref msg, keyData);
-
+                
 
                 return base.ProcessCmdKey(ref msg, keyData);
             }
@@ -1443,41 +1057,7 @@ namespace FinOrg
                 }
 
                
-                 //try
-                //{
-
-                //    if (dgv1.CurrentCell == dgv1["barcode", dgv1.CurrentCell.RowIndex] && dgv1.CurrentCell.RowIndex > 0 & dgv1["barcode", dgv1.CurrentCell.RowIndex - 1].Value.ToString() != "")
-                //    {
-                //        string grid = "";
-                //        for (int i = 0; i < dgv1.Rows.Count - 1; i++)
-                //        {
-                //            for (int col = 0; col < dgv1.Columns.Count; col++)
-                //            {
-                //                try
-                //                {
-                //                    grid = grid + dgv1[col, i].Value.ToString() + ",";
-                //                }
-                //                catch
-                //                {
-                //                }
-
-                //            }
-                //            grid = grid + "|";
-
-                //        }
-
-                //        string myTempFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "pos.txt");
-                //       // using (System.IO.StreamWriter sw = new System.IO.StreamWriter(myTempFile))
-                //        {
-
-                //            System.IO.File.WriteAllText(myTempFile, grid);
-                //            //sw.WriteLine(grid);
-                //        }
-                //    }
-                //}
-                //catch
-                //{
-                //}
+                
 
                 DataGridView d = (DataGridView)sender;
 
@@ -1536,39 +1116,21 @@ namespace FinOrg
                 Conn.Close();
                 Conn.Open();
 
-                if (Item_Code == "999")
-                {
-                    dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["updsale"].Value = 0;
-                    dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["unit"].Value = "PCS";
-                    dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["description"].Value = "OTHER ITEM";
-                    dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["description"].Selected = true;
-
-                    return;
-                }
-
-
-                if ((txttrn_type.Text == "6" || txttrn_type.Text == "7") && Item_Code.Substring(0, 2) == "00" && Item_Code.Length > 10)
-
-                {
-                    dgv1["barcode", dgv1.CurrentCell.RowIndex].Value = Item_Code.Substring(0, 6);
-                    dgv1["price", dgv1.CurrentCell.RowIndex].Value = Convert.ToDecimal( Item_Code.Substring(6, 5))/100;
-                    Item_Code = dgv1["barcode", dgv1.CurrentCell.RowIndex].Value.ToString();
-
-
-                }
+               
 
 
 
 
                 //sql = "sELECT  h.Item_Code,h.DESCRIPTION,h.UNIT,h.FRACTION,s.AVG_PUR_PRICE,s.RE_ORDER,s.stock,u.unit_name from hd_ITEMMASTER h inner join unitmaster u on h.unit=u.unit_id  left join stock_master s on h.Item_Code=s.Item_Code where h.brn_code=1 and itm_cat_code=0 and h.Item_Code='" + Item_Code + "'";
-                sql = "select BdescrIPTION,stock,avg_PUR_PRICE,RETAIL_PRICE,ITEM_CODE,FRACTION,UNIT,stock,wr_code,ITEM_CODE,ITEM_ID,hfraction,barcode,bdescription,r_min_profit,vat_percent  from QRY_barcode where  wr_code =" +  Gvar.wr_code + " and   flag <> 'C' AND (BARCODE='" + Item_Code + "' OR (item_CODE='" + Item_Code + "' and MAIN_ID=1) OR ALIAS_NAME='" + Item_Code + "')"; // AND WR_CODE=" + Gvar.wr_code;
+                
+                sql = "select BdescrIPTION,stock,avg_PUR_PRICE,RETAIL_PRICE,ITEM_CODE,FRACTION,UNIT,stock,wr_code,ITEM_CODE,ITEM_ID,hfraction,barcode,bdescription,r_min_profit,vat_percent  from QRY_barcode where  wr_code =" +  cmbwarehouse.SelectedValue + " and   flag <> 'C' AND (BARCODE='" + Item_Code + "' OR (item_CODE='" + Item_Code + "' and MAIN_ID=1) OR ALIAS_NAME='" + Item_Code + "')"; // AND WR_CODE=" + cmbwarehouse.SelectedValue;
 
                 if (unit != "")
                 {
                     string sql1 = "";
 
                     sql1 = sql.Substring(0, sql.IndexOf("where") - 1);
-                    sql = sql1 + " where wr_code =" + Gvar.wr_code + " and flag <> 'C' AND (ITeM_code = '" + dgv1["ITEMCODE", dgv1.CurrentCell.RowIndex].Value.ToString() + "' or barcode = '" + dgv1["ITEMCODE", dgv1.CurrentCell.RowIndex].Value.ToString() + "') and unit ='" + unit + "'";
+                    sql = sql1 + " where wr_code =" + cmbwarehouse.SelectedValue + " and flag <> 'C' AND (ITeM_code = '" + dgv1["ITEMCODE", dgv1.CurrentCell.RowIndex].Value.ToString() + "' or barcode = '" + dgv1["ITEMCODE", dgv1.CurrentCell.RowIndex].Value.ToString() + "') and unit ='" + unit + "'";
 
 
                 }
@@ -1596,23 +1158,10 @@ namespace FinOrg
                             dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["unit"].Value = rd[6].ToString();
 
                             //if ((txttrn_type.Text == "6" || txttrn_type.Text == "7") && Item_Code.Substring(0, 2) == "00" )
-                                if ((txttrn_type.Text == "6" || txttrn_type.Text == "7" || txttrn_type.Text == "3" || txttrn_type.Text == "4") )
-                            {
-                                if ( Convert.ToDecimal( rd[3].ToString()) > 0 && Convert.ToDecimal( dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["price"].Value) > 0)
-                                {
-                                  //  dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["qty"].Value = Math.Round( Convert.ToDecimal( dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["price"].Value) / Convert.ToDecimal( rd[3].ToString()),3);
-                                }
-                                dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["price"].Value = rd[3].ToString();
+                             
                                 dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["cost"].Value = rd[2].ToString();
 
-                            }
-                            else
-                            {
-                                if (dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["price"].Value==null || dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["price"].Value.ToString()=="0" )
-                                dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["price"].Value = rd[2].ToString();
-                                dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["cost"].Value = rd[3].ToString();
-                            }
-
+                            
                             
                              
 
@@ -1628,12 +1177,8 @@ namespace FinOrg
                            
                             dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["stock"].Value = rd[7].ToString();
 
-                            if (Convert.ToDecimal(dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["cost"].Value) > 0)
-                                dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["cost"].Value = Math.Round(Convert.ToDecimal(dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["cost"].Value) / Convert.ToDecimal(txtrate.Text), 2).ToString();
-                            //dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["RETAIL_PRICE"].Value = (Convert.ToDecimal(dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["RETAIL_PRICE"].Value) * Convert.ToDecimal(txtrate.Text)).ToString();
-                            if (Convert.ToDecimal(dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["price"].Value) > 0)
-                                dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["price"].Value = Math.Round(Convert.ToDecimal(dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["price"].Value) / Convert.ToDecimal(txtrate.Text), 2).ToString();
-                            btnsave.Enabled = true;
+                        
+                                btnsave.Enabled = true;
                             btndelete.Enabled = true;
                             btnPrint.Enabled = true;
 
@@ -1672,7 +1217,7 @@ namespace FinOrg
 
                         dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["unit"].Value = "PCS";
 
-                        //dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["price"].Value = "";
+                        //dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["changes"].Value = "";
                         dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["proposed"].Value = "0";
 
                         dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["Itemid"].Value = dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["barcode"].Value + "01";
@@ -1701,7 +1246,7 @@ namespace FinOrg
 
                         dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["unit"].Value = "";
 
-                        dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["price"].Value = "";
+                        dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["changes"].Value = "";
                         dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["proposed"].Value = "";
 
                         dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["Itemid"].Value = "";
@@ -1719,50 +1264,8 @@ namespace FinOrg
                 rd.Close();
                 cmd.Cancel();
                 int ttype=0;
-                switch (txttrn_type.Text)
-                {
-                    case "3":
-                        
-                    case "4":
-                       
-                    case "8":
-                        
-                    case "9":
-                        {
-                           if  (txttrn_type.Text =="3") ttype= 6;
-                            if  (txttrn_type.Text =="4") ttype= 7;
-                            if  (txttrn_type.Text =="8") ttype= 1;
-                            if  (txttrn_type.Text =="9") ttype= 2;
-                            
-                        
-                            
-                                sql = "select unit_price,unit from data_entry_grid where (barcode = '" + Item_Code + "' or item_code ='" + Item_Code + "') and Invoice_no='" + txtrefno.Text.Trim() + "' and trn_type = " + ttype  ;
-
-
-                            
-
-                        }
-                        break;
-                }
-
-
-
-
-                if (txtrefno.Text.Trim() != "")
-                {
-
-                    SqlCommand cmd1 = new SqlCommand(sql, Conn);
-                    SqlDataReader rd1 = cmd1.ExecuteReader();
-                    if (rd1.HasRows)
-                    {
-                        while (rd1.Read())
-                        {
-                            dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["unit"].Value = rd1[1].ToString();
-                            dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["price"].Value = rd1[0].ToString();
-                        }
-
-                    }
-                }
+                
+                
 
 
                 Conn.Close();
@@ -1789,26 +1292,7 @@ namespace FinOrg
             dgv1_DoubleClick(sender, e);
 
         }
-        private void GrdcusLookup_DoubleClick(object sender, EventArgs e)
-        {
-            try
-            {
-                KeyEventArgs e1 = new KeyEventArgs(Keys.Enter);
-
-
-                txtcustomer_KeyDown(null, e1);
-
-
-
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-
-        }
-
+     
         private void GrdLookup_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -1846,9 +1330,9 @@ namespace FinOrg
                             {
                                 object nextline = rec_options.Rows[0]["Auto_Next_line"];
                                 decimal price = 0;
-                                if (dgv1["price", cur_row].Value == null) dgv1["price", cur_row].Value = 0;
-                                if (!string.IsNullOrEmpty(dgv1["price", cur_row].Value.ToString()))
-                                    price = Convert.ToDecimal(dgv1["price", cur_row].Value.ToString());
+                                if (dgv1["changes", cur_row].Value == null) dgv1["changes", cur_row].Value = 0;
+                                if (!string.IsNullOrEmpty(dgv1["changes", cur_row].Value.ToString()))
+                                    price = Convert.ToDecimal(dgv1["changes", cur_row].Value.ToString());
 
                                 if (nextline.Equals("1") && price > 0)
                                 {
@@ -1920,7 +1404,7 @@ namespace FinOrg
 
                         dgv1.BeginEdit(false);
                         dgv1["unit", dblclk_row].Value = GrdLookup.Rows[lkprow].Cells[0].Value;
-                        dgv1["price", dblclk_row].Value = "0";
+                        dgv1["changes", dblclk_row].Value = "0";
                         dgv1.EndEdit();
                         search_data(dgv1["barcode", dblclk_row].Value.ToString(), dgv1["unit", dblclk_row].Value.ToString());
                         GrdLookup.Visible = false;
@@ -1950,12 +1434,7 @@ namespace FinOrg
 
         }
 
-        private void grdcuslookup_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-                txtcustomer_KeyDown(null, e);
-
-        }
+        
 
         private void GrdLookup_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -2005,14 +1484,32 @@ namespace FinOrg
                 if (last_col == "qty" && dgv1["qty", last_row].Value == null && dgv1["description", last_row].Value != "")
                     dgv1["qty", last_row].Value = 1;
 
-                if (!dgv1["barcode", cur_row].Value.Equals("999"))
+                if ( dgv1["stock", last_row].Value == null && dgv1["description", last_row].Value != "")
+                    dgv1["stock", last_row].Value = 0;
+
+                if ( e.ColumnIndex == dgv1["qty", e.RowIndex].ColumnIndex )
                 {
-                    if (dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["proposed"].Value == "") dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["proposed"].Value = 0;
-                if (last_col == "Price" && Convert.ToDecimal(dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["proposed"].Value) > 0 && Convert.ToDecimal(dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["proposed"].Value) != Convert.ToDecimal(dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["price"].Value))
-                    dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["updsale"].Value = 1;
-            }
-                if (e.ColumnIndex == dgv1["disc", e.RowIndex].ColumnIndex || e.ColumnIndex == dgv1["qty", e.RowIndex].ColumnIndex || e.ColumnIndex == dgv1["cost", e.RowIndex].ColumnIndex || e.ColumnIndex == dgv1["price", e.RowIndex].ColumnIndex)
-                {
+                    if (Convert.ToDouble( dgv1["qty", e.RowIndex].Value) <  Convert.ToDouble( dgv1["stock", e.RowIndex].Value) && txttrn_type.Text=="-2")
+                    {
+                        MessageBox.Show("Invaldi Quantuty Entry, Please correct The qty");
+                         dgv1["qty", last_row].Value = 0;
+                         //dgv1.CurrentCell = dgv1["qty", last_row];
+                            return;
+                    }
+                    if (Convert.ToDouble( dgv1["qty", e.RowIndex].Value) >  Convert.ToDouble( dgv1["stock", e.RowIndex].Value) && txttrn_type.Text=="17")
+                    {
+                        MessageBox.Show("Invaldi Quantuty Entry, Please correct The qty");
+                        dgv1["qty", last_row].Value = 0;
+                        //dgv1.CurrentCell = dgv1["qty", last_row];
+                            return;
+                    }
+
+                    if(txttrn_type.Text=="-2")
+                    dgv1["changes", last_row].Value = Convert.ToDouble(dgv1["qty", e.RowIndex].Value) - Convert.ToDouble(dgv1["stock", e.RowIndex].Value);
+                    else
+                        dgv1["changes", last_row].Value = Convert.ToDouble(dgv1["stock", e.RowIndex].Value) - Convert.ToDouble(dgv1["qty", e.RowIndex].Value);
+
+
                     find_total();
                 }
 
@@ -2024,35 +1521,7 @@ namespace FinOrg
             }
         }
 
-        //private void cmbproject_SelectedIndexChanged(object sender, EventArgs e)
-        //{
-        //    try
-        //    {
-        //        Conn.Close();
-        //        Conn.Open();
-        //        sql = "select site_code, site_name,proj_code from site_master where proj_code=" + cmbproject.SelectedValue;
-        //        SqlDataAdapter ada3 = new SqlDataAdapter(sql, Conn);
-        //        ada3 = new SqlDataAdapter(sql, Conn);
-        //        //ada3.Fill(dt);
-        //        DataSet siteds = new DataSet();
-
-        //        ada3.Fill(siteds, "site_master");
-
-        //        //ada1.Fill(ds, "proj_master");
-        //        //projdv.Table = dt;
-        //        cmbsite.DisplayMember = "site_name";
-        //        cmbsite.ValueMember = "site_code";
-        //        cmbsite.DataSource = siteds.Tables[0];
-        //    }
-        //    catch (SqlException ex)
-        //    {
-        //        //ADOconn.RollbackTrans();
-
-        //        MessageBox.Show(ex.Message);
-        //    }
-        //}
-
-
+       
 
 
         private void SAVE_DATAENTRY()
@@ -2120,23 +1589,12 @@ namespace FinOrg
                     decimal balance = 0;
 
 
-                    if (Convert.ToDecimal(txtchange.Text) < 0)
-                    {
-                        paidcash = Convert.ToDecimal(txtcash.Text);
-                        balance = Convert.ToDecimal(txtnetamt.Text) - Convert.ToDecimal(txtbalance.Text) - Convert.ToDecimal(txtcash.Text);
-                        paidother = Convert.ToDecimal(txtnetamt.Text) - balance - Convert.ToDecimal(txtcash.Text);
-
-                    }
-                    else
-                    {
-                        paidcash = Convert.ToDecimal(txtcash.Text) - Convert.ToDecimal(txtchange.Text); ;
-                        paidother = Convert.ToDecimal(txtnetamt.Text) - paidcash;
-                    }
+                    
 
                     if (Gvar.orgdup == null) Gvar.orgdup = "ORG";
 
                     rec = new ADODB.Recordset();
-                    sql = "SELECT * FROM DATA_ENTRY WHERE INVOICE_NO = '" + txtinvno.Text.Trim() + "' AND  NYEAR=" + Gvar.nyear + " and  TRN_TYPE=" + Convert.ToInt32(txttrn_type.Text) + " AND ORG_DUP ='" + Gvar.orgdup + "' and BRN_CODE =" + Gvar.brn_code;
+                    sql = "SELECT * FROM DATA_ENTRY WHERE INVOICE_NO = '" + txtinvno.Text.Trim() + "' AND  NYEAR=" + Gvar.nyear + " and  TRN_TYPE=" + Convert.ToInt32(txttrn_type.Text) + " and BRN_CODE =" + Gvar.brn_code;
 
                     rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
 
@@ -2160,14 +1618,11 @@ namespace FinOrg
                     rec.Fields["trn_type"].Value = Convert.ToInt32(txttrn_type.Text);
                     rec.Fields["ORG_DUP"].Value = Gvar.orgdup;
                     rec.Fields["BRN_CODE"].Value = Gvar.brn_code;
-                    rec.Fields["ENTRY_TYPE"].Value = "Retail";
-                    rec.Fields["CRATE"].Value = txtrate.Text;
-                    rec.Fields["ACCODE"].Value = txtcustomer.Text;
-                    rec.Fields["ename"].Value = txtcusname.Text;
-                    //rec.Fields["BRN_CODE"].Value = Gvar.brn_code;
+                    rec.Fields["ENTRY_TYPE"].Value = "Adjust";
+                    rec.Fields["CRATE"].Value = 1;
+                    rec.Fields["ACCODE"].Value = 0;
+                    rec.Fields["ename"].Value = lbltrntype.Text ;
                     rec.Fields["REMARKS"].Value = txtremarks.Text;
-
-                    
 
                     tmp = new ADODB.Recordset();
                     sql = "sELECT  INV_PREFEX  froM TRN_TYPE WHERE TRN_CODE = " + txttrn_type.Text;
@@ -2175,28 +1630,27 @@ namespace FinOrg
                     if (tmp.RecordCount > 0)
                         rec.Fields["INV_PREFEX"].Value = tmp.Fields[0].Value;
 
-                    rec.Fields["Currency"].Value =cmbcurrency.SelectedValue;
+                    rec.Fields["Currency"].Value = Gvar._currency ;
                     rec.Fields["REF_NO"].Value = txtrefno.Text;
                     
                     rec.Fields["sales_code"].Value = Gvar.Userid;
 
 
-                    rec.Fields["G_TOTAL"].Value = Convert.ToDouble(txttotal.Text) * Convert.ToDouble(txtrate.Text);
-                    rec.Fields["DISC_AMT"].Value = Convert.ToDouble(txtdscamt.Text) * Convert.ToDouble(txtrate.Text);
-                    rec.Fields["NET_AMOUNT"].Value = Convert.ToDouble(txtnetamt.Text) * Convert.ToDouble(txtrate.Text);
-                    rec.Fields["cash_paid"].Value = paidcash * Convert.ToDecimal(txtrate.Text); ;
-                    rec.Fields["other_paid"].Value = paidother * Convert.ToDecimal(txtrate.Text);
+                    rec.Fields["G_TOTAL"].Value = Convert.ToDecimal(txtnetamt.Text);
+                    rec.Fields["DISC_AMT"].Value = 0;
+                    rec.Fields["NET_AMOUNT"].Value = Convert.ToDecimal(txtnetamt.Text);
+                    rec.Fields["cash_paid"].Value =0;
+                    rec.Fields["other_paid"].Value = Convert.ToDecimal(txtnetamt.Text);
                     rec.Fields["FRN_AMOUNT"].Value = Convert.ToDecimal(txtnetamt.Text);
                     // rec.Fields["ename"].Value = cmbproject.Text;
 
                     //rec.Fields["order_no"].Value = 0;
-                    rec.Fields["wr_code"].Value = Gvar.wr_code;
-                    rec.Fields["NYEAR"].Value = Gvar.nyear;
+                    rec.Fields["wr_code"].Value =cmbwarehouse.SelectedValue;
+                    rec.Fields["NYEAR"].Value = dt1.Value.Year;
 
-                    rec.Fields["VAT_PERCENT"].Value = Convert.ToDecimal(txtvatpcnt.Text); ;
-                    rec.Fields["VAT_AMOUNT"].Value = Convert.ToDecimal(txtvatamt.Text); ; ;
-                    //rec.Fields["INVOICE_NO"].Value =TxtmrnNo.Text;
-                    //rec.Fields["INVOICE_NO"].Value =TxtmrnNo.Text;
+                    rec.Fields["VAT_PERCENT"].Value = 0 ;
+                    rec.Fields["VAT_AMOUNT"].Value = 0 ; ;
+                   
 
                     rec.Update();
 
@@ -2244,23 +1698,22 @@ namespace FinOrg
                             rec.Fields["REC_NO"].Value = rec_no;
                             rec.Fields["ROWNUM"].Value = i;
                             rec.Fields["Item_Code"].Value = dgv1["ItemCode", i].Value;
-                            rec.Fields["PRICE"].Value = dgv1["price", i].Value;
+                            rec.Fields["price"].Value = dgv1["changes", i].Value;
                             rec.Fields["Description"].Value = dgv1["Description", i].Value;
-                            rec.Fields["QTY"].Value = dgv1["qty", i].Value;
+                            rec.Fields["QTY"].Value = dgv1["changes", i].Value;
                             
-                            if (dgv1["proposed", i].Value == null || dgv1["proposed", i].Value == "")
-                            {
-                                dgv1["proposed", i].Value = dgv1["price", i].Value;
+                            
+                                dgv1["proposed", i].Value =0;
 
-                            }
 
-                            rec.Fields["price"].Value = Convert.ToDecimal(dgv1["price", i].Value) * Convert.ToDecimal(txtrate.Text);
+
+                                rec.Fields["price"].Value = Convert.ToDecimal(dgv1["cost", i].Value);
                             rec.Fields["BARCODE"].Value = dgv1["barcode", i].Value;
                             rec.Fields["FRACTION"].Value = dgv1["fraction", i].Value;
                             rec.Fields["UNIT"].Value = dgv1["unit", i].Value;
                             if (dgv1["cost", i].Value == null || dgv1["cost", i].Value == "")
                                 dgv1["cost", i].Value = 0;
-                            rec.Fields["SALE_PUR_AMT"].Value = Convert.ToDecimal(dgv1["cost", i].Value) * Convert.ToDecimal(txtrate.Text);
+                            rec.Fields["SALE_PUR_AMT"].Value = Convert.ToDecimal(dgv1["cost", i].Value) * Convert.ToDecimal(1);
                             rec.Fields["ITM_TOTAL"].Value = dgv1["total", i].Value;
                             rec.Fields["FRACTION"].Value = dgv1["fraction", i].Value;
                             rec.Fields["BRN_CODE"].Value = Gvar.brn_code;
@@ -2268,13 +1721,13 @@ namespace FinOrg
 
                             rec.Fields["PROPOSE_PRICE"].Value = dgv1["proposed", i].Value;
                             object propose = rec.Fields["PROPOSE_PRICE"].Value;
-                            if (propose == "0") rec.Fields["PROPOSE_PRICE"].Value = dgv1["price", i].Value;
+                            if (propose == "0") rec.Fields["PROPOSE_PRICE"].Value = dgv1["cost", i].Value;
                             rec.Fields["ITEM_ID"].Value = dgv1["itemid", i].Value;
                             rec.Fields["hfraction"].Value = dgv1["hfraction", i].Value;
-                            rec.Fields["wr_code"].Value = Gvar.wr_code;
-                            if (dgv1["disc", i].Value == null || dgv1["disc", i].Value == "")
+                            rec.Fields["wr_code"].Value = cmbwarehouse.SelectedValue;
+                           
                                 dgv1["disc", i].Value = 0;
-                            rec.Fields["disc"].Value = Convert.ToDecimal(dgv1["disc", i].Value) * Convert.ToDecimal(txtrate.Text); 
+                                rec.Fields["disc"].Value = 0; 
                             rec.Fields["REMARKS"].Value = dgv1["remarks", i].Value;
                             rec.Fields["trn_type"].Value = Convert.ToInt32(txttrn_type.Text);
                             //rec.Fields["REF_NO"].Value = txtinvno.Text;
@@ -2287,21 +1740,21 @@ namespace FinOrg
 
                             if (Convert.ToDecimal(dgv1["fraction", i].Value) > 0)
                             {
-                                rec.Fields["UNIT_PRICE"].Value = (Convert.ToDecimal(dgv1["price", i].Value) / Convert.ToDecimal(dgv1["FRACTION", i].Value)) * Convert.ToDecimal(txtrate.Text);
-                                rec.Fields["FPRICE"].Value = Convert.ToDecimal(dgv1["price", i].Value);
+                                rec.Fields["UNIT_PRICE"].Value = (Convert.ToDecimal(dgv1["cost", i].Value) / Convert.ToDecimal(dgv1["FRACTION", i].Value)) ;
+                                rec.Fields["FPRICE"].Value = Convert.ToDecimal(dgv1["cost", i].Value);
                                 rec.Fields["UNIT_TRN_AMOUNT"].Value = Convert.ToDecimal(dgv1["cost", i].Value) / Convert.ToDecimal(dgv1["FRACTION", i].Value);
-                                rec.Fields["UNIT_TRN_AMOUNT"].Value = Convert.ToDecimal(rec.Fields["UNIT_TRN_AMOUNT"].Value) * Convert.ToDecimal(txtrate.Text);
+                                rec.Fields["UNIT_TRN_AMOUNT"].Value = Convert.ToDecimal(rec.Fields["UNIT_TRN_AMOUNT"].Value) * Convert.ToDecimal(1);
                             }
                             else
                             {
-                                rec.Fields["UNIT_PRICE"].Value = Convert.ToDecimal(dgv1["price", i].Value) * Convert.ToDecimal(txtrate.Text) * Convert.ToDecimal(txtrate.Text); ; ;
-                                rec.Fields["FPRICE"].Value = Convert.ToDecimal(dgv1["price", i].Value);
-                                rec.Fields["UNIT_TRN_AMOUNT"].Value = Convert.ToDecimal(dgv1["cost", i].Value) * Convert.ToDecimal(txtrate.Text); ;
+                                rec.Fields["UNIT_PRICE"].Value = Convert.ToDecimal(dgv1["cost", i].Value);
+                                rec.Fields["FPRICE"].Value = Convert.ToDecimal(dgv1["cost", i].Value);
+                                rec.Fields["UNIT_TRN_AMOUNT"].Value = Convert.ToDecimal(dgv1["cost", i].Value) ;
 
                             }
 
-                             rec.Fields["vat_amount"].Value = Convert.ToDecimal(dgv1["vat", i].Value);
-                             rec.Fields["vat_percent"].Value = Convert.ToDecimal(dgv1["vat%", i].Value);
+                             rec.Fields["vat_amount"].Value = 0;
+                             rec.Fields["vat_percent"].Value = 0;
 
                             
                             rec.Update();
@@ -2311,17 +1764,7 @@ namespace FinOrg
 
                     }
 
-                    //sql="update data_entry set flag='N' where trn_type=11 and invoice_no='" + txtinvno.Text.Trim() +"'";
-
-                    //tmp = new ADODB.Recordset();
-
-
-
-                    //tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-
-
-                    //cmd = new SqlCommand(sql, Conn);
-                    //  cmd.ExecuteNonQuery();
+                  
 
                     iserror = false;
 
@@ -2363,29 +1806,7 @@ namespace FinOrg
                 {
                     iserror = false;
 
-                    //If Val(options(13)) = "1" Then
-                    //If Trim(txtpassword) = "" Then txtpassword = InputBox("Please Enter The Password", "Login Password")
-
-                    //Set TMP = New ADODB.Recordset
-                    //TMP.Open "SELECT userid FROM Userinfo WHERE password='" & txtpassword & "'", Sqlcon, 3, 3
-                    //If TMP.RecordCount = 0 Then
-                    //MsgBox "Invalid Password!", vbCritical
-                    //txtpassword.SetFocus
-                    //Exit Sub
-                    //Else
-                    //usrid = TMP(0)
-                    //End If
-                    //End If
-
-
-                    //                If DTPicker1.Value < Date Then
-                    //a = MsgBox("The selected Date is on Previous Date, Do you want to Continue?", vbYesNoCancel)
-                    //If a <> 6 Then Exit Sub
-                    //End If
-
-
-
-                    //ADOconn.BeginTrans();
+                   
                     cus = new ADODB.Recordset();
                     //ADOconn.BeginTrans();
 
@@ -2411,44 +1832,22 @@ namespace FinOrg
                     cus.Fields["INV_NO"].Value = txtinvno.Text.Trim();
                     cus.Fields["REF_NO"].Value = txtrefno.Text.Trim();
                     cus.Fields["DATE_TIME"].Value = dt1.Value;
-                    cus.Fields["cus_code"].Value = txtcustomer.Text;
-                    cus.Fields["cus_name"].Value = txtcusname.Text;
+                    cus.Fields["cus_code"].Value = 0;
+                    cus.Fields["cus_name"].Value = lbltrntype.Text;
                     cus.Fields["trn_type"].Value = Convert.ToInt32(txttrn_type.Text);
-                    cus.Fields["TOT_AMOUNT"].Value = Convert.ToDouble(txttotal.Text.Trim());
+                    cus.Fields["TOT_AMOUNT"].Value = Convert.ToDecimal(txtnetamt.Text); ;
                     cus.Fields["NET_AMOUNT"].Value = Convert.ToDouble(txtnetamt.Text.Trim());
-                    cus.Fields["FNET_AMOUNT"].Value = Convert.ToDecimal(txtnetamt.Text.Trim()) * Gvar._cur_rate;
-                    cus.Fields["DISCOUNT"].Value = Convert.ToDouble(txtdscamt.Text.Trim()); ;
+                    cus.Fields["FNET_AMOUNT"].Value = Convert.ToDecimal(txtnetamt.Text.Trim()) ;
+                    cus.Fields["DISCOUNT"].Value = 0 ;
                     cus.Fields["user_ID"].Value = Gvar._Userid;
                     cus.Fields["SALE_TYPE"].Value = 0; ;
-                    cus.Fields["SALES_code"].Value = cmbsalesagent.SelectedValue ;
-                    cus.Fields["WR_CODE"].Value = Gvar.wr_code;
+                    cus.Fields["SALES_code"].Value = cmbwarehouse.SelectedValue ;
+                    cus.Fields["WR_CODE"].Value = cmbwarehouse.SelectedValue;
                     cus.Fields["brn_CODE"].Value = Gvar.brn_code;
                     cus.Fields["NYEAR"].Value = Gvar.nyear;
                     cus.Fields["REMARKS"].Value = txtremarks.Text.Trim();
-                    cus.Fields["CURRENCY"].Value = cmbcurrency.SelectedValue;
+                    cus.Fields["CURRENCY"].Value = Gvar._currency;
 
-                   // cus.Fields["sales_code"].Value = Gvar.Userid;
-
-//                    SELECT [emp_id]
-//      ,[Sal_Month]
-//      ,[Sal_year]
-//      ,[Process_Date]
-//      ,[Contract_id]
-//      ,[Basic]
-//      ,[Transportation]
-//      ,[Housing]
-//      ,[Other]
-//      ,[Overtime]
-//      ,[Remarks]
-//      ,[user_id]
-//      ,[Paid_Amount]
-//      ,[Paid_date]
-//      ,[Acc_trnno]
-//      ,[emp_accno]
-//      ,[sal_accno]
-//      ,[id]
-//  FROM [Finance].[dbo].[Salary_Process]
-//GO
 
 
 
@@ -2516,8 +1915,8 @@ namespace FinOrg
                             rec.Fields["trn_no"].Value = txttrn.Text.Trim();
                             rec.Fields["Item_Code"].Value = dgv1["ItemCode", i].Value;
                             rec.Fields["barcode"].Value = dgv1["barcode", i].Value;
-                            rec.Fields["UNIT_QTY"].Value = dgv1["qty", i].Value;
-                            rec.Fields["UNIT_PRICE"].Value = dgv1["price", i].Value;
+                            rec.Fields["UNIT_QTY"].Value = dgv1["changes", i].Value;
+                            rec.Fields["UNIT_PRICE"].Value = dgv1["cost", i].Value;
                            
                             //rec.Fields["RQTY"].Value = 0;
                             //rec.Fields["BARCODE"].Value = dgv1["barcode", i].Value;
@@ -2534,123 +1933,44 @@ namespace FinOrg
                             rec.Fields["QTY"].Value = Convert.ToDecimal(dgv1["qty", i].Value) * Convert.ToDecimal(dgv1["fraction", i].Value);
                             if (Convert.ToDecimal(dgv1["fraction", i].Value) > 0)
                             {
-                                rec.Fields["PRICE"].Value = Convert.ToDecimal(dgv1["price", i].Value) / Convert.ToDecimal(dgv1["FRACTION", i].Value);
-                                rec.Fields["FPRICE"].Value = rec.Fields["PRICE"].Value;
-                                if (txttrn_type.Text == "1" || txttrn_type.Text == "2" || txttrn_type.Text == "8" || txttrn_type.Text == "9")
-                                {
-                                    rec.Fields["SALE_PUR_AMOUNT"].Value = Convert.ToDecimal(dgv1["price", i].Value) / Convert.ToDecimal(dgv1["FRACTION", i].Value);
-
-                                    
-                                }
-                                else
-                                {
+                                rec.Fields["price"].Value = Convert.ToDecimal(dgv1["cost", i].Value) / Convert.ToDecimal(dgv1["FRACTION", i].Value);
+                                rec.Fields["FPRICE"].Value = rec.Fields["price"].Value;
+                               
                                     rec.Fields["SALE_PUR_AMOUNT"].Value = Convert.ToDecimal(dgv1["cost", i].Value) / Convert.ToDecimal(dgv1["FRACTION", i].Value);
 
 
-                                }
+                                
                                
 
                             }
                             else
                             {
-                                rec.Fields["PRICE"].Value = Convert.ToDecimal(dgv1["price", i].Value);
-                                rec.Fields["FPRICE"].Value = rec.Fields["PRICE"].Value;
-                                if (txttrn_type.Text == "1" || txttrn_type.Text == "2" || txttrn_type.Text == "8" || txttrn_type.Text == "9")
-                                {
-                                    rec.Fields["SALE_PUR_AMOUNT"].Value = Convert.ToDecimal(dgv1["price", i].Value);
-
-
-                                }
-                                else
-                                {
+                                rec.Fields["price"].Value = Convert.ToDecimal(dgv1["cost", i].Value);
+                                rec.Fields["FPRICE"].Value = rec.Fields["cost"].Value;
+                               
                                     rec.Fields["SALE_PUR_AMOUNT"].Value = Convert.ToDecimal(dgv1["cost", i].Value) ;
 
 
-                                }
+                              
 
                             }
 
-                            decimal PRICE = Convert.ToDecimal(rec.Fields["PRICE"].Value); ;
+                            decimal PRICE = Convert.ToDecimal(rec.Fields["price"].Value); ;
                             rec.Fields["discount"].Value = Convert.ToDecimal(dgv1["disc", i].Value);
-                            rec.Fields["WR_CODE"].Value = Gvar.wr_code;
+                            rec.Fields["WR_CODE"].Value = cmbwarehouse.SelectedValue;
                             rec.Fields["brn_code"].Value = Gvar.brn_code;
                             rec.Update();
 
                             sal_pur_amt = sal_pur_amt + Convert.ToDecimal(rec.Fields["SALE_PUR_AMOUNT"].Value) * Convert.ToDecimal(rec.Fields["QTY"].Value);
 
 
-                            if (Convert.ToDecimal(dgv1.Rows[i].Cells["price"].Value) > 0 && dgv1.Rows[i].Cells["updsale"].Value.ToString() == "2")
-                            {
-
-                                add_newitem(i);
-                            }
-
-                            else
-                            {
-                                if (txttrn_type.Text=="6" ||txttrn_type.Text=="7")
-                                {
-
-                                    if (Convert.ToDecimal(dgv1.Rows[i].Cells["price"].Value) > 0 && (dgv1.Rows[i].Cells["updsale"].Value.ToString() == "1" || dgv1.Rows[i].Cells["price"].Value != dgv1.Rows[i].Cells["proposed"].Value) && rec_options.Rows[0]["upd_sal_price"].ToString() == "1")
-                                    {
-
-                                        sql = "update barcode set retail_price = " + Convert.ToDecimal(dgv1.Rows[i].Cells["price"].Value) + "  WHERE barcode='" + dgv1["barcode", i].Value + "'";
-
-
-                                        //cmd = new SqlCommand(sql, Conn);
-                                        //cmd.ExecuteNonQuery();
-
-                                        tmp = new Recordset();
-                                        tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                                    }
-                                }
+                         
                                
 
-                                if (txttrn_type.Text == "1" || txttrn_type.Text == "2")
-                                {
 
-                                    if (Convert.ToDecimal(dgv1.Rows[i].Cells["cost"].Value) > 0 &&  rec_options.Rows[0]["upd_sal_price"].ToString() == "1")
-                                    {
-
-                                        sql = "update barcode set retail_price = " + Convert.ToDecimal(dgv1.Rows[i].Cells["cost"].Value) + "  WHERE barcode='" + dgv1["barcode", i].Value + "'";
-
-
-                                        //cmd = new SqlCommand(sql, Conn);
-                                        //cmd.ExecuteNonQuery();
-
-                                        tmp = new Recordset();
-                                        tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                                    }
-                                }
-
-                            }
-
-                           if((Convert.ToInt32(txttrn_type.Text)==1 || Convert.ToInt32(txttrn_type.Text)==2) &&  rec_options.Rows[0]["UPD_PUR_PRICE"].ToString()=="1")
-                           {
-                               object a;
-
-                               sql = "Update STOCK_MASTER set last_pur_price=" + PRICE + ",AVG_PUR_PRICE= round(((AVG_pur_price*stock)+(" + PRICE * QTY + "))/(CASE stock+" + QTY + " WHEN 0 THEN 1 ELSE stock+" + QTY + " END),2) where stock > 0 and Item_Code ='" + rec.Fields["Item_Code"].Value + "'";
-
-                               
-                               ADOconn.Execute(sql, out a, -1);
-
-                               if ((int)a < 1)
-                               {
-                                   sql = "Update STOCK_MASTER set last_pur_price=" + PRICE + ",AVG_pur_price=" + PRICE + " where  stock =0 and Item_Code ='" + rec.Fields["Item_Code"].Value + "'";
-                                   ADOconn.Execute(sql, out a, -1);
-
-                               }
-
-                           }
                            
                             double qty = 0;
-                            //if (!Convert.IsDBNull(tmp.Fields[0].Value))
-                            //{
-                            //    sql = "UPDATE DATA_ENTRY_GRID SET RQTY = " + tmp.Fields[0].Value + " WHERE  rownum=" + dgv1["rownum", i].Value + " and Item_Code='" + dgv1["Item_Code", i].Value + "' AND invoice_NO='" + Txtreciept.Text.Trim() + "' And trn_type =2";
-                            //    tmp = new Recordset();
-                            //    tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                            //    //tmp.Close();
-
-                            //}
+                           
                             tmp = new Recordset();
                             //tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
                             object ST = 0;
@@ -2659,7 +1979,7 @@ namespace FinOrg
                             if (dgv1["barcode", i].Value.ToString() != "999")
                             {
 
-                                sql = "SELECT STOCK FROM STOCK_ITEM WHERE WR_CODE=" + Gvar.wr_code + " AND ITEM_CODE='" + dgv1["itemcode", i].Value + "'";
+                                sql = "SELECT STOCK FROM STOCK_ITEM WHERE WR_CODE=" + cmbwarehouse.SelectedValue + " AND ITEM_CODE='" + dgv1["itemcode", i].Value + "'";
 
                                 tmp = new Recordset();
                                 tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
@@ -2669,7 +1989,7 @@ namespace FinOrg
 
                                 if (!tmp.EOF) ST = tmp.Fields[0].Value;
 
-                                sql = "SELECT * FROM WR_STOCK_MASTER WHERE WR_CODE=" + Gvar.wr_code + " AND ITEM_CODE='" + dgv1["itemcode", i].Value + "'";
+                                sql = "SELECT * FROM WR_STOCK_MASTER WHERE WR_CODE=" + cmbwarehouse.SelectedValue + " AND ITEM_CODE='" + dgv1["itemcode", i].Value + "'";
                                 tmp = new Recordset();
                                 tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
 
@@ -2677,7 +1997,7 @@ namespace FinOrg
                                 if (tmp.RecordCount == 0) tmp.AddNew();
 
 
-                                tmp.Fields["WR_CODE"].Value = Gvar.wr_code;
+                                tmp.Fields["WR_CODE"].Value = cmbwarehouse.SelectedValue;
                                 tmp.Fields["BRN_CODE"].Value = Gvar.brn_code;
                                 tmp.Fields["ITEM_CODE"].Value = dgv1["itemcode", i].Value;
                                 tmp.Fields["User"].Value = Gvar.Userid;
@@ -2720,7 +2040,7 @@ namespace FinOrg
                     while (!tmp.EOF)
                     {
 
-                        sql = "SELECT STOCK FROM STOCK_ITEM WHERE WR_CODE=" + Gvar.wr_code + " AND ITEM_CODE='" + tmp.Fields["item_code"].Value + "'";
+                        sql = "SELECT STOCK FROM STOCK_ITEM WHERE WR_CODE=" + cmbwarehouse.SelectedValue + " AND ITEM_CODE='" + tmp.Fields["item_code"].Value + "'";
 
                         rec = new Recordset();
                         rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
@@ -2735,13 +2055,13 @@ namespace FinOrg
 
 
 
-                        sql = "SELECT * FROM WR_STOCK_MASTER WHERE WR_CODE=" + Gvar.wr_code + " AND ITEM_CODE='" + tmp.Fields["item_code"].Value + "'";
+                        sql = "SELECT * FROM WR_STOCK_MASTER WHERE WR_CODE=" + cmbwarehouse.SelectedValue + " AND ITEM_CODE='" + tmp.Fields["item_code"].Value + "'";
                         rec = new Recordset();
                         rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
 
 
                         if (rec.RecordCount == 0) rec.AddNew();
-                        rec.Fields["WR_CODE"].Value = Gvar.wr_code;
+                        rec.Fields["WR_CODE"].Value = cmbwarehouse.SelectedValue;
                         rec.Fields["BRN_CODE"].Value = Gvar.brn_code;
                         rec.Fields["ITEM_CODE"].Value = tmp.Fields["item_code"].Value;
                         rec.Fields["User"].Value = Gvar.Userid;
@@ -2836,18 +2156,7 @@ namespace FinOrg
                     decimal TXTSRAMT = Convert.ToDecimal(txtnetamt.Text) * Gvar._cur_rate;
                     decimal OLD_AMNT = Convert.ToDecimal(txtnetamt.Text);
                     decimal paidamt = 0;
-                    if (txtcash.Text == "") txtcash.Text = "0";
-                    //if (Convert.ToDecimal(txtcash.Text) <= 0)
-                    //{
-                    //    txtcash.Text = (Convert.ToDecimal(txtnetamt.Text) - Convert.ToDecimal(txtbalance.Text)).ToString();
-                    //}
-                    if (Convert.ToDecimal(txtchange.Text) < 0)
-                        paidamt = Convert.ToDecimal(txtcash.Text);
-                    else
-                    {
-                        paidamt = Convert.ToDecimal(txtcash.Text) - Convert.ToDecimal(txtchange.Text); ;
-                    }
-
+                   
 
 
                     if (Convert.ToDecimal(txtnetamt.Text) > 0)
@@ -2871,8 +2180,8 @@ namespace FinOrg
                         NARR = ledgerini[3];
                         LACC = Convert.ToInt64((ledgerini[4]));
                         PAYBY = Convert.ToInt64(ledgerini[05]);
-                        vat_ac = Convert.ToInt64(ledgerini[06]);
-                        exp_ac = ledgerini[07];
+                        vat_ac = 0;
+                        exp_ac = 0;
 
                         NARR = txtremarks.Text.Trim();
                         if (NARR == "")
@@ -2909,17 +2218,9 @@ namespace FinOrg
 
 
 
-                        sql = "DELETE FROM TRN_PAYMENT_DET WHERE NYEAR=" + Gvar.nyear + " and TRN_by=" + TRNBY + " and DOC_NO='" + txtinvno.Text.Trim() + "'  and BRN_CODE =" + Gvar.brn_code;
-                        Recordset acc = new Recordset();
-                        acc.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-
-
                        
-
-
+                        Recordset acc = new Recordset();
                         
-
-
                         long cost_ac = 0;
                         long pur_ac = 0;
                         long sale_ac = 0;
@@ -2958,90 +2259,28 @@ namespace FinOrg
                             return;
                         }
 
-                        if (vat_ac == "0"  &&  Convert.ToDouble( txtvatamt.Text) >0)
-                        {
-                            MessageBox.Show("Invalid Initial VAT Account", "Invalid Account");
-                            iserror = true;
-                            return;
-                        }
-
 
                         # region Credit account
-                        //switch (Convert.ToInt16(txttrn_type.Text))
-                        //{
-                        //    case 2:
-                        //    case 4:
-                        //    case 7:
+                        
 
-                        //    case 9:
-
-                        //if (Convert.ToDecimal(txtchange.Text)<0 || Gvar.sale_acno.ToString() != txtcustomer.Text)
-                        //        {
-
-                             sql = "SELECT TOP 1 * FROM TRN_ACCOUNTS";
-                        acc = new Recordset();
-                        acc.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-
-                                    sql = "select * from trnno";
-                                    TMP = new Recordset();
-                                    TMP.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                                    trno = TMP.Fields[0].Value;
-                                    trno2 = Convert.ToDouble(TMP.Fields[0].Value) + 1;
-                                    acc.AddNew();
-                                    acc.Fields["trn_no"].Value = trno;
-                                    acc.Fields["trn_no2"].Value = trno2;
-                                    acc.Fields["BRN_CODE"].Value = Gvar.brn_code;
-                                    acc.Fields["DR_CR"].Value = DRCR;
-                                    acc.Fields["User_id"].Value = Gvar.Userid;
-                                    acc.Fields["acc_no"].Value = Convert.ToDecimal(txtcustomer.Text);
-                                    acc.Fields["entry_no"].Value = Convert.ToDecimal(txtinvno.Text);
-                                    acc.Fields["PAY_AMOUNT"].Value =  Math.Abs(Convert.ToDecimal(txtnetamt.Text)) * Convert.ToDecimal(txtrate.Text);
-                                   // acc.Fields["f_pay_amount"].Value = Math.Abs(Convert.ToDouble(txtnetamt.Text)) * Convert.ToDouble(txtrate.Text) / Gvar.Get_Currency_rate(Convert.ToDouble(txtcustomer.Text), cmbcurrency.SelectedValue.ToString());
-                                   //// acc.Fields["f_pay_amount"].Value = Convert.ToDouble(txtnetamt.Text) * Convert.ToDouble(txtrate.Text);
-                                   // acc.Fields["F_RATE"].Value = txtrate.Text;
-
-                                    double frate = Gvar.Get_Currency_rate(Convert.ToDouble(txtcustomer.Text), cmbcurrency.SelectedValue.ToString());
-                                    acc.Fields["f_pay_amount"].Value = Convert.ToDouble(txtnetamt.Text) * Convert.ToDouble(txtrate.Text) / frate;
-                                    acc.Fields["F_RATE"].Value = frate;
-                        acc.Fields["currency"].Value = cmbcurrency.SelectedValue;
-                                    acc.Fields["pay_date"].Value = dt1.Value;
-                        if(Convert.ToDecimal( txtbalance.Text) > 0)
-                                    acc.Fields["NARRATION"].Value = NARR + " (Credit)"; 
-                        else
-
-                          acc.Fields["NARRATION"].Value = NARR + " (Cash)"; 
-
-                                    acc.Fields["doc_no"].Value = txtinvno.Text;
-                                    acc.Fields["PAYBY"].Value = cmbsalesagent.SelectedValue;
-
-                                    acc.Fields["TRN_BY"].Value = TRNBY;
-                                    acc.Fields["cost_code"].Value = 0;
-                                    acc.Fields["dept_code"].Value = 0;
-                                    acc.Fields["NYEAR"].Value = dt1.Value.Year;
-                                    acc.Fields["trn_type"].Value = txttrn_type.Text;
-                                    acc.Update();
-                                //}
-                               // break;
-                        //}
+                            
 
                         #endregion credit acoun
                                     #region Inventory ACcount
                                     string lnarr = "";
                                     switch (Convert.ToInt16(txttrn_type.Text))
                                     {
-                                        case 1:
-                                        case 2:
-                                        case 8:
+                                        
 
-                                        case 9:
+                                        case -2:
                                             {
-                                                LACC = stock_ac;
-                                                lnarr = " (StockAC)";
+                                                //LACC = stock_ac;
+                                                lnarr = " Stock Adjustment Addition " ;
                                             }
                                             break;
                                         default:
                                             {
-                                                lnarr = " (SaleAC)";
+                                                lnarr = " Stock Adjustment Deletion ";
                                                 break;
                                             }
 
@@ -3051,6 +2290,10 @@ namespace FinOrg
 
                                     if (Convert.ToDecimal(txtnetamt.Text) > 0)
                                     {
+                                         sql = "SELECT TOP 1 * FROM TRN_ACCOUNTS";
+                        acc = new Recordset();
+                        acc.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
+
                                         sql = "select * from trnno";
                                         TMP = new Recordset();
                                         TMP.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
@@ -3060,434 +2303,50 @@ namespace FinOrg
                                         acc.Fields["trn_no"].Value = trno2;
                                         acc.Fields["trn_no2"].Value = trno;
                                         acc.Fields["BRN_CODE"].Value = Gvar.brn_code;
-                                        acc.Fields["DR_CR"].Value = DRCR1;
+                                        acc.Fields["DR_CR"].Value = DRCR;
                                         acc.Fields["User_id"].Value = Gvar.Userid;
                                         acc.Fields["acc_no"].Value = LACC; // IF SALES THEN LACC ELSE STOCK_AC
                                         //acc.Fields["PAY_AMOUNT"].Value = Convert.ToDecimal(txtnetamt.Text) - (Convert.ToDecimal(txtnetamt.Text) - sal_pur_amt);
                                         //acc.Fields["f_pay_amount"].Value = Convert.ToDecimal(txtnetamt.Text) - (Convert.ToDecimal(txtnetamt.Text) - sal_pur_amt);
 
-                                        double pay_amt = Math.Round((Convert.ToDouble(txtnetamt.Text) * Convert.ToDouble(txtrate.Text)) - Convert.ToDouble(txtvatamt.Text), 2);
+                                        double pay_amt = Math.Round(Convert.ToDouble(txtnetamt.Text),2) ;
                                         acc.Fields["PAY_AMOUNT"].Value = pay_amt; ;
-                                        acc.Fields["f_pay_amount"].Value = pay_amt * Convert.ToDouble(txtrate.Text);
-                                        acc.Fields["F_RATE"].Value = txtrate.Text;
-                                        acc.Fields["currency"].Value = cmbcurrency.SelectedValue;
+                                        acc.Fields["f_pay_amount"].Value = pay_amt * Convert.ToDouble(1);
+                                        acc.Fields["F_RATE"].Value = 1;
+                                        acc.Fields["currency"].Value = Gvar._currency;
 
                                         acc.Fields["pay_date"].Value = dt1.Value;
                                         acc.Fields["NARRATION"].Value = NARR + lnarr;
                                         acc.Fields["doc_no"].Value = txtinvno.Text;
-                                        acc.Fields["PAYBY"].Value = cmbsalesagent.SelectedValue;
+                                        acc.Fields["PAYBY"].Value = cmbwarehouse.SelectedValue;
                                         acc.Fields["TRN_BY"].Value = TRNBY;
                                         acc.Fields["NYEAR"].Value = dt1.Value.Year;
-                                        acc.Fields["cost_code"].Value = Gvar.wr_code;
+                                        acc.Fields["cost_code"].Value = cmbwarehouse.SelectedValue;
                                         acc.Fields["dept_code"].Value = 0;
                                         acc.Fields["entry_no"].Value = Convert.ToDecimal(txtinvno.Text);
                                         acc.Fields["trn_type"].Value = txttrn_type.Text;
                                         acc.Update();
                                     }
                                     #endregion Inventory ACcount
-                                    #region vat
-
-
-                                    if (Convert.ToDecimal(txtvatamt.Text) > 0)
-                                    {
-
-
-
-                                        if ( vat_ac == "0")
-                                        {
-                                            MessageBox.Show("Invalid Initial Account[VAT_AC]", "Invalid Account");
-                                            iserror = true;
-                                            return;
-                                        }
-
-
-                                        sql = "SELECT TOP 1 * FROM TRN_ACCOUNTS";
-                                        ADODB.Recordset rec = new ADODB.Recordset();
-                                        ADODB.Recordset tmp = new ADODB.Recordset();
-
-                                        rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                                        long trnno = 0;
-                                        long trnno2 = 0;
-
-                                        rec.AddNew();
-                                        sql = "SELECT * FROM TRNNO";
-
-                                        tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenDynamic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-
-
-                                        //if (tmp.Fields[0].Value == DBNull.Value)
-                                        //{
-                                        //    trnno = 1;
-                                        //}
-                                        //else
-                                        {
-                                            trnno = Convert.ToInt64(tmp.Fields[0].Value.ToString());
-                                            trnno2 = trnno + 1;
-                                        }
-                                        rec.Fields["trn_no"].Value = trnno;
-                                        rec.Fields["trn_no2"].Value = trnno + 1;
-
-
-                                        double amt = Convert.ToDouble(txtvatamt.Text);
-
-                                        string docno = txtinvno.Text;
-
-
-                                        rec.Fields["acc_no"].Value = vat_ac;
-                                        rec.Fields["EntrY_no"].Value = Convert.ToDecimal(txtinvno.Text); ;
-                                        double rate = 1;
-                                        rec.Fields["PAY_AMOUNT"].Value = Math.Abs(amt * rate);
-                                        rec.Fields["F_PAY_AMOUNT"].Value = Math.Abs(amt);
-                                        rec.Fields["F_RATE"].Value = 1;
-                                        rec.Fields["TRN_BY"].Value = TRNBY;
-                                        rec.Fields["DR_CR"].Value = DRCR;
-                                        rec.Fields["user_ID"].Value = Gvar.Userid;
-                                        rec.Fields["PAYBY"].Value = Convert.ToDecimal(txtcustomer.Text); ;
-                                        //rec.Fields["RQTY"].Value = 0;
-                                        rec.Fields["SNO"].Value = 1;
-                                        // rec.Fields["FRACTION"].Value = dgv1["fraction", i].Value;
-                                        rec.Fields["NARRATION"].Value = "Sales Vat Amount for  " + txtinvno.Text + "(" + txttrn_type.Text + ")";
-                                        rec.Fields["Voucher_No"].Value = 0;
-                                        rec.Fields["cost_code"].Value = 0;
-                                        rec.Fields["dept_code"].Value = 0;
-                                        rec.Fields["pay_date"].Value = dt1.Value;
-                                        rec.Fields["doc_no"].Value = docno;
-                                        rec.Fields["NYEAR"].Value = dt1.Value.Year;
-                                        rec.Fields["brn_code"].Value = Gvar.brn_code;
-                                        rec.Fields["currency"].Value = "SR";
-                                        rec.Fields["trn_type"].Value = txttrn_type.Text;
-                                        rec.Update();
-
-
-
-                                        ////sql = "select * from TRN_accounts where trn_NO2 =  '" + txtactrnno.Text.Trim() + "' AND TRN_BY = 13 and Sno = 2";
-                                        ////rec = new ADODB.Recordset();
-                                        ////rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-
-                                        ////if (rec.RecordCount == 0)
-                                        ////{
-                                        //rec.AddNew();
-                                        //tmp = new ADODB.Recordset();
-                                        //sql = "SELECT * FROM TRNNO";
-
-                                        //tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenDynamic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                                        ////if (tmp.Fields[0].Value)
-                                        ////    txttrn.Text="1";
-                                        ////else
-                                        //if (tmp.Fields[0].Value == DBNull.Value)
-                                        //{
-                                        //    trnno = 1;
-                                        //}
-                                        //else
-                                        //{
-                                        //    trnno2 = Convert.ToInt64(tmp.Fields[0].Value.ToString());
-
-                                        //}
-                                        //rec.Fields["trn_no"].Value = trnno2;
-                                        //rec.Fields["trn_no2"].Value = trnno;
-
-
-
-                                        //rec.Fields["acc_no"].Value = LACC;
-                                        //rec.Fields["EntrY_no"].Value = Convert.ToDecimal(txtinvno.Text); ;
-
-                                        //rec.Fields["PAY_AMOUNT"].Value = Math.Abs(amt * rate);
-                                        //rec.Fields["F_PAY_AMOUNT"].Value = Math.Abs(amt);
-                                        //rec.Fields["F_RATE"].Value = 1;
-                                        //rec.Fields["TRN_BY"].Value = TRNBY;
-                                        //rec.Fields["DR_CR"].Value = DRCR1;
-                                        //rec.Fields["user_ID"].Value = Gvar.Userid;
-                                        //rec.Fields["PAYBY"].Value = exp_ac;
-                                        ////rec.Fields["RQTY"].Value = 0;
-                                        //rec.Fields["SNO"].Value = 2;
-                                        //// rec.Fields["FRACTION"].Value = dgv1["fraction", i].Value;
-                                        //rec.Fields["NARRATION"].Value = "Sales Vat Amount for  " + txtinvno.Text + "(" + txttrn_type.Text + ")";
-
-                                        //rec.Fields["Voucher_No"].Value = 0;
-                                        //rec.Fields["cost_code"].Value = 0;
-                                        //rec.Fields["dept_code"].Value = 0;
-                                        //rec.Fields["pay_date"].Value = dt1.Value;
-                                        //rec.Fields["doc_no"].Value = docno;
-                                        //rec.Fields["NYEAR"].Value = dt1.Value.Year;
-                                        //rec.Fields["brn_code"].Value = Gvar.brn_code;
-                                        //rec.Fields["currency"].Value = "SR";
-
-                                        //rec.Update();
-                                    }
-
-
-                                    #endregion
-
-
-                        #region paidcash
-
-                        if (paidamt > 0)
-                        {
-                            //acc.AddNew();
-                            //acc.Fields["trn_no"].Value = trno;
-                            //acc.Fields["trn_no2"].Value = trno2;
-                            //acc.Fields["BRN_CODE"].Value = Gvar.brn_code;
-                            //acc.Fields["DR_CR"].Value = DRCR;
-                            //acc.Fields["User_id"].Value = Gvar.Userid;
-                            //acc.Fields["acc_no"].Value = Convert.ToDecimal(txtcustomer.Text);
-                            //acc.Fields["entry_no"].Value = Convert.ToDecimal(txtinvno.Text);
-                            //acc.Fields["PAY_AMOUNT"].Value = paidamt;
-                            //acc.Fields["f_pay_amount"].Value = paidamt * Gvar._cur_rate;
-                            //acc.Fields["F_RATE"].Value = Gvar._cur_rate;
-                            //acc.Fields["pay_date"].Value = dt1.Value;
-                            //acc.Fields["NARRATION"].Value = NARR ;
-                            //acc.Fields["doc_no"].Value = txtinvno.Text;
-                            //acc.Fields["PAYBY"].Value = cmbsalesagent.SelectedValue;
-
-                            //acc.Fields["TRN_BY"].Value = TRNBY;
-                            //acc.Fields["cost_code"].Value = 0;
-                            //acc.Fields["dept_code"].Value = 0;
-                            //acc.Fields["NYEAR"].Value = dt1.Value.Year;
-                            //acc.Update();
-
-                            sql = "select * from trnno";
-                            TMP = new Recordset();
-                            TMP.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                            trno = TMP.Fields[0].Value;
-                            trno2 = Convert.ToDouble(TMP.Fields[0].Value) + 1;
-                            acc.AddNew();
-                            acc.Fields["trn_no"].Value = trno;
-                            acc.Fields["trn_no2"].Value = trno2;
-                            acc.Fields["BRN_CODE"].Value = Gvar.brn_code;
-                            acc.Fields["DR_CR"].Value = DRCR;
-                            acc.Fields["User_id"].Value = Gvar.Userid;
-                            acc.Fields["acc_no"].Value = cash_ac;
-                            acc.Fields["PAY_AMOUNT"].Value = Convert.ToDecimal(paidamt) * Convert.ToDecimal(txtrate.Text); ;
-                            acc.Fields["f_pay_amount"].Value = Convert.ToDouble(paidamt) * Convert.ToDouble(txtrate.Text);
-                            acc.Fields["F_RATE"].Value = txtrate.Text;
-                            acc.Fields["currency"].Value = cmbcurrency.SelectedValue;
-                            acc.Fields["pay_date"].Value = dt1.Value;
-                            acc.Fields["NARRATION"].Value = NARR + " (Cash)"; ;
-                            acc.Fields["doc_no"].Value = txtinvno.Text;
-                            acc.Fields["PAYBY"].Value = cmbsalesagent.SelectedValue;
-                            acc.Fields["TRN_BY"].Value = TRNBY;
-                            acc.Fields["NYEAR"].Value = dt1.Value.Year;
-                            acc.Fields["cost_code"].Value = 0;
-                            acc.Fields["dept_code"].Value = 0;
-                            acc.Fields["entry_no"].Value = Convert.ToDecimal(txtinvno.Text);
-                            acc.Fields["trn_type"].Value = txttrn_type.Text;
-                            acc.Update();
-
-
-                            sql = "select * from trnno";
-                            TMP = new Recordset();
-                            TMP.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                            trno2 = TMP.Fields[0].Value;
-                           // trno2 = Convert.ToDouble(TMP.Fields[0].Value) + 1;
-                            acc.AddNew();
-                            acc.Fields["trn_no"].Value = trno2;
-                            acc.Fields["trn_no2"].Value = trno;
-                            acc.Fields["BRN_CODE"].Value = Gvar.brn_code;
-                            acc.Fields["DR_CR"].Value = DRCR1;
-                            acc.Fields["User_id"].Value = Gvar.Userid;
-                            acc.Fields["acc_no"].Value = txtcustomer.Text;
-                            acc.Fields["PAY_AMOUNT"].Value = Convert.ToDecimal(paidamt) * Convert.ToDecimal(txtrate.Text); ;
-                            acc.Fields["f_pay_amount"].Value = Convert.ToDouble(paidamt) * Convert.ToDouble(txtrate.Text);
-                            acc.Fields["F_RATE"].Value = txtrate.Text;
-                            acc.Fields["currency"].Value = cmbcurrency.SelectedValue;
-                            acc.Fields["pay_date"].Value = dt1.Value;
-                            acc.Fields["NARRATION"].Value = NARR + " (Cash Paid)"; ;
-                            acc.Fields["doc_no"].Value = txtinvno.Text;
-                            acc.Fields["PAYBY"].Value = cmbsalesagent.SelectedValue;
-                            acc.Fields["TRN_BY"].Value = TRNBY;
-                            acc.Fields["NYEAR"].Value = dt1.Value.Year;
-                            acc.Fields["cost_code"].Value = 0;
-                            acc.Fields["dept_code"].Value = 0;
-                            acc.Fields["entry_no"].Value = Convert.ToDecimal(txtinvno.Text);
-                            acc.Fields["trn_type"].Value = txttrn_type.Text;
-                            acc.Update();
-
-
-
-                            sql = "select * from TRN_PAYMENT_DET WHERE trn_no =" + trno;
-                            Recordset tmp = new Recordset();
-                            tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-
-
-
-
-                            if (tmp.RecordCount == 0) tmp.AddNew();
-
-                            tmp.Fields["trn_no"].Value = trno;
-                            tmp.Fields["BRN_CODE"].Value = Gvar.brn_code;
-                            tmp.Fields["DR_CR"].Value = DRCR;
-                            //acc.Fields["User"].Value = Gvar.Userid;
-                            tmp.Fields["acc_no"].Value = cash_ac;
-                            tmp.Fields["acc_FROM"].Value=Convert.ToDecimal(txtcustomer.Text);
-                            tmp.Fields["PAY_AMOUNT"].Value = paidamt*Convert.ToDecimal(txtrate.Text);
-                            tmp.Fields["ENTRY_AMOUNT"].Value = paidamt;
-                            tmp.Fields["RATE"].Value = txtrate.Text;
-                            tmp.Fields["CURRENCY_CODE"].Value = cmbcurrency.SelectedValue;
-                            tmp.Fields["pay_date"].Value = dt1.Value;
-                            tmp.Fields["doc_no"].Value = txtinvno.Text;
-                            tmp.Fields["SNO"].Value = 1;
-                            tmp.Fields["TRN_TYPE"].Value = txttrn_type.Text;
-                            tmp.Fields["TRN_BY"].Value = TRNBY;
-                            tmp.Fields["NYEAR"].Value = dt1.Value.Year.ToString();
-
-                            tmp.Update();
-
-                            //sql = "select * from trnno";
-                            //TMP = new Recordset();
-                            //TMP.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                            //trno = TMP.Fields[0].Value;
-                            //trno2 = Convert.ToDouble(TMP.Fields[0].Value) + 1;
-                        }
-
-                        #endregion paidcash
-
-
-                        #region paid_Other_detail
-                        //if the more payments using cash and bank by cash sles and purchase
-
-                        for (int i = 0; i <= dgvpaid.Rows.Count - 1; i++)
-                        {
-                            if (dgvpaid["paid", i].Value != null)
-                            {
-                                if (Convert.ToDecimal(dgvpaid["paid", i].Value) != 0)
-                                {
-
-                                    if (Convert.ToDecimal(dgvpaid["paid", i].Value) > 0 && Convert.ToDecimal(dgvpaid["paidac", i].Value) > 0)
-                                    {
-                                        sql = "select * from trnno";
-                                        TMP = new Recordset();
-                                        TMP.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                                        trno = TMP.Fields[0].Value;
-                                        trno2 = Convert.ToDouble(TMP.Fields[0].Value) + 1;
-                                        acc.AddNew();
-                                        acc.Fields["trn_no"].Value = trno;
-                                        acc.Fields["trn_no2"].Value = trno2;
-                                        acc.Fields["BRN_CODE"].Value = Gvar.brn_code;
-                                        acc.Fields["DR_CR"].Value = DRCR;
-                                        acc.Fields["User_id"].Value = Gvar.Userid;
-                                        acc.Fields["acc_no"].Value = Convert.ToDecimal(dgvpaid["paidac", i].Value);
-                                       
-
-                                        acc.Fields["PAY_AMOUNT"].Value = Convert.ToDecimal(dgvpaid["paid", i].Value) * Convert.ToDecimal(txtrate.Text); ;
-                                        acc.Fields["f_pay_amount"].Value = Convert.ToDecimal(dgvpaid["paid", i].Value) * Convert.ToDecimal(txtrate.Text); ;
-                                        acc.Fields["F_RATE"].Value = txtrate.Text;
-                                        acc.Fields["currency"].Value = cmbcurrency.SelectedValue;
-                                        acc.Fields["pay_date"].Value = dt1.Value;
-                                        acc.Fields["NARRATION"].Value = NARR + dgvpaid["paidby", i].Value.ToString();
-                                        acc.Fields["doc_no"].Value = txtinvno.Text;
-                                        acc.Fields["PAYBY"].Value = cmbsalesagent.SelectedValue;
-                                        acc.Fields["TRN_BY"].Value = TRNBY;
-                                        acc.Fields["NYEAR"].Value = dt1.Value.Year;
-                                        acc.Fields["cost_code"].Value = 0;
-                                        acc.Fields["dept_code"].Value = 0;
-                                        acc.Fields["entry_no"].Value = Convert.ToDecimal(txtinvno.Text);
-                                        acc.Fields["trn_type"].Value = txttrn_type.Text;
-                                        acc.Update();
-
-                                        switch (Convert.ToInt16(txttrn_type.Text))
-                                        {
-                                            case 2:
-                                            case 4:
-                                            case 7:
-                                            case 9:
-                                                {
-
-                                                    sql = "select * from trnno";
-                                                    TMP = new Recordset();
-                                                    TMP.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                                                    trno2 = TMP.Fields[0].Value;
-                                                    //trno2 = Convert.ToDouble(TMP.Fields[0].Value) + 1;
-                                                    acc.AddNew();
-                                                    acc.Fields["trn_no"].Value = trno2;
-                                                    acc.Fields["trn_no2"].Value = trno;
-                                                    acc.Fields["BRN_CODE"].Value = Gvar.brn_code;
-                                                    acc.Fields["DR_CR"].Value = DRCR1;
-                                                    acc.Fields["User_id"].Value = Gvar.Userid;
-                                                    acc.Fields["acc_no"].Value = Convert.ToDecimal(txtcustomer.Text);
-
-                                                    acc.Fields["PAY_AMOUNT"].Value = Convert.ToDecimal(dgvpaid["paid", i].Value) * Convert.ToDecimal(txtrate.Text); ;
-                                                    //acc.Fields["f_pay_amount"].Value = Convert.ToDouble(dgvpaid["paid", i].Value) * Convert.ToDouble(txtrate.Text) / Gvar.Get_Currency_rate(Convert.ToDouble(txtcustomer.Text), cmbcurrency.SelectedValue.ToString());
-                                                    //acc.Fields["F_RATE"].Value = txtrate.Text;
-
-                                                     frate = Gvar.Get_Currency_rate(Convert.ToDouble(txtcustomer.Text), cmbcurrency.SelectedValue.ToString());
-                                                    acc.Fields["f_pay_amount"].Value = Convert.ToDouble(txtnetamt.Text) * Convert.ToDouble(txtrate.Text) / frate;
-                                                    acc.Fields["F_RATE"].Value = frate;
-                                                    acc.Fields["currency"].Value = cmbcurrency.SelectedValue;
                                  
-                                                  
-                                                    acc.Fields["pay_date"].Value = dt1.Value;
-                                                    acc.Fields["NARRATION"].Value = NARR + "-Paid By  " + Convert.ToDecimal(dgvpaid["paidac", i].Value); ;
-                                                    acc.Fields["doc_no"].Value = txtinvno.Text;
-                                                    acc.Fields["PAYBY"].Value = cmbsalesagent.SelectedValue;
-                                                    acc.Fields["TRN_BY"].Value = TRNBY;
-                                                    acc.Fields["NYEAR"].Value = dt1.Value.Year;
-                                                    acc.Fields["cost_code"].Value = 0;
-                                                    acc.Fields["dept_code"].Value = 0;
-                                                    acc.Fields["entry_no"].Value = Convert.ToDecimal(txtinvno.Text);
-                                                    acc.Fields["trn_type"].Value = txttrn_type.Text;
-                                                    acc.Update();
-                                                }
-                                                break;
-                                        }
 
+                    
 
-                                        sql = "select * from TRN_PAYMENT_DET WHERE trn_no =" + trno;
-                                        Recordset tmp = new Recordset();
-                                        tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-
-
-
-
-                                        if (tmp.RecordCount == 0) tmp.AddNew();
-
-                                        tmp.Fields["trn_no"].Value = trno;
-                                        tmp.Fields["BRN_CODE"].Value = Gvar.brn_code;
-                                        tmp.Fields["DR_CR"].Value = DRCR;
-                                        tmp.Fields["trn_type"].Value = txttrn_type.Text;
-                                        tmp.Fields["acc_no"].Value = Convert.ToDecimal(dgvpaid["paidac", i].Value);
-                                        tmp.Fields["acc_FROM"].Value = Convert.ToDecimal(txtcustomer.Text);
-                                        tmp.Fields["PAY_AMOUNT"].Value = Convert.ToDecimal(dgvpaid["paid", i].Value) * Convert.ToDecimal(txtrate.Text);
-                                        tmp.Fields["ENTRY_AMOUNT"].Value = Convert.ToDecimal(dgvpaid["paid", i].Value);
-                                        tmp.Fields["RATE"].Value = txtrate.Text;
-                                        tmp.Fields["CURRENCY_CODE"].Value = cmbcurrency.SelectedValue; 
-
-                                        tmp.Fields["pay_date"].Value = dt1.Value;
-                                        tmp.Fields["doc_no"].Value = txtinvno.Text;
-                                        tmp.Fields["SNO"].Value = 1;
-                                        tmp.Fields["TRN_BY"].Value = TRNBY;
-                                        tmp.Fields["NYEAR"].Value = dt1.Value.Year.ToString();
-                                        tmp.Update();
-                                        
-                                    }
-                                }
-                            }
-                        }
-
-                        //  entry for cash transaction to appear on db
-
-
-                        # endregion paid_ac_detail
+                    
 
                     
 
 
-                        #region cost Item account
-                        switch (Convert.ToInt16(txttrn_type.Text))
-                        {
-                            case 3:
-                            case 4:
-                            case 6:
-
-                            case 7:
-                                {
+                        #region Inventory account
+                      
                                     sql = "select * from trnno";
                                     TMP = new Recordset();
                                     TMP.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                                    trno = TMP.Fields[0].Value;
-                                    trno2 = Convert.ToDouble(TMP.Fields[0].Value) + 1;
+                                    trno2 = TMP.Fields[0].Value;
+                                    //trno2 = Convert.ToDouble(TMP.Fields[0].Value) + 1;
                                     acc.AddNew();
-                                    acc.Fields["trn_no"].Value = trno;
-                                    acc.Fields["trn_no2"].Value = trno2;
+                                    acc.Fields["trn_no"].Value = trno2;
+                                    acc.Fields["trn_no2"].Value = trno;
                                     acc.Fields["BRN_CODE"].Value = Gvar.brn_code;
                                     //if (Convert.ToInt16(txttrn_type.Text) == 3 || Convert.ToInt16(txttrn_type.Text) == 4)
                                     acc.Fields["DR_CR"].Value = DRCR1;
@@ -3501,10 +2360,10 @@ namespace FinOrg
                                     acc.Fields["entry_no"].Value = Convert.ToDecimal(txtinvno.Text);
                                    
                                     
-                                    acc.Fields["PAY_AMOUNT"].Value = sal_pur_amt * Convert.ToDecimal(txtrate.Text); ;
-                                    acc.Fields["f_pay_amount"].Value = sal_pur_amt * Convert.ToDecimal(txtrate.Text);
-                                    acc.Fields["F_RATE"].Value = txtrate.Text;
-                                    acc.Fields["currency"].Value = cmbcurrency.SelectedValue;
+                                    acc.Fields["PAY_AMOUNT"].Value = sal_pur_amt * Convert.ToDecimal(1); ;
+                                    acc.Fields["f_pay_amount"].Value = sal_pur_amt * Convert.ToDecimal(1);
+                                    acc.Fields["F_RATE"].Value = 1;
+                                    acc.Fields["currency"].Value = Gvar._currency;
 
 
 
@@ -3512,58 +2371,16 @@ namespace FinOrg
                                     acc.Fields["pay_date"].Value = dt1.Value;
                                     acc.Fields["NARRATION"].Value = NARR + " (Stock)";
                                     acc.Fields["doc_no"].Value = txtinvno.Text;
-                                    acc.Fields["PAYBY"].Value = cmbsalesagent.SelectedValue;
+                                    acc.Fields["PAYBY"].Value = cmbwarehouse.SelectedValue;
 
                                     acc.Fields["TRN_BY"].Value = TRNBY;
-                                    acc.Fields["cost_code"].Value = Gvar.wr_code;
+                                    acc.Fields["cost_code"].Value = cmbwarehouse.SelectedValue;
                                     acc.Fields["dept_code"].Value = 0;
                                     acc.Fields["NYEAR"].Value = dt1.Value.Year;
                                     acc.Fields["trn_type"].Value = txttrn_type.Text;
                                     acc.Update();
-                                }
-                                {
-                                    sql = "select * from trnno";
-                                    TMP = new Recordset();
-                                    TMP.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                                    trno2 = TMP.Fields[0].Value;
-                                    //trno2 = Convert.ToDouble(TMP.Fields[0].Value) + 1;
-                                    acc.AddNew();
-                                    acc.Fields["trn_no"].Value = trno2;
-                                    acc.Fields["trn_no2"].Value = trno;
-                                    acc.Fields["BRN_CODE"].Value = Gvar.brn_code;
-                                
-
-                                    //if (Convert.ToInt16(txttrn_type.Text) == 3 || Convert.ToInt16(txttrn_type.Text) == 4)
-                                       acc.Fields["DR_CR"].Value = DRCR;
-                                    //else
-                                    //{
-                                    //    acc.Fields["DR_CR"].Value = DRCR1;
-
-                                    //}
-                                    acc.Fields["User_id"].Value = Gvar.Userid;
-                                    acc.Fields["acc_no"].Value = cost_ac;
-                                    acc.Fields["entry_no"].Value = Convert.ToDecimal(txtinvno.Text);
-                                    
-
-                                    acc.Fields["PAY_AMOUNT"].Value = sal_pur_amt * Convert.ToDecimal(txtrate.Text); ;
-                                    acc.Fields["f_pay_amount"].Value = sal_pur_amt * Convert.ToDecimal(txtrate.Text);
-                                    acc.Fields["F_RATE"].Value = txtrate.Text;
-                                    acc.Fields["currency"].Value = cmbcurrency.SelectedValue;
-                                    acc.Fields["pay_date"].Value = dt1.Value;
-                                    acc.Fields["NARRATION"].Value = NARR + " (Cost)"; 
-                                    acc.Fields["doc_no"].Value = txtinvno.Text;
-                                    acc.Fields["PAYBY"].Value = cmbsalesagent.SelectedValue;
-
-                                    acc.Fields["TRN_BY"].Value = TRNBY;
-                                    acc.Fields["cost_code"].Value = Gvar.wr_code;
-                                    acc.Fields["dept_code"].Value = 0;
-                                    acc.Fields["NYEAR"].Value = dt1.Value.Year;
-                                    acc.Fields["trn_type"].Value = txttrn_type.Text;
-                                    acc.Update();
-                                }
-                                break;
-                        }
-
+                               
+                               
                         #endregion Cost Item Account
 
                         
@@ -3577,11 +2394,11 @@ namespace FinOrg
                                 acc.Fields["BRN_CODE"].Value = Gvar.brn_code;
                                 acc.Fields["PaidTo_Acc"].Value = 0;
                                 //acc.Fields["User"].Value = Gvar.Userid;
-                                acc.Fields["acc_no"].Value = txtcustomer.Text.ToString();
-                                acc.Fields["AMOUNT"].Value = (Convert.ToDecimal(txtnetamt.Text)*Convert.ToDecimal(txtrate.Text));
-                                acc.Fields["currency_rate"].Value = txtrate.Text;
+                                acc.Fields["acc_no"].Value = 0;
+                                acc.Fields["AMOUNT"].Value = (Convert.ToDecimal(txtnetamt.Text)*Convert.ToDecimal(1));
+                                acc.Fields["currency_rate"].Value = 1;
 
-                                acc.Fields["currency_CODE"].Value = cmbcurrency.SelectedValue;
+                                acc.Fields["currency_CODE"].Value = Gvar._currency;
                                 acc.Fields["Ledger_acc"].Value = LACC;
                                 acc.Fields["CUR_DATE"].Value = dt1.Value;
                                 acc.Fields["Description"].Value = NARR;
@@ -3755,24 +2572,19 @@ namespace FinOrg
 
                     object rec_no = rec.Fields["REC_NO"].Value;
 
-                    cmbcurrency.SelectedValue = rec.Fields["currency"].Value;
+                   
                     txtinvno.Text = rec.Fields["INVOICE_NO"].Value.ToString();
                     txttrn.Text = rec.Fields["TRAN_NO"].Value.ToString();
                     dt1.Value = Convert.ToDateTime(rec.Fields["CURDATE"].Value.ToString());
 
                     txtcustomer.Text = rec.Fields["ACCODE"].Value.ToString();
-                    txtcusname.Text = rec.Fields["ename"].Value.ToString();
+                    
 
                     txtrefno.Text = rec.Fields["REF_NO"].Value.ToString();
                     txtremarks.Text = rec.Fields["remarks"].Value.ToString();
 
-                    txtvatpcnt.Text = rec.Fields["VAT_PERCENT"].Value.ToString();
-                    txtvatamt.Text = rec.Fields["VAT_AMOUNT"].Value.ToString();
-
-                    if (Convert.ToDecimal(rec.Fields["DISC_AMT"].Value) > 0)
-                        txtdscamt.Text = (Convert.ToDecimal(rec.Fields["DISC_AMT"].Value.ToString()) / Convert.ToDecimal(txtrate.Text)).ToString();
-                  
                     
+   
                     btnsave.Enabled = true;
                     btndelete.Enabled = true;
                     btnPrint.Enabled = true;
@@ -3815,7 +2627,7 @@ namespace FinOrg
                         dgv1.Rows.Add();
                         dgv1["barcode", i].Value = rec.Fields["barcode"].Value.ToString();
                         dgv1["itemcode", i].Value = rec.Fields["item_code"].Value.ToString();
-                        dgv1["price", i].Value = rec.Fields["FPRICE"].Value.ToString();
+                        dgv1["changes", i].Value = rec.Fields["FPRICE"].Value.ToString();
                         dgv1["Description", i].Value = rec.Fields["Description"].Value.ToString();
                         dgv1["qty", i].Value = rec.Fields["QTY"].Value.ToString();
                         dgv1["fraction", i].Value = rec.Fields["FRACTION"].Value.ToString();
@@ -3833,7 +2645,7 @@ namespace FinOrg
                       
                         dgv1["proposed", i].Value = rec.Fields["PROPOSE_PRICE"].Value.ToString();
                         object propose = rec.Fields["PROPOSE_PRICE"].Value.ToString();
-                        if (propose == "0") dgv1["proposed", i].Value = dgv1["price", i].Value;
+                        if (propose == "0") dgv1["proposed", i].Value = dgv1["changes", i].Value;
                         dgv1["itemid", i].Value = rec.Fields["ITEM_ID"].Value.ToString();
                         dgv1["hfraction", i].Value = rec.Fields["hfraction"].Value.ToString();
                         dgv1["disc", i].Value = rec.Fields["disc"].Value.ToString();
@@ -3848,44 +2660,10 @@ namespace FinOrg
 
 
 
-                    rec = new ADODB.Recordset();
-
-                    sql = "SELECT  pay_amount,DEF_CASH_AC from TRN_PAYMENT_DET inner join ac_options on TRN_PAYMENT_DET.acc_no=ac_options.DEF_CASH_AC AND  ac_options.ID =1  where   trn_by ='" + txttrn_type.Text + "' and doc_no='" + txtinvno.Text + "'";
-
-                    rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-
-                    while (!rec.EOF)
-                    {
-
-                        txtcash.Text = rec.Fields["pay_amount"].Value.ToString();
-                        rec.MoveNext();
-
-                    }
+                   
 
 
-                    rec = new ADODB.Recordset();
-
-                    sql = "SELECT d.acc_no,a.acc_name, d.pay_amount,DEF_CASH_AC from  accounts as a inner join TRN_PAYMENT_DET as d on a.acc_no=d.acc_no  inner join ac_options as o on d.acc_no <> o.DEF_CASH_AC AND o.ID =1 where  trn_by ='" + txttrn_type.Text + "' and doc_no='" + txtinvno.Text + "'";
-
-                    rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                    int r = 0;
-                    dgvpaid.Rows.Clear();
-                    //dgvpaid.Rows.Add(1);
-                    while (!rec.EOF)
-                    {
-                        // if (dgvpaid.Rows.Count < r + 1)
-                        dgvpaid.Rows.Add(1);
-                        dgvpaid["amount", r].Value = rec.Fields["pay_amount"].Value;
-                        dgvpaid["paidac", r].Value = rec.Fields["acc_no"].Value;
-                        dgvpaid["paidby", r].Value = rec.Fields["acc_name"].Value;
-                        dgvpaid["paid", r].Value = rec.Fields["pay_amount"].Value;
-
-
-
-                        r++;
-                        rec.MoveNext();
-
-                    }
+                   
 
                     pay_calc_total();
 
@@ -3912,7 +2690,7 @@ namespace FinOrg
 
 
 
-                cmbcurrency.Enabled = true;
+              
                 isdirty = false;
             }
             catch (SqlException ex)
@@ -3943,24 +2721,18 @@ namespace FinOrg
             cur_row = 0;
             last_col = "barcode";
             last_row = 0;
-            cmbcurrency.Enabled = true;
+           
             dgv1.Rows.Clear();
-            dgvpaid.Rows.Clear();
-            dgvpaid.Refresh();
+          
             txtnetamt.Text = "0";
-            txtdscamt.Text = "0";
-            txtbalance.Text = "0";
+           
             dgv1.Refresh();
             txtinvno.Text = "";
             txtrefno.Text = "";
             txttrn.Text = "";
-            txttotal.Text = "";
-            txtcash.Text = "";
-            txtacbalance.Text = "";
-            txtcusname.Text = "";
+            
             txtcustomer.Text = "";
-            txtvatamt.Text = "0";
-            txtvatpcnt.Text = "0";
+            
             isedit = false;
             dgv1.Rows.Add(2);
             dt1.Value = DateTime.Now;
@@ -3976,59 +2748,7 @@ namespace FinOrg
             }
 
 
-             switch (txttrn_type.Text)
-                
-            {
-                case "1":
-                case "2":
-                case "3":
-                case "4":
-                case "6":
-                case "7":
-                case "8":
-                case "9":
-                    {
-                        txtvatpcnt.Text = vat_pcnt.ToString();
-                    }                   
-                    break;
-            }
-            set_initAC();
-            //switch (txttrn_type.Text)
-            //{
-            //    case "1":
-            //        {
-            //            txtcustomer.Text = Gvar.pur_acno;
-            //            txtcusname.Text = "Cash Supplier";
-            //            lblcustomer.Text = "Supplier";
-
-            //            break;
-            //        }
-
-            //    case "2":
-            //        {
-            //            txtcustomer.Text = Gvar.pur_acno;
-            //            txtcusname.Text = "Cash Supplier";
-            //            lblcustomer.Text = "Supplier";
-
-            //            break;
-            //        }
-            //        break;
-            //    case "6":
-            //        {
-            //            txtcustomer.Text = Gvar.sale_acno.ToString();
-            //            txtcusname.Text = "Cash Customer";
-            //            break;
-            //        }
-            //    case "7":
-            //        {
-            //            txtcustomer.Text = Gvar.sale_acno.ToString();
-            //            txtcusname.Text = "Cash Customer";
-            //            break;
-            //        }
-            //        break;
-
-            //}
-           
+            
                
         }
         private void find_total()
@@ -4043,25 +2763,25 @@ namespace FinOrg
                 dgv1.EndEdit();
                 for (int i = 0; i < dgv1.RowCount; i++)
                 {
-                    if (dgv1["price", i].Value == null) dgv1["price", i].Value = 0;
+                    if (dgv1["changes", i].Value == null) dgv1["changes", i].Value = 0;
                     if (!Convert.IsDBNull(dgv1["barcode", i].Value)) //dgv1["Item_Code", i].Value = 0;
                     {
                         if (dgv1["barcode", i].Value != null)
                         {
-                            if (dgv1["vat%", i].Value == "") dgv1["vat%", i].Value = 0;
-                            if (Convert.IsDBNull(dgv1["price", i].Value) || dgv1["price", i].Value == "" || dgv1["price", i].Value == null) dgv1["price", i].Value = 0;
+                            
+                            if (Convert.IsDBNull(dgv1["changes", i].Value) || dgv1["changes", i].Value == "" || dgv1["changes", i].Value == null) dgv1["changes", i].Value = 0;
                             if (Convert.IsDBNull(dgv1["qty", i].Value) || dgv1["qty", i].Value == "" || dgv1["qty", i].Value == null) dgv1["qty", i].Value = 0;
                             if (Convert.IsDBNull(dgv1["disc", i].Value) || dgv1["disc", i].Value == "" || dgv1["disc", i].Value == null) dgv1["disc", i].Value = 0;
                             
-                            price = Convert.ToDouble(dgv1["price", i].Value) * Convert.ToDouble(dgv1["qty", i].Value) - Convert.ToDouble(dgv1["disc", i].Value);
+                            price = Convert.ToDouble(dgv1["changes", i].Value) * Convert.ToDouble(dgv1["cost", i].Value);
                             dgv1["total", i].Value = Math.Round(price, 2);
-                            dgv1["vat", i].Value = Math.Round(Convert.ToDouble(dgv1["total", i].Value) * Convert.ToDouble(dgv1["vat%", i].Value) / 100,2);
+                            
                             tot = tot + price;
                         }
                     }
                 }
                 isdirty = true;
-                txttotal.Text = Math.Round(tot, 2).ToString();
+                txtnetamt.Text = Math.Round(tot, 2).ToString();
 
                 switch (txttrn_type.Text)
                 {
@@ -4075,9 +2795,8 @@ namespace FinOrg
                         break;
                 }
 
-                cmbcurrency.Enabled = false;
-                pay_calc_total();
-                find_vat();
+                
+               
             }
             catch (Exception ex)
             {
@@ -4185,232 +2904,7 @@ namespace FinOrg
 
         }
 
-        private void txtcustomer_DoubleClick(object sender, EventArgs e)
-        {
-            try
-            {
-                Conn.Close();
-                Conn.Open();
-                if (ADOconn.State == 0)
-                    ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
-
-                ADODB.Recordset rec = new ADODB.Recordset();
-
-                sql = "SELECT CUS_AC_TYPE,SUP_AC_TYPE FROM AC_OPTIONS WHERE  ac_options.ID =1";
-
-                rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                // 
-                object sl = 0;
-                object pr = 0;
-                if (rec.RecordCount > 0)
-                {
-                    sl = rec.Fields[0].Value;
-                    pr = rec.Fields[1].Value;
-                }
-
-                sql = "select  cast(Acc_No as Varchar) as Code ,Acc_Name as Name,Acc_aName as Ar_Name from Accounts ";
-                switch (txttrn_type.Text)
-                {
-                    case "1":
-                    case "2":
-                        {
-                            rec = new ADODB.Recordset();
-
-                            sql = "select  cast(Acc_No as Varchar) as Code ,Acc_Name as Name,Acc_aName as Ar_Name from Accounts where  acc_type_code=" + pr;
-                            break;
-                        }
-                    case "6":
-                    case "7":
-                        {
-                            rec = new ADODB.Recordset();
-
-                            sql = "select  cast(Acc_No as Varchar) as Code ,Acc_Name as Name,Acc_aName as Ar_Name from Accounts where  acc_type_code=" + sl;
-                            break;
-                        }
-
-                }
-
-
-
-
-
-
-
-                SqlCommand cmd = new SqlCommand(sql, Conn);
-
-                SqlDataAdapter adalkp = new SqlDataAdapter(cmd);
-
-
-                DataTable dtlkp = new DataTable("Customer");
-                adalkp.Fill(dtlkp);
-
-                var cellRectangle = dgv1.GetCellDisplayRectangle(dgv1.CurrentCell.ColumnIndex, dgv1.CurrentCell.RowIndex, true);
-                // dataGrid1.DataContext = dt.DefaultView;
-                //GrdLookup.Left = dgv1.Left + dgv1.CurrentCell.ContentBounds.Left;
-                //GrdLookup.Top = dgv1.Top + dgv1.CurrentCell.Size.Height + cellRectangle.Top;
-                grdcuslookup.Left = txtcustomer.Left;
-                grdcuslookup.Top = txtcustomer.Top + txtcustomer.Height;
-                acntrl = "txtcus";
-                dv.Table = dtlkp;
-                grdcuslookup.DataSource = dv;
-                grdcuslookup.Columns[1].Width = 300;
-                grdcuslookup.Visible = true;
-                txtcustomer.Focus();
-
-
-                ADOconn.Close();
-
-
-            }
-
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
-
-        private void txtcustomer_TextChanged(object sender, EventArgs e)
-        {
-            if (grdcuslookup.Visible == true)
-            {
-                //dgv1.EndEdit();
-
-
-                //dgv1.BeginEdit(false);
-                string txt = txtcustomer.Text.Trim();
-                if (txt != "")
-                {
-                    dv.RowFilter = "Code LIKE  '%" + txt + "%' OR Name LIKE '%" + txt + "%'";
-                }
-                else
-                    dv.RowFilter = "Code <> '0'";
-
-
-            }
-        }
-
-
-        private void find_customer()
-        {
-            try
-            {
-                Conn.Close();
-                Conn.Open();
-                if (ADOconn.State == 0)
-                    ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
-
-                ADODB.Recordset rec = new ADODB.Recordset();
-
-                if (txtcustomer.Text == "") txtcustomer.Text = "";
-                if (string.IsNullOrEmpty(txtcustomer.Text.Trim()))
-                {
-                    //txtcustomer.Focus();
-                    return;
-                }
-
-                sql = "select  Acc_No  ,Acc_Name ,Acc_aName,DEF_CURRENCY from Accounts where cast(acc_no as varchar) ='" + txtcustomer.Text.ToString() + "' or acc_name ='" + txtcustomer.Text.ToString() + "'";
-
-                txtcusname.Text = "";
-                rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                if (rec.RecordCount != 0)
-                {
-                    txtcustomer.TextChanged -= txtcustomer_TextChanged;
-                    txtcustomer.Text = rec.Fields[0].Value.ToString();
-                    txtcusname.Text = rec.Fields[1].Value.ToString();
-                    if (rec.Fields[3].Value!=DBNull.Value)
-                   cmbcurrency.SelectedValue = rec.Fields[3].Value.ToString();
-                    txtcustomer.TextChanged += txtcustomer_TextChanged;
-                }
-                else
-                {
-                    MessageBox.Show("Invalid Customer");
-                    return;
-                }
-                dgv1.Focus();
-
-                // 
-            }
-            catch (Exception ex)
-            {
-                txtcustomer.TextChanged -= txtcustomer_TextChanged;
-                txtcustomer.Text = "";
-                txtcusname.Text = "";
-                txtcustomer.TextChanged += txtcustomer_TextChanged;
-
-            }
-        }
-        private void txtcustomer_KeyDown(object sender, KeyEventArgs e)
-        {
-            try
-            {
-
-
-
-
-                switch (e.KeyCode)
-                {
-                    case Keys.Enter:
-
-
-                        if (grdcuslookup.Visible)
-                        {
-                            if (grdcuslookup.Rows.Count < 1) return;
-
-
-                            int lkprow = 0;
-
-
-                            lkprow = grdcuslookup.CurrentCell.RowIndex;
-                            int rw = grdcuslookup.CurrentCell.RowIndex;
-
-                            txtcustomer.TextChanged -= txtcustomer_TextChanged;
-                            txtcustomer.Text = grdcuslookup.Rows[rw].Cells[0].Value.ToString();
-                            txtcusname.Text = grdcuslookup.Rows[rw].Cells[1].Value.ToString();
-                            txtcustomer.TextChanged += txtcustomer_TextChanged;
-
-
-                            grdcuslookup.Visible = false;
-                            find_credit();
-                            dgv1.Focus();
-
-                            return;
-                            //e.Handled = true;
-                            //this.dgv1.CurrentCell = this.dgv1[dgv1.FirstDisplayedCell.ColumnIndex + 2, cur_row];
-                        }
-                        else
-                        {
-                            find_customer();
-                        }
-                        break;
-
-                    case Keys.Control:
-                        txtcustomer_DoubleClick(sender, null);
-                        e.Handled = true;
-                        break;
-                    case Keys.ControlKey:
-                        txtcustomer_DoubleClick(sender, null);
-                        e.Handled = true;
-                        break;
-
-                    case Keys.Escape:
-                        break;
-
-                    default:
-                        if (!grdcuslookup.Visible)
-                            txtcustomer_DoubleClick(sender, null);
-
-                        break;
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-        }
-
+       
         private void dt1_ValueChanged(object sender, EventArgs e)
         {
             nyear.Text = dt1.Value.Year.ToString();
@@ -4467,8 +2961,8 @@ namespace FinOrg
                 {
                     object nextline = rec_options.Rows[0]["Auto_Next_line"];
                     decimal price = 0;
-                    if (!string.IsNullOrEmpty(dgv1["price", cur_row].Value.ToString()))
-                        price = Convert.ToDecimal(dgv1["price", cur_row].Value.ToString());
+                    if (!string.IsNullOrEmpty(dgv1["changes", cur_row].Value.ToString()))
+                        price = Convert.ToDecimal(dgv1["changes", cur_row].Value.ToString());
 
                     if (nextline.Equals("1") && price > 0)
                     {
@@ -4496,11 +2990,6 @@ namespace FinOrg
                         dgv1.CurrentCell = dgv1["unit", cur_row];
                     }
 
-                if (dgv1.CurrentCell == dgv1["unit", cur_row] && dgv1.CurrentCell.RowIndex > 0 && dgv1["barcode", cur_row].Value == null)
-                {
-                    txtdiscprcnt.Focus();
-                    return;
-                }
 
                 if (nodata)
                 {
@@ -4539,10 +3028,8 @@ namespace FinOrg
         {
             try
             {
-                if (txttotal.Text == null || txttotal.Text == "") txttotal.Text = "0";
-                if (txtdscamt.Text == null || txtdscamt.Text == "") txtdscamt.Text = "0";
-                txtnetamt.Text = Math.Round(Convert.ToDecimal(txttotal.Text.ToString()) - Convert.ToDecimal(txtdscamt.Text.ToString()), 2).ToString();
-                dgvpaid.Rows[0].Cells["amount"].Value = txtnetamt.Text;
+                
+                
                 pay_calc_total();
                 find_vat();
             }
@@ -4557,53 +3044,11 @@ namespace FinOrg
         {
             try
             {
-                dgvpaid.CellValueChanged -= dgvpaid_CellValueChanged;
-
-
-                dgvpaid.EndEdit();
-                decimal tot = 0;
-                if (txtnetamt.Text == null || txtnetamt.Text == "")
-                {
-                    txtnetamt.Text = "0";
-                    dgvpaid.CellValueChanged += dgvpaid_CellValueChanged;
-                    return;
-                }
-
-                if (txtnetamt.Text == "0")
-                {
-                    dgvpaid.CellValueChanged += dgvpaid_CellValueChanged;
-                    return;
-                }
-
-                for (int i = 0; i <= dgvpaid.Rows.Count - 1; i++)
-                {
-
-                    if (dgvpaid["paid", i].Value == null) dgvpaid["paid", i].Value = 0;
-                    if (dgvpaid["amount", i].Value == null) dgvpaid["amount", i].Value = 0;
-
-
-                    tot = tot + Convert.ToDecimal(dgvpaid["paid", i].Value);
-                    txtbalance.Text = Math.Round((Convert.ToDecimal(txtnetamt.Text) - tot), 2).ToString();
-                    if (i < dgvpaid.Rows.Count - 1)
-                       // dgvpaid.Rows[i + 1].Cells["amount"].Value = 0;
-                    if (Convert.ToDecimal(dgvpaid["amount", i].Value) - (Convert.ToDecimal(dgvpaid["paid", i].Value)) > 0)
-                    {
-                        if (i < dgvpaid.Rows.Count - 1)
-
-                            dgvpaid.Rows[i + 1].Cells["amount"].Value = (Convert.ToDecimal(dgvpaid["amount", i].Value)) - (Convert.ToDecimal(dgvpaid["paid", i].Value));
-
-                    }
-
-
-                }
-                if (txtcash.Text == "") txtcash.Text = "0";
-                txtbalance.Text = Math.Round(Convert.ToDecimal(txtnetamt.Text) - tot, 2).ToString();
-                dgvpaid.CellValueChanged += dgvpaid_CellValueChanged;
-
+                
             }
             catch (Exception ex)
             {
-                dgvpaid.CellValueChanged += dgvpaid_CellValueChanged;
+                
             }
 
         }
@@ -4629,260 +3074,8 @@ namespace FinOrg
 
         }
 
-        private void dgvpaid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
-        {
-            if (dgvpaid.CurrentCell == null) return;
-            if (dgvpaid.CurrentCell.ColumnIndex != 1) return;
-            pay_calc_total();
-        }
 
-        private void dgvpaid_CellEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            try
-            {
-                //if(lstpaid.Visible)
-                //{
-                //    dgvpaid.CurrentCell = dgvpaid["paidby",dgvpaid.CurrentCell.RowIndex];
-                //    return;
-                //}
-
-
-
-
-                if (dgvpaid["paidby", dgvpaid.CurrentCell.RowIndex].Value == null) dgvpaid["paidby", dgvpaid.CurrentCell.RowIndex].Value = "";
-                if (dgvpaid.CurrentCell.ColumnIndex == dgvpaid["paidby", dgvpaid.CurrentCell.RowIndex].ColumnIndex && Convert.ToDecimal(dgvpaid["paid", dgvpaid.CurrentCell.RowIndex].Value) > 0 && dgvpaid["paidby", dgvpaid.CurrentCell.RowIndex].Value == "")
-                {
-
-                    var cellRectangle = dgvpaid.GetCellDisplayRectangle(dgvpaid.CurrentCell.ColumnIndex, dgvpaid.CurrentCell.RowIndex, true);
-
-
-
-                    lstpaid.Top = dgvpaid.Top + cellRectangle.Top + cellRectangle.Height;
-
-                    if (dgvpaid["paidby", dgvpaid.CurrentCell.RowIndex].Value.ToString() != "")
-                        lstpaid.SelectedItem = dgvpaid["paidby", dgvpaid.CurrentCell.RowIndex].Value.ToString(); ;
-                    lstpaid.Width = dgvpaid.Columns[2].Width;
-                    lstpaid.Width = cellRectangle.Left;
-                    lstpaid.Visible = true;
-
-                }
-            }
-
-            catch (Exception ex)
-            {
-            }
-
-        }
-
-        private void dgvpaid_KeyDown(object sender, KeyEventArgs e)
-        {
-            try
-            {
-
-                switch (e.KeyCode)
-                {
-                    case Keys.Enter:
-
-
-                        if (lstpaid.Visible)
-                        {
-
-                            if (dgvpaid.CurrentCell.ColumnIndex == 2)
-                            {
-                                int lkprow = 0;
-
-
-
-
-                                set_dgvpaid_cell();
-
-                                return;
-                                //e.Handled = true;
-                                //this.dgvpaid.CurrentCell = this.dgvpaid[dgvpaid.FirstDisplayedCell.ColumnIndex + 2, cur_row];
-                            }
-
-
-                        }
-                        break;
-                    case Keys.Right:
-                        if (dgvpaid.CurrentCell.ColumnIndex == 3)
-                            txtcash.Focus();
-
-                        break;
-
-                    case Keys.ControlKey:
-                        var cellRectangle = dgvpaid.GetCellDisplayRectangle(dgvpaid.CurrentCell.ColumnIndex, dgvpaid.CurrentCell.RowIndex, true);
-
-
-
-                        lstpaid.Top = dgvpaid.Top + cellRectangle.Top + cellRectangle.Height;
-                        if (dgvpaid["paidby", dgvpaid.CurrentCell.RowIndex].Value.ToString() != "")
-                            lstpaid.SelectedItem = dgvpaid["paidby", dgvpaid.CurrentCell.RowIndex].Value.ToString(); ;
-                        lstpaid.Width = dgvpaid.Columns[2].Width;
-                        lstpaid.Width = cellRectangle.Left;
-                        lstpaid.Visible = true;
-
-                        e.Handled = true;
-                        break;
-
-
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-        }
-
-        private void dgvpaid_Enter(object sender, EventArgs e)
-        {
-            try
-            {
-                acntrl = "dgvpaid";
-
-                dgvpaid.CurrentCell = dgvpaid["paid", dgvpaid.CurrentCell.RowIndex];
-            }
-            catch
-            { }
-        }
-
-        private void lstpaid_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-
-                try
-                {
-                    set_dgvpaid_cell();
-
-                    return;
-                }
-                catch
-                {
-
-                }
-        }
-
-        private void lstpaid_DoubleClick(object sender, EventArgs e)
-        {
-            try
-            {
-                set_dgvpaid_cell();
-                return;
-            }
-            catch
-            {
-
-            }
-        }
-
-
-        private void set_dgvpaid_cell()
-        {
-            try
-            {
-                dgvpaid.BeginEdit(false);
-                dgvpaid["paidby", dgvpaid.CurrentCell.RowIndex].Value = lstpaid.Text;
-                dgvpaid["paidac", dgvpaid.CurrentCell.RowIndex].Value = lstpaid.SelectedValue.ToString();
-                dgvpaid.EndEdit();
-
-                lstpaid.Visible = false;
-                dgvpaid.CurrentCell = dgvpaid["amount", dgvpaid.CurrentCell.RowIndex + 1];
-                dgvpaid.Focus();
-            }
-            catch
-            {
-            }
-        }
-
-        private void txtcash_Enter(object sender, EventArgs e)
-        {
-            acntrl = "txtcash";
-            txtcash.SelectAll();
-            txtcash.BackColor = Color.LightYellow;
-        }
-
-        private void txtdscamt_KeyDown(object sender, KeyEventArgs e)
-        {
-                        if (e.KeyValue == 13)
-                //this.SelectNextControl(this.ActiveControl, true, true, true, true);
-                if (txtcash.Visible)
-                    txtcash.Focus();
-                else
-                    btnsave.Focus();
-        }
-
-        private void txtcash_TextChanged(object sender, EventArgs e)
-        {
-
-            if (txtcash.Text == "") txtcash.Text = "0";
-            if (txtbalance.Text == "") txtbalance.Text = "0";
-
-            txtchange.Text = (Convert.ToDecimal(txtcash.Text) - Convert.ToDecimal(txtbalance.Text)).ToString();
-        }
-
-        private void txtcash_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Left)
-                dgvpaid.Focus();
-
-            if (e.KeyValue == 13)
-            {
-                btnsave.Focus();
-
-
-
-            }
-
-
-        }
-
-        private void dgvpaid_CellLeave(object sender, DataGridViewCellEventArgs e)
-        {
-
-        }
-
-        private void txtdscamt_Leave(object sender, EventArgs e)
-        {
-            txtdscamt.BackColor = bg_color ;
-            if(txtdscamt.Text=="") txtdscamt.Text="0";
-            txtdiscprcnt.Text = Math.Round (Convert.ToDecimal(txtdscamt.Text) / Convert.ToDecimal(txttotal.Text) * 100,2).ToString();
-        }
-
-        private void txtdscamt_Enter(object sender, EventArgs e)
-        {
-            if (txtnetamt.Text == "")
-            {
-                dgv1.Focus();
-                return;
-            }
-            txtdscamt.BackColor = Color.LightYellow;
-        }
-
-        private void txtcash_Leave(object sender, EventArgs e)
-        {
-            txtcash.BackColor = bg_color;
-        }
-
-        private void toolStripButton1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStrip_Enter(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStrip_Validated(object sender, EventArgs e)
-        {
-
-        }
-
-        private void toolStrip_RegionChanged(object sender, EventArgs e)
-        {
-
-        }
+        
 
         private void btnnew_Click(object sender, EventArgs e)
         {
@@ -4981,10 +3174,7 @@ namespace FinOrg
 
                     this.BackColor = colorDlg.Color;
                     dgv1.BackgroundColor = colorDlg.Color;
-                    dgvpaid.BackgroundColor = colorDlg.Color;
-                    dgvpaid.AlternatingRowsDefaultCellStyle.BackColor = colorDlg.Color;
-                    dgvpaid.DefaultCellStyle.BackColor = colorDlg.Color;
-                    dgvpaid.Refresh();
+                    ;
                     Gvar._defaultcolor = colorDlg.Color.ToString();
 
                     Color color = colorDlg.Color;
@@ -5027,11 +3217,7 @@ namespace FinOrg
             try
             {
 
-                if (cmbcurrency.Enabled && isdirty)
-                {
-                    MessageBox.Show("Please Re-Vaidate The Items ", "Currency Changes not effected ");
-                    return;
-                }
+               
                 if (isedit)
                 {
                     if (txtpriv.Text.Substring(1, 1) == "0")
@@ -5051,12 +3237,12 @@ namespace FinOrg
                 }
                  
 
-                if (txtcustomer.Text == "" || txtcusname.Text=="")
-                {
-                    MessageBox.Show("Invalid Customer Code ", "Invalid Customer Code  ");
-                    txtcustomer.Focus();
-                    return;
-                }
+                //if (txtcustomer.Text == "" )
+                //{
+                //    MessageBox.Show("Invalid GL Account Code ", "Invalid Account Code  ");
+                //    txtcustomer.Focus();
+                //    return;
+                //}
 
                 if (isedit)
                 {
@@ -5091,64 +3277,12 @@ namespace FinOrg
 
               
                 Application.DoEvents();
-                if (txtchange.Text == "") txtchange.Text = "0";
-
-                if (Convert.ToDecimal(txtchange.Text) < 0 && (txttrn_type.Text == "1" || txttrn_type.Text == "6" || txttrn_type.Text == "3" || txttrn_type.Text == "8"))
-                {
-                    //DialogResult result = MessageBox.Show("The Paid Amount not Completely Paid ,  You Cannot to Continue?", "Invalid Record", MessageBoxButtons.YesNoCancel);
-                    //if (result != DialogResult.Yes)
-                    //{
-                    //    lblmsg.Text = "Invalid Paid Amount.....";
-                    //    txtcash.Focus();
-                        
-                    //    return;
-                    //}
-
-                     MessageBox.Show("The Paid Amount not Completely Paid ,  You Cannot to Continue?", "Invalid Record");
-                    
-                        lblmsg.Text = "Invalid Paid Amount.....";
-                        txtcash.Focus();
-
-                        return;
-                   
-                }
+                
 
 
-                 if (Convert.ToDecimal(txtchange.Text) < 0 &&  Gvar.sale_acno.ToString() == txtcustomer.Text )
-                {
-                    //DialogResult result = MessageBox.Show("The Paid Amount not Completely Paid ,  You Cannot to Continue?", "Invalid Record", MessageBoxButtons.YesNoCancel);
-                    //if (result != DialogResult.Yes)
-                    //{
-                    //    lblmsg.Text = "Invalid Paid Amount.....";
-                    //    txtcash.Focus();
-                        
-                    //    return;
-                    //}
-
-                     MessageBox.Show("The Paid Amount not Completely Paid ,  You Cannot to Continue?", "Invalid Record");
-                    
-                        lblmsg.Text = "Invalid Paid Amount.....";
-                        txtcash.Focus();
-
-                        return;
-                   
-                }
 
                 lblmsg.Text = "Please Wait.....";
-                for (int i = 0; i <= dgvpaid.Rows.Count - 1; i++)
-                {
-                    if (dgvpaid["paid", i].Value != null)
-                    {
-                        if (Convert.ToDecimal(dgvpaid["paid", i].Value) > 0)
-                        {
-                            if (Convert.ToDecimal(dgvpaid["paidac", i].Value) == 0)
-                            {
-                                MessageBox.Show("Invalid Paid By Entry for Card Payment");
-                                return;
-                            }
-                        }
-                    }
-                }
+                
 
 
 
@@ -5161,16 +3295,7 @@ namespace FinOrg
                 {
                     // i=i+1;
                     if (dgv1["barcode", i].Value == null) break;
-                    if (dgv1["barcode", i].Value.ToString() == "999")
-                    {
-                        dgv1["ItemCode", i].Value = "999";
-                        dgv1["fraction", i].Value = "1";
-                        dgv1["Hfraction", i].Value = "1";
-                        dgv1["itemid", i].Value = "999";
-                        dgv1["cost", i].Value = dgv1["price", i].Value;
-
-
-                    }
+                  
                     string celval = Convert.ToString(dgv1["ItemCode", i].Value);
 
                     if (celval.Trim() != "")
@@ -5178,7 +3303,7 @@ namespace FinOrg
                         itemfound = true;
 
 
-                        if (dgv1["Description", i].Value == null || dgv1["Qty", i].Value == null || dgv1["price", i].Value.ToString()=="0")
+                        if (dgv1["Description", i].Value == null || dgv1["Qty", i].Value == null || dgv1["changes", i].Value.ToString()=="0")
                         {
                             MessageBox.Show("Invalid Entry on Row " + ++i);
                             lblmsg.Text = "Invalid Entry on Row " + ++i;
@@ -5380,20 +3505,7 @@ namespace FinOrg
 
         }
 
-        private void txtbalance_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                txtchange.Text = Math.Round(Convert.ToDecimal(txtcash.Text) - Convert.ToDecimal(txtbalance.Text), 2).ToString();
-                // txtchange.Text = (Convert.ToDecimal(txtcash.Text) - Convert.ToDecimal(txtbalance.Text)).ToString();
-            }
-
-
-            catch
-            {
-
-            }
-        }
+        
 
         private void txtinvno_KeyDown(object sender, KeyEventArgs e)
         {
@@ -5458,132 +3570,16 @@ namespace FinOrg
             textBox1.Text = "";
         }
 
-        private void add_newitem(int i)
-        {
-
-            string sql;
-            
-            ADODB.Recordset cus = new ADODB.Recordset();
-            ADODB.Recordset tmp = new ADODB.Recordset();
-            cus = new ADODB.Recordset();
-            tmp = new ADODB.Recordset();
-            double trn_no;
-            try
-            {
-                try
-                {
-                    iserror = false;
-
-                    string SQL="";
-
-                    SQL = "iNSERT INTO [HD_ITEMMASTER]([ITEM_CODE],[DESCRIPTION],[USER],[ITM_CAT_CODE],[UNIT],[FRACTION],[BRN_CODE],[SUB_CAT_CODE],[AR_DESC],[UPD_FLAG],[BARCODE])";
-                    SQL = SQL + "  Values ('" + dgv1["barcode",i].Value + "','" + dgv1["description",i].Value + "','" + Gvar.Userid + "','99','" + dgv1["unit",i].Value + "','1'," + Gvar.brn_code + ",'1','" + dgv1["description",i].Value + "','N','" + dgv1["barcode",i].Value + "')";
-                    tmp = new Recordset();
-                    tmp.Open(SQL, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-
-
-                    SQL = "INSERT INTO [BARCODE] ([BARCODE],[UNIT],[FRACTION],[SALE_PRICE],[RETAIL_PRICE],[ITEM_CODE],[BRN_CODE],[ITEM_ID],[MAIN_ID],[DESCRIPTION],[DESCRIPTION_AR])";
-                   // SQL = SQL & "  Values ('" & txtFbarcode & "','" & cmbFunit.Text & "','" & Val(txtFfraction) & "' ,'" & Val(txtFsale) & "','" & Val(txtFsale) & "','" & TxtFItemCode & "', '" & BRN_CODE & "','" & Trim(TxtFItemCode) & cmbFunit.ItemData(cmbFunit.ListIndex) & "','1','" & txtFItemName & "', '" & txtFaname & "')"
-                    SQL = SQL + "  Values ('" + dgv1["barcode",i].Value + "','" + dgv1["unit",i].Value + "','1','" + dgv1["price",i].Value + "','" + dgv1["price",i].Value + "','" + dgv1["barcode",i].Value + "','"   + Gvar.brn_code + "','" + dgv1["itemid",i].Value + "', '1','" + dgv1["description",i].Value + "','" + dgv1["description",i].Value + "')";
-                    tmp = new Recordset();
-                    tmp.Open(SQL, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-
-
-                    SQL = "INSERT INTO [STOCK_MASTER]([ITEM_CODE],[LAST_PUR_PRICE],[SALE_PRICE],[USER],[LAST_PUR_PRICE])";
-                //SQL = SQL & "  Values ('" & TxtFItemCode & "','" & Val(txtFcost) & "','" & Val(txtFsale) & "' ,'ADMIN')";
-                    SQL = SQL + "  Values ('" + dgv1["barcode", i].Value + "','" + dgv1["price", i].Value + "','" + dgv1["price", i].Value + "','Admin','" + dgv1["price", i].Value + "')";
-                    tmp = new Recordset();
-                    tmp.Open(SQL, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-
-
-
-            SQL = "INSERT INTO [WR_STOCK_MASTER]([ITEM_CODE],[USER],WR_CODE)";
-            //SQL = SQL & "  Values ('" & TxtFItemCode & "','ADMIN'," & WR_CODE & ")"
-                SQL = SQL + "  Values ('" + dgv1["barcode",i].Value + "','Admin','" + Gvar.wr_code +"')";
-                    tmp = new Recordset();
-                    tmp.Open(SQL, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-
-
-
-                    iserror = false;
-
-
-
-
-
-                    //MessageBox.Show("Service Issue Entry Saved Successfully!!!", "Succeed Entry");
-                }
-
-                catch (SqlException ex)
-                {
-                    ////ADOconn.RollbackTrans();
-                    //lblmsg.Text = ex.Message;
-                    //iserror = true;
-                    //MessageBox.Show(ex.Message);
-                }
-            }
-            catch (Exception sq)
-            {
-
-                ////ADOconn.RollbackTrans();
-                //lblmsg.Text = sq.Message;
-                //iserror = true;
-                //MessageBox.Show(sq.Message);
-            }
-
-
-        }
+     
 
         private void cmbtrntype_SelectedIndexChanged(object sender, EventArgs e)
         {
             txttrn_type.Text = cmbtrntype.SelectedValue.ToString();
         }
 
-        private void txtcustomer_Validated(object sender, EventArgs e)
-        {
-            try
-            {
-                if (!grdcuslookup.Visible)
-                {
-                    find_customer();
-                    find_credit();
-                }
-            }
-            catch
-            { }
-        }
+        
 
-        private void find_credit()
-        {
-            try
-            {
-                 if (ADOconn.State == 0)
-                    ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
-                Conn.Close();
-                Conn.Open();
-                txtacbalance.Text = "";
-                string sql;
-                if (txtcusname.Text == "") return;
-                sql = "select cr_amount,dr_amount from trn_acc_sum where acc_no =" + Convert.ToDecimal(txtcustomer.Text);
-                decimal dr = 0;
-                decimal cr = 0;
-
-               ADODB.Recordset tmp = new Recordset();
-                tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                                if (!tmp.EOF )
-                                {
-                                    if (tmp.Fields[0].Value != DBNull.Value) cr = Convert.ToDecimal(tmp.Fields[0].Value);
-                                        if (tmp.Fields[1].Value != DBNull.Value) dr = Convert.ToDecimal( tmp.Fields[1].Value);
-                                                
-                                }
-
-                                txtacbalance.Text = ( dr-cr).ToString();
-
-
-            }
-            catch(Exception EX)
-            { }
-        }
+      
 
         private void btndelete_Click(object sender, EventArgs e)
         {
@@ -5606,18 +3602,7 @@ namespace FinOrg
                         object PAYBY;
                         object[] ledgerini;
                         string acc_acs;
-//string TMP As New ADODB.Recordset
-//Set TMP = New ADODB.Recordset
-//TMP.Open "SELECT * FROM FINANCE_SESSION WHERE FS_STATUS='OPEN' AND convert(varchar, '" & Format(DTPicker1.Value, "yyyyMMdd") & "',112)  BETWEEN convert(varchar, FS_START_DATE,112) AND convert(varchar, FS_END_DATE,112)", Sqlcon, 3, 3
-//If TMP.RecordCount = 0 Then
-//MsgBox "There is no Open Finance Session found for This Date " & DTPicker1.Value, vbCritical
-//Exit Sub
-//End If
-//If ISPRINTED = True And Mid(priv, 5, 1) <> "X" And ORGDUP = "ORG" Then
 
-//MsgBox "Insufficient Previlage", vbCritical
-//Exit Sub
-//End If
 
 
 DialogResult result = MessageBox.Show("Do you Want to Delete This Invoice?", "Delete Invoice", MessageBoxButtons.YesNoCancel);
@@ -5686,7 +3671,7 @@ ADODB.Recordset rec = new   ADODB.Recordset();
                        {
                            if (rec.Fields["item_code"].Value.ToString() != "" && rec.Fields["item_code"].Value.ToString() != "999")
                            {
-                               sql = "SELECT STOCK FROM STOCK_ITEM WHERE WR_CODE = " + Gvar.wr_code + " and  item_code ='" + rec.Fields["item_code"].Value.ToString() + "'";
+                               sql = "SELECT STOCK FROM STOCK_ITEM WHERE WR_CODE = " + cmbwarehouse.SelectedValue + " and  item_code ='" + rec.Fields["item_code"].Value.ToString() + "'";
 
                                tmp = new Recordset();
                                tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockReadOnly, -1);
@@ -5697,7 +3682,7 @@ ADODB.Recordset rec = new   ADODB.Recordset();
 
 
 
-                               sql = "SELECT * FROM WR_STOCK_MASTER WHERE   WR_CODE = " + Gvar.wr_code + " and  item_code ='" + rec.Fields["item_code"].Value.ToString() + "'";
+                               sql = "SELECT * FROM WR_STOCK_MASTER WHERE   WR_CODE = " + cmbwarehouse.SelectedValue + " and  item_code ='" + rec.Fields["item_code"].Value.ToString() + "'";
 
                                tmp = new Recordset();
                                tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockPessimistic,-1);
@@ -5819,31 +3804,7 @@ ADODB.Recordset rec = new   ADODB.Recordset();
 
         }
 
-        private void btnremote_Click(object sender, EventArgs e)
-        {
-            panelremote.Visible = !panelremote.Visible;
-        }
-
-        private void txtdiscprcnt_TextChanged(object sender, EventArgs e)
-        {
-            if (txttotal.Text == "") return;
-            if (txtdiscprcnt.Text == "" || txtdiscprcnt.Text=="0") return;
-            txtdscamt.Text = Math.Round( (Convert.ToDecimal(txttotal.Text) * Convert.ToDecimal(txtdiscprcnt.Text) / 100),2).ToString();
-        }
-
-        private void cmbcurrency_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                string[] currate = cmbcurrency.Text.Split(':');
-                txtrate.Text = currate[1];
-            }
-            catch(Exception ex)
-            {
-
-            }
-        }
-
+        
     private void set_bgcolor(Color color)
        
     {
@@ -5872,14 +3833,10 @@ ADODB.Recordset rec = new   ADODB.Recordset();
 
                 }
 
-                this.BackColor = color;
-                dgv1.BackgroundColor = color;
-                dgvpaid.BackgroundColor = color;
-                dgvpaid.AlternatingRowsDefaultCellStyle.BackColor = color;
-                dgvpaid.DefaultCellStyle.BackColor = color;
-                dgvpaid.Refresh();
-                //Gvar._defaultcolor = color;
+                
             }
+            this.BackColor = color;
+            dgv1.BackgroundColor = color;
         }
         catch (Exception ex)
         {
@@ -5888,19 +3845,7 @@ ADODB.Recordset rec = new   ADODB.Recordset();
 
     }
 
-    private void btncurrency_Click(object sender, EventArgs e)
-    {
-        if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = MDIParent1.find_tag("cuurencyMenuItem");
-
-        Form childForm = new Frmcurrency();
-        childForm.MdiParent = MDIParent1.ActiveForm;
-
-        //childForm.Text = "Window " + childFormNumber++;
-        childForm.Text = "Currency Entry/Edit Screen";
-        childForm.Show();
-
-    }
-
+   
     private void txtinvno_Enter(object sender, EventArgs e)
     {
         acntrl = "txtinvno";
@@ -5945,10 +3890,7 @@ ADODB.Recordset rec = new   ADODB.Recordset();
         }
     }
 
-    private void txtcustomer_Leave(object sender, EventArgs e)
-    {
-        find_customer();
-    }
+    
 
     private void txtvatpcnt_TextChanged(object sender, EventArgs e)
     {
@@ -5959,15 +3901,7 @@ ADODB.Recordset rec = new   ADODB.Recordset();
 
    private void find_vat()
    {
-       if (txttotal.Text == "") txttotal.Text = "0";
-        if (txtdscamt.Text == "") txtdscamt.Text = "0";
-        if (txtnetamt.Text == "") txtnetamt.Text = "0";
-        if (txtvatpcnt.Text == "") txtvatpcnt.Text = "0";
-       
-        txtvatamt.Text = Math.Round(((Convert.ToDecimal(txttotal.Text) - Convert.ToDecimal(txtdscamt.Text)) * Convert.ToDecimal(txtvatpcnt.Text) / 100), 2).ToString();
-       txtnetamt.Text = Math.Round(((Convert.ToDecimal(txttotal.Text) - Convert.ToDecimal(txtdscamt.Text)) + Convert.ToDecimal(txtvatamt.Text)),2).ToString();
-
-      // txtvatamt.Text = Math.Round((Convert.ToDecimal(txtnetamt.Text) * Convert.ToDecimal(txtvatpcnt.Text) / 100), 2).ToString();
+             // txtvatamt.Text = Math.Round((Convert.ToDecimal(txtnetamt.Text) * Convert.ToDecimal(txtvatpcnt.Text) / 100), 2).ToString();
    }
 
    private void txtvatamt_TextChanged(object sender, EventArgs e)
