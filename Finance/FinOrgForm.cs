@@ -25,7 +25,7 @@ namespace FinOrg
 		{
 			ControlDefaultValues = new Dictionary<string, string>();
 
-			foreach (Control c in this.GetAllChildren())
+			foreach (Control c in this.GetAllControlChildren())
 				if (c.IsTranslatableControl())
 					ControlDefaultValues.Add(c.Name, c.Text);
 

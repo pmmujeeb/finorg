@@ -53,7 +53,7 @@ namespace FinOrg
 		}
 
 		public static void ApplyTranslation(FinOrgForm f) {
-			foreach (Control c in f.GetAllChildren())
+			foreach (Control c in f.GetAllControlChildren())
 			{
 				if (c.IsTranslatableControl())
 				{
@@ -137,7 +137,6 @@ namespace FinOrg
 			if (ControlDefaultValues.Count <= 0)
 				return;
 			SqlConnection con = FinOrgForm.getSqlConnection();
-			List<string> addedValues = new List<string>();
 			try
 			{
 				con.Open();
@@ -146,14 +145,14 @@ namespace FinOrg
 				foreach (KeyValuePair<string, string> e in ControlDefaultValues)
 				{
 					// check for duplications
-					if (Translations.ContainsKey(e.Value) || addedValues.Contains(e.Value))
+					if (Translations.ContainsKey(e.Value))
 						continue;
 					if (i > 0)
 						cmd.CommandText += ", ";
 					cmd.CommandText += string.Format("(@text{0}, @value{0})", i);
 					cmd.Parameters.Add(new SqlParameter("@text" + i, e.Value));
 					cmd.Parameters.Add(new SqlParameter("@value" + i, e.Value));
-					addedValues.Add(e.Value);
+					Translations.Add(e.Value, e.Value);
 					i++;
 				}
 				if (cmd.Parameters.Count > 0)

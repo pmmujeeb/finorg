@@ -44,7 +44,7 @@ namespace FinOrg
 		/// </summary>
 		/// <param name="root"></param>
 		/// <returns></returns>
-		public static IEnumerable<Control> GetAllChildren(this Control root)
+		public static IEnumerable<Control> GetAllControlChildren(this Control root)
 		{
 			var stack = new Stack<Control>();
 			stack.Push(root);
@@ -54,6 +54,50 @@ namespace FinOrg
 				var next = stack.Pop();
 				foreach (Control child in next.Controls)
 					stack.Push(child);
+				yield return next;
+			}
+		}
+
+		/// <summary>
+		///
+		///  ToolStripItem provides Name & Text
+		///
+		///	System.Windows.Forms.Control
+		///	System.Windows.Forms.ScrollableControl
+		///		System.Windows.Forms.ToolStrip						Items !!
+		///			System.Windows.Forms.BindingNavigator
+		///			System.Windows.Forms.MenuStrip
+		///			System.Windows.Forms.StatusStrip
+		///			System.Windows.Forms.ToolStripDropDown			!!
+		///
+		///	System.ComponentModel.Component
+		///		System.Windows.Forms.ToolStripItem
+		///			System.Windows.Forms.ToolStripButton
+		///			System.Windows.Forms.ToolStripControlHost
+		///			System.Windows.Forms.ToolStripDropDownItem		DropDownItems !!
+		///			System.Windows.Forms.ToolStripLabel
+		///			System.Windows.Forms.ToolStripSeparator
+		/// </summary>
+		/// <param name="root"></param>
+		/// <returns></returns>
+		public static IEnumerable<ToolStripItem> GetAllToolStripItems(this ToolStrip root)
+		{
+			var stack = new Stack<ToolStripItem>();
+
+			// https://msdn.microsoft.com/en-us/library/system.windows.forms.toolstrip(v=vs.110).aspx
+			// for ToolStripItems (ToolStripMenuItem, ToolStripButton etc)
+			foreach (ToolStripItem i in root.Items)
+				stack.Push(i);
+
+			while (stack.Any())
+			{
+				var next = stack.Pop();
+
+				// https://msdn.microsoft.com/en-us/library/system.windows.forms.toolstripdropdownitem(v=vs.110).aspx
+				// DropDownItems: MenuItem, DropDownButton..
+				if (next.GetType().IsSubclassOf(typeof(ToolStripDropDownItem)))
+					foreach (ToolStripItem child in ((ToolStripDropDownItem)next).DropDownItems)
+						stack.Push(child);
 				yield return next;
 			}
 		}
