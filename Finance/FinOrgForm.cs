@@ -18,20 +18,7 @@ namespace FinOrg
 		{
 			base.OnLoad(e);
 			if (!DesignMode) // Necessary
-				InitLanguage();
-		}
-
-		protected void InitLanguage()
-		{
-			ControlDefaultValues = new Dictionary<string, string>();
-
-			foreach (Control c in this.GetAllControlChildren())
-				if (c.IsTranslatableControl())
-					ControlDefaultValues.Add(c.Name, c.Text);
-
-			// ControlDefaultValues loaded
-			// LazyLoad these in Languages
-			Languages.LazyLoadTranslations(this);
+				Languages.InitFormLanguage(this);
 		}
 
 		public static SqlConnection getSqlConnection()

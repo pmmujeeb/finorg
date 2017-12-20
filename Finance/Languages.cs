@@ -63,7 +63,24 @@ namespace FinOrg
 		}
 
 		/// <summary>
-		/// Lazy Loads the text for each form
+		/// Initialize Languaging Process for a form
+		/// </summary>
+		/// <param name="f"></param>
+		public static void InitFormLanguage(FinOrgForm f)
+		{
+			f.ControlDefaultValues = new Dictionary<string, string>();
+
+			foreach (Control c in f.GetAllControlChildren())
+				if (c.IsTranslatableControl())
+					f.ControlDefaultValues.Add(c.Name, c.Text);
+
+			// ControlDefaultValues loaded
+			// LazyLoad these in Languages
+			Languages.LazyLoadTranslations(f);
+		}
+
+		/// <summary>
+		/// Lazy Loads the text for each Control in form
 		/// </summary>
 		/// <param name="ControlDefaultValues">A dictionary with ControlName-Text pairs</param>
 		public static Thread LazyLoadTranslations(FinOrgForm f)
