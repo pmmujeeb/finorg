@@ -10,10 +10,10 @@ namespace FinOrg
 {
 	public static class Languages
 	{
-		public static bool COPY_KEY_VALUES = true;
+		public static bool LANG_DEBUG_MODE = true;
 
 		// Set column name in TRANSLATIONS Table
-		public static string currentLanguage = "english";
+		public static string currentLanguage = "English";
 
 		// <DefaultValue, Translation>
 		public static Dictionary<string, string> Translations;
@@ -35,7 +35,14 @@ namespace FinOrg
 						cmd.CommandText = TRANSLATIONS_TABLE_SQL;
 						cmd.ExecuteNonQuery();
 					}
-
+					if (LANG_DEBUG_MODE) {
+						cmd.CommandText = "SELECT * FROM TRANSLATIONS";
+						using (SqlDataReader reader = cmd.ExecuteReader()) {
+							Translations = new Dictionary<string, string>();
+							while(reader.Read())
+								Translations.Add(reader["text"].ToString(), reader[currentLanguage].ToString());
+						}
+					}
 					con.Close();
 				} catch (Exception e)
 				{
@@ -73,15 +80,17 @@ namespace FinOrg
 					con.Open();
 					SqlCommand cmd = new SqlCommand(string.Format("SELECT text, {0} FROM TRANSLATIONS WHERE text IN ({{keys}});", currentLanguage), con);
 					cmd.AddArrayParameters(items, "keys");
-					using (SqlDataReader reader = cmd.ExecuteReader())
-					{
-						if (Translations == null)
-							Translations = new Dictionary<string, string>();
-						while(reader.Read())
+					if (cmd.Parameters.Count > 0)
+						using (SqlDataReader reader = cmd.ExecuteReader())
 						{
-							Translations.Add(reader["text"].ToString(), reader[currentLanguage].ToString());
+							if (Translations == null)
+								Translations = new Dictionary<string, string>();
+							while(reader.Read())
+							{
+								// Only Keys NOT Present in Translations Dictionary is fetched from Database
+								Translations.Add(reader["text"].ToString(), reader[currentLanguage].ToString());
+							}
 						}
-					}
 					con.Close();
 				}
 				catch (Exception e)
@@ -89,7 +98,7 @@ namespace FinOrg
 					con.Close();
 					System.Windows.MessageBox.Show(e.Message, "FinOrg Languages LazyLoadTranslations");
 				}
-				if (COPY_KEY_VALUES) // Copies the value from form to database currentLanguage field
+				if (LANG_DEBUG_MODE) // Copies the value from form to database currentLanguage field
 					InsertFormTranslations(f.ControlDefaultValues);
 
 				// Apply Translation
