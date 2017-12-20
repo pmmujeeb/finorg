@@ -24,18 +24,9 @@ namespace FinOrg
 		{
 			ControlDefaultValues = new Dictionary<string, string>();
 
-			var controls = new Queue<Control>();
-			controls.Enqueue(this);
-			do
-			{
-				Control t = controls.Dequeue();
-				if (Languages.IsTranslatableControl(t))
-					ControlDefaultValues.Add(t.Name, t.Text);
-
-				foreach (Control c in t.Controls)
-					controls.Enqueue(c);
-
-			} while (controls.Count > 0);
+			foreach (Control c in this.GetAllChildren())
+				if (Languages.IsTranslatableControl(c))
+					ControlDefaultValues.Add(c.Name, c.Text);
 
 			// ControlDefaultValues loaded
 			// LazyLoad these in Languages
