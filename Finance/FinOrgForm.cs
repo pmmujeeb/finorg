@@ -17,8 +17,25 @@ namespace FinOrg
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
-			if (!DesignMode) // Necessary
+			if (!DesignMode)
+			{ // Necessary
 				Languages.InitFormLanguage(this);
+				Languages.onLanguageChanged += onLanguageChanged;
+			}
+		}
+
+		protected override void OnClosed(EventArgs e)
+		{
+			base.OnClosed(e);
+			if (!DesignMode)
+			{
+				Languages.onLanguageChanged -= onLanguageChanged;
+			}
+		}
+
+		private void onLanguageChanged(object sender, EventArgs e)
+		{
+			Languages.LazyLoadTranslations(this);
 		}
 
 		public static SqlConnection getSqlConnection()

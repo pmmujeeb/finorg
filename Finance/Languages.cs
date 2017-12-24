@@ -12,6 +12,8 @@ namespace FinOrg
 	{
 		public static bool LANG_DEBUG_MODE = true;
 
+
+		public static event EventHandler onLanguageChanged;
 		// Set column name in TRANSLATIONS Table
 		public static string currentLanguage = "English";
 
@@ -21,9 +23,10 @@ namespace FinOrg
 		public static List<string> TranslationLoadedForms;
 
 		//
-		public static void Init()
+		public static Thread Init()
 		{
-			new Thread(() => {
+			Thread t = new Thread(() =>
+			{
 				SqlConnection con = FinOrgForm.getSqlConnection();
 				try
 				{
@@ -35,24 +38,47 @@ namespace FinOrg
 						cmd.CommandText = TRANSLATIONS_TABLE_SQL;
 						cmd.ExecuteNonQuery();
 					}
-					if (LANG_DEBUG_MODE) {
-						cmd.CommandText = "SELECT * FROM TRANSLATIONS";
-						using (SqlDataReader reader = cmd.ExecuteReader()) {
-							Translations = new Dictionary<string, string>();
-							while(reader.Read())
-								Translations.Add(reader["text"].ToString(), reader[currentLanguage].ToString());
-						}
+					if (LANG_DEBUG_MODE)
+					{
+						LoadAllTranslations();
 					}
 					con.Close();
-				} catch (Exception e)
+				}
+				catch (Exception e)
 				{
 					con.Close();
 					MessageBox.Show(e.Message, "FinOrg Languages Init");
 				}
-			}).Start();
+			});
+			t.Start();
+			return t;
+		}
+
+
+		private static void LoadAllTranslations()
+		{
+			SqlConnection con = FinOrgForm.getSqlConnection();
+			con.Open();
+			SqlCommand cmd = new SqlCommand(string.Format("SELECT text, {0} FROM TRANSLATIONS", currentLanguage), con);
+			using (SqlDataReader reader = cmd.ExecuteReader())
+			{
+				Translations = new Dictionary<string, string>();
+				while (reader.Read())
+					Translations.Add(reader["text"].ToString(), reader[currentLanguage].ToString());
+			}
+			con.Close();
+		}
+
+		public static void ChangeLanguage(string newLanguage)
+		{
+			currentLanguage = newLanguage;
+			LoadAllTranslations();
+			onLanguageChanged?.Invoke(null, null);
 		}
 
 		public static void ApplyTranslation(FinOrgForm f) {
+			f.RightToLeftLayout = currentLanguage == "arabic";
+			f.RightToLeft = currentLanguage == "arabic" ? RightToLeft.Yes : RightToLeft.No;
 			foreach (Control c in f.GetAllControlChildren())
 			{
 				if (c.IsTranslatableControl())
@@ -80,6 +106,8 @@ namespace FinOrg
 
 			foreach (Control c in f.GetAllControlChildren())
 			{
+				c.RightToLeft = RightToLeft.Inherit;
+
 				if (c.IsTranslatableControl() && !string.IsNullOrEmpty(c.Name))
 					f.ControlDefaultValues.Add(c.Name, c.Text.Simplified());
 
@@ -87,6 +115,7 @@ namespace FinOrg
 				if (c.GetType().IsSubclassOf(typeof(ToolStrip))) {
 					foreach (ToolStripItem toolStripItem in ((ToolStrip)c).GetAllToolStripItems())
 					{
+						toolStripItem.RightToLeft = RightToLeft.Inherit;
 						if (!string.IsNullOrEmpty(toolStripItem.Name))
 							f.ControlDefaultValues.Add(toolStripItem.Name, toolStripItem.Text.Simplified());
 					}
@@ -116,7 +145,7 @@ namespace FinOrg
 						cmd.Parameters.Clear();
 					}
 					// fetch from DB
-					cmd.CommandText = "SELECT {0} FROM TRANSLATIONS WHERE text = @v";
+					cmd.CommandText = string.Format("SELECT {0} FROM TRANSLATIONS WHERE text = @v", currentLanguage);
 					cmd.Parameters.Add(new SqlParameter("v", s));
 					object data = cmd.ExecuteScalar();
 					con.Close();
@@ -220,14 +249,14 @@ namespace FinOrg
 				foreach (KeyValuePair<string, string> e in ControlDefaultValues)
 				{
 					// check for duplications
-					if (Translations.ContainsKey(e.Value))
+					if (Translations.ContainsKey(e.Value.Simplified()) || string.IsNullOrWhiteSpace(e.Value.Simplified()))
 						continue;
 					if (i > 0)
 						cmd.CommandText += ", ";
 					cmd.CommandText += string.Format("(@text{0}, @value{0})", i);
-					cmd.Parameters.Add(new SqlParameter("@text" + i, e.Value));
-					cmd.Parameters.Add(new SqlParameter("@value" + i, e.Value));
-					Translations.Add(e.Value, e.Value);
+					cmd.Parameters.Add(new SqlParameter("@text" + i, e.Value.Simplified()));
+					cmd.Parameters.Add(new SqlParameter("@value" + i, e.Value.Simplified()));
+					Translations.Add(e.Value.Simplified(), e.Value.Simplified());
 					i++;
 				}
 				if (cmd.Parameters.Count > 0)
