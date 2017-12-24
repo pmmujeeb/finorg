@@ -91,12 +91,47 @@ namespace FinOrg
 							f.ControlDefaultValues.Add(toolStripItem.Name, toolStripItem.Text.Simplified());
 					}
 				}
-
 			}
 
 			// ControlDefaultValues loaded
 			// LazyLoad these in Languages
 			Languages.LazyLoadTranslations(f);
+		}
+
+		public static string GetStringTranslation(string s)
+		{
+			if (!Translations.ContainsKey(s))
+			{
+				SqlConnection con = FinOrgForm.getSqlConnection();
+				SqlCommand cmd = new SqlCommand("", con);
+				try
+				{
+					con.Open();
+					// Insert to DB
+					if (LANG_DEBUG_MODE)
+					{
+						cmd.CommandText = "INSERT INTO TRANSLATIONS (text, english) VALUES (@v);";
+						cmd.Parameters.Add(new SqlParameter("v", s));
+						cmd.ExecuteNonQuery();
+						cmd.Parameters.Clear();
+					}
+					// fetch from DB
+					cmd.CommandText = "SELECT {0} FROM TRANSLATIONS WHERE text = @v";
+					cmd.Parameters.Add(new SqlParameter("v", s));
+					object data = cmd.ExecuteScalar();
+					con.Close();
+					if (data != null)
+						return data.ToString();
+					else
+						return "";
+				} catch (Exception ef)
+				{
+					MessageBox.Show(ef.Message + "\nSQL: " + cmd.CommandText, "FinOrg Languages GetTranslation");
+					return "";
+				}
+			}
+			else
+				return Translations[s];
 		}
 
 		/// <summary>
