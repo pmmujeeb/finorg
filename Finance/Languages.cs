@@ -39,9 +39,9 @@ namespace FinOrg
 						cmd.ExecuteNonQuery();
 					}
 					if (LANG_DEBUG_MODE)
-					{
 						LoadAllTranslations();
-					}
+					else
+						Translations = new Dictionary<string, string>();
 					con.Close();
 				}
 				catch (Exception e)
@@ -72,7 +72,10 @@ namespace FinOrg
 		public static void ChangeLanguage(string newLanguage)
 		{
 			currentLanguage = newLanguage;
-			LoadAllTranslations();
+			if (LANG_DEBUG_MODE)
+				LoadAllTranslations();
+			else
+				Translations = new Dictionary<string, string>();
 			onLanguageChanged?.Invoke(null, null);
 		}
 
@@ -81,27 +84,33 @@ namespace FinOrg
 			f.RightToLeft = currentLanguage == "arabic" ? RightToLeft.Yes : RightToLeft.No;
 			foreach (Control c in f.GetAllControlChildren())
 			{
-				if (c.IsTranslatableControl())
-					c.Text = Translations[f.ControlDefaultValues[c.Name]];
-
-				// Apply on ToolStrips
-				if (c.GetType().IsSubclassOf(typeof(ToolStrip)))
+				try
 				{
-					foreach (ToolStripItem toolStripItem in ((ToolStrip)c).GetAllToolStripItems())
+					if (c.IsTranslatableControl())
+						c.Text = Translations[f.ControlDefaultValues[c.Name]];
+
+					// Apply on ToolStrips
+					if (c.GetType().IsSubclassOf(typeof(ToolStrip)))
 					{
-						if (!string.IsNullOrEmpty(toolStripItem.Name))
-							toolStripItem.Text = Translations[f.ControlDefaultValues[toolStripItem.Name]];
+						foreach (ToolStripItem toolStripItem in ((ToolStrip)c).GetAllToolStripItems())
+						{
+							if (!string.IsNullOrEmpty(toolStripItem.Name))
+								toolStripItem.Text = Translations[f.ControlDefaultValues[toolStripItem.Name]];
+						}
 					}
-				}
 
-				// Apply RTL on the following Controls
-				if (c.GetType() == typeof(Panel))
+					// Apply RTL on the following Controls
+					if (c.GetType() == typeof(Panel))
+					{
+						if (c.RightToLeft != f.RightToLeft)
+							// panel type, rearrage children
+							foreach (Control panel_child in c.Controls)
+								panel_child.Location = new System.Drawing.Point(c.Size.Width - panel_child.Size.Width - panel_child.Location.X, panel_child.Location.Y);
+						c.RightToLeft = f.RightToLeft;
+					}
+				} catch (Exception e)
 				{
-					if (c.RightToLeft != f.RightToLeft)
-						// panel type, rearrage children
-						foreach (Control panel_child in c.Controls)
-							panel_child.Location = new System.Drawing.Point(c.Size.Width - panel_child.Size.Width - panel_child.Location.X, panel_child.Location.Y);
-					c.RightToLeft = f.RightToLeft;
+					MessageBox.Show(string.Format("{0}({4}) : {1} ({2})\nKey: {5}\nMessage: {3}", f.Name, c.Name, c.GetType(), e.Message, f.GetType(), "f.ControlDefaultValues[c.Name]"), "FinOrg Langauges ApplyTranslation");
 				}
 			}
 		}
@@ -195,8 +204,6 @@ namespace FinOrg
 					if (cmd.Parameters.Count > 0)
 						using (SqlDataReader reader = cmd.ExecuteReader())
 						{
-							if (Translations == null)
-								Translations = new Dictionary<string, string>();
 							while(reader.Read())
 							{
 								// Only Keys NOT Present in Translations Dictionary is fetched from Database
@@ -249,7 +256,7 @@ namespace FinOrg
 		/// <param name="ControlDefaultValues"></param>
 		public static void InsertFormTranslations(Dictionary<string, string> ControlDefaultValues)
 		{
-			if (ControlDefaultValues.Count <= 0)
+			if (ControlDefaultValues.Count == 0)
 				return;
 			SqlConnection con = FinOrgForm.getSqlConnection();
 			SqlCommand cmd = new SqlCommand(string.Format("INSERT INTO TRANSLATIONS (text, {0}) VALUES ", currentLanguage), con);
