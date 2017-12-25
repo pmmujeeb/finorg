@@ -86,7 +86,7 @@ namespace FinOrg
                 if (txtpriv.Text.Substring(2, 1) == "0")
                     btndelete.Visible = false;
 
-                int trn = Gvar._trntype;
+                int trn = Gvar.trntype;
                 txttrn_type.Text = trn.ToString();
               
                 sql = "SELECT * FROM options WHERE TRNTYPE=" + Convert.ToInt32(txttrn_type.Text);

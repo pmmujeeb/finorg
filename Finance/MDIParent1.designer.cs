@@ -28,178 +28,182 @@
         /// </summary>
         private void InitializeComponent()
         {
-			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MDIParent1));
-			System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-			this.menuStrip = new System.Windows.Forms.MenuStrip();
-			this.MainMenu = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
-			this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.userPrivelegesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuxpressmenu = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuUpdateStock = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator28 = new System.Windows.Forms.ToolStripSeparator();
-			this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuentrysetting = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuglentrysetting = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnusetting = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuInventory = new System.Windows.Forms.ToolStripMenuItem();
-			this.MnuMaster = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuItemcat = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuItemUnit = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnuProjectmaster = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuAreaMaster = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem28 = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem29 = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuwarehouse = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-			this.toolStripMenuItem31 = new System.Windows.Forms.ToolStripMenuItem();
-			this.SupplierMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.customerMasterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-			this.cuurencyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.productMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.itemCostMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.damagedItemMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.OPStockMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuItemMaster = new System.Windows.Forms.ToolStripMenuItem();
-			this.rawItemsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.serviceMasterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-			this.purchaseToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.PurchaseOrderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.orderRecieptMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnuCashPurchase = new System.Windows.Forms.ToolStripMenuItem();
-			this.purchaseReToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-			this.cashPurchaseReturnToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.creditPurchaseReturnToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
-			this.purchaseExpensemenu = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
-			this.salesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuCashSales = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuCreditSale = new System.Windows.Forms.ToolStripMenuItem();
-			this.cashSalesReturnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.creditSalesReturnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnutransferMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuitemadjust = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuadjustaddition = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuadjustdeletion = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnuinventoryReport = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuStock = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuinvdet = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuitmbycust = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuitmbycusbyitm = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnuitemTransactionDetai = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator21 = new System.Windows.Forms.ToolStripSeparator();
-			this.purchaseOrdermnu = new System.Windows.Forms.ToolStripMenuItem();
-			this.packingSlipmnu = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
-			this.searchViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.masterEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnubrand = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnudept = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
-			this.Acccreationtool = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator24 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnucusreceivale = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnusuppayable = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator25 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnuglvoucher = new System.Windows.Forms.ToolStripMenuItem();
-			this.receivableEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.payableEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
-			this.salaryProcessmenu = new System.Windows.Forms.ToolStripMenuItem();
-			this.salaryPaymentmnu = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator20 = new System.Windows.Forms.ToolStripSeparator();
-			this.bankReconciliationmnu = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
-			this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnucusSummary = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnucusdet = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnuSupsummary = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuSupdet = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator26 = new System.Windows.Forms.ToolStripSeparator();
-			this.accountSummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.accountDetailToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
-			this.mnuincomerpt = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnutrailbalance = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuprofitnloss = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnubalancesheet = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator27 = new System.Windows.Forms.ToolStripSeparator();
-			this.projectReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.projectsMasterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.reportsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.projectSummaryReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.assetMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.assetCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.assetCreationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
-			this.reportsToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
-			this.assetSummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.hRMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.deparmentsmenu = new System.Windows.Forms.ToolStripMenuItem();
-			this.Positionsmenu = new System.Windows.Forms.ToolStripMenuItem();
-			this.nationalitiesmenu = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator22 = new System.Windows.Forms.ToolStripSeparator();
-			this.employeeInfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStripSeparator23 = new System.Windows.Forms.ToolStripSeparator();
-			this.reportsToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-			this.employeesListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.employeesRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuwindows = new System.Windows.Forms.ToolStripMenuItem();
-			this.mnuexit = new System.Windows.Forms.ToolStripMenuItem();
-			this.toolStrip = new System.Windows.Forms.ToolStrip();
-			this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-			this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.printPreviewToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
-			this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
-			this.statusStrip = new System.Windows.Forms.StatusStrip();
-			this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.button1 = new System.Windows.Forms.Button();
-			this.lstpriv = new System.Windows.Forms.ListBox();
-			this.lstmenu = new System.Windows.Forms.ListBox();
-			this.groupBox1 = new System.Windows.Forms.GroupBox();
-			this.btnPrint = new System.Windows.Forms.Button();
-			this.lbltrntype = new System.Windows.Forms.Label();
-			this.btnsearch = new System.Windows.Forms.Button();
-			this.btnnew = new System.Windows.Forms.Button();
-			this.cmbtrntype = new System.Windows.Forms.ComboBox();
-			this.btnsave = new System.Windows.Forms.Button();
-			this.label8 = new System.Windows.Forms.Label();
-			this.txttrn = new System.Windows.Forms.TextBox();
-			this.dgmenu = new System.Windows.Forms.DataGridView();
-			this.Menu = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.priv = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.salesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.cmbMainMenu = new System.Windows.Forms.ComboBox();
-			this.btnarow = new System.Windows.Forms.Button();
-			this.btnlang = new System.Windows.Forms.Button();
-			this.menuStrip.SuspendLayout();
-			this.toolStrip.SuspendLayout();
-			this.statusStrip.SuspendLayout();
-			this.groupBox1.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dgmenu)).BeginInit();
-			this.SuspendLayout();
-			// 
-			// menuStrip
-			// 
-			this.menuStrip.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MDIParent1));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.menuStrip = new System.Windows.Forms.MenuStrip();
+            this.MainMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
+            this.usersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.userPrivelegesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuxpressmenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuUpdateStock = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator28 = new System.Windows.Forms.ToolStripSeparator();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuentrysetting = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuglentrysetting = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnusetting = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuInventory = new System.Windows.Forms.ToolStripMenuItem();
+            this.MnuMaster = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuItemcat = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuItemUnit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuProjectmaster = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuAreaMaster = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem28 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem29 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuwarehouse = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripMenuItem31 = new System.Windows.Forms.ToolStripMenuItem();
+            this.SupplierMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.customerMasterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.cuurencyMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.productMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.itemCostMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.damagedItemMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.OPStockMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuItemMaster = new System.Windows.Forms.ToolStripMenuItem();
+            this.rawItemsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.serviceMasterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.purchaseToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.PurchaseOrderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.orderRecieptMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuCashPurchase = new System.Windows.Forms.ToolStripMenuItem();
+            this.purchaseReToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
+            this.cashPurchaseReturnToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.creditPurchaseReturnToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
+            this.purchaseExpensemenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
+            this.salesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuCashSales = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuCreditSale = new System.Windows.Forms.ToolStripMenuItem();
+            this.cashSalesReturnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.creditSalesReturnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnutransferMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuitemadjust = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuadjustaddition = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuadjustdeletion = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuinventoryReport = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuStock = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuinvdet = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuitmbycust = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuitmbycusbyitm = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuitemmovement = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuitemTransactionDetai = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator21 = new System.Windows.Forms.ToolStripSeparator();
+            this.purchaseOrdermnu = new System.Windows.Forms.ToolStripMenuItem();
+            this.packingSlipmnu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator29 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnudailyTransaction = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator17 = new System.Windows.Forms.ToolStripSeparator();
+            this.searchViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.masterEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnubrand = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnudept = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripSeparator();
+            this.Acccreationtool = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator24 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnucusreceivale = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnusuppayable = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator25 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuglvoucher = new System.Windows.Forms.ToolStripMenuItem();
+            this.receivableEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.payableEntryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator14 = new System.Windows.Forms.ToolStripSeparator();
+            this.salaryProcessmenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.salaryPaymentmnu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator20 = new System.Windows.Forms.ToolStripSeparator();
+            this.bankReconciliationmnu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator15 = new System.Windows.Forms.ToolStripSeparator();
+            this.reportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnucusSummary = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnucusdet = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuSupsummary = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuSupdet = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator26 = new System.Windows.Forms.ToolStripSeparator();
+            this.accountSummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.accountDetailToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnuincomerpt = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnutrailbalance = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuprofitnloss = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnubalancesheet = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator27 = new System.Windows.Forms.ToolStripSeparator();
+            this.projectReportsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.projectsMasterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.reportsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.projectSummaryReportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.assetMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.assetCategoryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.assetCreationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator18 = new System.Windows.Forms.ToolStripSeparator();
+            this.reportsToolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.assetSummaryToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hRMSToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.deparmentsmenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.Positionsmenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.nationalitiesmenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator22 = new System.Windows.Forms.ToolStripSeparator();
+            this.employeeInfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator23 = new System.Windows.Forms.ToolStripSeparator();
+            this.reportsToolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
+            this.employeesListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.employeesRecordToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuwindows = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuexit = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStrip = new System.Windows.Forms.ToolStrip();
+            this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.printPreviewToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
+            this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.button1 = new System.Windows.Forms.Button();
+            this.lstpriv = new System.Windows.Forms.ListBox();
+            this.lstmenu = new System.Windows.Forms.ListBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btnPrint = new System.Windows.Forms.Button();
+            this.lbltrntype = new System.Windows.Forms.Label();
+            this.btnsearch = new System.Windows.Forms.Button();
+            this.btnnew = new System.Windows.Forms.Button();
+            this.cmbtrntype = new System.Windows.Forms.ComboBox();
+            this.btnsave = new System.Windows.Forms.Button();
+            this.label8 = new System.Windows.Forms.Label();
+            this.txttrn = new System.Windows.Forms.TextBox();
+            this.dgmenu = new System.Windows.Forms.DataGridView();
+            this.Menu = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.priv = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Code = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.salesToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmbMainMenu = new System.Windows.Forms.ComboBox();
+            this.btnarow = new System.Windows.Forms.Button();
+            this.btnlang = new System.Windows.Forms.Button();
+            this.mnudailyCashBook = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuStrip.SuspendLayout();
+            this.toolStrip.SuspendLayout();
+            this.statusStrip.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgmenu)).BeginInit();
+            this.SuspendLayout();
+            // 
+            // menuStrip
+            // 
+            this.menuStrip.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.MainMenu,
             this.toolStripMenuItem13,
             this.mnuInventory,
@@ -705,92 +709,116 @@
             this.mnuitmbycust,
             this.mnuitmbycusbyitm,
             this.toolStripSeparator9,
+            this.mnuitemmovement,
             this.mnuitemTransactionDetai,
             this.toolStripSeparator21,
             this.purchaseOrdermnu,
-            this.packingSlipmnu});
-			this.mnuinventoryReport.ForeColor = System.Drawing.Color.Maroon;
-			this.mnuinventoryReport.Name = "mnuinventoryReport";
-			this.mnuinventoryReport.Size = new System.Drawing.Size(223, 22);
-			this.mnuinventoryReport.Text = "&Inventory Reports";
-			// 
-			// mnuStock
-			// 
-			this.mnuStock.Image = global::FinOrg.Properties.Resources.WZEDIT;
-			this.mnuStock.Name = "mnuStock";
-			this.mnuStock.Size = new System.Drawing.Size(283, 22);
-			this.mnuStock.Text = "Stock Master";
-			this.mnuStock.Click += new System.EventHandler(this.mnuStock_Click);
-			// 
-			// mnuinvdet
-			// 
-			this.mnuinvdet.Name = "mnuinvdet";
-			this.mnuinvdet.Size = new System.Drawing.Size(283, 22);
-			this.mnuinvdet.Text = "Invoice Detail";
-			this.mnuinvdet.Click += new System.EventHandler(this.mnuinvdet_Click);
-			// 
-			// mnuitmbycust
-			// 
-			this.mnuitmbycust.Name = "mnuitmbycust";
-			this.mnuitmbycust.Size = new System.Drawing.Size(283, 22);
-			this.mnuitmbycust.Text = "Items By Accounts";
-			this.mnuitmbycust.Click += new System.EventHandler(this.mnuitmbycust_Click);
-			// 
-			// mnuitmbycusbyitm
-			// 
-			this.mnuitmbycusbyitm.Name = "mnuitmbycusbyitm";
-			this.mnuitmbycusbyitm.Size = new System.Drawing.Size(283, 22);
-			this.mnuitmbycusbyitm.Text = "Item By Sales / Purchase";
-			this.mnuitmbycusbyitm.Click += new System.EventHandler(this.mnuitmbycusbyitm_Click);
-			// 
-			// toolStripSeparator9
-			// 
-			this.toolStripSeparator9.Name = "toolStripSeparator9";
-			this.toolStripSeparator9.Size = new System.Drawing.Size(280, 6);
-			// 
-			// mnuitemTransactionDetai
-			// 
-			this.mnuitemTransactionDetai.Name = "mnuitemTransactionDetai";
-			this.mnuitemTransactionDetai.Size = new System.Drawing.Size(283, 22);
-			this.mnuitemTransactionDetai.Text = "Item Transaction Detail";
-			this.mnuitemTransactionDetai.Click += new System.EventHandler(this.mnuitemTransactionDetai_Click);
-			// 
-			// toolStripSeparator21
-			// 
-			this.toolStripSeparator21.Name = "toolStripSeparator21";
-			this.toolStripSeparator21.Size = new System.Drawing.Size(280, 6);
-			// 
-			// purchaseOrdermnu
-			// 
-			this.purchaseOrdermnu.Name = "purchaseOrdermnu";
-			this.purchaseOrdermnu.Size = new System.Drawing.Size(283, 22);
-			this.purchaseOrdermnu.Text = "Purchase Order";
-			this.purchaseOrdermnu.Click += new System.EventHandler(this.purchaseOrdermnu_Click);
-			// 
-			// packingSlipmnu
-			// 
-			this.packingSlipmnu.Name = "packingSlipmnu";
-			this.packingSlipmnu.Size = new System.Drawing.Size(283, 22);
-			this.packingSlipmnu.Text = "Packing Slip ";
-			this.packingSlipmnu.Click += new System.EventHandler(this.packingSlipmnu_Click);
-			// 
-			// toolStripSeparator17
-			// 
-			this.toolStripSeparator17.Name = "toolStripSeparator17";
-			this.toolStripSeparator17.Size = new System.Drawing.Size(220, 6);
-			// 
-			// searchViewToolStripMenuItem
-			// 
-			this.searchViewToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
-			this.searchViewToolStripMenuItem.Name = "searchViewToolStripMenuItem";
-			this.searchViewToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
-			this.searchViewToolStripMenuItem.Text = "&Search View";
-			this.searchViewToolStripMenuItem.Visible = false;
-			this.searchViewToolStripMenuItem.Click += new System.EventHandler(this.searchViewToolStripMenuItem_Click);
-			// 
-			// masterEntryToolStripMenuItem
-			// 
-			this.masterEntryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.packingSlipmnu,
+            this.toolStripSeparator29,
+            this.mnudailyTransaction});
+            this.mnuinventoryReport.ForeColor = System.Drawing.Color.Maroon;
+            this.mnuinventoryReport.Name = "mnuinventoryReport";
+            this.mnuinventoryReport.Size = new System.Drawing.Size(223, 22);
+            this.mnuinventoryReport.Text = "&Inventory Reports";
+            // 
+            // mnuStock
+            // 
+            this.mnuStock.Image = global::FinOrg.Properties.Resources.WZEDIT;
+            this.mnuStock.Name = "mnuStock";
+            this.mnuStock.Size = new System.Drawing.Size(299, 22);
+            this.mnuStock.Text = "Stock Master";
+            this.mnuStock.Click += new System.EventHandler(this.mnuStock_Click);
+            // 
+            // mnuinvdet
+            // 
+            this.mnuinvdet.Name = "mnuinvdet";
+            this.mnuinvdet.Size = new System.Drawing.Size(299, 22);
+            this.mnuinvdet.Text = "Invoice Detail";
+            this.mnuinvdet.Click += new System.EventHandler(this.mnuinvdet_Click);
+            // 
+            // mnuitmbycust
+            // 
+            this.mnuitmbycust.Name = "mnuitmbycust";
+            this.mnuitmbycust.Size = new System.Drawing.Size(299, 22);
+            this.mnuitmbycust.Text = "Items By Accounts";
+            this.mnuitmbycust.Click += new System.EventHandler(this.mnuitmbycust_Click);
+            // 
+            // mnuitmbycusbyitm
+            // 
+            this.mnuitmbycusbyitm.Name = "mnuitmbycusbyitm";
+            this.mnuitmbycusbyitm.Size = new System.Drawing.Size(299, 22);
+            this.mnuitmbycusbyitm.Text = "Item By Sales / Purchase";
+            this.mnuitmbycusbyitm.Click += new System.EventHandler(this.mnuitmbycusbyitm_Click);
+            // 
+            // toolStripSeparator9
+            // 
+            this.toolStripSeparator9.Name = "toolStripSeparator9";
+            this.toolStripSeparator9.Size = new System.Drawing.Size(296, 6);
+            // 
+            // mnuitemmovement
+            // 
+            this.mnuitemmovement.Checked = true;
+            this.mnuitemmovement.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.mnuitemmovement.Name = "mnuitemmovement";
+            this.mnuitemmovement.Size = new System.Drawing.Size(299, 22);
+            this.mnuitemmovement.Text = "Item Movment Statistics";
+            this.mnuitemmovement.Click += new System.EventHandler(this.mnuitemmovement_Click);
+            // 
+            // mnuitemTransactionDetai
+            // 
+            this.mnuitemTransactionDetai.Name = "mnuitemTransactionDetai";
+            this.mnuitemTransactionDetai.Size = new System.Drawing.Size(299, 22);
+            this.mnuitemTransactionDetai.Text = "Item Transaction Detail";
+            this.mnuitemTransactionDetai.Click += new System.EventHandler(this.mnuitemTransactionDetai_Click);
+            // 
+            // toolStripSeparator21
+            // 
+            this.toolStripSeparator21.Name = "toolStripSeparator21";
+            this.toolStripSeparator21.Size = new System.Drawing.Size(296, 6);
+            // 
+            // purchaseOrdermnu
+            // 
+            this.purchaseOrdermnu.Name = "purchaseOrdermnu";
+            this.purchaseOrdermnu.Size = new System.Drawing.Size(299, 22);
+            this.purchaseOrdermnu.Text = "Purchase Order";
+            this.purchaseOrdermnu.Click += new System.EventHandler(this.purchaseOrdermnu_Click);
+            // 
+            // packingSlipmnu
+            // 
+            this.packingSlipmnu.Name = "packingSlipmnu";
+            this.packingSlipmnu.Size = new System.Drawing.Size(299, 22);
+            this.packingSlipmnu.Text = "Packing Slip ";
+            this.packingSlipmnu.Click += new System.EventHandler(this.packingSlipmnu_Click);
+            // 
+            // toolStripSeparator29
+            // 
+            this.toolStripSeparator29.Name = "toolStripSeparator29";
+            this.toolStripSeparator29.Size = new System.Drawing.Size(296, 6);
+            // 
+            // mnudailyTransaction
+            // 
+            this.mnudailyTransaction.Name = "mnudailyTransaction";
+            this.mnudailyTransaction.Size = new System.Drawing.Size(299, 22);
+            this.mnudailyTransaction.Text = "Daily Transaction Summary";
+            this.mnudailyTransaction.Click += new System.EventHandler(this.mnudailyTransaction_Click);
+            // 
+            // toolStripSeparator17
+            // 
+            this.toolStripSeparator17.Name = "toolStripSeparator17";
+            this.toolStripSeparator17.Size = new System.Drawing.Size(220, 6);
+            // 
+            // searchViewToolStripMenuItem
+            // 
+            this.searchViewToolStripMenuItem.ForeColor = System.Drawing.Color.Blue;
+            this.searchViewToolStripMenuItem.Name = "searchViewToolStripMenuItem";
+            this.searchViewToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
+            this.searchViewToolStripMenuItem.Text = "&Search View";
+            this.searchViewToolStripMenuItem.Visible = false;
+            this.searchViewToolStripMenuItem.Click += new System.EventHandler(this.searchViewToolStripMenuItem_Click);
+            // 
+            // masterEntryToolStripMenuItem
+            // 
+            this.masterEntryToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnubrand,
             this.mnudept,
             this.toolStripMenuItem2,
@@ -935,6 +963,7 @@
             this.toolStripSeparator26,
             this.accountSummaryToolStripMenuItem,
             this.accountDetailToolStripMenuItem,
+            this.mnudailyCashBook,
             this.toolStripSeparator10,
             this.mnuincomerpt,
             this.mnutrailbalance,
@@ -1299,327 +1328,335 @@
 			// 
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-			this.statusStrip.Location = new System.Drawing.Point(0, 692);
-			this.statusStrip.Name = "statusStrip";
-			this.statusStrip.Padding = new System.Windows.Forms.Padding(2, 0, 21, 0);
-			this.statusStrip.Size = new System.Drawing.Size(1231, 22);
-			this.statusStrip.TabIndex = 2;
-			this.statusStrip.Text = "StatusStrip";
-			// 
-			// toolStripStatusLabel
-			// 
-			this.toolStripStatusLabel.Name = "toolStripStatusLabel";
-			this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
-			this.toolStripStatusLabel.Text = "Status";
-			// 
-			// button1
-			// 
-			this.button1.Location = new System.Drawing.Point(993, 0);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(23, 18);
-			this.button1.TabIndex = 5;
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Visible = false;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
-			// 
-			// lstpriv
-			// 
-			this.lstpriv.FormattingEnabled = true;
-			this.lstpriv.ItemHeight = 19;
-			this.lstpriv.Location = new System.Drawing.Point(238, 210);
-			this.lstpriv.Name = "lstpriv";
-			this.lstpriv.Size = new System.Drawing.Size(113, 118);
-			this.lstpriv.TabIndex = 7;
-			this.lstpriv.Visible = false;
-			// 
-			// lstmenu
-			// 
-			this.lstmenu.FormattingEnabled = true;
-			this.lstmenu.ItemHeight = 19;
-			this.lstmenu.Location = new System.Drawing.Point(238, 316);
-			this.lstmenu.Name = "lstmenu";
-			this.lstmenu.Size = new System.Drawing.Size(113, 118);
-			this.lstmenu.TabIndex = 4;
-			this.lstmenu.Visible = false;
-			// 
-			// groupBox1
-			// 
-			this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.groupBox1.Controls.Add(this.btnPrint);
-			this.groupBox1.Controls.Add(this.lbltrntype);
-			this.groupBox1.Controls.Add(this.btnsearch);
-			this.groupBox1.Controls.Add(this.btnnew);
-			this.groupBox1.Controls.Add(this.cmbtrntype);
-			this.groupBox1.Controls.Add(this.btnsave);
-			this.groupBox1.Controls.Add(this.label8);
-			this.groupBox1.Controls.Add(this.txttrn);
-			this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-			this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.groupBox1.Location = new System.Drawing.Point(0, 28);
-			this.groupBox1.Margin = new System.Windows.Forms.Padding(0);
-			this.groupBox1.Name = "groupBox1";
-			this.groupBox1.Size = new System.Drawing.Size(1231, 31);
-			this.groupBox1.TabIndex = 56;
-			this.groupBox1.TabStop = false;
-			this.groupBox1.Visible = false;
-			// 
-			// btnPrint
-			// 
-			this.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnPrint.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
-			this.btnPrint.ForeColor = System.Drawing.Color.Navy;
-			this.btnPrint.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.btnPrint.ImageIndex = 3;
-			this.btnPrint.Location = new System.Drawing.Point(209, 0);
-			this.btnPrint.Name = "btnPrint";
-			this.btnPrint.Size = new System.Drawing.Size(124, 29);
-			this.btnPrint.TabIndex = 2;
-			this.btnPrint.Text = "Cr.Purchase";
-			this.btnPrint.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.btnPrint.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnPrint.UseVisualStyleBackColor = true;
-			this.btnPrint.Click += new System.EventHandler(this.mnucrPurchase_Click);
-			// 
-			// lbltrntype
-			// 
-			this.lbltrntype.AutoSize = true;
-			this.lbltrntype.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
-			this.lbltrntype.ForeColor = System.Drawing.Color.Purple;
-			this.lbltrntype.ImeMode = System.Windows.Forms.ImeMode.On;
-			this.lbltrntype.Location = new System.Drawing.Point(787, 32);
-			this.lbltrntype.Name = "lbltrntype";
-			this.lbltrntype.Size = new System.Drawing.Size(89, 19);
-			this.lbltrntype.TabIndex = 58;
-			this.lbltrntype.Text = "Sale Type";
-			// 
-			// btnsearch
-			// 
-			this.btnsearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnsearch.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
-			this.btnsearch.ForeColor = System.Drawing.Color.Navy;
-			this.btnsearch.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.btnsearch.ImageIndex = 6;
-			this.btnsearch.Location = new System.Drawing.Point(335, 0);
-			this.btnsearch.Name = "btnsearch";
-			this.btnsearch.Size = new System.Drawing.Size(113, 29);
-			this.btnsearch.TabIndex = 3;
-			this.btnsearch.Text = "Acc.Reports";
-			this.btnsearch.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.btnsearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnsearch.UseVisualStyleBackColor = true;
-			this.btnsearch.Click += new System.EventHandler(this.accountDetailToolStripMenuItem_Click);
-			// 
-			// btnnew
-			// 
-			this.btnnew.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
-			this.btnnew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnnew.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
-			this.btnnew.ForeColor = System.Drawing.Color.Navy;
-			this.btnnew.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.btnnew.ImageIndex = 4;
-			this.btnnew.Location = new System.Drawing.Point(6, 0);
-			this.btnnew.Name = "btnnew";
-			this.btnnew.Size = new System.Drawing.Size(93, 29);
-			this.btnnew.TabIndex = 0;
-			this.btnnew.Text = "Cr.Sale";
-			this.btnnew.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.btnnew.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnnew.UseVisualStyleBackColor = true;
-			this.btnnew.Click += new System.EventHandler(this.mnuCreditSale_Click);
-			// 
-			// cmbtrntype
-			// 
-			this.cmbtrntype.Font = new System.Drawing.Font("Tahoma", 10F);
-			this.cmbtrntype.FormattingEnabled = true;
-			this.cmbtrntype.Location = new System.Drawing.Point(965, 34);
-			this.cmbtrntype.Name = "cmbtrntype";
-			this.cmbtrntype.Size = new System.Drawing.Size(152, 24);
-			this.cmbtrntype.TabIndex = 57;
-			this.cmbtrntype.Visible = false;
-			// 
-			// btnsave
-			// 
-			this.btnsave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnsave.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
-			this.btnsave.ForeColor = System.Drawing.Color.Navy;
-			this.btnsave.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-			this.btnsave.Location = new System.Drawing.Point(100, 0);
-			this.btnsave.Name = "btnsave";
-			this.btnsave.Size = new System.Drawing.Size(108, 29);
-			this.btnsave.TabIndex = 1;
-			this.btnsave.Text = "Recievable";
-			this.btnsave.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-			this.btnsave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
-			this.btnsave.UseVisualStyleBackColor = true;
-			this.btnsave.Click += new System.EventHandler(this.receivableEntryToolStripMenuItem_Click);
-			// 
-			// label8
-			// 
-			this.label8.AutoSize = true;
-			this.label8.Font = new System.Drawing.Font("Tahoma", 12F);
-			this.label8.ForeColor = System.Drawing.Color.Black;
-			this.label8.ImeMode = System.Windows.Forms.ImeMode.On;
-			this.label8.Location = new System.Drawing.Point(1087, 32);
-			this.label8.Name = "label8";
-			this.label8.Size = new System.Drawing.Size(108, 19);
-			this.label8.TabIndex = 9;
-			this.label8.Text = "Transaction #";
-			this.label8.Visible = false;
-			// 
-			// txttrn
-			// 
-			this.txttrn.BackColor = System.Drawing.Color.DeepSkyBlue;
-			this.txttrn.Font = new System.Drawing.Font("Tahoma", 11.25F);
-			this.txttrn.Location = new System.Drawing.Point(965, 32);
-			this.txttrn.Name = "txttrn";
-			this.txttrn.Size = new System.Drawing.Size(116, 26);
-			this.txttrn.TabIndex = 17;
-			this.txttrn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-			this.txttrn.Visible = false;
-			// 
-			// dgmenu
-			// 
-			this.dgmenu.AllowUserToAddRows = false;
-			this.dgmenu.AllowUserToDeleteRows = false;
-			this.dgmenu.AllowUserToResizeColumns = false;
-			this.dgmenu.AllowUserToResizeRows = false;
-			dataGridViewCellStyle1.BackColor = System.Drawing.Color.AliceBlue;
-			this.dgmenu.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
-			this.dgmenu.BackgroundColor = System.Drawing.Color.White;
-			this.dgmenu.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-			this.dgmenu.ColumnHeadersVisible = false;
-			this.dgmenu.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.statusStrip.Location = new System.Drawing.Point(0, 692);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Padding = new System.Windows.Forms.Padding(2, 0, 21, 0);
+            this.statusStrip.Size = new System.Drawing.Size(1231, 22);
+            this.statusStrip.TabIndex = 2;
+            this.statusStrip.Text = "StatusStrip";
+            // 
+            // toolStripStatusLabel
+            // 
+            this.toolStripStatusLabel.Name = "toolStripStatusLabel";
+            this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
+            this.toolStripStatusLabel.Text = "Status";
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(993, 0);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(23, 18);
+            this.button1.TabIndex = 5;
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Visible = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // lstpriv
+            // 
+            this.lstpriv.FormattingEnabled = true;
+            this.lstpriv.ItemHeight = 19;
+            this.lstpriv.Location = new System.Drawing.Point(238, 203);
+            this.lstpriv.Name = "lstpriv";
+            this.lstpriv.Size = new System.Drawing.Size(113, 118);
+            this.lstpriv.TabIndex = 7;
+            this.lstpriv.Visible = false;
+            // 
+            // lstmenu
+            // 
+            this.lstmenu.FormattingEnabled = true;
+            this.lstmenu.ItemHeight = 19;
+            this.lstmenu.Location = new System.Drawing.Point(420, 104);
+            this.lstmenu.Name = "lstmenu";
+            this.lstmenu.Size = new System.Drawing.Size(247, 156);
+            this.lstmenu.TabIndex = 4;
+            this.lstmenu.Visible = false;
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.groupBox1.Controls.Add(this.btnPrint);
+            this.groupBox1.Controls.Add(this.lbltrntype);
+            this.groupBox1.Controls.Add(this.btnsearch);
+            this.groupBox1.Controls.Add(this.btnnew);
+            this.groupBox1.Controls.Add(this.cmbtrntype);
+            this.groupBox1.Controls.Add(this.btnsave);
+            this.groupBox1.Controls.Add(this.label8);
+            this.groupBox1.Controls.Add(this.txttrn);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.groupBox1.Location = new System.Drawing.Point(0, 28);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(0);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(1231, 31);
+            this.groupBox1.TabIndex = 56;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Visible = false;
+            // 
+            // btnPrint
+            // 
+            this.btnPrint.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnPrint.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.btnPrint.ForeColor = System.Drawing.Color.Navy;
+            this.btnPrint.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnPrint.ImageIndex = 3;
+            this.btnPrint.Location = new System.Drawing.Point(209, 0);
+            this.btnPrint.Name = "btnPrint";
+            this.btnPrint.Size = new System.Drawing.Size(124, 29);
+            this.btnPrint.TabIndex = 2;
+            this.btnPrint.Text = "Cr.Purchase";
+            this.btnPrint.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnPrint.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnPrint.UseVisualStyleBackColor = true;
+            this.btnPrint.Click += new System.EventHandler(this.mnucrPurchase_Click);
+            // 
+            // lbltrntype
+            // 
+            this.lbltrntype.AutoSize = true;
+            this.lbltrntype.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.lbltrntype.ForeColor = System.Drawing.Color.Purple;
+            this.lbltrntype.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.lbltrntype.Location = new System.Drawing.Point(787, 32);
+            this.lbltrntype.Name = "lbltrntype";
+            this.lbltrntype.Size = new System.Drawing.Size(89, 19);
+            this.lbltrntype.TabIndex = 58;
+            this.lbltrntype.Text = "Sale Type";
+            // 
+            // btnsearch
+            // 
+            this.btnsearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnsearch.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.btnsearch.ForeColor = System.Drawing.Color.Navy;
+            this.btnsearch.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnsearch.ImageIndex = 6;
+            this.btnsearch.Location = new System.Drawing.Point(335, 0);
+            this.btnsearch.Name = "btnsearch";
+            this.btnsearch.Size = new System.Drawing.Size(113, 29);
+            this.btnsearch.TabIndex = 3;
+            this.btnsearch.Text = "Acc.Reports";
+            this.btnsearch.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnsearch.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnsearch.UseVisualStyleBackColor = true;
+            this.btnsearch.Click += new System.EventHandler(this.accountDetailToolStripMenuItem_Click);
+            // 
+            // btnnew
+            // 
+            this.btnnew.FlatAppearance.BorderColor = System.Drawing.Color.Navy;
+            this.btnnew.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnnew.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.btnnew.ForeColor = System.Drawing.Color.Navy;
+            this.btnnew.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnnew.ImageIndex = 4;
+            this.btnnew.Location = new System.Drawing.Point(6, 0);
+            this.btnnew.Name = "btnnew";
+            this.btnnew.Size = new System.Drawing.Size(93, 29);
+            this.btnnew.TabIndex = 0;
+            this.btnnew.Text = "Cr.Sale";
+            this.btnnew.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnnew.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnnew.UseVisualStyleBackColor = true;
+            this.btnnew.Click += new System.EventHandler(this.mnuCreditSale_Click);
+            // 
+            // cmbtrntype
+            // 
+            this.cmbtrntype.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.cmbtrntype.FormattingEnabled = true;
+            this.cmbtrntype.Location = new System.Drawing.Point(965, 34);
+            this.cmbtrntype.Name = "cmbtrntype";
+            this.cmbtrntype.Size = new System.Drawing.Size(152, 24);
+            this.cmbtrntype.TabIndex = 57;
+            this.cmbtrntype.Visible = false;
+            // 
+            // btnsave
+            // 
+            this.btnsave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnsave.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
+            this.btnsave.ForeColor = System.Drawing.Color.Navy;
+            this.btnsave.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.btnsave.Location = new System.Drawing.Point(100, 0);
+            this.btnsave.Name = "btnsave";
+            this.btnsave.Size = new System.Drawing.Size(108, 29);
+            this.btnsave.TabIndex = 1;
+            this.btnsave.Text = "Recievable";
+            this.btnsave.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.btnsave.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText;
+            this.btnsave.UseVisualStyleBackColor = true;
+            this.btnsave.Click += new System.EventHandler(this.receivableEntryToolStripMenuItem_Click);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.label8.ForeColor = System.Drawing.Color.Black;
+            this.label8.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.label8.Location = new System.Drawing.Point(1087, 32);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(108, 19);
+            this.label8.TabIndex = 9;
+            this.label8.Text = "Transaction #";
+            this.label8.Visible = false;
+            // 
+            // txttrn
+            // 
+            this.txttrn.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.txttrn.Font = new System.Drawing.Font("Tahoma", 11.25F);
+            this.txttrn.Location = new System.Drawing.Point(965, 32);
+            this.txttrn.Name = "txttrn";
+            this.txttrn.Size = new System.Drawing.Size(116, 26);
+            this.txttrn.TabIndex = 17;
+            this.txttrn.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.txttrn.Visible = false;
+            // 
+            // dgmenu
+            // 
+            this.dgmenu.AllowUserToAddRows = false;
+            this.dgmenu.AllowUserToDeleteRows = false;
+            this.dgmenu.AllowUserToResizeColumns = false;
+            this.dgmenu.AllowUserToResizeRows = false;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.AliceBlue;
+            this.dgmenu.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            this.dgmenu.BackgroundColor = System.Drawing.Color.White;
+            this.dgmenu.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgmenu.ColumnHeadersVisible = false;
+            this.dgmenu.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Menu,
             this.priv,
             this.Code});
-			this.dgmenu.GridColor = System.Drawing.Color.Maroon;
-			this.dgmenu.Location = new System.Drawing.Point(0, 93);
-			this.dgmenu.MultiSelect = false;
-			this.dgmenu.Name = "dgmenu";
-			this.dgmenu.ReadOnly = true;
-			this.dgmenu.RowHeadersVisible = false;
-			this.dgmenu.RowTemplate.Height = 40;
-			this.dgmenu.RowTemplate.ReadOnly = true;
-			this.dgmenu.Size = new System.Drawing.Size(2, 535);
-			this.dgmenu.TabIndex = 1;
-			this.dgmenu.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgmenu_CellContentClick);
-			this.dgmenu.MouseLeave += new System.EventHandler(this.dgmenu_MouseLeave);
-			this.dgmenu.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgmenu_MouseMove);
-			// 
-			// Menu
-			// 
-			this.Menu.HeaderText = "Menu";
-			this.Menu.Name = "Menu";
-			this.Menu.ReadOnly = true;
-			this.Menu.Width = 200;
-			// 
-			// priv
-			// 
-			this.priv.HeaderText = "priv";
-			this.priv.Name = "priv";
-			this.priv.ReadOnly = true;
-			this.priv.Visible = false;
-			// 
-			// Code
-			// 
-			this.Code.HeaderText = "code";
-			this.Code.Name = "Code";
-			this.Code.ReadOnly = true;
-			this.Code.Visible = false;
-			// 
-			// salesToolStripMenuItem1
-			// 
-			this.salesToolStripMenuItem1.Name = "salesToolStripMenuItem1";
-			this.salesToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
-			this.salesToolStripMenuItem1.Text = "sales";
-			// 
-			// cmbMainMenu
-			// 
-			this.cmbMainMenu.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.cmbMainMenu.ForeColor = System.Drawing.Color.Blue;
-			this.cmbMainMenu.FormattingEnabled = true;
-			this.cmbMainMenu.Location = new System.Drawing.Point(0, 56);
-			this.cmbMainMenu.Name = "cmbMainMenu";
-			this.cmbMainMenu.Size = new System.Drawing.Size(209, 31);
-			this.cmbMainMenu.TabIndex = 0;
-			this.cmbMainMenu.Visible = false;
-			this.cmbMainMenu.SelectedIndexChanged += new System.EventHandler(this.cmbMainMenu_SelectedIndexChanged);
-			// 
-			// btnarow
-			// 
-			this.btnarow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-			this.btnarow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnarow.Location = new System.Drawing.Point(0, 606);
-			this.btnarow.Name = "btnarow";
-			this.btnarow.Size = new System.Drawing.Size(207, 33);
-			this.btnarow.TabIndex = 67;
-			this.btnarow.Text = "<<-";
-			this.btnarow.UseVisualStyleBackColor = true;
-			this.btnarow.Visible = false;
-			this.btnarow.Click += new System.EventHandler(this.btnarow_Click);
-			// 
-			// btnlang
-			// 
-			this.btnlang.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-			this.btnlang.Location = new System.Drawing.Point(1172, 0);
-			this.btnlang.Name = "btnlang";
-			this.btnlang.Size = new System.Drawing.Size(59, 28);
-			this.btnlang.TabIndex = 69;
-			this.btnlang.Tag = "0";
-			this.btnlang.Text = "عربي";
-			this.btnlang.UseVisualStyleBackColor = true;
-			this.btnlang.Click += new System.EventHandler(this.btnlang_Click);
-			// 
-			// MDIParent1
-			// 
-			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-			this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
-			this.BackColor = System.Drawing.Color.White;
-			this.ClientSize = new System.Drawing.Size(1231, 714);
-			this.Controls.Add(this.btnlang);
-			this.Controls.Add(this.btnarow);
-			this.Controls.Add(this.cmbMainMenu);
-			this.Controls.Add(this.groupBox1);
-			this.Controls.Add(this.lstmenu);
-			this.Controls.Add(this.lstpriv);
-			this.Controls.Add(this.button1);
-			this.Controls.Add(this.statusStrip);
-			this.Controls.Add(this.toolStrip);
-			this.Controls.Add(this.menuStrip);
-			this.Controls.Add(this.dgmenu);
-			this.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
-			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-			this.IsMdiContainer = true;
-			this.KeyPreview = true;
-			this.MainMenuStrip = this.menuStrip;
-			this.Margin = new System.Windows.Forms.Padding(4);
-			this.Name = "MDIParent1";
-			this.Text = "Finance and Inventory System";
-			this.TransparencyKey = System.Drawing.Color.White;
-			this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-			this.Activated += new System.EventHandler(this.MDIParent1_Activated);
-			this.Deactivate += new System.EventHandler(this.MDIParent1_Deactivate);
-			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MDIParent1_FormClosing);
-			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MDIParent1_FormClosed);
-			this.Load += new System.EventHandler(this.MDIParent1_Load);
-			this.DoubleClick += new System.EventHandler(this.MDIParent1_DoubleClick);
-			this.Enter += new System.EventHandler(this.MDIParent1_Enter);
-			this.Layout += new System.Windows.Forms.LayoutEventHandler(this.MDIParent1_Layout);
-			this.Leave += new System.EventHandler(this.MDIParent1_Leave);
-			this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MDIParent1_MouseMove);
-			this.Validated += new System.EventHandler(this.MDIParent1_Validated);
-			this.menuStrip.ResumeLayout(false);
-			this.menuStrip.PerformLayout();
-			this.toolStrip.ResumeLayout(false);
-			this.toolStrip.PerformLayout();
-			this.statusStrip.ResumeLayout(false);
-			this.statusStrip.PerformLayout();
-			this.groupBox1.ResumeLayout(false);
-			this.groupBox1.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.dgmenu)).EndInit();
-			this.ResumeLayout(false);
-			this.PerformLayout();
+            this.dgmenu.GridColor = System.Drawing.Color.Maroon;
+            this.dgmenu.Location = new System.Drawing.Point(0, 93);
+            this.dgmenu.MultiSelect = false;
+            this.dgmenu.Name = "dgmenu";
+            this.dgmenu.ReadOnly = true;
+            this.dgmenu.RowHeadersVisible = false;
+            this.dgmenu.RowTemplate.Height = 40;
+            this.dgmenu.RowTemplate.ReadOnly = true;
+            this.dgmenu.Size = new System.Drawing.Size(2, 535);
+            this.dgmenu.TabIndex = 1;
+            this.dgmenu.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgmenu_CellContentClick);
+            this.dgmenu.MouseLeave += new System.EventHandler(this.dgmenu_MouseLeave);
+            this.dgmenu.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgmenu_MouseMove);
+            // 
+            // Menu
+            // 
+            this.Menu.HeaderText = "Menu";
+            this.Menu.Name = "Menu";
+            this.Menu.ReadOnly = true;
+            this.Menu.Width = 200;
+            // 
+            // priv
+            // 
+            this.priv.HeaderText = "priv";
+            this.priv.Name = "priv";
+            this.priv.ReadOnly = true;
+            this.priv.Visible = false;
+            // 
+            // Code
+            // 
+            this.Code.HeaderText = "code";
+            this.Code.Name = "Code";
+            this.Code.ReadOnly = true;
+            this.Code.Visible = false;
+            // 
+            // salesToolStripMenuItem1
+            // 
+            this.salesToolStripMenuItem1.Name = "salesToolStripMenuItem1";
+            this.salesToolStripMenuItem1.Size = new System.Drawing.Size(152, 26);
+            this.salesToolStripMenuItem1.Text = "sales";
+            // 
+            // cmbMainMenu
+            // 
+            this.cmbMainMenu.Font = new System.Drawing.Font("Tahoma", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.cmbMainMenu.ForeColor = System.Drawing.Color.Blue;
+            this.cmbMainMenu.FormattingEnabled = true;
+            this.cmbMainMenu.Location = new System.Drawing.Point(0, 56);
+            this.cmbMainMenu.Name = "cmbMainMenu";
+            this.cmbMainMenu.Size = new System.Drawing.Size(209, 31);
+            this.cmbMainMenu.TabIndex = 0;
+            this.cmbMainMenu.Visible = false;
+            this.cmbMainMenu.SelectedIndexChanged += new System.EventHandler(this.cmbMainMenu_SelectedIndexChanged);
+            // 
+            // btnarow
+            // 
+            this.btnarow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.btnarow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnarow.Location = new System.Drawing.Point(0, 606);
+            this.btnarow.Name = "btnarow";
+            this.btnarow.Size = new System.Drawing.Size(207, 33);
+            this.btnarow.TabIndex = 67;
+            this.btnarow.Text = "<<-";
+            this.btnarow.UseVisualStyleBackColor = true;
+            this.btnarow.Visible = false;
+            this.btnarow.Click += new System.EventHandler(this.btnarow_Click);
+            // 
+            // btnlang
+            // 
+            this.btnlang.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.btnlang.Location = new System.Drawing.Point(1172, 0);
+            this.btnlang.Name = "btnlang";
+            this.btnlang.Size = new System.Drawing.Size(59, 28);
+            this.btnlang.TabIndex = 69;
+            this.btnlang.Tag = "0";
+            this.btnlang.Text = "عربي";
+            this.btnlang.UseVisualStyleBackColor = true;
+            this.btnlang.Click += new System.EventHandler(this.btnlang_Click);
+            // 
+            // mnudailyCashBook
+            // 
+            this.mnudailyCashBook.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(64)))), ((int)(((byte)(0)))));
+            this.mnudailyCashBook.Name = "mnudailyCashBook";
+            this.mnudailyCashBook.Size = new System.Drawing.Size(307, 22);
+            this.mnudailyCashBook.Text = "Daily Cash Book";
+            this.mnudailyCashBook.Click += new System.EventHandler(this.mnudailyCashBook_Click);
+            // 
+            // MDIParent1
+            // 
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoValidate = System.Windows.Forms.AutoValidate.EnablePreventFocusChange;
+            this.BackColor = System.Drawing.Color.White;
+            this.ClientSize = new System.Drawing.Size(1231, 714);
+            this.Controls.Add(this.btnlang);
+            this.Controls.Add(this.btnarow);
+            this.Controls.Add(this.cmbMainMenu);
+            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.lstmenu);
+            this.Controls.Add(this.lstpriv);
+            this.Controls.Add(this.button1);
+            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.toolStrip);
+            this.Controls.Add(this.menuStrip);
+            this.Controls.Add(this.dgmenu);
+            this.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(0)))), ((int)(((byte)(64)))));
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.IsMdiContainer = true;
+            this.KeyPreview = true;
+            this.MainMenuStrip = this.menuStrip;
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.Name = "MDIParent1";
+            this.Text = "Finance and Inventory System";
+            this.TransparencyKey = System.Drawing.Color.White;
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.Activated += new System.EventHandler(this.MDIParent1_Activated);
+            this.Deactivate += new System.EventHandler(this.MDIParent1_Deactivate);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MDIParent1_FormClosing);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MDIParent1_FormClosed);
+            this.Load += new System.EventHandler(this.MDIParent1_Load);
+            this.DoubleClick += new System.EventHandler(this.MDIParent1_DoubleClick);
+            this.Enter += new System.EventHandler(this.MDIParent1_Enter);
+            this.Layout += new System.Windows.Forms.LayoutEventHandler(this.MDIParent1_Layout);
+            this.Leave += new System.EventHandler(this.MDIParent1_Leave);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MDIParent1_MouseMove);
+            this.Validated += new System.EventHandler(this.MDIParent1_Validated);
+            this.menuStrip.ResumeLayout(false);
+            this.menuStrip.PerformLayout();
+            this.toolStrip.ResumeLayout(false);
+            this.toolStrip.PerformLayout();
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgmenu)).EndInit();
+            this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
         #endregion
@@ -1783,6 +1820,10 @@
         private System.Windows.Forms.ToolStripMenuItem mnuadjustdeletion;
         private System.Windows.Forms.ToolStripMenuItem mnuxpressmenu;
         private System.Windows.Forms.Button btnlang;
+        private System.Windows.Forms.ToolStripMenuItem mnuitemmovement;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator29;
+        private System.Windows.Forms.ToolStripMenuItem mnudailyTransaction;
+        private System.Windows.Forms.ToolStripMenuItem mnudailyCashBook;
         //private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
         //private Microsoft.VisualBasic.PowerPacks.RectangleShape b1;
     }

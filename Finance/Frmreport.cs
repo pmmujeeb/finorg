@@ -260,7 +260,54 @@ namespace FinOrg
                             break;
 
                         }
+                    case 3:
+                        {
+                            chkdate.Checked = false;
+                            repdt1.Value = DateTime.Now.Date;
+                            repdt2.Value = DateTime.Now.Date;
+                            grpdate.Visible = true;
+                            panel1.Visible = false;
+                            panel2.Visible = false;
+                            label5.Visible = false;
+                            cmbowner.Visible = false;
+                            cmblocaltion.DataSource = null;
+                            lblsaleagent.Text = "Account Entry";
+                           if (Gvar.SuperUserid==1)
+                           {                             lbllocation.Text = "Branch";
+                            sql = "sELECT   Branch_Name,Branch_Code froM Branches UNION sELECT  'All',-1 order by branch_code ";
 
+                             locad = new SqlDataAdapter(sql, Conn);
+                             locdt = new DataTable("brn");
+                            locad.Fill(locdt);
+
+                            cmblocaltion.DisplayMember = "Branch_Name";
+                            cmblocaltion.ValueMember = "Branch_Code";
+                            cmblocaltion.DataSource = locdt;
+                            cmblocaltion.SelectedIndex = 0;
+                            cmblocaltion.SelectedValue = Gvar.brn_code;
+
+                        }
+                           else
+                           {
+                               cmblocaltion.Visible = false;
+                               lbllocation.Visible = false;
+                           }
+
+
+                            sql = "sELECT   'C' as Code,'Credit Only' as Ename Union Select 'D','Debit Only'  UNION sELECT  'A','All' order by code ";
+                            cmbsaleagent.DataSource = null;
+                            locad = new SqlDataAdapter(sql, Conn);
+                            locdt = new DataTable("cdt");
+                            locad.Fill(locdt);
+
+                            cmbsaleagent.DisplayMember = "Ename";
+                            cmbsaleagent.ValueMember = "Code";
+                            cmbsaleagent.DataSource = locdt;
+                            cmbsaleagent.SelectedIndex = 0;
+
+
+                        }
+                        break;
                     case 112:
                         {
 
@@ -290,7 +337,7 @@ namespace FinOrg
                             label3.Visible = false;
                             cmbtransaction.Visible = false;
                             label1.Visible = false;
-                            dt1.Visible = false;
+                            repdt1.Visible = false;
                             chkdate.Visible = false;
                             label2.Text = "As of Date";
                             grpdate.Visible = true;
@@ -302,6 +349,9 @@ namespace FinOrg
 
                 try
                 {
+
+                    if (Gvar.rptidx < 100 && Gvar.rptidx > 106)
+                    { 
                     sql = "SELECT * FROM AC_OPTIONS WHERE  ac_options.ID =1";
 
                     rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
@@ -327,28 +377,40 @@ namespace FinOrg
                         {
                             panel2.Visible = false;
                         }
-
-                        emptype = Convert.ToInt16(rec.Fields["emp_ac_type"].Value.ToString());
-                        isini = false;
                     }
+                        emptype = Convert.ToInt16(rec.Fields["emp_ac_type"].Value.ToString());
+                       
+                    }
+
+                    else
+                    {
+                        lbldept.Visible = false;
+                        cmbdept.Visible = false;
+                    }
+                    isini = false;
+                   
+
+                
                 }
                 catch
                 {
                 }
 
+                if (Gvar._Gind != 3)
+                {
+                    sql = "sELECT  Acc_Name,cast(Acc_No as varchar) as Acc_no,row_number() over (order by Acc_Name) as Rownum froM Accounts where acc_type_code=" + emptype + " UNION sELECT   'All',-1,0 ";
 
-                sql = "sELECT  Acc_Name,cast(Acc_No as varchar) as Acc_no,row_number() over (order by Acc_Name) as Rownum froM Accounts where acc_type_code=" + emptype + " UNION sELECT   'All',-1,0 ";
+                    SqlDataAdapter empad = new SqlDataAdapter(sql, Conn);
+                    DataTable empdt = new DataTable("emp");
+                    empad.Fill(empdt);
 
-                SqlDataAdapter empad = new SqlDataAdapter(sql, Conn);
-                DataTable empdt = new DataTable("emp");
-                empad.Fill(empdt);
+                    cmbsaleagent.DisplayMember = "Acc_Name";
+                    cmbsaleagent.ValueMember = "Acc_no";
+                    cmbsaleagent.DataSource = empdt;
+                    cmbsaleagent.SelectedIndex = 0;
 
-                cmbsaleagent.DisplayMember = "Acc_Name";
-                cmbsaleagent.ValueMember = "Acc_no";
-                cmbsaleagent.DataSource = empdt;
-                cmbsaleagent.SelectedIndex = 0;
-
-                cmbtransaction.SelectedIndex = 0;
+                    cmbtransaction.SelectedIndex = 0;
+                }
 
 
                 // sql = "sELECT  Trn_Name,cast(Trn_code as varchar) as Trn_Code,row_number() over (order by Trn_Name) as Rownum froM Trn_Type  UNION sELECT   'All',-1,0  order by 3";
@@ -434,13 +496,13 @@ namespace FinOrg
 
 
 
-                DateTime edt1 = dt1.Value;
-                DateTime edt2 = dt2.Value; ;
+                DateTime edt1 = repdt1.Value;
+                DateTime edt2 = repdt2.Value; ;
 
                 RPTHEAD = "";
                 // string sdt2 = string.Format("yyyy,MM,dd,00,00,00", Gvar.ArCalendar(dt2.Value, true));
-                string adate1 = dt1.Value.Date.ToString("dd-MM-yyyy");
-                string adate2 = dt2.Value.Date.ToString("dd-MM-yyyy");
+                string adate1 = repdt1.Value.Date.ToString("dd-MM-yyyy");
+                string adate2 = repdt2.Value.Date.ToString("dd-MM-yyyy");
 
                 string sdt1 = edt1.Date.ToString("yyyy,MM,dd,00,00,00");
                 string sdt2 = edt2.Date.ToString("yyyy,MM,dd,23,59,59");
@@ -464,8 +526,8 @@ namespace FinOrg
 
 
 
-                            string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                            string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                            string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                            string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
                             string crt2 = "1=1";
                              string crt4 = "";
                              string crt3 = "";
@@ -807,8 +869,8 @@ namespace FinOrg
 
 
 
-                            string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                            string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                            string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                            string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
                             if (Gvar.rptidx == 102)
                             {
@@ -1161,7 +1223,122 @@ namespace FinOrg
                         }
                         break;
                     #endregion case2;
+                    #region case3;
+                    case 3:
+                        {
 
+                           
+
+                                rep_path = Gvar.report_path + "\\reports\\repacctrans.rpt";
+
+
+                            CrRep.Load(rep_path);
+                            //DateTime edt1 = Convert.ToDateTime(Gvar.ArCalendar(dt1.Value, true,false));
+                            //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
+
+                             sql = "SELECT def_cash_ac FROM AC_OPTIONS WHERE  ac_options.ID =1";
+                ADODB.Recordset rec = new ADODB.Recordset();
+                    rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
+                object  cash_ac=0;
+                    if (rec.RecordCount > 0)
+                    {
+                        cash_ac = rec.Fields[0].Value;
+                    }
+
+
+                            string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                            string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
+
+
+                            crt1 = "1=1";
+                            string crt2 = "1=1";
+
+                            crt1 = " {accounts.acc_no}  = " + cash_ac;
+                                    RPTHEAD = "Cash Workbook Detail  report ";
+                                
+
+
+                           
+
+
+                            if (!chkdate.Checked)
+                            {
+                                crt1 = crt1 + " AND  {TRN_ACCOUNTS.PAY_DATE} in DateTime (" + sdt1 + ") to DateTime (" + sdt2 + ")";
+                                RPTHEAD = "Cash Workbook Detail  report From " + rdt1 + " To " + rdt2;
+                                // var subrpt = (SubreportObject)CrRep.ReportDefinition.ReportObjects["CLBAL"];
+
+                              //  CrRep.Subreports[1].RecordSelectionFormula = "{TRN_ACCOUNTS.PAY_DATE} < DateTime (" + sdt1 + ") and {TRN_ACCOUNTS.ACC_NO} = {?Pm-TRN_ACCOUNTS.ACC_NO}";
+                                //CrRep.Subreports[0].Refresh();
+
+                                // CrRep.SetParameterValue("@dt1",dt1.Value.ToString("yyyy-MM-dd"));
+                                //CrRep.SetParameterValue("@dt2", dt2.Value.ToString("yyyy-MM-dd"));
+                            }
+                            else
+                            {
+
+                                var subrpt = (SubreportObject)CrRep.ReportDefinition.ReportObjects["CLBAL"];
+                                subrpt.ObjectFormat.EnableSuppress = true;
+                                RPTHEAD = "Cash Workbook Detail  report for All Date ";
+                                //CrRep.SetParameterValue("@dt1", "1900-01-01");
+                                //CrRep.SetParameterValue("@dt2", "2900-01-01");
+                            }
+
+
+
+                        
+
+
+                            if (cmbtransaction.SelectedIndex < 1)
+                            {
+
+                                // crt2 = "{accounts.acc_type_code} <> -1";
+                            }
+                            else
+                            {
+                                crt2 = crt2 + " and {trn_accounts.trn_by}  = " + cmbtransaction.SelectedValue;
+                                RPTHEAD = RPTHEAD + ", for  " + cmbtransaction.Text;
+                            }
+
+                            if (cmbsaleagent.SelectedIndex < 1)
+                            {
+
+                               
+                            }
+                            else
+                            {
+                                crt2 = crt2 + " and {trn_accounts.dr_cr}  = " + cmbsaleagent.SelectedValue;
+                                RPTHEAD = RPTHEAD + ", for Account Type  " + cmbsaleagent.Text;
+                            }
+
+                            if (cmblocaltion.SelectedIndex < 1)
+                            {
+
+                                // crt2 = "{accounts.acc_type_code} <> -1";
+                            }
+                            else
+                            {
+                                crt2 = crt2 + " and {trn_accounts.brn_code}  = " + cmblocaltion.SelectedValue;
+                                RPTHEAD = RPTHEAD + ", for Branch  " + cmblocaltion.Text;
+                            }
+
+
+
+
+
+                            rep_formula = crt1 + " aND " + crt2;
+
+
+
+
+                            //rep_formula = crt1 + " aND " + crt2 + " aND " + crt3 + " and " + crt4; //" AND {QRY_ITEM.QTY}<>0";
+
+                            CrRep.SummaryInfo.ReportTitle = RPTHEAD;// "Account Detail  Report from " + rdt1 + " To " + rdt2;
+
+                          
+
+                        }
+                        break;
+                    #endregion case2;
                     #region case 12;
                     case 112:
                         {
@@ -1177,8 +1354,8 @@ namespace FinOrg
 
 
 
-                            string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                            string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                            string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                            string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
 
 
@@ -1292,7 +1469,7 @@ namespace FinOrg
 
                             if (Gvar._Gind == 12)
                             {
-                                sql = "update Report_dt set incdate='" + dt2.Value.Date.ToString("yyyy-MM-dd") + " 23:59:59'";
+                                sql = "update Report_dt set incdate='" + repdt2.Value.Date.ToString("yyyy-MM-dd") + " 23:59:59'";
                                 ADOconn.Execute(sql, out out1);
 
                                 RPTHEAD = "Income and Expense  Report as of " + adate2;
@@ -1300,7 +1477,7 @@ namespace FinOrg
                             }
                             if (Gvar._Gind == 13)
                             {
-                                sql = "update Report_dt set trail_date='" + dt2.Value.Date.ToString("yyyy-MM-dd") + " 23:59:59'";
+                                sql = "update Report_dt set trail_date='" + repdt2.Value.Date.ToString("yyyy-MM-dd") + " 23:59:59'";
                                 ADOconn.Execute(sql, out out1);
 
                                 RPTHEAD = "Trail Balance Report as of " + adate2;
@@ -1309,7 +1486,7 @@ namespace FinOrg
 
                             if (Gvar._Gind == 14)
                             {
-                                sql = "update Report_dt set pnldate='" + dt2.Value.Date.ToString("yyyy-MM-dd") + " 23:59:59'";
+                                sql = "update Report_dt set pnldate='" + repdt2.Value.Date.ToString("yyyy-MM-dd") + " 23:59:59'";
                                 ADOconn.Execute(sql, out out1);
                                 RPTHEAD = "Profit and Loss Report as of " + adate2;
 
@@ -1320,7 +1497,7 @@ namespace FinOrg
 
                             if (Gvar._Gind == 15)
                             {
-                                sql = "update Report_dt set Baldate='" + dt2.Value.Date.ToString("yyyy-MM-dd") + " 23:59:59'";
+                                sql = "update Report_dt set Baldate='" + repdt2.Value.Date.ToString("yyyy-MM-dd") + " 23:59:59'";
                                 ADOconn.Execute(sql, out out1);
                                 RPTHEAD = "Balance Sheet Report as of " + adate2;
                                 rep_path = Gvar.report_path + "\\reports\\repBalSheet1.rpt";
@@ -1332,8 +1509,8 @@ namespace FinOrg
 
 
 
-                            string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                            string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                            string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                            string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
 
 

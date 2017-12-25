@@ -227,7 +227,7 @@ namespace FinOrg
                          lst1.Columns[0].ReadOnly = false;
                          lst1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-                         sql = "sELECT  ACC_TYPE_CODE,ACC_TYPE_NAME froM ACC_TYPE   UNION sELECT  -10,'All' ";
+                         sql = "sELECT  ACC_TYPE_CODE,ACC_TYPE_NAME froM ACC_TYPE where ACC_TYPE_CODE in (2,3)   UNION sELECT  -10,'All' ";
 
                                      SqlDataAdapter adaactype = new SqlDataAdapter(sql, Conn);
                                      DataTable dtactype = new DataTable("ACC_TYPE");
@@ -253,11 +253,15 @@ namespace FinOrg
                          
                          panel2.Visible = true;
 
-
+                         string crt1 = "";
 
                         lbllst2.Text = "Accounts";
+                        if (cmb3.SelectedIndex == 0)
+                            crt1 = " acc_type_code in (2,3)";
 
-                        sql = "sELECT  cast(ACC_NO as varchar) as acc_no,ACC_NAME,row_number() over (order by ACC_NAME) as Rownum froM ACCOUNTS where acc_type_code in (" + cus_code + ")";
+                        else crt1 = " acc_type_code =" + cmb3.SelectedValue;
+
+                        sql = "sELECT  cast(ACC_NO as varchar) as acc_no,ACC_NAME,row_number() over (order by ACC_NAME) as Rownum froM ACCOUNTS where " + crt1;
 
                          ada2 = new SqlDataAdapter(sql, Conn);
                          dt2 = new DataTable("accounts");
@@ -867,26 +871,7 @@ namespace FinOrg
                 sql = "sELECT  WR_CODE,WR_NAME froM WRHOUSE_MASTER union select 0 , 'All' from WRHOUSE_MASTER";
 
                  adacmb1 = new SqlDataAdapter(sql, Conn);
-                // cmd = new SqlCommand(sql, Conn);
-
-                //     rd = cmd.ExecuteReader();
-                //     cmb1.Items.Clear();
-                //     cmb1.Items.Add("All");
-
-
-
-                //while (rd.Read())
-                //{
-                //    Gvar.ComboboxItem itm= new Gvar.ComboboxItem();
-                //    itm.Text=rd["COST_NAME"].ToString();
-                //    itm.Value=rd["COST_CODE"];
-
-                //    cmb1.Items.Add(itm);
-
-                //}
-
-                //if (cmb1.Items.Count > 0) cmb1.SelectedIndex = 1;
-                //rd.Close();
+               
 
                   dtcmb1 = new DataTable("WRHOUSE_MASTER");
 
@@ -950,8 +935,75 @@ namespace FinOrg
                             grpdate.Visible = false;
                             //this.Visible = false;
                             break;
-              
-                    
+                  case 22:
+                    grpdate.Visible = true;
+                    lblcmb3.Visible = true;
+                    txtmove.Visible = true;
+                    lblcmb3.Text = "Report For";
+                        lblcmb1.Visible = false;
+                        lblcmb1.Text = "Item Category";
+                        cmb1.Visible = false;
+                        cmb3.Visible = true;
+                         sql = "sELECT   0 as code,'Item Movement Percent Less Than ' as Rname Union Select 1, 'Item Movement Percent Greter Than'  ";
+
+                         ada2 = new SqlDataAdapter(sql, Conn);
+                         dt2 = new DataTable("ITEM");
+                        ada2.Fill(dt2);
+                        cmb3.DataSource = dt2;
+                        cmb3.DisplayMember = "Rname";
+                        cmb3.ValueMember = "code";
+
+                        chkminstock.Visible = false;
+                
+                        
+                        chkstock.Visible=false;;
+                        break;
+                  case 23:
+                        grpdate.Visible = true;
+
+                        chkdate.Checked = false;
+                        repdt1.Value = DateTime.Now.Date;
+                        repdt2.Value = DateTime.Now.Date;
+                      
+                        lblcmb1.Visible = true;
+                        lblcmb1.Text = "WareHouse";
+                        cmb1.Visible = true;
+                         sql = "sELECT   WR_code,WR_name froM WRHOUSe_MASTER Union sELECT   0,'All' froM WRHOUSe_MASTER  ";
+
+                        ada2 = new SqlDataAdapter(sql, Conn);
+                        dt2 = new DataTable("WRHOUS_MASTER");
+                        ada2.Fill(dt2);
+                        cmb1.DisplayMember = "WR_name";
+                        cmb1.ValueMember = "WR_code";
+
+
+                
+                        cmb1.DataSource = dt2;
+                        //cmbcatcode.DataSource = dt2;
+                        grpdate.Visible = true;        
+                        lblcmb2.Visible = true;
+                        lblcmb2.Text = "Transaction";
+                        cmb2.Visible = true;
+                        
+
+                       
+
+                         sql = "SELECT  Trn_Name,CODES froM Trn_Type_rep  order by TRN_CODE";
+
+                     trnad = new SqlDataAdapter(sql, Conn);
+                     trndt = new DataTable("trntype");
+                    trnad.Fill(trndt);
+
+                    cmb2.DisplayMember = "Trn_Name";
+                    cmb2.ValueMember = "CODES";
+                    cmb2.DataSource = trndt;
+                    cmb2.SelectedIndex = 0;
+
+                        chkminstock.Visible = false;
+
+
+                        chkstock.Visible = false; ;
+                        break;
                         
                 }   
 
@@ -1240,11 +1292,11 @@ namespace FinOrg
                             {
 
 
-                                string sdt1 = dt1.Value.ToString("yyyy,MM,dd,00,00,00");
-                                string sdt2 = dt2.Value.ToString("yyyy,MM,dd,23,59,59");
+                                string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                                string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
 
-                                string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                                string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                                string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                                string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
 
 
@@ -1461,11 +1513,11 @@ namespace FinOrg
                         {
 
 
-                            string sdt1 = dt1.Value.ToString("yyyy,MM,dd,00,00,00");
-                            string sdt2 = dt2.Value.ToString("yyyy,MM,dd,23,59,59");
+                            string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                            string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
 
-                            string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                            string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                            string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                            string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
 
 
@@ -1710,11 +1762,11 @@ namespace FinOrg
                             //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
 
 
-                            string sdt1 = dt1.Value.ToString("yyyy,MM,dd,00,00,00");
-                            string sdt2 = dt2.Value.ToString("yyyy,MM,dd,23,59,59");
+                            string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                            string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
 
-                            string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                            string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                            string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                            string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
 
 
@@ -1801,11 +1853,11 @@ namespace FinOrg
                             //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
 
 
-                            string sdt1 = dt1.Value.ToString("yyyy,MM,dd,00,00,00");
-                            string sdt2 = dt2.Value.ToString("yyyy,MM,dd,23,59,59");
+                            string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                            string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
 
-                            string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                            string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                            string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                            string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
 
 
@@ -1890,11 +1942,11 @@ namespace FinOrg
                                 //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
 
 
-                                string sdt1 = dt1.Value.ToString("yyyy,MM,dd,00,00,00");
-                                string sdt2 = dt2.Value.ToString("yyyy,MM,dd,23,59,59");
+                                string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                                string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
 
-                                string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                                string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                                string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                                string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
 
 
@@ -2001,11 +2053,11 @@ namespace FinOrg
                             //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
 
 
-                            string sdt1 = dt1.Value.ToString("yyyy,MM,dd,00,00,00");
-                           string sdt2 = dt2.Value.ToString("yyyy,MM,dd,23,59,59");
+                            string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                           string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
 
-                            string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                           string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                            string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                           string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
 
 
@@ -2108,11 +2160,11 @@ namespace FinOrg
                               //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
 
 
-                              string sdt1 = dt1.Value.ToString("yyyy,MM,dd,00,00,00");
-                              string sdt2 = dt2.Value.ToString("yyyy,MM,dd,23,59,59");
+                              string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                              string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
 
-                              string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                              string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                              string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                              string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
                               crt1 = "";
                               if (!chkdate.Checked)
@@ -2308,11 +2360,11 @@ namespace FinOrg
                               //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
 
 
-                              string sdt1 = dt1.Value.ToString("yyyy,MM,dd,00,00,00");
-                              string sdt2 = dt2.Value.ToString("yyyy,MM,dd,23,59,59");
+                              string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                              string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
 
-                              string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                              string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                              string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                              string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
                               crt1 = "";
 
@@ -2462,11 +2514,11 @@ namespace FinOrg
                               //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
 
 
-                              string sdt1 = dt1.Value.ToString("yyyy,MM,dd,00,00,00");
-                              string sdt2 = dt2.Value.ToString("yyyy,MM,dd,23,59,59");
+                              string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                              string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
 
-                              string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                              string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                              string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                              string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
 
 
@@ -2532,15 +2584,15 @@ namespace FinOrg
                               //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
 
 
-                              string sdt1 = dt1.Value.ToString("yyyy,MM,dd,00,00,00");
-                              string sdt2 = dt2.Value.ToString("yyyy,MM,dd,23,59,59");
+                              string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                              string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
 
-                              string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                              string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                              string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                              string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
                               Conn.Close();
                               Conn.Open();
-                              string sql = "Update report_dt set dt1 ='" + dt1.Value.Year + "-" + dt1.Value.Month + "-" + dt1.Value.Day + "', dt2='" + dt2.Value.Year + "-" + dt2.Value.Month + "-" + dt2.Value.Day + "'";
+                              string sql = "Update report_dt set dt1 ='" + repdt1.Value.Year + "-" + repdt1.Value.Month + "-" + repdt1.Value.Day + "', dt2='" + repdt2.Value.Year + "-" + repdt2.Value.Month + "-" + repdt2.Value.Day + "'";
                               cmd = new SqlCommand(sql, Conn);
                               cmd.ExecuteNonQuery();
 
@@ -2657,15 +2709,15 @@ namespace FinOrg
                                 //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
 
 
-                                string sdt1 = dt1.Value.ToString("yyyy,MM,dd,00,00,00");
-                                string sdt2 = dt2.Value.ToString("yyyy,MM,dd,23,59,59");
+                                string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                                string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
 
-                                string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                                string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                                string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                                string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
                                 Conn.Close();
                                 Conn.Open();
-                                string sql = "Update report_dt set dt1 ='" + dt1.Value.Year + "-"  + dt1.Value.Month + "-" + dt1.Value.Day + "', dt2='" + dt2.Value.Year + "-"  + dt2.Value.Month + "-" + dt2.Value.Day + "'";
+                                string sql = "Update report_dt set dt1 ='" + repdt1.Value.Year + "-"  + repdt1.Value.Month + "-" + repdt1.Value.Day + "', dt2='" + repdt2.Value.Year + "-"  + repdt2.Value.Month + "-" + repdt2.Value.Day + "'";
                                 cmd = new SqlCommand(sql, Conn);
                                 cmd.ExecuteNonQuery();
 
@@ -2791,11 +2843,11 @@ namespace FinOrg
                                 //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
 
 
-                                string sdt1 = dt1.Value.ToString("yyyy,MM,dd,00,00,00");
-                                string sdt2 = dt2.Value.ToString("yyyy,MM,dd,23,59,59");
+                                string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                                string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
 
-                                string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                                string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                                string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                                string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
                                 Conn.Close();
                                 Conn.Open();
@@ -2869,11 +2921,11 @@ namespace FinOrg
                             //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
 
 
-                            string sdt1 = dt1.Value.ToString("yyyy,MM,dd,00,00,00");
-                            string sdt2 = dt2.Value.ToString("yyyy,MM,dd,23,59,59");
+                            string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                            string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
 
-                            string rdt1 = dt1.Value.ToString("dd/MM/yyyy");
-                            string rdt2 = dt2.Value.ToString("dd/MM/yyyy");
+                            string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                            string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
 
 
 
@@ -2972,6 +3024,133 @@ namespace FinOrg
 
                             }
                             break;
+
+                    case 22:
+                            {
+
+
+                                rep_path = Gvar.report_path + "\\reports\\Item_SaleStats.rpt";
+
+
+                                CrRep.Load(rep_path);
+                                //DateTime edt1 = Convert.ToDateTime(Gvar.ArCalendar(dt1.Value, true,false));
+                                //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
+
+
+                                string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                                string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
+
+                                string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                                string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
+
+
+                                string sql = "";
+
+                                RPTHEAD = "Item Movement Statitstic  From " + rdt1 + " To " + rdt2;
+                                if (!chkdate.Checked)
+                                {
+                                     sql = "Update report_dt set dt1 ='" + repdt1.Value.Year + "-" + repdt1.Value.Month + "-" + repdt1.Value.Day + "', dt2='" + repdt2.Value.Year + "-" + repdt2.Value.Month + "-" + repdt2.Value.Day + " 23:59:59'";
+                                }
+                                else
+                                {
+                                     sql = "Update report_dt set dt1 ='2000-01-01', dt2='2100-01-01'";
+                                }
+                                cmd = new SqlCommand(sql, Conn);
+                                cmd.ExecuteNonQuery();
+
+
+                               
+
+                                crt2 = "00";
+                                if (cmb3.SelectedIndex ==0)
+                                {
+
+                                    crt = "{V_ITEM_MOVE_PRCNT.PRCNT} <= " + txtmove.Text ;
+                                    RPTHEAD = RPTHEAD + " for Less " + txtmove.Text + " %";
+                                }
+                                else
+                                {
+                                    crt = "{V_ITEM_MOVE_PRCNT.PRCNT} >= " + txtmove.Text;
+                                    RPTHEAD = RPTHEAD + " for Greater " + txtmove.Text + " %";
+                                }
+
+
+
+
+
+
+
+                                CrRep.SummaryInfo.ReportTitle = RPTHEAD;
+
+                            }
+                            break;
+
+
+                    case 23:
+                            {
+
+
+                                rep_path = Gvar.report_path + "\\reports\\repdailytrans.rpt";
+
+
+                                CrRep.Load(rep_path);
+                                //DateTime edt1 = Convert.ToDateTime(Gvar.ArCalendar(dt1.Value, true,false));
+                                //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
+
+
+                                string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                                string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
+
+                                string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                                string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
+                                crt1 = "1=1";
+                                RPTHEAD = "Transaction Summary Report  " ;
+                                if (!chkdate.Checked)
+                                {
+                                    crt1 = "  {DATA_ENTRY.CURDATE} in DateTime (" + sdt1 + ") to DateTime (" + sdt2 + ")";
+                                    RPTHEAD = "Transaction Summary Report  From " + rdt1 + " To " + rdt2;
+                                }
+                                string sql = "";
+
+                              
+
+
+                                crt3 = "1=1";
+                                crt2 = "1=1";
+                                if (cmb1.SelectedIndex == 0)
+                                {
+
+                                   
+                                }
+                                else
+                                {
+                                    crt3 = "{DATA_ENTRY.WR_CODE} = " + cmb1.SelectedValue;
+                                    RPTHEAD = RPTHEAD + " for WareHouse " + cmb1.Text;
+                                }
+
+                                if (cmb2.SelectedIndex == 0)
+                                {
+
+
+                                }
+                                else
+                                {
+                                    crt2 = "{DATA_ENTRY.TRN_TYPE} in [ " + cmb2.SelectedValue + "]";
+                                    RPTHEAD = RPTHEAD + " for Transactions " + cmb2.Text;
+                                }
+
+
+
+
+                                crt = crt1 + " aND " + crt2 + " aND " + crt3;
+
+
+
+                                CrRep.SummaryInfo.ReportTitle = RPTHEAD;
+
+                            }
+                            break;
+                            
                             
                 }
                           

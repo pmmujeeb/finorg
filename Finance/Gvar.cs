@@ -38,6 +38,7 @@ namespace FinOrg
         public static bool frm_search;
         public static string invno;
         public static int rptidx;
+        public static int trntype;
         public static int multibrn;
         public static int multiwr;
         public static string menu_dock;
@@ -383,13 +384,7 @@ namespace FinOrg
         }
 
 
-        public static int _trntype;
-        public static int trntype
-        {
-            get { return _trntype; }
-            set { _trntype = value; }
-        }
-
+       
 
         public static int _brn_code;
         public static int brn_code

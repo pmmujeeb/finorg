@@ -89,7 +89,7 @@ namespace FinOrg
                 if (txtpriv.Text.Substring(2, 1) == "0")
                     btndelete.Visible = false;
 
-                int trn = Gvar._trntype;
+                int trn = Gvar.trntype;
                 txttrn_type.Text = trn.ToString();
               
                 sql = "SELECT * FROM options WHERE TRNTYPE=" + Convert.ToInt32(txttrn_type.Text);
@@ -135,7 +135,7 @@ namespace FinOrg
                 lbltrntype.Text = cmbtrntype.Text;
 
 
-                sql = "SELECT  WR_CODE,WR_NAME FROM WRHOUSE_MASTER";
+                sql = "SELECT  WR_CODE,WR_NAME FROM WRHOUSE_MASTER ORDER BY WR_CODE";
                 SqlDataAdapter sales = new SqlDataAdapter(sql, Conn);
                 DataTable dtsales = new DataTable("WHOUSE");
                 sales.Fill(dtsales);
@@ -1178,10 +1178,10 @@ namespace FinOrg
                             dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["stock"].Value = rd[7].ToString();
 
                         
-                                btnsave.Enabled = true;
+                               // btnsave.Enabled = true;
                             btndelete.Enabled = true;
                             btnPrint.Enabled = true;
-
+                           
                             nodata = false;
                         }
 
@@ -1264,9 +1264,9 @@ namespace FinOrg
                 rd.Close();
                 cmd.Cancel();
                 int ttype=0;
-                
-                
 
+
+              
 
                 Conn.Close();
                 isini = false;
@@ -1698,7 +1698,7 @@ namespace FinOrg
                             rec.Fields["REC_NO"].Value = rec_no;
                             rec.Fields["ROWNUM"].Value = i;
                             rec.Fields["Item_Code"].Value = dgv1["ItemCode", i].Value;
-                            rec.Fields["price"].Value = dgv1["changes", i].Value;
+                           
                             rec.Fields["Description"].Value = dgv1["Description", i].Value;
                             rec.Fields["QTY"].Value = dgv1["changes", i].Value;
                             
@@ -1734,7 +1734,7 @@ namespace FinOrg
                             rec.Fields["INVOICE_NO"].Value = txtinvno.Text;
                             // rec.Fields["brn_code"].Value = Gvar._brn_code;
 
-                            rec.Fields["UNIT_QTY"].Value = Convert.ToDecimal(dgv1["qty", i].Value) * Convert.ToDecimal(dgv1["fraction", i].Value);
+                            rec.Fields["UNIT_QTY"].Value = Convert.ToDecimal(dgv1["changes", i].Value) * Convert.ToDecimal(dgv1["fraction", i].Value);
                            
 
 
@@ -1929,8 +1929,8 @@ namespace FinOrg
                             rec.Fields["INVOICE_NO"].Value = txtinvno.Text;
                             //rec.Fields["ORDER_NO"].Value = 0;
 
-                            decimal QTY = Convert.ToDecimal(dgv1["qty", i].Value) * Convert.ToDecimal(dgv1["fraction", i].Value);
-                            rec.Fields["QTY"].Value = Convert.ToDecimal(dgv1["qty", i].Value) * Convert.ToDecimal(dgv1["fraction", i].Value);
+                            decimal QTY = Convert.ToDecimal(dgv1["changes", i].Value) * Convert.ToDecimal(dgv1["fraction", i].Value);
+                            rec.Fields["QTY"].Value = Convert.ToDecimal(dgv1["changes", i].Value) * Convert.ToDecimal(dgv1["fraction", i].Value);
                             if (Convert.ToDecimal(dgv1["fraction", i].Value) > 0)
                             {
                                 rec.Fields["price"].Value = Convert.ToDecimal(dgv1["cost", i].Value) / Convert.ToDecimal(dgv1["FRACTION", i].Value);
@@ -2583,14 +2583,14 @@ namespace FinOrg
                     txtrefno.Text = rec.Fields["REF_NO"].Value.ToString();
                     txtremarks.Text = rec.Fields["remarks"].Value.ToString();
 
-                    
-   
-                    btnsave.Enabled = true;
+
+
+                    btnsave.Enabled = false;
                     btndelete.Enabled = true;
                     btnPrint.Enabled = true;
                     lblinvstatus.Text = "***";
 
-                     btnsave.Enabled = true;
+                    
                     lblmsg.Text = "Edit Entry......";
                     lblmsg.BackColor = Color.Green;
                     if (rec.Fields["flag"].Value.ToString() == "D")

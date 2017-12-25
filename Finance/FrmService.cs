@@ -89,7 +89,7 @@ namespace FinOrg
                 if (txtpriv.Text.Substring(2, 1) == "0")
                     btndelete.Visible = false;
 
-                int trn = Gvar._trntype;
+                int trn = Gvar.trntype;
                 txttrn_type.Text = trn.ToString();
               
                 sql = "SELECT * FROM options WHERE TRNTYPE=" + Convert.ToInt32(txttrn_type.Text);
@@ -155,6 +155,19 @@ namespace FinOrg
 
                 cmbsalesagent.DataSource = dtsales;
                 cmbsalesagent.SelectedIndex = 0;
+                
+                
+                sql = "SELECT  WR_CODE,WR_NAME FROM WRHOUSE_MASTER";
+                SqlDataAdapter adawr = new SqlDataAdapter(sql, Conn);
+                DataTable dtwr = new DataTable("WHOUSE");
+                adawr.Fill(dtwr);
+                cmbwarehouse.DisplayMember = "WR_NAME";
+                cmbwarehouse.ValueMember = "WR_CODE";
+
+                cmbwarehouse.DataSource = dtwr;
+                cmbwarehouse.SelectedValue = Gvar.wr_code;
+                cmbwarehouse.Enabled=false;
+                if(Gvar.SuperUserid==1) cmbwarehouse.Enabled=true;
                 dt1.Value = DateTime.Now;
 
                 //string myTempFile = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "pos.txt");
@@ -716,8 +729,14 @@ namespace FinOrg
                    // crite = "(h.DESCRIPTION like '" + ITM.ToString().Trim() + "%' or h.ITEM_CODE like '" + ITM.ToString().Trim() + "%' or h.BARCODE like '" + ITM.ToString().Trim() + "%' )";
                 }
 
-                //a = InStr(Trim(myGrid1.TextMatrix(myGrid1.row, 1)), " ")
+                //int a =  textBox1.Text.Trim().IndexOf(' '); //  InStr(Trim(myGrid1.TextMatrix(myGrid1.row, 1)), " ")
 
+                //if(a>0)
+                //{
+                //    string item = textBox1.Text.ToString().Trim().Substring(0, a - 1);
+                //    crite = " DESCRIPTION like "
+
+                //}
                 //If a > 0 Then
                 //ITM = Left(Trim(myGrid1.TextMatrix(myGrid1.row, 1)), a - 1)
                 //crite = "(DESCRIPTION like '" & Trim(ITM) & "%' or ITEM_CODE like '" & Trim(ITM) & "%' OR PART_NO like '" & Trim(ITM) & "%')"
@@ -728,12 +747,15 @@ namespace FinOrg
                 string sql = "";
                 if (crite != "")
                 {
-                    sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT FROM BARCODE as h INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + "   where ITM_cAT_CODE NOT IN (" + EXCLUDE_ITM_cAT + " ) AND " + crite;
+                    sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT,RETAIL_PRICE,ISNULL(STOCK,0) AS STOCK FROM         BARCODE AS H LEFT OUTER JOIN " +
+                      "WR_STOCK_MASTER AS W ON H.ITEM_CODE = W.ITEM_CODE AND W.WR_CODE= "  + cmbwarehouse.SelectedValue + " INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + " AND    ITM_cAT_CODE NOT IN (" + EXCLUDE_ITM_cAT + " ) AND " + crite;
                     //sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT FROM BARCODE as h INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + "   where ITM_cAT_CODE NOT IN (" + EXCLUDE_ITM_cAT + " ) ";
                 }
                 else
                 {
-                    sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT FROM BARCODE as h INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + "   where ITM_cAT_CODE NOT IN (" + EXCLUDE_ITM_cAT + ") ";
+                    //sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT,RETAIL_PRICE,STOCK FROM QRY_BARCODE as h INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + "   where ITM_cAT_CODE NOT IN (" + EXCLUDE_ITM_cAT + ") ";
+                    sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT,RETAIL_PRICE,ISNULL(STOCK,0) AS STOCK FROM         BARCODE AS H LEFT OUTER JOIN " +
+                      "WR_STOCK_MASTER AS W ON H.ITEM_CODE = W.ITEM_CODE AND W.WR_CODE= "  + cmbwarehouse.SelectedValue + " INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + " AND    ITM_cAT_CODE NOT IN (" + EXCLUDE_ITM_cAT + " ) ";
                 }
 
 
@@ -1561,14 +1583,14 @@ namespace FinOrg
 
 
                 //sql = "sELECT  h.Item_Code,h.DESCRIPTION,h.UNIT,h.FRACTION,s.AVG_PUR_PRICE,s.RE_ORDER,s.stock,u.unit_name from hd_ITEMMASTER h inner join unitmaster u on h.unit=u.unit_id  left join stock_master s on h.Item_Code=s.Item_Code where h.brn_code=1 and itm_cat_code=0 and h.Item_Code='" + Item_Code + "'";
-                sql = "select BdescrIPTION,stock,avg_PUR_PRICE,RETAIL_PRICE,ITEM_CODE,FRACTION,UNIT,stock,wr_code,ITEM_CODE,ITEM_ID,hfraction,barcode,bdescription,r_min_profit,vat_percent  from QRY_barcode where  wr_code =" +  Gvar.wr_code + " and   flag <> 'C' AND (BARCODE='" + Item_Code + "' OR (item_CODE='" + Item_Code + "' and MAIN_ID=1) OR ALIAS_NAME='" + Item_Code + "')"; // AND WR_CODE=" + Gvar.wr_code;
+                sql = "select BdescrIPTION,stock,avg_PUR_PRICE,RETAIL_PRICE,ITEM_CODE,FRACTION,UNIT,stock,wr_code,ITEM_CODE,ITEM_ID,hfraction,barcode,bdescription,r_min_profit,vat_percent  from QRY_barcode where  wr_code =" +  cmbwarehouse.SelectedValue + " and   flag <> 'C' AND (BARCODE='" + Item_Code + "' OR (item_CODE='" + Item_Code + "' and MAIN_ID=1) OR ALIAS_NAME='" + Item_Code + "')"; // AND WR_CODE=" + Gvar.wr_code;
 
                 if (unit != "")
                 {
                     string sql1 = "";
 
                     sql1 = sql.Substring(0, sql.IndexOf("where") - 1);
-                    sql = sql1 + " where wr_code =" + Gvar.wr_code + " and flag <> 'C' AND (ITeM_code = '" + dgv1["ITEMCODE", dgv1.CurrentCell.RowIndex].Value.ToString() + "' or barcode = '" + dgv1["ITEMCODE", dgv1.CurrentCell.RowIndex].Value.ToString() + "') and unit ='" + unit + "'";
+                    sql = sql1 + " where wr_code =" + cmbwarehouse.SelectedValue + " and flag <> 'C' AND (ITeM_code = '" + dgv1["ITEMCODE", dgv1.CurrentCell.RowIndex].Value.ToString() + "' or barcode = '" + dgv1["ITEMCODE", dgv1.CurrentCell.RowIndex].Value.ToString() + "') and unit ='" + unit + "'";
 
 
                 }
@@ -2190,7 +2212,7 @@ namespace FinOrg
                     // rec.Fields["ename"].Value = cmbproject.Text;
 
                     //rec.Fields["order_no"].Value = 0;
-                    rec.Fields["wr_code"].Value = Gvar.wr_code;
+                    rec.Fields["wr_code"].Value = cmbwarehouse.SelectedValue;
                     rec.Fields["NYEAR"].Value = Gvar.nyear;
 
                     rec.Fields["VAT_PERCENT"].Value = Convert.ToDecimal(txtvatpcnt.Text); ;
@@ -2271,7 +2293,7 @@ namespace FinOrg
                             if (propose == "0") rec.Fields["PROPOSE_PRICE"].Value = dgv1["price", i].Value;
                             rec.Fields["ITEM_ID"].Value = dgv1["itemid", i].Value;
                             rec.Fields["hfraction"].Value = dgv1["hfraction", i].Value;
-                            rec.Fields["wr_code"].Value = Gvar.wr_code;
+                            rec.Fields["wr_code"].Value = cmbwarehouse.SelectedValue;
                             if (dgv1["disc", i].Value == null || dgv1["disc", i].Value == "")
                                 dgv1["disc", i].Value = 0;
                             rec.Fields["disc"].Value = Convert.ToDecimal(dgv1["disc", i].Value) * Convert.ToDecimal(txtrate.Text); 
@@ -2421,7 +2443,7 @@ namespace FinOrg
                     cus.Fields["user_ID"].Value = Gvar._Userid;
                     cus.Fields["SALE_TYPE"].Value = 0; ;
                     cus.Fields["SALES_code"].Value = cmbsalesagent.SelectedValue ;
-                    cus.Fields["WR_CODE"].Value = Gvar.wr_code;
+                    cus.Fields["WR_CODE"].Value = cmbwarehouse.SelectedValue;
                     cus.Fields["brn_CODE"].Value = Gvar.brn_code;
                     cus.Fields["NYEAR"].Value = Gvar.nyear;
                     cus.Fields["REMARKS"].Value = txtremarks.Text.Trim();
@@ -2572,12 +2594,12 @@ namespace FinOrg
 
                             decimal PRICE = Convert.ToDecimal(rec.Fields["PRICE"].Value); ;
                             rec.Fields["discount"].Value = Convert.ToDecimal(dgv1["disc", i].Value);
-                            rec.Fields["WR_CODE"].Value = Gvar.wr_code;
+                            rec.Fields["WR_CODE"].Value = cmbwarehouse.SelectedValue;
                             rec.Fields["brn_code"].Value = Gvar.brn_code;
                             rec.Update();
 
                             sal_pur_amt = sal_pur_amt + Convert.ToDecimal(rec.Fields["SALE_PUR_AMOUNT"].Value) * Convert.ToDecimal(rec.Fields["QTY"].Value);
-
+                            string upd_sale_price = "retail_price=retail_price";
 
                             if (Convert.ToDecimal(dgv1.Rows[i].Cells["price"].Value) > 0 && dgv1.Rows[i].Cells["updsale"].Value.ToString() == "2")
                             {
@@ -2603,20 +2625,15 @@ namespace FinOrg
                                         tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
                                     }
                                 }
-                               
 
+                               
                                 if (txttrn_type.Text == "1" || txttrn_type.Text == "2")
                                 {
 
                                     if (Convert.ToDecimal(dgv1.Rows[i].Cells["cost"].Value) > 0 &&  rec_options.Rows[0]["upd_sal_price"].ToString() == "1")
                                     {
-
+                                        upd_sale_price = "retail_price=" + dgv1.Rows[i].Cells["cost"].Value.ToString();
                                         sql = "update barcode set retail_price = " + Convert.ToDecimal(dgv1.Rows[i].Cells["cost"].Value) + "  WHERE barcode='" + dgv1["barcode", i].Value + "'";
-
-
-                                        //cmd = new SqlCommand(sql, Conn);
-                                        //cmd.ExecuteNonQuery();
-
                                         tmp = new Recordset();
                                         tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
                                     }
@@ -2628,14 +2645,14 @@ namespace FinOrg
                            {
                                object a;
 
-                               sql = "Update STOCK_MASTER set last_pur_price=" + PRICE + ",AVG_PUR_PRICE= round(((AVG_pur_price*stock)+(" + PRICE * QTY + "))/(CASE stock+" + QTY + " WHEN 0 THEN 1 ELSE stock+" + QTY + " END),2) where stock > 0 and Item_Code ='" + rec.Fields["Item_Code"].Value + "'";
+                               sql = "Update STOCK_MASTER set " + upd_sale_price + ", last_pur_price=" + PRICE + ",AVG_PUR_PRICE= round(((AVG_pur_price*stock)+(" + PRICE * QTY + "))/(CASE stock+" + QTY + " WHEN 0 THEN 1 ELSE stock+" + QTY + " END),2) where stock > 0 and Item_Code ='" + rec.Fields["Item_Code"].Value + "'";
 
                                
                                ADOconn.Execute(sql, out a, -1);
 
                                if ((int)a < 1)
                                {
-                                   sql = "Update STOCK_MASTER set last_pur_price=" + PRICE + ",AVG_pur_price=" + PRICE + " where  stock =0 and Item_Code ='" + rec.Fields["Item_Code"].Value + "'";
+                                   sql = "Update STOCK_MASTER set " + upd_sale_price + ",last_pur_price=" + PRICE + ",AVG_pur_price=" + PRICE + " where  stock <1 and Item_Code ='" + rec.Fields["Item_Code"].Value + "'";
                                    ADOconn.Execute(sql, out a, -1);
 
                                }
@@ -2659,7 +2676,7 @@ namespace FinOrg
                             if (dgv1["barcode", i].Value.ToString() != "999")
                             {
 
-                                sql = "SELECT STOCK FROM STOCK_ITEM WHERE WR_CODE=" + Gvar.wr_code + " AND ITEM_CODE='" + dgv1["itemcode", i].Value + "'";
+                                sql = "SELECT STOCK FROM STOCK_ITEM WHERE WR_CODE=" + cmbwarehouse.SelectedValue + " AND ITEM_CODE='" + dgv1["itemcode", i].Value + "'";
 
                                 tmp = new Recordset();
                                 tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
@@ -2669,7 +2686,7 @@ namespace FinOrg
 
                                 if (!tmp.EOF) ST = tmp.Fields[0].Value;
 
-                                sql = "SELECT * FROM WR_STOCK_MASTER WHERE WR_CODE=" + Gvar.wr_code + " AND ITEM_CODE='" + dgv1["itemcode", i].Value + "'";
+                                sql = "SELECT * FROM WR_STOCK_MASTER WHERE WR_CODE=" + cmbwarehouse.SelectedValue + " AND ITEM_CODE='" + dgv1["itemcode", i].Value + "'";
                                 tmp = new Recordset();
                                 tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
 
@@ -2677,7 +2694,7 @@ namespace FinOrg
                                 if (tmp.RecordCount == 0) tmp.AddNew();
 
 
-                                tmp.Fields["WR_CODE"].Value = Gvar.wr_code;
+                                tmp.Fields["WR_CODE"].Value = cmbwarehouse.SelectedValue;
                                 tmp.Fields["BRN_CODE"].Value = Gvar.brn_code;
                                 tmp.Fields["ITEM_CODE"].Value = dgv1["itemcode", i].Value;
                                 tmp.Fields["User"].Value = Gvar.Userid;
@@ -2720,7 +2737,7 @@ namespace FinOrg
                     while (!tmp.EOF)
                     {
 
-                        sql = "SELECT STOCK FROM STOCK_ITEM WHERE WR_CODE=" + Gvar.wr_code + " AND ITEM_CODE='" + tmp.Fields["item_code"].Value + "'";
+                        sql = "SELECT STOCK FROM STOCK_ITEM WHERE WR_CODE=" + cmbwarehouse.SelectedValue + " AND ITEM_CODE='" + tmp.Fields["item_code"].Value + "'";
 
                         rec = new Recordset();
                         rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
@@ -2735,13 +2752,13 @@ namespace FinOrg
 
 
 
-                        sql = "SELECT * FROM WR_STOCK_MASTER WHERE WR_CODE=" + Gvar.wr_code + " AND ITEM_CODE='" + tmp.Fields["item_code"].Value + "'";
+                        sql = "SELECT * FROM WR_STOCK_MASTER WHERE WR_CODE=" + cmbwarehouse.SelectedValue + " AND ITEM_CODE='" + tmp.Fields["item_code"].Value + "'";
                         rec = new Recordset();
                         rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
 
 
                         if (rec.RecordCount == 0) rec.AddNew();
-                        rec.Fields["WR_CODE"].Value = Gvar.wr_code;
+                        rec.Fields["WR_CODE"].Value = cmbwarehouse.SelectedValue;
                         rec.Fields["BRN_CODE"].Value = Gvar.brn_code;
                         rec.Fields["ITEM_CODE"].Value = tmp.Fields["item_code"].Value;
                         rec.Fields["User"].Value = Gvar.Userid;
@@ -3078,7 +3095,7 @@ namespace FinOrg
                                         acc.Fields["PAYBY"].Value = cmbsalesagent.SelectedValue;
                                         acc.Fields["TRN_BY"].Value = TRNBY;
                                         acc.Fields["NYEAR"].Value = dt1.Value.Year;
-                                        acc.Fields["cost_code"].Value = Gvar.wr_code;
+                                        acc.Fields["cost_code"].Value = cmbwarehouse.SelectedValue;
                                         acc.Fields["dept_code"].Value = 0;
                                         acc.Fields["entry_no"].Value = Convert.ToDecimal(txtinvno.Text);
                                         acc.Fields["trn_type"].Value = txttrn_type.Text;
@@ -3140,7 +3157,7 @@ namespace FinOrg
                                         rec.Fields["F_PAY_AMOUNT"].Value = Math.Abs(amt);
                                         rec.Fields["F_RATE"].Value = 1;
                                         rec.Fields["TRN_BY"].Value = TRNBY;
-                                        rec.Fields["DR_CR"].Value = DRCR;
+                                        rec.Fields["DR_CR"].Value = DRCR1;
                                         rec.Fields["user_ID"].Value = Gvar.Userid;
                                         rec.Fields["PAYBY"].Value = Convert.ToDecimal(txtcustomer.Text); ;
                                         //rec.Fields["RQTY"].Value = 0;
@@ -3515,7 +3532,7 @@ namespace FinOrg
                                     acc.Fields["PAYBY"].Value = cmbsalesagent.SelectedValue;
 
                                     acc.Fields["TRN_BY"].Value = TRNBY;
-                                    acc.Fields["cost_code"].Value = Gvar.wr_code;
+                                    acc.Fields["cost_code"].Value = cmbwarehouse.SelectedValue;
                                     acc.Fields["dept_code"].Value = 0;
                                     acc.Fields["NYEAR"].Value = dt1.Value.Year;
                                     acc.Fields["trn_type"].Value = txttrn_type.Text;
@@ -3555,7 +3572,7 @@ namespace FinOrg
                                     acc.Fields["PAYBY"].Value = cmbsalesagent.SelectedValue;
 
                                     acc.Fields["TRN_BY"].Value = TRNBY;
-                                    acc.Fields["cost_code"].Value = Gvar.wr_code;
+                                    acc.Fields["cost_code"].Value = cmbwarehouse.SelectedValue;
                                     acc.Fields["dept_code"].Value = 0;
                                     acc.Fields["NYEAR"].Value = dt1.Value.Year;
                                     acc.Fields["trn_type"].Value = txttrn_type.Text;
@@ -5114,6 +5131,28 @@ namespace FinOrg
                 }
 
 
+                if ((txtcustomer.Text == Gvar.sale_acno || txtcustomer.Text == Gvar.pur_acno) && Convert.ToDecimal(txtchange.Text) < 0)
+                {
+                    //DialogResult result = MessageBox.Show("The Paid Amount not Completely Paid ,  You Cannot to Continue?", "Invalid Record", MessageBoxButtons.YesNoCancel);
+                    //if (result != DialogResult.Yes)
+                    //{
+                    //    lblmsg.Text = "Invalid Paid Amount.....";
+                    //    txtcash.Focus();
+
+                    //    return;
+                    //}
+
+                    MessageBox.Show("The Paid Amount not Completely Paid ,  You Cannot to Continue?", "Invalid Record");
+
+                    lblmsg.Text = "Invalid Paid Amount.....";
+                    txtcash.Focus();
+
+                    return;
+
+                }
+
+
+
                  if (Convert.ToDecimal(txtchange.Text) < 0 &&  Gvar.sale_acno.ToString() == txtcustomer.Text )
                 {
                     //DialogResult result = MessageBox.Show("The Paid Amount not Completely Paid ,  You Cannot to Continue?", "Invalid Record", MessageBoxButtons.YesNoCancel);
@@ -5499,7 +5538,7 @@ namespace FinOrg
 
             SQL = "INSERT INTO [WR_STOCK_MASTER]([ITEM_CODE],[USER],WR_CODE)";
             //SQL = SQL & "  Values ('" & TxtFItemCode & "','ADMIN'," & WR_CODE & ")"
-                SQL = SQL + "  Values ('" + dgv1["barcode",i].Value + "','Admin','" + Gvar.wr_code +"')";
+                SQL = SQL + "  Values ('" + dgv1["barcode",i].Value + "','Admin','" + cmbwarehouse.SelectedValue +"')";
                     tmp = new Recordset();
                     tmp.Open(SQL, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
 
@@ -5686,7 +5725,7 @@ ADODB.Recordset rec = new   ADODB.Recordset();
                        {
                            if (rec.Fields["item_code"].Value.ToString() != "" && rec.Fields["item_code"].Value.ToString() != "999")
                            {
-                               sql = "SELECT STOCK FROM STOCK_ITEM WHERE WR_CODE = " + Gvar.wr_code + " and  item_code ='" + rec.Fields["item_code"].Value.ToString() + "'";
+                               sql = "SELECT STOCK FROM STOCK_ITEM WHERE WR_CODE = " + cmbwarehouse.SelectedValue + " and  item_code ='" + rec.Fields["item_code"].Value.ToString() + "'";
 
                                tmp = new Recordset();
                                tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockReadOnly, -1);
@@ -5697,7 +5736,7 @@ ADODB.Recordset rec = new   ADODB.Recordset();
 
 
 
-                               sql = "SELECT * FROM WR_STOCK_MASTER WHERE   WR_CODE = " + Gvar.wr_code + " and  item_code ='" + rec.Fields["item_code"].Value.ToString() + "'";
+                               sql = "SELECT * FROM WR_STOCK_MASTER WHERE   WR_CODE = " + cmbwarehouse.SelectedValue + " and  item_code ='" + rec.Fields["item_code"].Value.ToString() + "'";
 
                                tmp = new Recordset();
                                tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockPessimistic,-1);

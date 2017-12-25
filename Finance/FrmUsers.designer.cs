@@ -202,6 +202,7 @@
             this.dgv1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv1_CellEnter);
             this.dgv1.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv1_CellLeave);
             this.dgv1.RowLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv1_RowLeave);
+            this.dgv1.RowValidated += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv1_RowValidated);
             // 
             // lstgroup
             // 

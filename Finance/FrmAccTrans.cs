@@ -58,7 +58,7 @@ namespace FinOrg
 
         private void FrmMRNEntry_Load(object sender, EventArgs e)
         {
-            int trn = Gvar._trntype;
+            int trn = Gvar.trntype;
             txttrn_type.Text = trn.ToString();
         }
 

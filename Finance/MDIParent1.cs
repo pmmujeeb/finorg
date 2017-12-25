@@ -55,11 +55,12 @@ namespace FinOrg
             if (Gvar._SuperUserid == 1) return;
             foreach (ToolStripMenuItem toolSripItem in menuStrip.Items)
             {
-                
-                
+
+              
                
                
                 disableMenu(toolSripItem);
+               // toolSripItem.Visible = true;
 
             }
 
@@ -76,15 +77,15 @@ namespace FinOrg
             cus = new ADODB.Recordset();
             //string sql = "SELECT menu_code FROM menu_master where id in (select form_id from userpriv where dsp=1 and group_name = (select group_name from userinfo where userid='" + Gvar.Userid+ "'))";
             string sql = "";
-            sql = "SELECT m.id,m.menu_code, m.menu_type,m.menu_name as Mmenu_name,m.menu_code,m.head,p.* FROM menu_master as M left join userpriv as p on  m.id=p.form_id where p.dsp=1 and p.group_name = (select group_name from userinfo where userid='" + Gvar.Userid + "') Order by id";
+            sql = "SELECT m.id,m.menu_code, m.menu_type,m.menu_name as Mmenu_name,m.menu_code,m.head,p.* FROM menu_master as M left join userpriv as p on  m.id=p.form_id where p.dsp=1 and p.group_name = (select group_name from userinfo where Flag='A' and  userid='" + Gvar.Userid + "') Order by id";
             if (Gvar._SuperUserid == 1)
             {
-                sql = "SELECT distinct m.id, m.menu_code, m.menu_type,m.menu_name as Mmenu_name,m.menu_code,m.head,p.* FROM menu_master as M left join userpriv as p on  m.id=p.form_id order by id";
+                sql = "SELECT distinct m.id, m.menu_code, m.menu_type,m.menu_name as Mmenu_name,m.menu_code,m.head,p.* FROM menu_master as M left join userpriv as p on  m.id=p.form_id where Flag='A' order by id";
             }
             cus.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
             while(!cus.EOF)
             {
-                string mnu = cus.Fields["Mmenu_name"].Value.ToString();
+                string mnu = cus.Fields["menu_code"].Value.ToString();
                 string prv ;
                 int ins, upd, del;
                
@@ -145,8 +146,9 @@ namespace FinOrg
                    
                 ////}
 
-
+                
             }
+            populate_sidemenu();
             ADOconn.Close();
             //cus.Close();
             if(cmbMainMenu.Items.Count>0)
@@ -161,37 +163,63 @@ namespace FinOrg
             // if sub menu contain child dropdown items 
             Boolean fnd = false;
             Boolean isitemfound = false;
+            string head_name;
             ToolStripMenuItem m = new ToolStripMenuItem() ;
+            menuItem.Visible = true;
             if (menuItem.HasDropDownItems)
             {
                 foreach (ToolStripItem toolSripItem in menuItem.DropDownItems)
                 {
-                    if (toolSripItem is ToolStripSeparator) if (fnd) continue; else 
+                    head_name = "";
+                    if (toolSripItem is ToolStripSeparator)
+                        if (fnd) continue;
+                        else 
                         toolSripItem.Visible = false; ;
                     
-                       
+                        try
+                        {
                     //if (toolSripItem is ToolStripMenuItem)
-                    //    m = (ToolStripMenuItem)toolSripItem;
-                    if (m.HasDropDownItems)
-                    {
-                        disableMenu(m);
-                        break;
-                    }
+                            if (toolSripItem is ToolStripSeparator)
+                            {
+
+                            }
+                            else
+                            {
+                                m = (ToolStripMenuItem)toolSripItem;
+
+
+                                if (m.HasDropDownItems)
+                                {
+                                    head_name = toolSripItem.Name;
+                                    disableMenu(m);
+                                   
+                                }
+                            }
+                       }
+                    catch(Exception ex)
+                       {
+
+                       }
                         //    insert_menu(menuItem.Text, toolSripItem.Name, 1, toolSripItem.Text, "", 'A');
                         fnd = false;
+                        if (toolSripItem is ToolStripSeparator) continue;
                         for (int i = 0; i < lstmenu.Items.Count; i++)
                         {
-                            string mnu = lstmenu.Items[i].ToString();
+                            string mnu =  lstmenu.Items[i].ToString();
                             if (toolSripItem.Name == mnu)
                             {
                                 toolSripItem.Tag = lstpriv.Items[i].ToString();
                                 fnd = true;
+                               // toolSripItem.GetCurrentParent();
+                                toolSripItem.Visible = true;
+                               
                                 isitemfound = true;
-                                break;
+                                //continue;
+                                
                             }
                             
                         }
-                        if (!fnd )
+                        if (!fnd && toolSripItem.Name != head_name )
                             toolSripItem.Visible = false;
                         
                     {                        //call recursively         
@@ -597,7 +625,7 @@ namespace FinOrg
         {
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = receivableEntryToolStripMenuItem.Tag.ToString();
             Gvar.Gind = 3;
-            Gvar._trntype = 100;
+            Gvar.trntype = 100;
             Form childForm = new frmAccTran();
             childForm.MdiParent = this;
           
@@ -612,7 +640,7 @@ namespace FinOrg
         {
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = receivableEntryToolStripMenuItem.Tag.ToString();
             Gvar.Gind = 4;
-            Gvar._trntype = 200;
+            Gvar.trntype = 200;
             Form childForm = new frmAccTran();
             childForm.MdiParent = this;
           
@@ -660,7 +688,7 @@ namespace FinOrg
         private void Acccreationtool_Click(object sender, EventArgs e)
         {
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = Acccreationtool.Tag.ToString();
-            Gvar._trntype = 200;
+            Gvar.trntype = 200;
             Form childForm = new frmAccounts();
             childForm.MdiParent = this;
 
@@ -697,6 +725,7 @@ namespace FinOrg
             Gvar.invno = "0";
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = mnuItemMaster.Tag.ToString();
             Gvar._Gind = 1;
+            Gvar.trntype = 0;
             Form childForm = new FrmItemMaster();
             childForm.MdiParent = this;
             //childForm.Text = "Window " + childFormNumber++;
@@ -719,7 +748,7 @@ namespace FinOrg
 
         private void mnuPurchase_Click(object sender, EventArgs e)
         {
-            Gvar._trntype = 1;
+            Gvar.trntype = 1;
             Gvar.invno = "0";
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111";
             else
@@ -747,7 +776,7 @@ namespace FinOrg
 
         private void mnuSales_Click(object sender, EventArgs e)
         {
-            Gvar._trntype = 6;
+            Gvar.trntype = 6;
             Gvar.invno = "0";
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111";
             else
@@ -775,7 +804,7 @@ namespace FinOrg
 
         private void mnuCreditSale_Click(object sender, EventArgs e)
         {
-            Gvar._trntype = 7;
+            Gvar.trntype = 7;
             Gvar.invno = "0";
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111";
             else
@@ -803,7 +832,7 @@ namespace FinOrg
 
         private void mnucrPurchase_Click(object sender, EventArgs e)
         {
-            Gvar._trntype = 2;
+            Gvar.trntype = 2;
             Gvar.invno = "0";
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111";
             else
@@ -924,7 +953,7 @@ namespace FinOrg
 
         private void cashSalesReturnToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Gvar._trntype = 3;
+            Gvar.trntype = 3;
             Gvar.invno = "0";
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111";
             else
@@ -952,7 +981,7 @@ namespace FinOrg
 
         private void creditSalesReturnToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Gvar._trntype = 4;
+            Gvar.trntype = 4;
             Gvar.invno = "0";
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111";
             else
@@ -980,7 +1009,7 @@ namespace FinOrg
 
         private void cashPurchaseReturnToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Gvar._trntype = 8;
+            Gvar.trntype = 8;
             Gvar.invno = "0";
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111";
             else
@@ -1008,7 +1037,7 @@ namespace FinOrg
 
         private void creditPurchaseReturnToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Gvar._trntype = 9;
+            Gvar.trntype = 9;
             Gvar.invno = "0";
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111";
             else
@@ -1053,7 +1082,7 @@ namespace FinOrg
 
         private void itemCostToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Gvar._trntype = -1;
+            Gvar.trntype = -1;
             Gvar.invno = "0";
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111";
             else
@@ -1081,7 +1110,7 @@ namespace FinOrg
 
         private void damagedItemMenuItem_Click(object sender, EventArgs e)
         {
-            Gvar._trntype = 11;
+            Gvar.trntype = 11;
             Gvar.invno = "0";
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111";
             else
@@ -1113,7 +1142,7 @@ namespace FinOrg
         private void PurchaseOrderMenuItem_Click_1(object sender, EventArgs e)
         {
         Gvar.invno = "0";
-             Gvar._trntype = 22;
+             Gvar.trntype = 22;
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = PurchaseOrderMenuItem.Tag.ToString();
             Form childForm = new FrmPurOrder();
             childForm.MdiParent = this;
@@ -1127,7 +1156,7 @@ namespace FinOrg
 
         private void orderRecieptMenuItem_Click(object sender, EventArgs e)
         {
-            Gvar._trntype = 2;
+            Gvar.trntype = 2;
             Gvar.invno = "0";
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = orderRecieptMenuItem.Tag.ToString();
             Form childForm = new FrmPurOrder();
@@ -1142,7 +1171,7 @@ namespace FinOrg
 
         private void mnutransferMenuItem_Click(object sender, EventArgs e)
         {
-            Gvar._trntype = 5;
+            Gvar.trntype = 5;
             Gvar.invno = "0";
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = mnutransferMenuItem.Tag.ToString();
             Form childForm = new FrmTransfer();
@@ -1168,7 +1197,7 @@ namespace FinOrg
         private void customerMasterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = Acccreationtool.Tag.ToString();
-            Gvar._trntype = 201;
+            Gvar.trntype = 201;
             Form childForm = new frmAccounts();
             childForm.MdiParent = this;
 
@@ -1180,7 +1209,7 @@ namespace FinOrg
         private void SupplierMenuItem_Click(object sender, EventArgs e)
         {
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = Acccreationtool.Tag.ToString();
-            Gvar._trntype = 202;
+            Gvar.trntype = 202;
             Form childForm = new frmAccounts();
             childForm.MdiParent = this;
 
@@ -1219,6 +1248,7 @@ namespace FinOrg
         {
             Gvar.invno = "0";
             Gvar._Gind = 2;
+            Gvar.trntype = 0;
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = mnuItemMaster.Tag.ToString();
             Form childForm = new FrmItemMaster();
             childForm.MdiParent = this;
@@ -1238,39 +1268,7 @@ namespace FinOrg
         {
             try
             {
-                dgmenu.Rows.Clear();
-                int i = 0;
-                foreach (var item in Gvar.User_Menu)
-                {
-                    string head = item.head.Replace('&', ' ').Trim();
-                    string mnu = item.Menu.Replace('&', ' ').Trim();
-                    if (cmbMainMenu.Text == head && cmbMainMenu.Text != mnu && mnu != "")
-                    {
-                        // if (dgmenu.Rows.Count<=i)
-                        dgmenu.Rows.Add(1);
-                        dgmenu[0, i].Value = mnu;
-                        dgmenu[1, i].Value = item.code;
-                        dgmenu[2, i].Value = item.priv;
-                        i++;
-                        //dgmenu.Rows.Add(1);
-                        //dgmenu[1, i].Value = item.
-
-
-                    }
-                }
-                dgmenu.EndEdit();
-                //if (dgmenu[0, i].Value == null)
-                //{
-                //    dgmenu.EndEdit();
-                //    dgmenu.Rows.RemoveAt(i);
-                //}
-                dgmenu.Columns[0].Width = dgmenu.Width - 5;
-                if (dgmenu.Rows.Count > 0)
-                {
-                    dgmenu.Focus();
-
-
-                }
+               //populate_sidemenu()
             }
             catch(Exception ex) 
             {
@@ -1316,7 +1314,7 @@ namespace FinOrg
 
 
             }
-            Gvar._trntype = 0;
+            Gvar.trntype = 0;
             Form childForm = new FrmProduct();
             childForm.MdiParent = this;
 
@@ -1343,7 +1341,7 @@ namespace FinOrg
 
 
             }
-            Gvar._trntype = 0;
+            Gvar.trntype = 0;
             Form childForm = new FrmPayExpense();
             childForm.MdiParent = this;
 
@@ -1370,7 +1368,7 @@ namespace FinOrg
 
 
             }
-            Gvar._trntype = 0;
+            Gvar.trntype = 0;
             Form childForm = new Frmsalprocess();
             childForm.MdiParent = this;
 
@@ -1413,7 +1411,7 @@ namespace FinOrg
 
 
             }
-            Gvar._trntype = 0;
+            Gvar.trntype = 0;
             Form childForm = new FrmBankrecons();
             childForm.MdiParent = this;
 
@@ -1429,7 +1427,7 @@ namespace FinOrg
         {
             Gvar.invno = "0";
             
-            //Gvar._trntype = 0;
+            //Gvar.trntype = 0;
             //Form childForm = new Frmbrowser ();
             //childForm.MdiParent = this;
 
@@ -1457,7 +1455,7 @@ namespace FinOrg
 
 
             }
-            Gvar._trntype = 0;
+            Gvar.trntype = 0;
             Form childForm = new FrmAssetMaster();
             childForm.MdiParent = this;
 
@@ -1510,7 +1508,7 @@ namespace FinOrg
 
 
             }
-            Gvar._trntype = 0;
+            Gvar.trntype = 0;
             Form childForm = new Frmsalpaid();
             childForm.MdiParent = this;
 
@@ -1682,7 +1680,7 @@ namespace FinOrg
         {
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = mnucusreceivale.Tag.ToString();
             Gvar.Gind = 1;
-            Gvar._trntype = 100;
+            Gvar.trntype = 100;
             Form childForm = new frmAccTran();
             childForm.MdiParent = this;
 
@@ -1695,7 +1693,7 @@ namespace FinOrg
         {
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = mnusuppayable.Tag.ToString();
             Gvar.Gind = 2;
-            Gvar._trntype = 200;
+            Gvar.trntype = 200;
             Form childForm = new frmAccTran();
             childForm.MdiParent = this;
 
@@ -1792,7 +1790,7 @@ namespace FinOrg
         {
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = mnuglvoucher.Tag.ToString();
             Gvar.Gind = 5;
-            Gvar._trntype = 100;
+            Gvar.trntype = 100;
             Form childForm = new frmGLTran();
             childForm.MdiParent = this;
 
@@ -1808,7 +1806,7 @@ namespace FinOrg
 
         private void mnuadjustaddition_Click(object sender, EventArgs e)
         {
-            Gvar._trntype = -2;
+            Gvar.trntype = -2;
             Gvar.invno = "0";
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111";
             else
@@ -1836,7 +1834,7 @@ namespace FinOrg
 
         private void mnuadjustdeletion_Click(object sender, EventArgs e)
         {
-            Gvar._trntype = 17;
+            Gvar.trntype = 17;
             Gvar.invno = "0";
             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111";
             else
@@ -1920,7 +1918,7 @@ namespace FinOrg
 
 
 
-                    return true;
+                    //return true;
                
                 //return base.ProcessCmdKey(ref msg, Keys.Up);
                 //return base.ProcessCmdKey(ref msg, keyData);
@@ -1964,7 +1962,7 @@ namespace FinOrg
               
             if (toolSripItem.HasDropDownItems)                 
             {
-             bool fnd =   SerachSubMenuStripItems(toolSripItem, "mnuadjustdeletion");
+             bool fnd =   SerachSubMenuStripItems(toolSripItem, dgmenu[1,e.RowIndex].Value.ToString());
                 if (fnd)
                 {
                     return;
@@ -2052,7 +2050,119 @@ namespace FinOrg
 
 
        
-      
+      private void populate_sidemenu()
+         {
+             try
+             {
+
+
+
+                 //ADODB.Connection ADOconn = new ADODB.Connection();
+              if(ADOconn.State==0)
+                 ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
+              
+                 
+                 ADODB.Recordset cus = new ADODB.Recordset();
+               
+            cus = new ADODB.Recordset();
+            //string sql = "SELECT menu_code FROM menu_master where id in (select form_id from userpriv where dsp=1 and group_name = (select group_name from userinfo where userid='" + Gvar.Userid+ "'))";
+            string sql = "";
+            sql = "SELECT m.id,m.menu_code,m.menu_name as Mmenu_name FROM menu_xpress as M inner join userpriv as p on  m.id=p.form_id where  m.group_name = (select group_name from userinfo where userid='" + Gvar.Userid + "') Order by id";
+            if (Gvar._SuperUserid == 1)
+            {
+               // sql = "SELECT distinct m.id, m.menu_code, m.menu_type,m.menu_name as Mmenu_name,m.menu_code,m.head,p.* FROM menu_master as M left join userpriv as p on  m.id=p.form_id order by id";
+            }
+            cus.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
+           
+                 dgmenu.Rows.Clear();
+                 int i = 0;
+
+                 while (!cus.EOF)
+                 {
+
+
+                     dgmenu.Rows.Add(1);
+
+                 dgmenu[0, i].Value = cus.Fields["Mmenu_name"].Value;
+                 dgmenu[1, i].Value = cus.Fields["menu_code"].Value; ;
+                 dgmenu[2, i].Value = cus.Fields["id"].Value; ;
+                         i++;
+
+                 //foreach (var item in Gvar.User_Menu)
+                 //{
+                 //    string head = item.head.Replace('&', ' ').Trim();
+                 //    string mnu = item.Menu.Replace('&', ' ').Trim();
+                 //    if (cmbMainMenu.Text == head && cmbMainMenu.Text != mnu && mnu != "")
+                 //    {
+                 //        // if (dgmenu.Rows.Count<=i)
+                 //        dgmenu.Rows.Add(1);
+                 //        dgmenu[0, i].Value = mnu;
+                 //        dgmenu[1, i].Value = item.code;
+                 //        dgmenu[2, i].Value = item.priv;
+                 //        i++;
+                 //        //dgmenu.Rows.Add(1);
+                 //        //dgmenu[1, i].Value = item.
+
+
+                 //    }
+
+                         cus.MoveNext();
+                 }
+
+                         if (dgmenu.Rows.Count == 0) dgmenu.Visible = false;
+                // dgmenu.EndEdit();
+                 //if (dgmenu[0, i].Value == null)
+                 //{
+                 //    dgmenu.EndEdit();
+                 //    dgmenu.Rows.RemoveAt(i);
+                 //}
+                 //dgmenu.Columns[0].Width = dgmenu.Width - 5;
+                 //if (dgmenu.Rows.Count > 0)
+                 //{
+                 //    dgmenu.Focus();
+
+
+                 //}
+             }
+          catch(Exception ex)
+             {
+
+             }
+         }
+
+      private void mnuitemmovement_Click(object sender, EventArgs e)
+      {
+          Gvar.Gind = 1;
+          Gvar.rptidx = 22;
+          Form childForm = new frmreport1();
+          childForm.MdiParent = this;
+          //childForm.Text = "Window " + childFormNumber++;
+          childForm.Text = "Item Movement Reports Screen";
+          childForm.Show();
+      }
+
+      private void mnudailyTransaction_Click(object sender, EventArgs e)
+      {
+          Gvar.Gind = 1;
+          Gvar.rptidx = 23;
+          Form childForm = new frmreport1();
+          childForm.MdiParent = this;
+          //childForm.Text = "Window " + childFormNumber++;
+          childForm.Text = "Daily Transaction Reports Screen";
+          childForm.Show();
+
+      }
+
+      private void mnudailyCashBook_Click(object sender, EventArgs e)
+      {
+          Gvar.Gind = 3;
+          Gvar.rptidx = 107;
+          Form childForm = new frmReport();
+          childForm.MdiParent = this;
+          //childForm.Text = "Window " + childFormNumber++;
+          childForm.Text = "Cash Flow Detail Reports Screen";
+          childForm.Show();
+      }
 
         }
 

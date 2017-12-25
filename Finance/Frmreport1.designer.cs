@@ -28,10 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
             this.maintab1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.txtmove = new System.Windows.Forms.TextBox();
             this.chkminstock = new System.Windows.Forms.CheckBox();
             this.chkstock = new System.Windows.Forms.CheckBox();
             this.lblmsg = new System.Windows.Forms.Label();
@@ -44,9 +45,9 @@
             this.lbllst2 = new System.Windows.Forms.Label();
             this.grpdate = new System.Windows.Forms.Panel();
             this.chkdate = new System.Windows.Forms.CheckBox();
-            this.dt2 = new System.Windows.Forms.DateTimePicker();
+            this.repdt2 = new System.Windows.Forms.DateTimePicker();
             this.lbldt2 = new System.Windows.Forms.Label();
-            this.dt1 = new System.Windows.Forms.DateTimePicker();
+            this.repdt1 = new System.Windows.Forms.DateTimePicker();
             this.lbldt1 = new System.Windows.Forms.Label();
             this.cmb2 = new System.Windows.Forms.ComboBox();
             this.lblcmb2 = new System.Windows.Forms.Label();
@@ -75,10 +76,12 @@
             this.maintab1.Name = "maintab1";
             this.maintab1.SelectedIndex = 0;
             this.maintab1.Size = new System.Drawing.Size(830, 640);
+            this.maintab1.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.maintab1.TabIndex = 1;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.txtmove);
             this.tabPage1.Controls.Add(this.chkminstock);
             this.tabPage1.Controls.Add(this.chkstock);
             this.tabPage1.Controls.Add(this.lblmsg);
@@ -102,12 +105,22 @@
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
             // 
+            // txtmove
+            // 
+            this.txtmove.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.txtmove.Location = new System.Drawing.Point(707, 322);
+            this.txtmove.Name = "txtmove";
+            this.txtmove.Size = new System.Drawing.Size(62, 24);
+            this.txtmove.TabIndex = 35;
+            this.txtmove.Text = "30";
+            this.txtmove.Visible = false;
+            // 
             // chkminstock
             // 
             this.chkminstock.AutoSize = true;
             this.chkminstock.Font = new System.Drawing.Font("Tahoma", 10F);
             this.chkminstock.ForeColor = System.Drawing.Color.Red;
-            this.chkminstock.Location = new System.Drawing.Point(65, 321);
+            this.chkminstock.Location = new System.Drawing.Point(196, 321);
             this.chkminstock.Name = "chkminstock";
             this.chkminstock.Size = new System.Drawing.Size(228, 21);
             this.chkminstock.TabIndex = 20;
@@ -121,9 +134,9 @@
             this.chkstock.AutoSize = true;
             this.chkstock.Checked = true;
             this.chkstock.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkstock.Location = new System.Drawing.Point(616, 321);
+            this.chkstock.Location = new System.Drawing.Point(465, 325);
             this.chkstock.Name = "chkstock";
-            this.chkstock.Size = new System.Drawing.Size(154, 17);
+            this.chkstock.Size = new System.Drawing.Size(152, 17);
             this.chkstock.TabIndex = 34;
             this.chkstock.Text = "Show Only Stock Available";
             this.chkstock.UseVisualStyleBackColor = true;
@@ -146,9 +159,9 @@
             "All",
             "Social Club Re-Creation",
             "Social Club Business"});
-            this.cmb3.Location = new System.Drawing.Point(218, 321);
+            this.cmb3.Location = new System.Drawing.Point(177, 321);
             this.cmb3.Name = "cmb3";
-            this.cmb3.Size = new System.Drawing.Size(482, 21);
+            this.cmb3.Size = new System.Drawing.Size(523, 21);
             this.cmb3.TabIndex = 24;
             this.cmb3.Visible = false;
             this.cmb3.SelectedIndexChanged += new System.EventHandler(this.cmb3_SelectedIndexChanged);
@@ -205,8 +218,8 @@
             // 
             this.lst2.AllowUserToAddRows = false;
             this.lst2.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.lst2.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.lst2.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
             this.lst2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.lst2.Enabled = false;
             this.lst2.Location = new System.Drawing.Point(138, 26);
@@ -228,9 +241,9 @@
             // grpdate
             // 
             this.grpdate.Controls.Add(this.chkdate);
-            this.grpdate.Controls.Add(this.dt2);
+            this.grpdate.Controls.Add(this.repdt2);
             this.grpdate.Controls.Add(this.lbldt2);
-            this.grpdate.Controls.Add(this.dt1);
+            this.grpdate.Controls.Add(this.repdt1);
             this.grpdate.Controls.Add(this.lbldt1);
             this.grpdate.Location = new System.Drawing.Point(42, 3);
             this.grpdate.Name = "grpdate";
@@ -251,16 +264,16 @@
             this.chkdate.Text = "Date All";
             this.chkdate.UseVisualStyleBackColor = true;
             // 
-            // dt2
+            // repdt2
             // 
-            this.dt2.CalendarFont = new System.Drawing.Font("Tahoma", 12F);
-            this.dt2.CustomFormat = "dd/MM/yyyy";
-            this.dt2.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.dt2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dt2.Location = new System.Drawing.Point(523, 11);
-            this.dt2.Name = "dt2";
-            this.dt2.Size = new System.Drawing.Size(135, 27);
-            this.dt2.TabIndex = 2;
+            this.repdt2.CalendarFont = new System.Drawing.Font("Tahoma", 12F);
+            this.repdt2.CustomFormat = "dd/MM/yyyy";
+            this.repdt2.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.repdt2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.repdt2.Location = new System.Drawing.Point(523, 11);
+            this.repdt2.Name = "repdt2";
+            this.repdt2.Size = new System.Drawing.Size(135, 27);
+            this.repdt2.TabIndex = 2;
             // 
             // lbldt2
             // 
@@ -273,16 +286,16 @@
             this.lbldt2.TabIndex = 4;
             this.lbldt2.Text = "To Date";
             // 
-            // dt1
+            // repdt1
             // 
-            this.dt1.CalendarFont = new System.Drawing.Font("Tahoma", 12F);
-            this.dt1.CustomFormat = "dd/MM/yyyy";
-            this.dt1.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.dt1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dt1.Location = new System.Drawing.Point(176, 11);
-            this.dt1.Name = "dt1";
-            this.dt1.Size = new System.Drawing.Size(157, 27);
-            this.dt1.TabIndex = 1;
+            this.repdt1.CalendarFont = new System.Drawing.Font("Tahoma", 12F);
+            this.repdt1.CustomFormat = "dd/MM/yyyy";
+            this.repdt1.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.repdt1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.repdt1.Location = new System.Drawing.Point(176, 11);
+            this.repdt1.Name = "repdt1";
+            this.repdt1.Size = new System.Drawing.Size(157, 27);
+            this.repdt1.TabIndex = 1;
             // 
             // lbldt1
             // 
@@ -362,8 +375,8 @@
             // 
             this.lst1.AllowUserToAddRows = false;
             this.lst1.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.lst1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.lst1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             this.lst1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.lst1.Enabled = false;
             this.lst1.Location = new System.Drawing.Point(138, 29);
@@ -444,7 +457,6 @@
             this.Name = "frmreport1";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Frmreport";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmReport_Load);
             this.maintab1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
@@ -468,8 +480,8 @@
         private System.Windows.Forms.Label lbllst1;
         private System.Windows.Forms.Label lbldt2;
         private System.Windows.Forms.Label lbldt1;
-        private System.Windows.Forms.DateTimePicker dt2;
-        private System.Windows.Forms.DateTimePicker dt1;
+        private System.Windows.Forms.DateTimePicker repdt2;
+        private System.Windows.Forms.DateTimePicker repdt1;
         private System.Windows.Forms.Button btnView;
         private System.Windows.Forms.Label lblcmb1;
         private System.Windows.Forms.ComboBox cmb1;
@@ -492,6 +504,7 @@
         private System.Windows.Forms.CheckBox chkstock;
         private System.Windows.Forms.CheckBox chkdate;
         private System.Windows.Forms.CheckBox chkminstock;
+        private System.Windows.Forms.TextBox txtmove;
 
     }
 }

@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmItemMaster));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
             this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -133,7 +133,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.grditem = new System.Windows.Forms.DataGridView();
             this.cmbcatcode = new System.Windows.Forms.ComboBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.txtsearch = new System.Windows.Forms.TextBox();
             this.txtpriv = new System.Windows.Forms.TextBox();
             this.txtolditm = new System.Windows.Forms.TextBox();
             this.grdmain = new System.Windows.Forms.DataGridView();
@@ -415,8 +415,8 @@
             // grdbarcode
             // 
             this.grdbarcode.AllowUserToAddRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.grdbarcode.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.grdbarcode.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
             this.grdbarcode.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdbarcode.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.barcode,
@@ -516,8 +516,8 @@
             // grdsup
             // 
             this.grdsup.AllowUserToAddRows = false;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.grdsup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.grdsup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle12;
             this.grdsup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdsup.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -583,6 +583,7 @@
             this.txtvat.BackColor = System.Drawing.Color.White;
             resources.ApplyResources(this.txtvat, "txtvat");
             this.txtvat.Name = "txtvat";
+            this.txtvat.TextChanged += new System.EventHandler(this.txtvat_TextChanged);
             // 
             // txtminstock
             // 
@@ -600,8 +601,8 @@
             // 
             this.grdstock.AllowUserToAddRows = false;
             this.grdstock.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.grdstock.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.grdstock.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
             this.grdstock.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdstock.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewTextBoxColumn1,
@@ -832,9 +833,9 @@
             // 
             this.grdlookup.AllowUserToAddRows = false;
             this.grdlookup.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Navy;
-            this.grdlookup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.Navy;
+            this.grdlookup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
             this.grdlookup.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
             this.grdlookup.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.grdlookup.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -938,8 +939,8 @@
             // 
             this.grditem.AllowUserToAddRows = false;
             this.grditem.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.grditem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.grditem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle13;
             this.grditem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             resources.ApplyResources(this.grditem, "grditem");
             this.grditem.Name = "grditem";
@@ -957,14 +958,14 @@
             this.cmbcatcode.Name = "cmbcatcode";
             this.cmbcatcode.ValueMember = "itm_cat_code";
             // 
-            // textBox1
+            // txtsearch
             // 
-            resources.ApplyResources(this.textBox1, "textBox1");
-            this.textBox1.Name = "textBox1";
-            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            this.textBox1.DoubleClick += new System.EventHandler(this.textBox1_DoubleClick);
-            this.textBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
-            this.textBox1.Leave += new System.EventHandler(this.textBox1_Leave);
+            resources.ApplyResources(this.txtsearch, "txtsearch");
+            this.txtsearch.Name = "txtsearch";
+            this.txtsearch.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.txtsearch.DoubleClick += new System.EventHandler(this.textBox1_DoubleClick);
+            this.txtsearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
+            this.txtsearch.Leave += new System.EventHandler(this.textBox1_Leave);
             // 
             // txtpriv
             // 
@@ -1003,6 +1004,7 @@
             this.grdmain.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
             this.grdmain.RowHeadersVisible = false;
             this.grdmain.RowTemplate.Height = 32;
+            this.grdmain.StandardTab = true;
             this.grdmain.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdmain_CellContentClick);
             this.grdmain.Enter += new System.EventHandler(this.grdmain_Enter);
             this.grdmain.KeyDown += new System.Windows.Forms.KeyEventHandler(this.grdmain_KeyDown);
@@ -1010,25 +1012,25 @@
             // 
             // caption
             // 
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.caption.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle14.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.caption.DefaultCellStyle = dataGridViewCellStyle14;
             resources.ApplyResources(this.caption, "caption");
             this.caption.Name = "caption";
             this.caption.ReadOnly = true;
             // 
             // ismandatory
             // 
-            dataGridViewCellStyle7.ForeColor = System.Drawing.Color.Maroon;
-            this.ismandatory.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.Maroon;
+            this.ismandatory.DefaultCellStyle = dataGridViewCellStyle15;
             resources.ApplyResources(this.ismandatory, "ismandatory");
             this.ismandatory.Name = "ismandatory";
             this.ismandatory.ReadOnly = true;
             // 
             // colvalue
             // 
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Blue;
-            this.colvalue.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle16.ForeColor = System.Drawing.Color.Blue;
+            this.colvalue.DefaultCellStyle = dataGridViewCellStyle16;
             resources.ApplyResources(this.colvalue, "colvalue");
             this.colvalue.Name = "colvalue";
             // 
@@ -1125,7 +1127,7 @@
             this.Controls.Add(this.dt1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.txtpriv);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.txtsearch);
             this.Controls.Add(this.cmbcatcode);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.groupBox1);
@@ -1202,7 +1204,7 @@
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.TextBox txtlastprice;
         private System.Windows.Forms.ComboBox cmbcatcode;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtsearch;
         private System.Windows.Forms.ToolStripDropDownButton mnuReports;
         private System.Windows.Forms.ToolStripMenuItem stockReportToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem stockReprtByWHouseToolStripMenuItem;
