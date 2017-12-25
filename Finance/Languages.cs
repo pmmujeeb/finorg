@@ -105,7 +105,21 @@ namespace FinOrg
 						foreach (DataGridViewColumn col in ((DataGridView)c).Columns)
 						{
 							if (!string.IsNullOrEmpty(col.Name))
+							{
 								col.HeaderText = Translations[f.ControlDefaultValues[col.Name]];
+								if (col.GetType() == typeof(DataGridViewButtonColumn))
+									((DataGridViewButtonColumn)col).Text = col.HeaderText;
+							}
+						}
+					}
+
+					// if Control is TabControl
+					if (c.GetType() == typeof(TabControl))
+					{
+						foreach (TabPage p in ((TabControl)c).TabPages)
+						{
+							if (!string.IsNullOrEmpty(p.Name))
+								p.Text = Translations[f.ControlDefaultValues[p.Name]];
 						}
 					}
 
@@ -158,6 +172,16 @@ namespace FinOrg
 					{
 						if (!string.IsNullOrEmpty(col.Name))
 							f.ControlDefaultValues.Add(col.Name, col.HeaderText.Simplified(true));
+					}
+				}
+
+				// if Control is TabControl
+				if (c.GetType() == typeof(TabControl))
+				{
+					foreach (TabPage p in ((TabControl)c).TabPages)
+					{
+						if (!string.IsNullOrEmpty(p.Name))
+							f.ControlDefaultValues.Add(p.Name, p.Text.Simplified(true));
 					}
 				}
 			}

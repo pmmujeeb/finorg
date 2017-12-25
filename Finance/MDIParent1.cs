@@ -2035,7 +2035,7 @@ namespace FinOrg
 		 {
 			 try
 			 {
-				 if (Languages.currentLanguage == "english")
+				 if (Languages.currentLanguage.Simplified(true) == "english")
 				 {
 					Languages.ChangeLanguage("arabic");
 				 }
