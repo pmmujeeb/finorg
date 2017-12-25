@@ -76,7 +76,8 @@ namespace FinOrg
 				LoadAllTranslations();
 			else
 				Translations = new Dictionary<string, string>();
-			onLanguageChanged?.Invoke(null, null);
+            if (onLanguageChanged != null)
+			    onLanguageChanged(null, null);
 		}
 
 		public static void ApplyTranslation(FinOrgForm f) {
@@ -124,7 +125,7 @@ namespace FinOrg
 					}
 
 					// Apply RTL on the following Controls
-					if (c.GetType() == typeof(Panel))
+					if (c.GetType() == typeof(Panel) || c.GetType() == typeof(GroupBox))
 					{
 						if (c.RightToLeft != f.RightToLeft)
 							// panel type, rearrage children
@@ -259,7 +260,7 @@ namespace FinOrg
 				catch (Exception e)
 				{
 					con.Close();
-					System.Windows.MessageBox.Show(e.Message, "FinOrg Languages LazyLoadTranslations");
+					MessageBox.Show(e.Message, "FinOrg Languages LazyLoadTranslations");
 				}
 				if (LANG_DEBUG_MODE) // Copies the value from form to database currentLanguage field
 					InsertFormTranslations(f.ControlDefaultValues);
