@@ -99,6 +99,16 @@ namespace FinOrg
 						}
 					}
 
+					// if Control is a type of DataGridView, iterate for DataGridViewColumn
+					if (c.GetType().IsSubclassOf(typeof(DataGridView)))
+					{
+						foreach (DataGridViewColumn col in ((DataGridView)c).Columns)
+						{
+							if (!string.IsNullOrEmpty(col.Name))
+								col.HeaderText = Translations[f.ControlDefaultValues[col.Name]];
+						}
+					}
+
 					// Apply RTL on the following Controls
 					if (c.GetType() == typeof(Panel))
 					{
@@ -138,6 +148,17 @@ namespace FinOrg
 					{
 						if (!string.IsNullOrEmpty(toolStripItem.Name))
 							f.ControlDefaultValues.Add(toolStripItem.Name, toolStripItem.Text.Simplified());
+							f.ControlDefaultValues.Add(toolStripItem.Name, toolStripItem.Text.Simplified(true));
+					}
+				}
+
+				// if Control is a type of DataGridView, iterate for DataGridViewColumn
+				if (c.GetType().IsSubclassOf(typeof(DataGridView)))
+				{
+					foreach (DataGridViewColumn col in ((DataGridView)c).Columns)
+					{
+						if (!string.IsNullOrEmpty(col.Name))
+							f.ControlDefaultValues.Add(col.Name, col.HeaderText.Simplified(true));
 					}
 				}
 			}
