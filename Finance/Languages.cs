@@ -90,7 +90,7 @@ namespace FinOrg
 						c.Text = Translations[f.ControlDefaultValues[c.Name]];
 
 					// Apply on ToolStrips
-					if (c.GetType().IsSubclassOf(typeof(ToolStrip)))
+					if (c.GetType().IsSubclassOf(typeof(ToolStrip)) || c.GetType() == typeof(ToolStrip))
 					{
 						foreach (ToolStripItem toolStripItem in ((ToolStrip)c).GetAllToolStripItems())
 						{
@@ -143,7 +143,7 @@ namespace FinOrg
 				}
 
 				// if Control is a type of ToolStrip, iterate for ToolStripItem
-				if (c.GetType().IsSubclassOf(typeof(ToolStrip))) {
+				if (c.GetType().IsSubclassOf(typeof(ToolStrip)) || c.GetType() == typeof(ToolStrip)) {
 					foreach (ToolStripItem toolStripItem in ((ToolStrip)c).GetAllToolStripItems())
 					{
 						if (!string.IsNullOrEmpty(toolStripItem.Name))
