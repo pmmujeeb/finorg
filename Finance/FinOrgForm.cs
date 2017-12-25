@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
@@ -20,16 +21,23 @@ namespace FinOrg
 			if (!DesignMode)
 			{ // Necessary
 				Languages.InitFormLanguage(this);
-				Languages.onLanguageChanged += onLanguageChanged;
+			}
+		}
+		protected override void OnHandleDestroyed(EventArgs e)
+		{
+			base.OnHandleDestroyed(e);
+			if (!DesignMode)
+			{
+				Languages.onLanguageChanged -= this.onLanguageChanged;
 			}
 		}
 
-		protected override void OnClosed(EventArgs e)
+		protected override void OnHandleCreated(EventArgs e)
 		{
-			base.OnClosed(e);
+			base.OnHandleCreated(e);
 			if (!DesignMode)
 			{
-				Languages.onLanguageChanged -= onLanguageChanged;
+				Languages.onLanguageChanged += this.onLanguageChanged;
 			}
 		}
 
