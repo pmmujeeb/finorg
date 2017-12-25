@@ -15,7 +15,7 @@ using System.Drawing.Imaging;
 namespace FinOrg
 {
 
-    public partial class FrmItemMaster : Form
+    public partial class FrmItemMaster : FinOrgForm
     {
 
 

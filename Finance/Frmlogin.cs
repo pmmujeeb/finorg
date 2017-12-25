@@ -290,18 +290,15 @@ namespace FinOrg
         {
             try
             {
-                if (btnlang.Tag == "0")
-                {
-                    btnlang.Text = "English";
-                    btnlang.Tag = "1";
-                }
-                else
-                {
-                    btnlang.Text = "عربي";
-                    btnlang.Tag = "0";
-                }
-
-            }
+				if (Languages.currentLanguage.Simplified(true) == "english")
+				{
+					Languages.ChangeLanguage("arabic");
+				}
+				else
+				{
+					Languages.ChangeLanguage("english");
+				}
+			}
             catch
             {
 
