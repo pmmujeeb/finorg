@@ -40,7 +40,8 @@ namespace FinOrg
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Frmlogin());
+                Languages.Init();
+                Application.Run(new Frmlogin());
                 return;
               
             }

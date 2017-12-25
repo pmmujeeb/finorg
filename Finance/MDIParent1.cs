@@ -14,7 +14,7 @@ using ADODB;
 using System.Reflection;
 namespace FinOrg
 {
-    public partial class MDIParent1 : Form
+    public partial class MDIParent1 : FinOrgForm
     {
         SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
         SqlConnection Conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
@@ -2029,28 +2029,24 @@ namespace FinOrg
              }
          }
 
-         private void btnlang_Click(object sender, EventArgs e)
-         {
-             try
-             {
-                 if (btnlang.Tag=="0")
-                 {
-                     btnlang.Text = "English";
-                     btnlang.Tag = "1";
-                 }
-                 else
-                 {
-                     btnlang.Text = "عربي";
-                     btnlang.Tag = "0";
-                 }
+		 private void btnlang_Click(object sender, EventArgs e)
+		 {
+			 try
+			 {
+				 if (Languages.currentLanguage.Simplified(true) == "english")
+				 {
+					Languages.ChangeLanguage("arabic");
+				 }
+				 else
+				 {
+					Languages.ChangeLanguage("english");
+				 }
+			 }
+			 catch
+			 {
 
-             }
-             catch
-             {
-
-             }
-
-         }
+			 }
+		 }
 
 
        
