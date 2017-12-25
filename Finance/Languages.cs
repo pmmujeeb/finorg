@@ -100,7 +100,7 @@ namespace FinOrg
 					}
 
 					// if Control is a type of DataGridView, iterate for DataGridViewColumn
-					if (c.GetType().IsSubclassOf(typeof(DataGridView)))
+					if (c.GetType() == typeof(DataGridView))
 					{
 						foreach (DataGridViewColumn col in ((DataGridView)c).Columns)
 						{
@@ -138,7 +138,7 @@ namespace FinOrg
 
 				if (c.IsTranslatableControl() && !string.IsNullOrEmpty(c.Name))
 				{
-					f.ControlDefaultValues.Add(c.Name, c.Text.Simplified());
+					f.ControlDefaultValues.Add(c.Name, c.Text.Simplified(true));
 					c.AutoSize = false;
 				}
 
@@ -147,13 +147,12 @@ namespace FinOrg
 					foreach (ToolStripItem toolStripItem in ((ToolStrip)c).GetAllToolStripItems())
 					{
 						if (!string.IsNullOrEmpty(toolStripItem.Name))
-							f.ControlDefaultValues.Add(toolStripItem.Name, toolStripItem.Text.Simplified());
 							f.ControlDefaultValues.Add(toolStripItem.Name, toolStripItem.Text.Simplified(true));
 					}
 				}
 
 				// if Control is a type of DataGridView, iterate for DataGridViewColumn
-				if (c.GetType().IsSubclassOf(typeof(DataGridView)))
+				if (c.GetType() == typeof(DataGridView))
 				{
 					foreach (DataGridViewColumn col in ((DataGridView)c).Columns)
 					{
@@ -288,7 +287,7 @@ namespace FinOrg
 				foreach (KeyValuePair<string, string> e in ControlDefaultValues)
 				{
 					// check for duplications
-					if (Translations.ContainsKey(e.Value.Simplified()) || string.IsNullOrWhiteSpace(e.Value.Simplified()))
+					if (Translations.ContainsKey(e.Value.Simplified()))
 						continue;
 					if (i > 0)
 						cmd.CommandText += ", ";
