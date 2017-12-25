@@ -109,7 +109,10 @@ namespace FinOrg
 				c.RightToLeft = RightToLeft.Inherit;
 
 				if (c.IsTranslatableControl() && !string.IsNullOrEmpty(c.Name))
+				{
 					f.ControlDefaultValues.Add(c.Name, c.Text.Simplified());
+					c.AutoSize = false;
+				}
 
 				// if Control is a type of ToolStrip, iterate for ToolStripItem
 				if (c.GetType().IsSubclassOf(typeof(ToolStrip))) {
