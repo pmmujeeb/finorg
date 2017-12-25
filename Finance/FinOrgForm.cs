@@ -15,7 +15,12 @@ namespace FinOrg
 		// <ControlName, DefaultValue>
 		public Dictionary<string, string> ControlDefaultValues { get; set; }
 
-		protected override void OnLoad(EventArgs e)
+        public virtual void LanguageChanged()
+        {
+
+        }
+
+        protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
 			if (!DesignMode)
@@ -44,6 +49,7 @@ namespace FinOrg
 		private void onLanguageChanged(object sender, EventArgs e)
 		{
 			Languages.LazyLoadTranslations(this);
+            LanguageChanged();
 		}
 
 		public static SqlConnection getSqlConnection()
