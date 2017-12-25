@@ -93,6 +93,16 @@ namespace FinOrg
 							toolStripItem.Text = Translations[f.ControlDefaultValues[toolStripItem.Name]];
 					}
 				}
+
+				// Apply RTL on the following Controls
+				if (c.GetType() == typeof(Panel))
+				{
+					if (c.RightToLeft != f.RightToLeft)
+						// panel type, rearrage children
+						foreach (Control panel_child in c.Controls)
+							panel_child.Location = new System.Drawing.Point(c.Size.Width - panel_child.Size.Width - panel_child.Location.X, panel_child.Location.Y);
+					c.RightToLeft = f.RightToLeft;
+				}
 			}
 		}
 
@@ -106,7 +116,6 @@ namespace FinOrg
 
 			foreach (Control c in f.GetAllControlChildren())
 			{
-				c.RightToLeft = RightToLeft.Inherit;
 
 				if (c.IsTranslatableControl() && !string.IsNullOrEmpty(c.Name))
 				{
@@ -118,7 +127,6 @@ namespace FinOrg
 				if (c.GetType().IsSubclassOf(typeof(ToolStrip))) {
 					foreach (ToolStripItem toolStripItem in ((ToolStrip)c).GetAllToolStripItems())
 					{
-						toolStripItem.RightToLeft = RightToLeft.Inherit;
 						if (!string.IsNullOrEmpty(toolStripItem.Name))
 							f.ControlDefaultValues.Add(toolStripItem.Name, toolStripItem.Text.Simplified());
 					}
