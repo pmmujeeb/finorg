@@ -53,7 +53,8 @@ namespace FinOrg
 			{
 				var next = stack.Pop();
 				foreach (Control child in next.Controls)
-					stack.Push(child);
+					if (child.GetType() != typeof(MdiClient))
+						stack.Push(child);
 				yield return next;
 			}
 		}
