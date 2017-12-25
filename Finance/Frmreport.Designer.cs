@@ -28,10 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.maintab1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.txtstat = new System.Windows.Forms.TextBox();
+            this.cmblevel = new System.Windows.Forms.ComboBox();
             this.cmbsaleagent = new System.Windows.Forms.ComboBox();
             this.cmblocaltion = new System.Windows.Forms.ComboBox();
             this.cmbtransaction = new System.Windows.Forms.ComboBox();
@@ -56,8 +58,8 @@
             this.lbldept = new System.Windows.Forms.Label();
             this.grpdate = new System.Windows.Forms.GroupBox();
             this.chkdate = new System.Windows.Forms.CheckBox();
-            this.dt1 = new System.Windows.Forms.DateTimePicker();
-            this.dt2 = new System.Windows.Forms.DateTimePicker();
+            this.repdt1 = new System.Windows.Forms.DateTimePicker();
+            this.repdt2 = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lbllevel = new System.Windows.Forms.Label();
@@ -66,7 +68,6 @@
             this.btnView = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.cmbowner = new System.Windows.Forms.ComboBox();
-            this.cmblevel = new System.Windows.Forms.ComboBox();
             this.maintab1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.panel2.SuspendLayout();
@@ -87,6 +88,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.txtstat);
             this.tabPage1.Controls.Add(this.cmblevel);
             this.tabPage1.Controls.Add(this.cmbsaleagent);
             this.tabPage1.Controls.Add(this.cmblocaltion);
@@ -115,6 +117,33 @@
             this.tabPage1.Text = "Options";
             this.tabPage1.UseVisualStyleBackColor = true;
             this.tabPage1.Click += new System.EventHandler(this.tabPage1_Click);
+            // 
+            // txtstat
+            // 
+            this.txtstat.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtstat.Location = new System.Drawing.Point(394, 551);
+            this.txtstat.Name = "txtstat";
+            this.txtstat.Size = new System.Drawing.Size(87, 21);
+            this.txtstat.TabIndex = 34;
+            this.txtstat.Visible = false;
+            // 
+            // cmblevel
+            // 
+            this.cmblevel.DisplayMember = "Unit_name";
+            this.cmblevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmblevel.FormattingEnabled = true;
+            this.cmblevel.Items.AddRange(new object[] {
+            "All",
+            "First",
+            "Second",
+            "Third",
+            "Fourth"});
+            this.cmblevel.Location = new System.Drawing.Point(159, 91);
+            this.cmblevel.Name = "cmblevel";
+            this.cmblevel.Size = new System.Drawing.Size(252, 21);
+            this.cmblevel.TabIndex = 33;
+            this.cmblevel.Visible = false;
+            this.cmblevel.SelectedIndexChanged += new System.EventHandler(this.cmblevel_SelectedIndexChanged_1);
             // 
             // cmbsaleagent
             // 
@@ -254,8 +283,8 @@
             // 
             this.lst2.AllowUserToAddRows = false;
             this.lst2.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lst2.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.lst2.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.lst2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.lst2.Enabled = false;
             this.lst2.Location = new System.Drawing.Point(159, 26);
@@ -318,7 +347,7 @@
             this.chkinvoice.AutoSize = true;
             this.chkinvoice.Location = new System.Drawing.Point(30, 147);
             this.chkinvoice.Name = "chkinvoice";
-            this.chkinvoice.Size = new System.Drawing.Size(96, 17);
+            this.chkinvoice.Size = new System.Drawing.Size(95, 17);
             this.chkinvoice.TabIndex = 21;
             this.chkinvoice.Text = "Show Invoices";
             this.chkinvoice.UseVisualStyleBackColor = true;
@@ -366,8 +395,8 @@
             // 
             this.lst1.AllowUserToAddRows = false;
             this.lst1.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.lst1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.lst1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.lst1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.lst1.Enabled = false;
             this.lst1.Location = new System.Drawing.Point(163, 29);
@@ -401,8 +430,8 @@
             // grpdate
             // 
             this.grpdate.Controls.Add(this.chkdate);
-            this.grpdate.Controls.Add(this.dt1);
-            this.grpdate.Controls.Add(this.dt2);
+            this.grpdate.Controls.Add(this.repdt1);
+            this.grpdate.Controls.Add(this.repdt2);
             this.grpdate.Controls.Add(this.label1);
             this.grpdate.Controls.Add(this.label2);
             this.grpdate.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -427,27 +456,27 @@
             this.chkdate.Text = "Date All";
             this.chkdate.UseVisualStyleBackColor = true;
             // 
-            // dt1
+            // repdt1
             // 
-            this.dt1.CalendarFont = new System.Drawing.Font("Tahoma", 12F);
-            this.dt1.CustomFormat = "dd/MM/yyyy";
-            this.dt1.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.dt1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dt1.Location = new System.Drawing.Point(122, 10);
-            this.dt1.Name = "dt1";
-            this.dt1.Size = new System.Drawing.Size(175, 27);
-            this.dt1.TabIndex = 1;
+            this.repdt1.CalendarFont = new System.Drawing.Font("Tahoma", 12F);
+            this.repdt1.CustomFormat = "dd/MM/yyyy";
+            this.repdt1.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.repdt1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.repdt1.Location = new System.Drawing.Point(122, 10);
+            this.repdt1.Name = "repdt1";
+            this.repdt1.Size = new System.Drawing.Size(175, 27);
+            this.repdt1.TabIndex = 1;
             // 
-            // dt2
+            // repdt2
             // 
-            this.dt2.CalendarFont = new System.Drawing.Font("Tahoma", 12F);
-            this.dt2.CustomFormat = "dd/MM/yyyy";
-            this.dt2.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.dt2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dt2.Location = new System.Drawing.Point(614, 14);
-            this.dt2.Name = "dt2";
-            this.dt2.Size = new System.Drawing.Size(181, 27);
-            this.dt2.TabIndex = 2;
+            this.repdt2.CalendarFont = new System.Drawing.Font("Tahoma", 12F);
+            this.repdt2.CustomFormat = "dd/MM/yyyy";
+            this.repdt2.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.repdt2.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.repdt2.Location = new System.Drawing.Point(614, 14);
+            this.repdt2.Name = "repdt2";
+            this.repdt2.Size = new System.Drawing.Size(181, 27);
+            this.repdt2.TabIndex = 2;
             // 
             // label1
             // 
@@ -541,24 +570,6 @@
             this.cmbowner.TabIndex = 15;
             this.cmbowner.SelectedIndexChanged += new System.EventHandler(this.cmbowner_SelectedIndexChanged);
             // 
-            // cmblevel
-            // 
-            this.cmblevel.DisplayMember = "Unit_name";
-            this.cmblevel.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmblevel.FormattingEnabled = true;
-            this.cmblevel.Items.AddRange(new object[] {
-            "All",
-            "First",
-            "Second",
-            "Third",
-            "Fourth"});
-            this.cmblevel.Location = new System.Drawing.Point(159, 91);
-            this.cmblevel.Name = "cmblevel";
-            this.cmblevel.Size = new System.Drawing.Size(252, 21);
-            this.cmblevel.TabIndex = 33;
-            this.cmblevel.Visible = false;
-            this.cmblevel.SelectedIndexChanged += new System.EventHandler(this.cmblevel_SelectedIndexChanged_1);
-            // 
             // frmReport
             // 
             this.AcceptButton = this.btnView;
@@ -593,8 +604,8 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker dt2;
-        private System.Windows.Forms.DateTimePicker dt1;
+        private System.Windows.Forms.DateTimePicker repdt2;
+        private System.Windows.Forms.DateTimePicker repdt1;
         private System.Windows.Forms.Button btnView;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.ComboBox cmbowner;
@@ -626,6 +637,7 @@
         private System.Windows.Forms.Label lblacheader;
         private System.Windows.Forms.Label lbllevel;
         private System.Windows.Forms.ComboBox cmblevel;
+        private System.Windows.Forms.TextBox txtstat;
 
     }
 }

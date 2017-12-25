@@ -188,7 +188,7 @@ namespace FinOrg
                     if (txtaccname.Text.Trim() == "") txtaccname.Text = txtarname.Text;
                     rec.Fields["ACC_NAME"].Value = txtaccname.Text.Trim();
                     rec.Fields["ACC_ANAME"].Value = txtarname.Text.Trim();
-                    rec.Fields["VAT_TINNO"].Value = txtvatno.Text.Trim();
+                   
                     
                     
                    
@@ -344,7 +344,7 @@ namespace FinOrg
                         rec.Fields["EMAIL"].Value = txtemailid.Text.Trim();
                         rec.Fields["credit_limit"].Value = Convert.ToDouble(txtcrlimit.Text);
                         rec.Fields["send_sms"].Value = chksms.Checked;
-
+                        rec.Fields["VAT_TINNO"].Value = txtvatno.Text.Trim();
                         rec.Update();
                     }
 
@@ -795,7 +795,7 @@ namespace FinOrg
         {
             InitializeComponent();
             txtpriv.Text = Gvar.frm_priv.ToString();
-            txttrn_type.Text = Gvar._trntype.ToString();
+            txttrn_type.Text = Gvar.trntype.ToString();
         }
 
         private void FrmLeader_Load(object sender, EventArgs e)

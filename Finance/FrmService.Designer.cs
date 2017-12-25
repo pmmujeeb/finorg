@@ -118,6 +118,8 @@
             this.txtvatamt = new System.Windows.Forms.TextBox();
             this.txtvatpcnt = new System.Windows.Forms.TextBox();
             this.label10 = new System.Windows.Forms.Label();
+            this.cmbwarehouse = new System.Windows.Forms.ComboBox();
+            this.label11 = new System.Windows.Forms.Label();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GrdLookup)).BeginInit();
@@ -134,11 +136,11 @@
             this.label5.Font = new System.Drawing.Font("Tahoma", 12F);
             this.label5.ForeColor = System.Drawing.Color.Black;
             this.label5.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label5.Location = new System.Drawing.Point(523, 134);
+            this.label5.Location = new System.Drawing.Point(831, 134);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(97, 19);
+            this.label5.Size = new System.Drawing.Size(41, 19);
             this.label5.TabIndex = 9;
-            this.label5.Text = "Invoice Date";
+            this.label5.Text = "Date";
             // 
             // label6
             // 
@@ -158,7 +160,7 @@
             this.label8.Font = new System.Drawing.Font("Tahoma", 12F);
             this.label8.ForeColor = System.Drawing.Color.Black;
             this.label8.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label8.Location = new System.Drawing.Point(1087, 32);
+            this.label8.Location = new System.Drawing.Point(915, 16);
             this.label8.Name = "label8";
             this.label8.Size = new System.Drawing.Size(108, 19);
             this.label8.TabIndex = 9;
@@ -261,9 +263,9 @@
             this.dt1.CalendarFont = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dt1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.dt1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dt1.Location = new System.Drawing.Point(632, 130);
+            this.dt1.Location = new System.Drawing.Point(902, 126);
             this.dt1.Name = "dt1";
-            this.dt1.Size = new System.Drawing.Size(189, 26);
+            this.dt1.Size = new System.Drawing.Size(134, 26);
             this.dt1.TabIndex = 2;
             this.dt1.ValueChanged += new System.EventHandler(this.dt1_ValueChanged);
             // 
@@ -456,11 +458,11 @@
             this.GrdLookup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.GrdLookup.BackgroundColor = System.Drawing.Color.White;
             this.GrdLookup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GrdLookup.Location = new System.Drawing.Point(261, 162);
+            this.GrdLookup.Location = new System.Drawing.Point(126, 174);
             this.GrdLookup.Name = "GrdLookup";
             this.GrdLookup.ReadOnly = true;
             this.GrdLookup.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.GrdLookup.Size = new System.Drawing.Size(714, 326);
+            this.GrdLookup.Size = new System.Drawing.Size(1027, 326);
             this.GrdLookup.TabIndex = 5;
             this.GrdLookup.Visible = false;
             this.GrdLookup.VisibleChanged += new System.EventHandler(this.GrdLookup_VisibleChanged);
@@ -669,6 +671,7 @@
             this.groupBox1.Controls.Add(this.cmbtrntype);
             this.groupBox1.Controls.Add(this.btnsave);
             this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.lblinvstatus);
             this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.txttrn);
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
@@ -771,7 +774,7 @@
             this.lbltrntype.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
             this.lbltrntype.ForeColor = System.Drawing.Color.Purple;
             this.lbltrntype.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.lbltrntype.Location = new System.Drawing.Point(787, 32);
+            this.lbltrntype.Location = new System.Drawing.Point(783, 34);
             this.lbltrntype.Name = "lbltrntype";
             this.lbltrntype.Size = new System.Drawing.Size(89, 19);
             this.lbltrntype.TabIndex = 58;
@@ -903,15 +906,17 @@
             // 
             // lblinvstatus
             // 
+            this.lblinvstatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.lblinvstatus.AutoSize = true;
             this.lblinvstatus.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblinvstatus.ForeColor = System.Drawing.Color.Red;
             this.lblinvstatus.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.lblinvstatus.Location = new System.Drawing.Point(897, 131);
+            this.lblinvstatus.Location = new System.Drawing.Point(1165, 27);
             this.lblinvstatus.Name = "lblinvstatus";
             this.lblinvstatus.Size = new System.Drawing.Size(45, 25);
             this.lblinvstatus.TabIndex = 61;
             this.lblinvstatus.Text = "***";
+            this.lblinvstatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txtremarks
             // 
@@ -946,7 +951,7 @@
             this.label16.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label16.ForeColor = System.Drawing.Color.Brown;
             this.label16.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label16.Location = new System.Drawing.Point(826, 104);
+            this.label16.Location = new System.Drawing.Point(1042, 130);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(39, 18);
             this.label16.TabIndex = 59;
@@ -957,9 +962,9 @@
             this.nyear.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.nyear.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.nyear.Font = new System.Drawing.Font("Tahoma", 11.25F, System.Drawing.FontStyle.Bold);
-            this.nyear.Location = new System.Drawing.Point(826, 130);
+            this.nyear.Location = new System.Drawing.Point(1090, 126);
             this.nyear.Name = "nyear";
-            this.nyear.Size = new System.Drawing.Size(63, 26);
+            this.nyear.Size = new System.Drawing.Size(120, 26);
             this.nyear.TabIndex = 60;
             this.nyear.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.nyear.TextChanged += new System.EventHandler(this.nyear_TextChanged);
@@ -1220,6 +1225,28 @@
             this.label10.TabIndex = 41;
             this.label10.Text = "Vat";
             // 
+            // cmbwarehouse
+            // 
+            this.cmbwarehouse.Font = new System.Drawing.Font("Tahoma", 10F);
+            this.cmbwarehouse.FormattingEnabled = true;
+            this.cmbwarehouse.Location = new System.Drawing.Point(632, 129);
+            this.cmbwarehouse.Name = "cmbwarehouse";
+            this.cmbwarehouse.Size = new System.Drawing.Size(188, 24);
+            this.cmbwarehouse.TabIndex = 2;
+            this.cmbwarehouse.SelectedIndexChanged += new System.EventHandler(this.cmbtrntype_SelectedIndexChanged);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.label11.ForeColor = System.Drawing.Color.Black;
+            this.label11.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.label11.Location = new System.Drawing.Point(523, 131);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(86, 19);
+            this.label11.TabIndex = 58;
+            this.label11.Text = "WR_House";
+            // 
             // FrmService
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1234,15 +1261,16 @@
             this.Controls.Add(this.txtrate);
             this.Controls.Add(this.cmbcurrency);
             this.Controls.Add(this.lblcurrency);
+            this.Controls.Add(this.cmbwarehouse);
             this.Controls.Add(this.panelremote);
             this.Controls.Add(this.btnremote);
-            this.Controls.Add(this.lblinvstatus);
             this.Controls.Add(this.GrdLookup);
             this.Controls.Add(this.grdcuslookup);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.label17);
             this.Controls.Add(this.nyear);
             this.Controls.Add(this.txtacbalance);
+            this.Controls.Add(this.label11);
             this.Controls.Add(this.lblsaleperson);
             this.Controls.Add(this.cmbsalesagent);
             this.Controls.Add(this.lblmsg);
@@ -1388,5 +1416,7 @@
        private System.Windows.Forms.TextBox txtvatamt;
        private System.Windows.Forms.TextBox txtvatpcnt;
        private System.Windows.Forms.Label label10;
+       private System.Windows.Forms.ComboBox cmbwarehouse;
+       private System.Windows.Forms.Label label11;
     }
 }

@@ -25,7 +25,7 @@ namespace FinOrg
         DataSet ds = new DataSet();
         string sql;
 
-
+        bool isini = true;
        
 
 
@@ -76,7 +76,7 @@ namespace FinOrg
 
 
 
-                sql = "SELECT     UserId, UserName,' ' as pass , Superuser, Group_Name,Password,WR_CODE,brn_code FROM         dbo.UserInfo";
+                sql = "SELECT     UserId, UserName,' ' as pass , Superuser, Group_Name,Password,WR_CODE,brn_code,MENU_DOCK,SH_TOPMENU,SH_SIDEMENU FROM         dbo.UserInfo";
                 
 
 
@@ -226,7 +226,7 @@ namespace FinOrg
                 lstgroup.Visible = true;
                // dgv1_password();
 
-
+                
             }
             catch (Exception ex)
             {
@@ -246,6 +246,7 @@ namespace FinOrg
             
             load_Users();
             dgv1.Width = this.Width;
+            isini = false;
         }
 
        
@@ -375,6 +376,13 @@ namespace FinOrg
                 return true;
             }
 
+
+            if (msg.WParam.ToInt32() == (int)Keys.Escape)
+            {
+                lstbranch.Visible = false;
+                lstgroup.Visible = false;
+                
+            }
            
 
             return base.ProcessCmdKey(ref msg, keyData);
@@ -613,6 +621,18 @@ namespace FinOrg
         private void l(object sender, EventArgs e)
         {
 
+        }
+
+        private void dgv1_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+
+        }
+
+        private void dgv1_RowValidated(object sender, DataGridViewCellEventArgs e)
+        {
+            //dgv1[8, e.RowIndex].Value = "Top";
+            //dgv1[9, e.RowIndex].Value = 1;
+            //dgv1[10, e.RowIndex].Value = 1;
         }
 
        

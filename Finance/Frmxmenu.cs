@@ -107,7 +107,7 @@ namespace FinOrg
            // dgv1.EndEdit();
             dgv1[e.ColumnIndex, 0].Value = dgv1.CurrentCell.EditedFormattedValue;
            // dgv1.EndEdit();
-            if (dgv1.CurrentCell.RowIndex == 0 && e.ColumnIndex > 0)
+            if (dgv1.CurrentCell.RowIndex == 0 && e.ColumnIndex == 3)
             {
                 for (int i = 1; i < dgv1.RowCount; i++)
                 {
@@ -306,10 +306,10 @@ namespace FinOrg
         private void cmbgrp_Validated(object sender, EventArgs e)
         {
            
-                for (int i = 1; i < dgv1.RowCount; i++)
-                {
-                    dgv1["select", i].Value = false;
-                }
+                //for (int i = 1; i < dgv1.RowCount; i++)
+                //{
+                //    dgv1["select", i].Value = false;
+                //}
 
             
         }

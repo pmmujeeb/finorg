@@ -259,7 +259,7 @@ namespace FinOrg
                         {
                            
                             Gvar.invno = txtitem.Text;
-                            Gvar._trntype = 0;
+                            Gvar.trntype = 0;
                             if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = "000";
                            Form childForm = new FrmAssetMaster();
                              childForm.MdiParent = MDIParent1.ActiveForm;
@@ -272,7 +272,7 @@ namespace FinOrg
                     case 2:
                         {
                             //Gvar.invno = dgvtrans["inv_no", dgvtrans.CurrentCell.RowIndex].Value.ToString();
-                            //Gvar._trntype = 2;
+                            //Gvar.trntype = 2;
                             //if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = "000";
                             //Form childForm = new FrmReciept();
                             // childForm.MdiParent = MDIParent1.ActiveForm;
