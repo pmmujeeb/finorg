@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Windows.Forms;
 using System.Windows.Threading;
@@ -10,7 +11,7 @@ namespace FinOrg
 {
 	public static class Languages
 	{
-		public static bool LANG_DEBUG_MODE = true;
+		public static bool LANG_DEBUG_MODE = false;
 
 
 		public static event EventHandler onLanguageChanged;
@@ -107,6 +108,8 @@ namespace FinOrg
 						{
 							if (!string.IsNullOrEmpty(col.Name))
 							{
+                                if (!f.ControlDefaultValues.ContainsKey(col.Name))
+                                    continue;                                
 								col.HeaderText = Translations[f.ControlDefaultValues[col.Name]];
 								if (col.GetType() == typeof(DataGridViewButtonColumn))
 									((DataGridViewButtonColumn)col).Text = col.HeaderText;
@@ -127,11 +130,13 @@ namespace FinOrg
 					// Apply RTL on the following Controls
 					if (c.GetType() == typeof(Panel) || c.GetType() == typeof(GroupBox))
 					{
-						if (c.RightToLeft != f.RightToLeft)
+                        if (c.Tag == null || string.IsNullOrWhiteSpace(c.Tag.ToString()))
+                            c.Tag = "english";
+						if (!c.Tag.ToString().Equals(currentLanguage))
 							// panel type, rearrage children
 							foreach (Control panel_child in c.Controls)
 								panel_child.Location = new System.Drawing.Point(c.Size.Width - panel_child.Size.Width - panel_child.Location.X, panel_child.Location.Y);
-						c.RightToLeft = f.RightToLeft;
+                        c.Tag = currentLanguage;
 					}
 				} catch (Exception e)
 				{
@@ -146,50 +151,58 @@ namespace FinOrg
 		/// <param name="f"></param>
 		public static void InitFormLanguage(FinOrgForm f)
 		{
-			f.ControlDefaultValues = new Dictionary<string, string>();
+            try
+            {
+                f.ControlDefaultValues = new Dictionary<string, string>();
 
-			foreach (Control c in f.GetAllControlChildren())
-			{
+                foreach (Control c in f.GetAllControlChildren())
+                {
 
-				if (c.IsTranslatableControl() && !string.IsNullOrEmpty(c.Name))
-				{
-					f.ControlDefaultValues.Add(c.Name, c.Text.Simplified(true));
-					c.AutoSize = false;
-				}
+                    if (c.IsTranslatableControl() && !string.IsNullOrEmpty(c.Name))
+                    {
+                        f.ControlDefaultValues.Add(c.Name, c.Text.Simplified(true));
+                        c.AutoSize = false;
+                    }
 
-				// if Control is a type of ToolStrip, iterate for ToolStripItem
-				if (c.GetType().IsSubclassOf(typeof(ToolStrip)) || c.GetType() == typeof(ToolStrip)) {
-					foreach (ToolStripItem toolStripItem in ((ToolStrip)c).GetAllToolStripItems())
-					{
-						if (!string.IsNullOrEmpty(toolStripItem.Name))
-							f.ControlDefaultValues.Add(toolStripItem.Name, toolStripItem.Text.Simplified(true));
-					}
-				}
+                    // if Control is a type of ToolStrip, iterate for ToolStripItem
+                    if (c.GetType().IsSubclassOf(typeof(ToolStrip)) || c.GetType() == typeof(ToolStrip))
+                    {
+                        foreach (ToolStripItem toolStripItem in ((ToolStrip)c).GetAllToolStripItems())
+                        {
+                            if (!string.IsNullOrEmpty(toolStripItem.Name))
+                                f.ControlDefaultValues.Add(toolStripItem.Name, toolStripItem.Text.Simplified(true));
+                        }
+                    }
 
-				// if Control is a type of DataGridView, iterate for DataGridViewColumn
-				if (c.GetType() == typeof(DataGridView))
-				{
-					foreach (DataGridViewColumn col in ((DataGridView)c).Columns)
-					{
-						if (!string.IsNullOrEmpty(col.Name))
-							f.ControlDefaultValues.Add(col.Name, col.HeaderText.Simplified(true));
-					}
-				}
+                    // if Control is a type of DataGridView, iterate for DataGridViewColumn
+                    if (c.GetType() == typeof(DataGridView))
+                    {
+                        foreach (DataGridViewColumn col in ((DataGridView)c).Columns)
+                        {
+                            if (!string.IsNullOrEmpty(col.Name))
+                                f.ControlDefaultValues.Add(col.Name, col.HeaderText.Simplified(true));
+                        }
+                    }
 
-				// if Control is TabControl
-				if (c.GetType() == typeof(TabControl))
-				{
-					foreach (TabPage p in ((TabControl)c).TabPages)
-					{
-						if (!string.IsNullOrEmpty(p.Name))
-							f.ControlDefaultValues.Add(p.Name, p.Text.Simplified(true));
-					}
-				}
-			}
+                    // if Control is TabControl
+                    if (c.GetType() == typeof(TabControl))
+                    {
+                        foreach (TabPage p in ((TabControl)c).TabPages)
+                        {
+                            if (!string.IsNullOrEmpty(p.Name))
+                                f.ControlDefaultValues.Add(p.Name, p.Text.Simplified(true));
+                        }
+                    }
+                }
 
-			// ControlDefaultValues loaded
-			// LazyLoad these in Languages
-			Languages.LazyLoadTranslations(f);
+                // ControlDefaultValues loaded
+                // LazyLoad these in Languages
+                Languages.LazyLoadTranslations(f);
+            }
+            catch(Exception ex)
+            {
+
+            }
 		}
 
 		public static string GetStringTranslation(string s)
@@ -234,47 +247,55 @@ namespace FinOrg
 		/// <param name="ControlDefaultValues">A dictionary with ControlName-Text pairs</param>
 		public static Thread LazyLoadTranslations(FinOrgForm f)
 		{
-			Thread t = new Thread(() =>
-			{
-				// Get a list of items to fetch
-				IEnumerable<string> items = f.ControlDefaultValues.Values;
-				if (Translations != null)
-					items = items.Except(Translations.Keys).ToArray();
-				SqlConnection con = FinOrgForm.getSqlConnection();
-				try
-				{
-					con.Open();
-					SqlCommand cmd = new SqlCommand(string.Format("SELECT text, {0} FROM TRANSLATIONS WHERE text IN ({{keys}});", currentLanguage), con);
-					cmd.AddArrayParameters(items, "keys");
-					if (cmd.Parameters.Count > 0)
-						using (SqlDataReader reader = cmd.ExecuteReader())
-						{
-							while(reader.Read())
-							{
-								// Only Keys NOT Present in Translations Dictionary is fetched from Database
-								Translations.Add(reader["text"].ToString(), reader[currentLanguage].ToString());
-							}
-						}
-					con.Close();
-				}
-				catch (Exception e)
-				{
-					con.Close();
-					MessageBox.Show(e.Message, "FinOrg Languages LazyLoadTranslations");
-				}
-				if (LANG_DEBUG_MODE) // Copies the value from form to database currentLanguage field
-					InsertFormTranslations(f.ControlDefaultValues);
+            try
+            {
+                Thread t = new Thread(() =>
+                {
+                    // Get a list of items to fetch
+                    IEnumerable<string> items = f.ControlDefaultValues.Values;
+                    if (Translations != null)
+                        items = items.Except(Translations.Keys).ToArray();
+                    SqlConnection con = FinOrgForm.getSqlConnection();
+                    try
+                    {
+                        con.Open();
+                        SqlCommand cmd = new SqlCommand(string.Format("SELECT text, {0} FROM TRANSLATIONS WHERE text IN ({{keys}});", currentLanguage), con);
+                        cmd.AddArrayParameters(items, "keys");
+                        if (cmd.Parameters.Count > 0)
+                            using (SqlDataReader reader = cmd.ExecuteReader())
+                            {
+                                while (reader.Read())
+                                {
+                                    // Only Keys NOT Present in Translations Dictionary is fetched from Database
+                                    if (!Translations.ContainsKey(reader["text"].ToString()))
+                                        Translations.Add(reader["text"].ToString(), reader[currentLanguage].ToString());
+                                }
+                            }
+                        con.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        con.Close();
+                        MessageBox.Show(e.Message, "FinOrg Languages LazyLoadTranslations");
+                    }
+                    if (LANG_DEBUG_MODE) // Copies the value from form to database currentLanguage field
+                        InsertFormTranslations(f.ControlDefaultValues);
 
-				// Apply Translation
-				f.BeginInvoke(new Action(() =>
-				{
-					ApplyTranslation(f);
-				}));
-			});
-			// finish  this fast
-			t.Priority = ThreadPriority.Highest;
-			t.Start();
-			return t;
+                    // Apply Translation
+                    f.BeginInvoke(new Action(() =>
+                    {
+                        ApplyTranslation(f);
+                    }));
+                });
+                // finish  this fast
+                t.Priority = ThreadPriority.Highest;
+                t.Start();
+                return t;
+            }
+            catch(Exception ex)
+            {
+                return null;
+            }
 		}
 
 

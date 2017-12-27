@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 //using Microsoft.VisualBasic;
 
 using ADODB;
+using Microsoft.Win32;
 namespace FinOrg
     
 {
@@ -40,7 +41,7 @@ namespace FinOrg
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
-                Languages.Init();
+                Languages.Init().Join();
                 Application.Run(new Frmlogin());
                 return;
               
@@ -56,7 +57,69 @@ namespace FinOrg
 
 
         }
+        public static string Write_User_Lang(string def_lang, string user_name)
+        {
+            try
+            {
 
+                RegistryKey key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\FinOrg\");
+
+                //storing the values  
+                key.SetValue("last_user", user_name);
+                //key.SetValue("Setting2", "This is our setting 2");
+                key.Close();
+
+                 key = Registry.CurrentUser.CreateSubKey(@"SOFTWARE\FinOrg\" + user_name );
+
+                //storing the values  
+                key.SetValue("Def_lang", def_lang);
+                //key.SetValue("Setting2", "This is our setting 2");
+                key.Close();
+
+                return null;
+            }
+             catch (Exception e)
+                {
+                    // AAAAAAAAAAARGH, an error!
+                   // ShowErrorMessage(e, "Reading registry " + KeyName.ToUpper());
+                    return null;
+                }
+        }
+        public static string Read_User_Lang()
+        {
+           
+                try
+                {
+                    string user_name = "";
+                    RegistryKey key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\FinOrg\");
+
+                    if (key != null)
+                    {
+                        user_name = key.GetValue("last_user").ToString();
+                        // Console.WriteLine(key.GetValue("Setting2"));  
+                        key.Close();
+                    }
+                    if (user_name == "") return null;
+
+                    string def_lang = "";
+                     key = Registry.CurrentUser.OpenSubKey(@"SOFTWARE\FinOrg\" + user_name );
+                  
+                    //if it does exist, retrieve the stored values  
+                    if (key != null)  
+                    {
+                        def_lang = user_name + "," + key.GetValue("Def_lang").ToString();  
+                       // Console.WriteLine(key.GetValue("Setting2"));  
+                        key.Close();  
+                    }
+                    return def_lang;
+                }
+                catch (Exception e)
+                {
+                   
+                    return null;
+                }
+            
+        }
         public static string ledger_ini(int trntype,string invno)
         {
             try
