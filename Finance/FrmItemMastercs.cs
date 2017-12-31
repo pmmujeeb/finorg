@@ -12,6 +12,8 @@ using System.Data.SqlClient;
 using CrystalDecisions.CrystalReports.Engine;
 using ADODB;
 using System.Drawing.Imaging;
+using System.Diagnostics;
+using System.Threading;
 namespace FinOrg
 {
 
@@ -44,6 +46,9 @@ namespace FinOrg
         bool issearch;
         string acntrl = "";
         int entrytype = 0;
+        string artext;
+        object txtcost;
+       
         public FrmItemMaster()
         {
             InitializeComponent();
@@ -53,31 +58,7 @@ namespace FinOrg
             isini = true;
             entrytype = Gvar.Gind;
             txttrn_type.Text = Gvar.trntype.ToString();
-            Load_data();
-            Load_grid();
-            grditem.Visible = false;
-            grdbutton.Rows.Add(1);
-            grdmain.Focus();
-            first_grdrow = 0;
-            last_grdrow = 0;
-            for (int i = 0; i < grdmain.Rows.Count; i++)
-            {
-                if (grdmain.Rows[i].Visible && first_grdrow == 0) first_grdrow = i;
-
-                if (grdmain.Rows[i].Visible) last_grdrow = i;
-
-            }
-
-            if (grdmain.Rows[first_grdrow].Visible)
-            {
-                grdmain.CurrentCell = grdmain["colvalue", first_grdrow];
-                grdmain.BeginEdit(false);
-            }
-
-            if (cmbcat.Items.Count > 1)
-                cmbcat.SelectedIndex = 1;
-            cmbcat.SelectedIndex = 0;
-            isini = false;
+            
 
 
 
@@ -87,6 +68,15 @@ namespace FinOrg
 
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
+            if (!Program.session_valid(dt1.Value.Date.ToString("yyyy-MM-dd")))
+            {
+                MessageBox.Show("There is no valid Finance Session Found, Please check the Entry Date or Contact Admin  ", "Invalid Transaction Date ", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+
+            }
+
+            if (grdbarcode.Rows.Count == 0)
+                add_barcode();
             save_data();
         }
 
@@ -200,6 +190,8 @@ namespace FinOrg
 
                 }
                 rd.Close();
+                if (grdstock.Rows.Count>0)
+                    grdstock.CurrentCell = grdstock["opstock", 0];
             }
 
 
@@ -272,10 +264,19 @@ namespace FinOrg
                     cmbbranch.Visible = false;
                     lblbranch.Visible = false;
                 }
-               
+
+                //grdother.Rows.Add(6);
+                //grdother[0, 0].Value = "VAT %";
+                //grdother[0, 1].Value = "Cost Price";
+                //grdother[0, 2].Value = "Sale Profit %";
+                //grdother[0, 3].Value = "Minimum Profit %";
+
+                //grdother[0, 4].Value = "Minimum Stock ";
+                //grdother[0, 5].Value = "Expense ";
 
                 load_sup_list(-1);
                 _load_stock();
+                Load_grid();
                 //rd.Close();
 
 
@@ -303,13 +304,16 @@ namespace FinOrg
                 cmbcat.DataSource = dt2;
                 cmbcatcode.DataSource = dt2;
 
-                sqlunt = "sELECT  Unit_id,unit_name froM Unitmaster WHERE UNIT_TYPE='I'";
+                sqlunt = "sELECT  Unit_id,unit_name,unit_aname froM Unitmaster WHERE UNIT_TYPE='I'";
 
                 SqlDataAdapter ada3 = new SqlDataAdapter(sqlunt, Conn);
                 DataTable dt3 = new DataTable("Unitmaster");
                 ada3.Fill(dt3);
+                cmbunitaname.DisplayMember = "unit_aname";
+                cmbunitaname.ValueMember = "Unit_id";
+                cmbunitaname.DataSource = dt3;
                 cmbunit.DataSource = dt3;
-
+               // cmbunitaname.SelectedIndex = 0;
 
 
                 Conn.Close();
@@ -629,6 +633,7 @@ namespace FinOrg
                         if (result == DialogResult.Yes) isedit = true; else return;
 
                     }
+                    rd.Close();
                 }
 
 
@@ -655,63 +660,55 @@ namespace FinOrg
                 Conn.Open();
                 //Conn.BeginTransaction();
                 fnd = false;
-                double lst_price;
+                double lst_price=0;
                 double avg_price;
                 double net_cost;
 
-                if (txtcost.Text.Trim() == "")
-                    lst_price = 0;
-                else
-                    lst_price = Convert.ToDouble(txtcost.Text); // / Convert.ToDouble(txtfraction.Text);
-
-                if (txtlastprice.Text.Trim() == "")
-                    avg_price = 0;
-                else
-                    avg_price = Convert.ToDouble(txtlastprice.Text); /// Convert.ToDouble(txtfraction.Text);
-
-                if (avg_price == 0) avg_price = lst_price;
-
-                if (txtlastexp.Text.Trim() == "")
-                    txtlastexp.Text = "0";
-                net_cost = avg_price + Convert.ToDouble(txtlastexp.Text);
+                grdmain.EndEdit();
+                 if (txtfraction.Text.Trim() == "") txtfraction.Text="1";
+                //if (txtlastexp.Text.Trim() == "")
+                //    txtlastexp.Text = "0";
+                //net_cost = avg_price + Convert.ToDouble(txtlastexp.Text);
                 DataGridViewRow row;
-                row = grdmain.Rows
-                         .Cast<DataGridViewRow>()
-                         .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("AR_DESC"))
-                         .First();
-                if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "";
-                string txtarabic = row.Cells["colvalue"].Value.ToString();
+                //row = grdmain.Rows
+                //         .Cast<DataGridViewRow>()
+                //         .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("AR_DESC"))
+                //         .First();
+                //if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "";
+                string txtarabic = txtarname.Text;
+                if (txtarabic == "") txtarabic = txtname.Text;
                 string txtbarcode = "";
-                if (grdbarcode.Rows.Count > 0)
-                {
-                    if (grdbarcode["barcode", 0].Value != null)
-                        txtbarcode = grdbarcode["barcode", 0].Value.ToString();
-                    else
-                    {
-                        row = grdmain.Rows
-                        .Cast<DataGridViewRow>()
-                        .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("BARCODE"))
-                        .First();
+                //if (grdbarcode.Rows.Count > 0)
+                //{
+                //    if (grdbarcode["barcode", 0].Value != null)
+                //        txtbarcode = grdbarcode["barcode", 0].Value.ToString();
+                //    else
+                //    {
+                //        row = grdmain.Rows
+                //        .Cast<DataGridViewRow>()
+                //        .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("BARCODE"))
+                //        .First();
 
-                        if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "";
-                        if (row.Cells["colvalue"].Value == "") row.Cells["colvalue"].Value = Txtitem.Text;
-                        txtbarcode = row.Cells["colvalue"].Value.ToString();
+                //        if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "";
+                //        if (row.Cells["colvalue"].Value == "") row.Cells["colvalue"].Value = Txtitem.Text;
+                //        txtbarcode = row.Cells["colvalue"].Value.ToString();
 
-                    }
+                //    }
 
 
 
-                }
-
+                //}
+                if (grdbarcode.Rows.Count>0)
+                txtbarcode = grdbarcode["barcode", 0].Value.ToString();
                 if (txtbarcode.Trim() == "") txtbarcode = Txtitem.Text;
 
-                row = grdmain.Rows
-                    .Cast<DataGridViewRow>()
-                    .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("SALE_PRICE"))
-                    .First();
-                if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "0";
+                //row = grdmain.Rows
+                //    .Cast<DataGridViewRow>()
+                //    .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("SALE_PRICE"))
+                //    .First();
+                //if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "0";
 
-                object txtsaleprice = row.Cells["colvalue"].Value;
+                object txtsaleprice = txtwhprice.Text;
                 if (txtsaleprice == "") txtsaleprice = "0";
 
                 row = grdmain.Rows
@@ -723,17 +720,45 @@ namespace FinOrg
                 if (txtorder == "") txtorder = "0";
                 row = grdmain.Rows
                    .Cast<DataGridViewRow>()
-                   .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("RETAIL_PRICE"))
+                   .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("AVG_PUR_PRICE"))
+                   .First();
+                if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "0";
+                 txtcost = row.Cells["colvalue"].Value;
+
+
+                object retailprice =txtretailprice.Text;
+                if (retailprice == "") retailprice = "0";
+
+                row = grdmain.Rows
+                   .Cast<DataGridViewRow>()
+                   .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("AVG_PUR_PRICE"))
                    .First();
                 if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "0";
 
-                object txtretailprice = row.Cells["colvalue"].Value;
-                if (txtretailprice == "") txtretailprice = "0";
-                if (txtcost.Text == "") txtcost.Text = "0";
+                
+                if (txtcost == "") txtcost = "0";
 
-                if (Convert.ToDecimal(txtcost.Text) > Convert.ToDecimal(txtsaleprice) || Convert.ToDecimal(txtcost.Text) > Convert.ToDecimal(txtretailprice))
+                if (Convert.ToDecimal(txtcost) > 0 && Convert.ToDecimal(retailprice) == 0)
                 {
-                    DialogResult result = MessageBox.Show("Either Wholesale Price Or Retail Price Less Than Cost Price!!!, Do you want to Continue??", "Invalid Sale Prices", MessageBoxButtons.YesNoCancel);
+                   retailprice = Convert.ToDecimal(txtcost);
+
+                }
+
+                if (Convert.ToDecimal(txtcost) > 0 && Convert.ToDecimal(txtsaleprice) == 0)
+                {
+                    txtsaleprice = retailprice;
+
+                }
+                if (Convert.ToDecimal(txtcost) > 0 && Convert.ToDecimal(txtsaleprice) == 0)
+                {
+                    txtsaleprice = Convert.ToDecimal(txtcost);
+
+                }
+              
+
+                if (Convert.ToDecimal(txtcost) > Convert.ToDecimal(txtsaleprice) || Convert.ToDecimal(txtcost) > Convert.ToDecimal(retailprice))
+                {
+                    DialogResult result = MessageBox.Show("Either Whole sale Price Or Retail Price Less Than Cost Price!!!, Do you want to Continue??", "Invalid Sale Prices", MessageBoxButtons.YesNoCancel);
                     if (result != DialogResult.Yes)
                     {
                         Conn.Close();
@@ -743,20 +768,80 @@ namespace FinOrg
                 }
 
 
+                
+                 if (txtcost == "")
+                    lst_price = 0;
+                else
+                    lst_price = Convert.ToDouble(txtcost); // / Convert.ToDouble(txtfraction.Text);
+
+                if (txtlastprice.Text.Trim() == "")
+                    avg_price = 0;
+                else
+                    avg_price = Convert.ToDouble(txtlastprice.Text); /// Convert.ToDouble(txtfraction.Text);
+
+                if (avg_price == 0) avg_price = lst_price;
+
+                row = grdmain.Rows
+                   .Cast<DataGridViewRow>()
+                   .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("PROFIT"))
+                   .First();
+                if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "0";
+                object txtminprofit = row.Cells["colvalue"].Value;
 
 
 
-                if (txtminprofit.Text.Trim() == "")
-                    txtminprofit.Text = "0";
-                if (txtlastexp.Text.Trim() == "")
-                    txtlastexp.Text = "0";
-                if (txtsaleprofit.Text.Trim() == "")
-                    txtsaleprofit.Text = "0";
+                if (txtminprofit == "")
+                    txtminprofit = "0";
 
-                if (txtminstock.Text.Trim() == "")
-                    txtminstock.Text = "0";
-                if (txtvat.Text.Trim() == "")
-                    txtvat.Text = "0";
+                row = grdmain.Rows
+                   .Cast<DataGridViewRow>()
+                   .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("AVG_EXPENSE_AMT"))
+                   .First();
+                if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "0";
+                object txtlastexp = row.Cells["colvalue"].Value;
+                if (txtlastexp == "")
+                    txtlastexp = "0";
+                decimal netcost = Convert.ToDecimal(txtlastexp) +Convert.ToDecimal(txtcost);
+
+                row = grdmain.Rows
+                   .Cast<DataGridViewRow>()
+                   .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("SALES_PROFIT_PCNT"))
+                   .First();
+                if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "0";
+                object txtsaleprofit = row.Cells["colvalue"].Value;
+                
+                
+                if (txtlastexp == "")
+                    txtlastexp= "0";
+                if (txtsaleprofit == "")
+                    txtsaleprofit= "0";
+
+                row = grdmain.Rows
+                   .Cast<DataGridViewRow>()
+                   .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("VAT_PERCENT"))
+                   .First();
+                if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "0";
+                object txtvat = row.Cells["colvalue"].Value;
+                
+
+                
+                if (txtvat == "")
+                    txtvat = "0";
+
+                 row = grdmain.Rows
+                      .Cast<DataGridViewRow>()
+                      .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("ALIAS_NAME"))
+                      .First();
+                    if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "";
+
+                    // object txtarabic = row.Cells["colvalue"].Value;
+
+
+                    object txtalias = row.Cells["colvalue"].Value;
+                if (txtalias == "")
+                    txtalias= cmbcat.Text;
+
+
                 iserror = false;
 
                 ADODB.Connection ADOconn = new ADODB.Connection();
@@ -768,21 +853,34 @@ namespace FinOrg
                 {
 
                     sql = "INSERT INTO [HD_ITEMMASTER]([Item_Code],[DESCRIPTION],AR_DESC,[USER],[ITM_CAT_CODE],[UNIT],[FRACTION],[ALIAS_NAME],[BRN_CODE],BARCODE,[VAT_PERCENT])";
-                    sql = sql + " VALUES ('" + Txtitem.Text.Trim() + "','" + txtname.Text.Trim() + "','" + txtname.Text + "','" + Gvar._Userid + "','" + cmbcat.SelectedValue + "','" + cmbunit.Text + "','" + txtfraction.Text + "','" + txtarabic + "'," + cmbbranch.SelectedValue + ",'" + txtbarcode + "',"+ txtvat.Text + ")";
+                    sql = sql + " VALUES ('" + Txtitem.Text.Trim() + "','" + txtname.Text.Trim() + "','" + txtarname.Text + "','" + Gvar._Userid + "','" + cmbcat.SelectedValue + "','" + cmbunit.SelectedValue + "','" + txtfraction.Text + "','" + txtalias + "'," + cmbbranch.SelectedValue + ",'" + txtbarcode + "',"+txtvat + ")";
 
                     cmd = new SqlCommand(sql, Conn);
 
                     cmd.ExecuteNonQuery();
 
-                    Recordset rec = new ADODB.Recordset();
-                    rec.Open("SELECT @@IDENTITY", ADOconn, ADODB.CursorTypeEnum.adOpenDynamic, ADODB.LockTypeEnum.adLockOptimistic, -1);
+                    sql = "SELECT item_no FROM HD_ITEMMASTER where Item_Code ='" + Txtitem.Text.Trim() + "'";
 
-                    //rec.GetRows();
+                    cmd = new SqlCommand(sql, Conn);
 
-                    txtitemno.Text = rec.Fields[0].Value.ToString();
+                    rd = cmd.ExecuteReader();
 
-                    sql = " INSERT INTO [STOCK_MASTER]([Item_Code],[STOCK],[LAST_PUR_PRICE],[AVG_PUR_PRICE],[USER1],[RE_ORDER],[BRN_CODE],[OP_STOCK],sale_price,retail_price,profit,expense_amt,net_cost,SALES_PROFIT_PCNT,[VAT_PERCENT])";
-                    sql = sql + " VALUES ('" + Txtitem.Text.Trim() + "','" + txtclstock.Text + "','" + lst_price + "','" + avg_price + "','" + Gvar._Userid + "','" + txtorder + "'," +cmbbranch.SelectedValue + ",'" + txtopstock.Text + "','" + txtsaleprice + "','" + txtretailprice + "','" + txtminprofit.Text + "','" + txtlastexp.Text + "','" + net_cost + "','" + txtsaleprofit.Text + "',"+  txtvat.Text + " )";
+
+
+                    if (rd.HasRows)
+                    {
+                        while (rd.Read())
+                        {
+                            txtitemno.Text = rd[0].ToString();
+
+                        }
+                    }
+                    rd.Close();
+
+                    //txtitemno.Text = rec.Fields[0].Value.ToString();
+
+                    sql = " INSERT INTO [STOCK_MASTER]([Item_Code],[STOCK],[LAST_PUR_PRICE],[AVG_PUR_PRICE],[USER1],[RE_ORDER],[BRN_CODE],[OP_STOCK],sale_price,retail_price,profit,AVG_expense_amt,net_cost,SALES_PROFIT_PCNT)";
+                    sql = sql + " VALUES ('" + Txtitem.Text.Trim() + "','" + txtstock.Text + "','" + lst_price + "','" + avg_price + "','" + Gvar._Userid + "','" + txtorder + "'," + cmbbranch.SelectedValue + ",'" + txtopstock.Text + "','" + txtsaleprice + "','" + retailprice + "','" + txtminprofit + "','" + txtlastexp + "','" + netcost + "','" + txtsaleprofit + "')";
 
                     cmd = new SqlCommand(sql, Conn);
 
@@ -804,20 +902,33 @@ namespace FinOrg
 
                         }
                     }
+
+
+                    if (txtitemno.Text == "")
+                    {
+                        sql = "SELECT item_no FROM HD_ITEMMASTER where Item_Code ='" + Txtitem.Text.Trim() + "'";
+
+                        cmd = new SqlCommand(sql, Conn);
+
+                        rd = cmd.ExecuteReader();
+
+
+
+                        if (rd.HasRows)
+                        {
+                            while (rd.Read())
+                            {
+                                txtitemno.Text = rd[0].ToString();
+
+                            }
+                        }
+                        rd.Close();
+                    }
                    
-                    row = grdmain.Rows
-                      .Cast<DataGridViewRow>()
-                      .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("ALIAS_NAME"))
-                      .First();
-                    if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "";
-
-                    // object txtarabic = row.Cells["colvalue"].Value;
+                   
 
 
-                    object txtalias = row.Cells["colvalue"].Value;
-
-
-                    sql = "update  [HD_ITEMMASTER]  set [Item_Code]='" + Txtitem.Text.Trim() + "',[DESCRIPTION]='" + txtname.Text + "',[ar_desc]='" + txtarabic + "',[ITM_CAT_CODE]='" + cmbcat.SelectedValue + "',[UNIT]='" + cmbunit.Text + "',[FRACTION]='" + txtfraction.Text + "',[ALIAS_NAME]='" + txtalias + "',BARCODE ='" + txtbarcode + "',VAT_PERCENT=" + txtvat.Text + "  where Item_Code ='" + txtolditm.Text + "'";
+                    sql = "update  [HD_ITEMMASTER]  set [Item_Code]='" + Txtitem.Text.Trim() + "',[DESCRIPTION]='" + txtname.Text + "',[ar_desc]='" + txtarabic + "',[ITM_CAT_CODE]='" + cmbcat.SelectedValue + "',[UNIT]='" + cmbunit.SelectedValue + "',[FRACTION]='" + txtfraction.Text + "',[ALIAS_NAME]='" + txtalias + "',BARCODE ='" + txtbarcode + "',VAT_PERCENT=" + txtvat + "  where Item_Code ='" + txtolditm.Text + "'";
 
 
                     cmd = new SqlCommand(sql, Conn);
@@ -827,7 +938,7 @@ namespace FinOrg
 
 
 
-                    sql = " update  [STOCK_MASTER] set [Item_Code]='" + Txtitem.Text.Trim() + "',[STOCK]='" + txtclstock.Text + "',[AVG_PUR_PRICE]='" + avg_price + "',[LAST_PUR_PRICE]='" + lst_price + "',[RE_ORDER]='" + txtorder + "',[OP_STOCK]='" + txtopstock.Text + "',sale_price='" + txtsaleprice + "',retail_price='" + txtretailprice + "', [profit]='" + txtminprofit.Text.Trim() + "',[expense_amt]='" + txtlastexp.Text.Trim() + "',[net_cost]='" + net_cost + "',SALES_PROFIT_PCNT='" + txtsaleprofit.Text + "' where Item_Code ='" + txtolditm.Text + "'";
+                    sql = " update  [STOCK_MASTER] set [Item_Code]='" + Txtitem.Text.Trim() + "',[STOCK]='" + txtclstock.Text + "',[AVG_PUR_PRICE]='" + avg_price + "',[LAST_PUR_PRICE]='" + lst_price + "',[RE_ORDER]='" + txtorder + "',[OP_STOCK]='" + txtopstock.Text + "',sale_price='" + txtsaleprice + "',retail_price='" + retailprice + "', [profit]='" + txtminprofit + "',[AVG_expense_amt]='" + txtlastexp + "',[net_cost]='" + netcost + "',SALES_PROFIT_PCNT='" + txtsaleprofit + "' where Item_Code ='" + txtolditm.Text + "'";
 
 
 
@@ -862,10 +973,6 @@ namespace FinOrg
 
                 }
 
-
-                
-
-
                 sql = "SELECT Item_Code FROM STOCK_MASTER where Item_Code ='" + Txtitem.Text.Trim() + "'";
 
                 cmd = new SqlCommand(sql, Conn);
@@ -879,7 +986,7 @@ namespace FinOrg
 
                     rd.Close();
                     sql = " INSERT INTO [STOCK_MASTER]([Item_Code],[STOCK],[LAST_PUR_PRICE],[AVG_PUR_PRICE],[USER1],[RE_ORDER],[BRN_CODE],[OP_STOCK],sale_price,retail_price)";
-                    sql = sql + " VALUES ('" + Txtitem.Text.Trim() + "','" + txtclstock.Text + "','" + lst_price + "','" + avg_price + "','" + Gvar._Userid + "','" + txtorder + "',"+ cmbbranch.SelectedValue + ",'" + txtopstock.Text + "','" + txtsaleprice + "','" + txtretailprice + "')";
+                    sql = sql + " VALUES ('" + Txtitem.Text.Trim() + "','" + txtclstock.Text + "','" + lst_price + "','" + avg_price + "','" + Gvar._Userid + "','" + txtorder + "',"+ cmbbranch.SelectedValue + ",'" + txtopstock.Text + "','" + txtsaleprice + "','" + retailprice + "')";
 
                     cmd = new SqlCommand(sql, Conn);
 
@@ -924,7 +1031,7 @@ namespace FinOrg
                 grdbarcode.EndEdit();
 
                 
-                    add_barcode();
+                    //add_barcode();
 
                   
 
@@ -942,12 +1049,18 @@ namespace FinOrg
 
 
                         bcode.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
+
+                         grdbarcode["description", i].Value = txtname.Text + " " + cmbunit.Text;
+                         grdbarcode["descriptionAr", i].Value = txtarname.Text + " " + cmbunitaname.Text;
+
+                       
                         if (grdbarcode["saleprice1", i].Value == "") grdbarcode["saleprice1", i].Value = 0;
                         if (grdbarcode["saleprice2", i].Value == "") grdbarcode["saleprice2", i].Value = 0;
+                        if (grdbarcode["fraction", i].Value == "") grdbarcode["fraction", i].Value = 1;
                         if (bcode.RecordCount == 0) bcode.AddNew();
                         barcode = barcode + ",'" + grdbarcode["barcode", i].Value + "'";
                         bcode.Fields["barcode"].Value = grdbarcode["barcode", i].Value;
-                        bcode.Fields["unit"].Value = grdbarcode["unit", i].Value;
+                        bcode.Fields["unit"].Value = grdbarcode["unitid", i].Value;
                         bcode.Fields["description"].Value = grdbarcode["description", i].Value;
                         bcode.Fields["fraction"].Value = grdbarcode["fraction", i].Value;
                         bcode.Fields["retail_price"].Value = grdbarcode["saleprice2", i].Value;
@@ -958,7 +1071,7 @@ namespace FinOrg
                         bcode.Fields["item_code"].Value = Txtitem.Text;
                         bcode.Fields["ITM_CAT_CODE"].Value = cmbcat.SelectedValue;
                         bcode.Fields["brn_code"].Value = cmbbranch.SelectedValue;
-                        bcode.Fields["item_id"].Value = Txtitem.Text + "-" + grdbarcode["unitid", i].Value;
+                        bcode.Fields["item_id"].Value = txtitemno.Text + "-" + cmbunit.SelectedValue;
                         bcode.Fields["description_ar"].Value = grdbarcode["descriptionAr", i].Value;
                         if (i == 0) bcode.Fields["main_id"].Value = 1; else bcode.Fields["main_id"].Value = 0;
                         bcode.Update();
@@ -1020,7 +1133,7 @@ namespace FinOrg
                 isini = false;
 
 
-                Load_data();
+               // Load_data();
                 MessageBox.Show("Successfully Added/Updated Item", "Successfull");
 
                 return;
@@ -1121,9 +1234,7 @@ namespace FinOrg
         private void ini_form()
         {
 
-            if (cmbcat.Items.Count > 0) cmbcat.SelectedIndex = 0;
-            if (cmbunit.Items.Count > 0) cmbunit.SelectedIndex = 0;
-
+            Txtitem.ReadOnly = false;
 
             ClearTextBoxes(this);
             txtsearch.Text = "";
@@ -1148,6 +1259,8 @@ namespace FinOrg
                 row1.Cells["fieldval"].Value = "";
             }
 
+            if (cmbcat.Items.Count > 0) cmbcat.SelectedIndex = 0;
+            if (cmbunit.Items.Count > 0) cmbunit.SelectedIndex = 0;
 
 
             grdsup.Rows.Clear();
@@ -1228,6 +1341,10 @@ namespace FinOrg
                             textBox.Text = string.Empty;
             }
             txttrn_type.Text = trntype.ToString();
+            if (cmbcat.Items.Count < 1) return;
+            cmbcat.SelectedIndex = -1;
+            cmbcat.SelectedIndex = 0;
+
             //lblrefund.Text = "";
 
 
@@ -1242,6 +1359,7 @@ namespace FinOrg
         private void newToolStripButton_Click(object sender, EventArgs e)
         {
             issearch = true;
+            cmbcat.SelectedIndex = -1;
             ini_form();
             txtsearch.Focus();
         }
@@ -1510,7 +1628,7 @@ namespace FinOrg
                             }
 
                             //With CUS
-                            if (txtcost.Text == "") txtcost.Text = "0";
+                           // if (grdmain["colval", 0].Value == "") grdmain["colval", 0].Value = "0";
                             trn_no = Convert.ToDouble(cus.Fields["trn_no"].Value);
                             cus.Fields["WR_CODE"].Value = v1;
 
@@ -1521,7 +1639,7 @@ namespace FinOrg
                             cus.Fields["cus_name"].Value = "OPENING BALANCE";
                             cus.Fields["trn_type"].Value = 0;
                             if (txtopstock.Text == "'") txtopstock.Text = "0";
-                            cus.Fields["TOT_AMOUNT"].Value = Convert.ToDouble(txtopstock.Text) * Convert.ToDouble(txtcost.Text);
+                            cus.Fields["TOT_AMOUNT"].Value = Convert.ToDouble(txtopstock.Text) * Convert.ToDouble( txtcost);
                             cus.Fields["NET_AMOUNT"].Value = cus.Fields["TOT_AMOUNT"].Value;
                             cus.Fields["FNET_AMOUNT"].Value = cus.Fields["TOT_AMOUNT"].Value;
                             cus.Fields["DISCOUNT"].Value = 0;
@@ -1546,7 +1664,7 @@ namespace FinOrg
 
                         cus.Fields["trn_no"].Value = trn_no;
                         if (v1 == "") v1 = "0";
-                        if (txtcost.Text.Trim() == "") txtcost.Text = "0";
+                        //if (grdmain["colval", 0].Value == "") grdmain["colval", 0].Value = "0";
                         //if (txtcost.Text.Trim() == "") txtcost.Text = "0";
                         if (txtlastprice.Text.Trim() == "") txtlastprice.Text = "0";
 
@@ -1558,10 +1676,10 @@ namespace FinOrg
                         cus.Fields["QTY"].Value = Convert.ToDouble(v2);
                         cus.Fields["UNIT"].Value = cmbunit.Text;
                         cus.Fields["UNIT_QTY"].Value = Convert.ToDecimal(v2) * Convert.ToDecimal(txtfraction.Text);
-                        cus.Fields["PRICE"].Value = Convert.ToDouble(txtcost.Text);
-                        cus.Fields["fPRICE"].Value = Convert.ToDecimal(txtcost.Text) * Gvar._cur_rate;
+                        cus.Fields["PRICE"].Value = Convert.ToDouble(txtcost);
+                        cus.Fields["fPRICE"].Value = Convert.ToDecimal(txtcost) * Gvar._cur_rate;
                         cus.Fields["DISCOUNT"].Value = 0;
-                        cus.Fields["SALE_PUR_AMOUNT"].Value = Convert.ToDouble(txtcost.Text);
+                        cus.Fields["SALE_PUR_AMOUNT"].Value = Convert.ToDouble(grdbarcode["saleprice2", 0].Value);
                         cus.Fields["trn_type"].Value = 0;
                         cus.Update();
 
@@ -1607,8 +1725,8 @@ namespace FinOrg
                             rec.Fields["BRN_code"].Value = cmbbranch.SelectedValue;
                             // rec.Fields["COST_CODE"].Value = 0;
                             rec.Fields["ENTRY_TYPE"].Value = "OPSTOCK";
-                            rec.Fields["G_TOTAL"].Value = Convert.ToDouble(txtopstock.Text) * Convert.ToDouble(txtcost.Text); ;
-                            rec.Fields["NET_AMOUNT"].Value = Convert.ToDouble(txtopstock.Text) * Convert.ToDouble(txtcost.Text); ;
+                            rec.Fields["G_TOTAL"].Value = Convert.ToDouble(txtopstock.Text) * Convert.ToDouble(txtcost); ;
+                            rec.Fields["NET_AMOUNT"].Value = Convert.ToDouble(txtopstock.Text) * Convert.ToDouble(txtcost); ;
                             rec.Fields["remarks"].Value = "";
 
                             rec.Update();
@@ -1655,13 +1773,13 @@ namespace FinOrg
 
 
                         rec.Fields["Item_Code"].Value = Txtitem.Text.Trim();
-                        rec.Fields["PRICE"].Value = Convert.ToDouble(txtcost.Text);
+                        rec.Fields["PRICE"].Value = Convert.ToDouble(txtcost);
                         rec.Fields["Description"].Value = txtname.Text.Trim();
                         rec.Fields["QTY"].Value = Convert.ToDouble(v2);
                         //rec.Fields["RQTY"].Value = 0;
                         rec.Fields["BARCODE"].Value = Txtitem.Text.Trim();
                         rec.Fields["FRACTION"].Value = Convert.ToDouble(txtfraction.Text);
-                        rec.Fields["UNIT"].Value = cmbunit.Text;
+                        rec.Fields["UNIT"].Value = cmbunit.SelectedValue;
 
                         //rec.Fields["plot"].Value = "";
                         rec.Fields["UNIT_QTY"].Value = Convert.ToDecimal(v2) * Convert.ToDecimal(txtfraction.Text);
@@ -1673,16 +1791,16 @@ namespace FinOrg
 
                         if (Convert.ToDecimal(txtfraction.Text) > 0)
                         {
-                            rec.Fields["UNIT_PRICE"].Value = Convert.ToDecimal(txtcost.Text) / Convert.ToDecimal(txtfraction.Text);
+                            rec.Fields["UNIT_PRICE"].Value = Convert.ToDecimal(txtcost) / Convert.ToDecimal(txtfraction.Text);
                             rec.Fields["FPRICE"].Value = rec.Fields["PRICE"].Value;
-                            rec.Fields["UNIT_TRN_AMOUNT"].Value = Convert.ToDecimal(txtcost.Text) / Convert.ToDecimal(txtfraction.Text);
+                            rec.Fields["UNIT_TRN_AMOUNT"].Value = Convert.ToDecimal(txtcost) / Convert.ToDecimal(txtfraction.Text);
 
                         }
                         else
                         {
-                            rec.Fields["UNIT_PRICE"].Value = Convert.ToInt32(txtcost.Text);
+                            rec.Fields["UNIT_PRICE"].Value = Convert.ToInt32(txtcost);
                             rec.Fields["FPRICE"].Value = rec.Fields["PRICE"].Value;
-                            rec.Fields["UNIT_TRN_AMOUNT"].Value = Convert.ToDecimal(txtcost.Text);
+                            rec.Fields["UNIT_TRN_AMOUNT"].Value = Convert.ToDecimal(txtcost);
 
                         }
                         rec.Update();
@@ -1730,7 +1848,7 @@ namespace FinOrg
 
 
                         decimal amount;
-                        amount = Convert.ToDecimal(v2) * Convert.ToDecimal(txtcost.Text); ;
+                        amount = Convert.ToDecimal(v2) * Convert.ToDecimal(txtcost); ;
                         updat_accounts(Txtitem.Text.Trim(), amount);
 
 
@@ -1796,8 +1914,8 @@ namespace FinOrg
         {
             try
             {
-
-                ini_form();
+                isini = true;
+              
                 Txtitem.Text = Item_Code;
                 Conn.Close();
                 Conn.Open();
@@ -1805,56 +1923,66 @@ namespace FinOrg
                 saveToolStripButton.Enabled = true;
                 toolRefund.Enabled = true;
 
-                sql = "sELECT  h.Item_Code,h.DESCRIPTION,h.ITM_CAT_CODE,h.UNIT,h.FRACTION,h.ALIAS_NAME,s.AVG_PUR_PRICE,s.RE_ORDER,S.AVG_PUR_PRICE,H.BARCODE,H.AR_DESC,SALE_PRICE,RETAIL_PRICE,PART_NO,BRAND,SUB_CAT_CODE,h.item_no,H.VAT_PERCENT from hd_ITEMMASTER h left join stock_master s on h.Item_Code=s.Item_Code where h.brn_code=" + cmbbranch.SelectedValue + "  and h.Item_Code='" + Item_Code + "'";
+                sql = "sELECT  h.Item_Code,h.DESCRIPTION,h.ITM_CAT_CODE,h.UNIT,h.FRACTION,h.ALIAS_NAME,s.AVG_PUR_PRICE,s.RE_OrdER,S.AVG_PUR_PRICE,H.BARCODE,H.AR_DESC,SALE_PRICE,RETAIL_PRICE,PART_NO,BRAND,SUB_CAT_CODE,h.item_no,H.VAT_PERCENT,SALES_PROFIT_PCNT,AVG_EXPENSE_AMT,profit from hd_ITEMMASTER h left join stock_master s on h.Item_Code=s.Item_Code where h.brn_code=" + cmbbranch.SelectedValue + "  and h.Item_Code='" + Item_Code + "'";
 
 
+                isini = true;
                 
-                
-                SqlCommand cmd = new SqlCommand(sql, Conn);
-                SqlDataReader rd = cmd.ExecuteReader();
-                //SqlDataReader rd = cmd.ExecuteReader();
+                SqlCommand cmditm = new SqlCommand(sql, Conn);
+                SqlDataReader rditm = cmditm.ExecuteReader();
+                //SqlDataReader rditm = cmd.ExecuteReader();
                 try
                 {
-                  //  rd1 = cmd.ExecuteReader();
+                  //  rditm1 = cmd.ExecuteReader();
 
 
 
-                    if (rd.HasRows)
+                    if (rditm.HasRows)
                 {
-                    while (rd.Read())
+                    //ini_form();
+                    //sql = "sELECT  h.Item_Code,h.DESCRIPTION,h.ITM_CAT_CODE,h.UNIT,h.FRACTION,h.ALIAS_NAME,s.AVG_PUR_PRICE,s.RE_OrdER,S.AVG_PUR_PRICE,H.BARCODE,H.AR_DESC,SALE_PRICE,RETAIL_PRICE,PART_NO,BRAND,SUB_CAT_CODE,h.item_no,H.VAT_PERCENT,SALES_PROFIT_PCNT,AVG_EXPENSE_AMT,profit from hd_ITEMMASTER h left join stock_master s on h.Item_Code=s.Item_Code where h.brn_code=" + cmbbranch.SelectedValue + "  and h.Item_Code='" + Item_Code + "'";
+
+                    // cmditm = new SqlCommand(sql, Conn);
+                    // rditm = cmditm.ExecuteReader();
+                    while (rditm.Read())
                     {
-                        if (!string.IsNullOrEmpty(rd[0].ToString()))
+                        Txtitem.ReadOnly = true;
+                        if (!string.IsNullOrEmpty(rditm[0].ToString()))
                         {
 
-                            Txtitem.Text = rd[0].ToString();
-                            //txtarabic.Text = rd["AR_DESC"].ToString();
-                            //txtalias.Text = rd["alias_name"].ToString();
-                            txtolditm.Text = rd[0].ToString();
+                            Txtitem.Text = rditm[0].ToString();
+                            txtarname.Text = rditm["AR_DESC"].ToString();
+                            //txtalias.Text = rditm["alias_name"].ToString();
+                            txtolditm.Text = rditm[0].ToString();
                             string catval;
-                            txtname.Text = rd[1].ToString();
-                            string ctcode = rd[2].ToString();
+                            txtname.Text = rditm[1].ToString();
+                            txtwhprice.Text = rditm[11].ToString();
+                            txtretailprice.Text = rditm[12].ToString();
+                            string ctcode = rditm[2].ToString();
 
                             
 
                             cmbcat.SelectedValue = ctcode;
-                            // txtbarcode.Text = rd["BARCODE"].ToString();
+                            // txtbarcode.Text = rditm["BARCODE"].ToString();
 
-                            ctcode = rd[3].ToString();
-                            cmbunit.Text = ctcode;
+                            ctcode = rditm[3].ToString();
+                            cmbunit.SelectedValue = ctcode;
 
-                            txtitemno.Text = rd["item_no"].ToString();
-                            txtvat.Text = rd["VAT_PERCENT"].ToString();
-
-
+                            txtitemno.Text = rditm["item_no"].ToString();
+                            //grdmain["colval", 0].Value = rditm["VAT_PERCENT"].ToString();
 
 
 
-                            if (!string.IsNullOrEmpty(rd[0].ToString()))
+
+
+                            if (!string.IsNullOrEmpty(rditm[0].ToString()))
                             {
 
 
                                 for (int i = 0; i <= grdmain.Rows.Count - 1; i++)
                                 {
+                                    if (grdmain["tablename", i].Value!=null)
+                                    { 
                                     int a = grdmain["tablename", i].Value.ToString().IndexOf("Hd_Itemmaster");
                                     if (grdmain["tablename", i].Value.ToString() != "" && grdmain["fieldname", i].Value.ToString() != "")
                                     {
@@ -1863,13 +1991,14 @@ namespace FinOrg
 
 
                                             // rec.Fields[grdmain["fieldname", i].Value.ToString()].Value =
-                                            grdmain["fieldval", i].Value = rd[grdmain["fieldname", i].Value.ToString()].ToString();
-                                            grdmain["colvalue", i].Value = rd[grdmain["fieldname", i].Value.ToString()].ToString();
+                                            grdmain["fieldval", i].Value = rditm[grdmain["fieldname", i].Value.ToString()].ToString();
+                                            grdmain["colvalue", i].Value = rditm[grdmain["fieldname", i].Value.ToString()].ToString();
 
 
                                         }
 
                                     }
+                                }
 
                                 }
 
@@ -1881,20 +2010,22 @@ namespace FinOrg
 
 
                         }
-                   
-                    
-                
-                    
 
 
 
-                        //txtarabic.Text = rd[5].ToString();
-                        txtfraction.Text = rd[4].ToString();
-                        txtlastprice.Text = rd[6].ToString();
 
-                        //txtorder.Text = rd[7].ToString();
-                        txtcost.Text = rd[8].ToString();
+                        
+
+                        //txtarabic.Text = rditm[5].ToString();
+                        txtfraction.Text = rditm[4].ToString();
+                        txtlastprice.Text = rditm[6].ToString();
+
+                        //txtorditmer.Text = rditm[7].ToString();
+                      //  grdmain["colval", 0].Value = rditm[8].ToString();
                         isedit = true;
+                        isini = false;
+                       
+
                     }
                         //Txtitem.Focus();
                     }
@@ -1920,10 +2051,10 @@ namespace FinOrg
                 search_suplier();
                 search_barcode();
                 search_foto();
-                rd.Close();
+                rditm.Close();
                 Conn.Close();
                 // grdmain.CurrentCell = grdmain[2, 5];
-                grdmain.CurrentCell = grdmain[2, first_grdrow];
+                grdmain.CurrentCell = grdmain["colvalue", first_grdrow];
 
                 isini = false;
                 grdmain.ClearSelection();
@@ -2005,7 +2136,7 @@ namespace FinOrg
                 Conn.Open();
 
 
-                sql = "SELECT *  from barcode where item_code='" + Txtitem.Text.Trim() + "'";
+                sql = "SELECT barcode.*,unit_name  from barcode inner join unitmaster on unit = unit_id where item_code='" + Txtitem.Text.Trim() + "'";
 
 
 
@@ -2020,8 +2151,10 @@ namespace FinOrg
 
 
                     grdbarcode["barcode", grdbarcode.Rows.Count - 1].Value = rd["barcode"];
+                    grdbarcode["itemid", grdbarcode.Rows.Count - 1].Value = rd["item_id"];
                     grdbarcode["description", grdbarcode.Rows.Count - 1].Value = rd["description"];
-                    grdbarcode["unit", grdbarcode.Rows.Count - 1].Value = rd["unit"];
+                    grdbarcode["unit", grdbarcode.Rows.Count - 1].Value = rd["Unit_Name"];
+                    grdbarcode["Unitid", grdbarcode.Rows.Count - 1].Value = rd["Unit"];
                     grdbarcode["fraction", grdbarcode.Rows.Count - 1].Value = rd["fraction"];
                     grdbarcode["itemcode", grdbarcode.Rows.Count - 1].Value = rd["item_code"]; ;
                     grdbarcode["saleprice1", grdbarcode.Rows.Count - 1].Value = rd["sale_price"];
@@ -2035,7 +2168,7 @@ namespace FinOrg
                     fnd = true;
 
                 }
-
+                rd.Close();
                 isini = false;
 
                 Conn.Close();
@@ -2100,6 +2233,7 @@ namespace FinOrg
             try
             {
                 string txt = txtsearch.Text.Trim();
+                if (txtsearch.Text.Trim() == "") return;
                 if (txt != "")
                 {
                     isini = true;
@@ -2149,8 +2283,22 @@ namespace FinOrg
                     }
                     break;
                 case 38:
-                    if (!grditem.Visible) return;
-                    int crow = grditem.CurrentRow.Index;
+
+
+
+
+                    if (!chksearch.Checked && !grditem.Visible) return;
+                 
+                   
+                       int crow = 0;
+                      if (grditem.CurrentCell == null && grditem.Rows.Count > 0)
+                      {
+                          grditem.CurrentCell = grditem[0, 0];
+                          crow = -1;
+                      }
+                      if (crow!=-1)                   
+                      crow = grditem.CurrentRow.Index;
+
                     int mros = grditem.Rows.Count;
                     // this.dgv1.CurrentCell = this.dgv1[crow+1, 0];
 
@@ -2161,13 +2309,23 @@ namespace FinOrg
                     //    return;
                     //}
                     if (crow > 0)
+
                         grditem.CurrentCell = grditem.Rows[crow - 1].Cells[0];
 
+                    if (chksearch.Checked )
+                        search_data(grditem[0, crow].Value.ToString());
 
 
                     break;
                 case 40:
-                    if (!grditem.Visible) return;
+                      if (!chksearch.Checked && !grditem.Visible) return;
+                      crow = 0;
+                      if (grditem.CurrentCell == null && grditem.Rows.Count > 0)
+                      {
+                          grditem.CurrentCell = grditem[0, 0];
+                          crow = -1;
+                      }
+                      if (crow!=-1)
                     crow = grditem.CurrentRow.Index;
                     mros = grditem.Rows.Count;
                     // this.dgv1.CurrentCell = this.dgv1[crow+1, 0];
@@ -2181,8 +2339,13 @@ namespace FinOrg
                     //}
                     {
                         if (crow < mros - 1)
+                        {
+
                             grditem.CurrentCell = grditem.Rows[crow + 1].Cells[0];
+                        }
                     }
+                      if (chksearch.Checked ) 
+                        search_data(grditem[0, crow].Value.ToString());
 
                     break;
 
@@ -2258,71 +2421,66 @@ namespace FinOrg
 
         private void btnaddbarcode_Click(object sender, EventArgs e)
         {
-            tab1.SelectedTab = tab1.TabPages[0];
-            tab1.TabPages[0].Show();
+
+            add_barcode();
+           
+        }
+        private  void add_barcode()
+        {
+           
             try
             {
+                tab1.SelectedTab = tab1.TabPages[0];
+                tab1.TabPages[0].Show();
                 if (string.IsNullOrEmpty(Txtitem.Text))
                 {
                     MessageBox.Show("Invalid Itemcode");
                     return;
                 }
 
-                //if (string.IsNullOrEmpty(txtbarcode.Text))
-                //{
-                //    MessageBox.Show("Invalid Barcode");
-                //    return;
-                //}
 
                 Conn.Close();
+                int i = -1;
 
-
-                foreach (DataGridViewRow row in this.grdbarcode.Rows)
-                {
+                //foreach (DataGridViewRow row in this.grdbarcode.Rows)
+                //{
                     //foreach (DataGridViewCell cell in row.Cells)
-                    if (row.Cells[2].Value.ToString() == cmbunit.Text)
+                    i = grdbarcode.Rows.Count - 1;
+                    for (int k = 0; k < grdbarcode.Rows.Count; k++)
                     {
-                        return;
+                        if (grdbarcode["unit", k].Value.ToString() == cmbunit.Text)
+                        {
+
+                            i = k;
+                            break;
+                        }
                     }
 
-                    //if (row.Cells[0].Value.ToString() == txtbarcode.Text)
-                    //{
-                    //    MessageBox.Show("Invalid Barcode");
-                    //    return;
-                    //}
-
-                    //if (dgv1.Rows[row.  cell.Size.IsEmpty)
-                    //{
-
-                    // }
-                    //MessageBox.Show(cell.Value.ToString());
-
-                }
+                    
+                //}
 
 
-                //Conn.Open();
-
-
-                //sql = " SELECT ACC_NO  ,ACC_NAME,ACC_MOBILE_NO,CONTACT_PERSON  ";
-                //sql = sql + " FROM ACCOUNTS WHERE ACC_NO  =" + CMBSUP.SelectedValue;
-
-                //SqlCommand cmd = new SqlCommand(sql, Conn);
-                //SqlDataReader rd = cmd.ExecuteReader();
+                
 
                 fnd = true;
                 while (fnd)
                 {
-                    grdbarcode.Rows.Add();
-                    // grdbarcode["barcode",grdbarcode.Rows.Count - 1].Value = txtbarcode.Text;
-                    grdbarcode["description", grdbarcode.Rows.Count - 1].Value = txtname.Text;
-                    grdbarcode["unit", grdbarcode.Rows.Count - 1].Value = cmbunit.Text;
-                    grdbarcode["unitid", grdbarcode.Rows.Count - 1].Value = cmbunit.SelectedValue.ToString();
-                    grdbarcode["fraction", grdbarcode.Rows.Count - 1].Value = txtfraction.Text;
-                    grdbarcode["itemcode", grdbarcode.Rows.Count - 1].Value = Txtitem.Text;
-                    grdbarcode["description", grdbarcode.Rows.Count - 1].Value = txtname.Text;
-                    //* grdbarcode["descriptionAr", grdbarcode.Rows.Count - 1].Value = txtarabic.Text;
-                    //*  grdbarcode["saleprice1", grdbarcode.Rows.Count - 1].Value = txtsaleprice.Text;
-                    //*grdbarcode["saleprice2", grdbarcode.Rows.Count - 1].Value = txtretailprice.Text;
+                    if (i == -1)
+                    {
+                        grdbarcode.Rows.Add();
+                        i = grdbarcode.Rows.Count-1 ;
+                    }
+                    grdbarcode["barcode",grdbarcode.Rows.Count - 1].Value = Txtitem.Text + cmbunit.SelectedValue;
+                    grdbarcode["description", i].Value = txtname.Text;
+                    grdbarcode["unit", i].Value = cmbunit.Text;
+                    grdbarcode["unitid", i].Value = cmbunit.SelectedValue.ToString();
+                    grdbarcode["fraction", i].Value = txtfraction.Text;
+                    grdbarcode["itemcode", i].Value = Txtitem.Text;
+                   // grdbarcode["item_id", i].Value = Txtitem.Text + "-" + cmbunit.SelectedValue;
+                    grdbarcode["description", i].Value = txtname.Text + " " + cmbunit.Text;
+                    grdbarcode["descriptionAr", i].Value = txtarname.Text + " " + cmbunitaname.Text;
+                    grdbarcode["saleprice1", i].Value = txtwhprice.Text;
+                    grdbarcode["saleprice2", i].Value = txtretailprice.Text;
 
 
                     //dt1.Text = rd["Cur_date"].ToString();
@@ -2333,13 +2491,14 @@ namespace FinOrg
                 }
 
                 grdbarcode.ReadOnly = false;
-
+                
                 Conn.Close();
             }
             catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message);
             }
+
         }
         private void Load_grid()
         {
@@ -2361,9 +2520,9 @@ namespace FinOrg
                 //SqlDataReader rd = cmd.ExecuteReader();
 
 
+                grdmain.Rows.Clear();
 
-
-
+               // grdmain.CellEnter -= grdmain_CellEnter;
                 SqlDataReader rd = cmd.ExecuteReader();
                 System.Drawing.Image image1;
                 int i = 0;
@@ -2373,7 +2532,7 @@ namespace FinOrg
                     {
                         if (!string.IsNullOrEmpty(rd[0].ToString()))
                         {
-                            grdmain.Rows.Add();
+                           grdmain.Rows.Add(1);
 
 
                             if (Convert.ToBoolean(rd["Lookup"]))
@@ -2471,7 +2630,8 @@ namespace FinOrg
                     }
                 }
                 rd.Close();
-
+                grdmain.CurrentCell = grdmain["colvalue", 0];
+                grdmain.CellEnter += grdmain_CellEnter;
             }
 
             catch (Exception ex)
@@ -2752,7 +2912,7 @@ namespace FinOrg
 
         }
 
-        private void add_barcode()
+        private void add_barcode_old()
         {
 
 
@@ -2814,7 +2974,7 @@ namespace FinOrg
                 //        return;
                 //    }
 
-
+                if (txtarname.Text == "") txtarname.Text = txtname.Text;
                 fnd = true;
                 while (fnd)
                 {
@@ -2841,18 +3001,18 @@ namespace FinOrg
                         grdbarcode["barcode", i].Value = grdbarcode["barcode", i].Value.ToString() + unitcode;
 
 
-                    grdbarcode["description", grdbarcode.Rows.Count - 1].Value = txtname.Text;
+                    grdbarcode["description", grdbarcode.Rows.Count - 1].Value = txtname.Text + " " + cmbunit.Text;
                     grdbarcode["unit", grdbarcode.Rows.Count - 1].Value = cmbunit.Text;
                     grdbarcode["unitid", grdbarcode.Rows.Count - 1].Value = cmbunit.SelectedValue.ToString();
                     grdbarcode["fraction", grdbarcode.Rows.Count - 1].Value = txtfraction.Text;
                     grdbarcode["itemcode", grdbarcode.Rows.Count - 1].Value = Txtitem.Text;
-                    row = grdmain.Rows
-                     .Cast<DataGridViewRow>()
-                     .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("AR_DESC"))
-                     .First();
+                    //row = grdmain.Rows
+                    // .Cast<DataGridViewRow>()
+                    // .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("AR_DESC"))
+                    // .First();
 
-                    grdbarcode["descriptionAr", grdbarcode.Rows.Count - 1].Value = row.Cells["colvalue"].Value;
-
+                    //grdbarcode["descriptionAr", grdbarcode.Rows.Count - 1].Value = row.Cells["colvalue"].Value;
+                    grdbarcode["descriptionAr", grdbarcode.Rows.Count - 1].Value = txtarname.Text + " " + cmbunitaname.Text;
                     row = grdmain.Rows
                      .Cast<DataGridViewRow>()
                      .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("RETAIL_PRICE"))
@@ -2994,7 +3154,12 @@ namespace FinOrg
 
         private void grdmain_Leave(object sender, EventArgs e)
         {
-            add_barcode();
+            if (Txtitem.Text == "")
+            {
+                txtsearch.Focus();
+                return;
+            }
+           // add_barcode();
             acntrl = "";
             grdmain.ClearSelection();
             grdstock.Focus();
@@ -3112,15 +3277,16 @@ namespace FinOrg
         {
             try
             {
-                if (grdmain.Rows.Count < 1) return;
+                cmbunitaname.SelectedIndex = cmbunit.SelectedIndex;
+                //if (grdmain.Rows.Count < 1) return;
 
-                DataGridViewRow row;
+                //DataGridViewRow row;
 
-                row = grdmain.Rows
-                    .Cast<DataGridViewRow>()
-                    .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("BARCODE"))
-                    .First();
-                row.Cells["colvalue"].Value = "";
+                //row = grdmain.Rows
+                //    .Cast<DataGridViewRow>()
+                //    .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("VAT_PERCENT"))
+                //    .First();
+                //row.Cells["colvalue"].Value = "";
 
 
                 //    row = grdmain.Rows
@@ -3131,62 +3297,62 @@ namespace FinOrg
 
                 //    row.Cells["colvalue"].Value = "";
 
-                row = grdmain.Rows
-                 .Cast<DataGridViewRow>()
-                 .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("RETAIL_PRICE"))
-                 .First();
+                //row = grdmain.Rows
+                // .Cast<DataGridViewRow>()
+                // .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("RETAIL_PRICE"))
+                // .First();
 
-                row.Cells["colvalue"].Value = "";
+                //row.Cells["colvalue"].Value = "";
 
-                row = grdmain.Rows
-                 .Cast<DataGridViewRow>()
-                 .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("SALE_PRICE"))
-                 .First();
-                if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "0";
-                row.Cells["colvalue"].Value = "";
-
-
+                //row = grdmain.Rows
+                // .Cast<DataGridViewRow>()
+                // .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("SALE_PRICE"))
+                // .First();
+                //if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "0";
+                //row.Cells["colvalue"].Value = "";
 
 
-                for (int i = 0; i < grdbarcode.Rows.Count; i++)
-                {
-                    if (cmbunit.Text == grdbarcode[2, i].Value.ToString())
-                    {
-
-                        row = grdmain.Rows
-                    .Cast<DataGridViewRow>()
-                    .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("BARCODE"))
-                    .First();
-                        row.Cells["colvalue"].Value = grdbarcode["barcode", i].Value;
 
 
-                        row = grdmain.Rows
-                    .Cast<DataGridViewRow>()
-                    .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("AR_DESC"))
-                    .First();
+                //for (int i = 0; i < grdbarcode.Rows.Count; i++)
+                //{
+                //    if (cmbunit.Text == grdbarcode[2, i].Value.ToString())
+                //    {
+
+                //        row = grdmain.Rows
+                //    .Cast<DataGridViewRow>()
+                //    .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("BARCODE"))
+                //    .First();
+                //        row.Cells["colvalue"].Value = grdbarcode["barcode", i].Value;
 
 
-                        row.Cells["colvalue"].Value = grdbarcode["descriptionAr", i].Value;
+                //        row = grdmain.Rows
+                //    .Cast<DataGridViewRow>()
+                //    .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("AR_DESC"))
+                //    .First();
 
-                        row = grdmain.Rows
-                         .Cast<DataGridViewRow>()
-                         .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("RETAIL_PRICE"))
-                         .First();
 
-                        row.Cells["colvalue"].Value = grdbarcode["saleprice2", i].Value;
+                //        row.Cells["colvalue"].Value = grdbarcode["descriptionAr", i].Value;
 
-                        row = grdmain.Rows
-                         .Cast<DataGridViewRow>()
-                         .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("SALE_PRICE"))
-                         .First();
-                        if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "0";
-                        row.Cells["colvalue"].Value = grdbarcode["saleprice1", i].Value;
+                //        row = grdmain.Rows
+                //         .Cast<DataGridViewRow>()
+                //         .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("RETAIL_PRICE"))
+                //         .First();
 
-                        txtfraction.Text = grdbarcode["fraction", i].Value.ToString();
+                //        row.Cells["colvalue"].Value = grdbarcode["saleprice2", i].Value;
 
-                    }
+                //        row = grdmain.Rows
+                //         .Cast<DataGridViewRow>()
+                //         .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("SALE_PRICE"))
+                //         .First();
+                //        if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "0";
+                //        row.Cells["colvalue"].Value = grdbarcode["saleprice1", i].Value;
 
-                }
+                //        txtfraction.Text = grdbarcode["fraction", i].Value.ToString();
+
+                //   }
+
+               // }
 
             }
             catch (Exception ex)
@@ -3629,10 +3795,22 @@ namespace FinOrg
 
         private void cmbcat_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //if (cmbcat.SelectedIndex < 0 ) return;
+            if (isini) return;
+            if (cmbcat.SelectedIndex < 0 ) return;
             
             try
             {
+
+                if (grdmain.Rows.Count < 1) return;
+
+                DataGridViewRow row;
+
+                row = grdmain.Rows
+                    .Cast<DataGridViewRow>()
+                    .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("VAT_PERCENT"))
+                    .First();
+               
+
 
                 sql = " SELECT vat_percent from item_cat where itm_cat_code =" + cmbcat.SelectedValue ;
                 
@@ -3643,7 +3821,7 @@ namespace FinOrg
 
                 while (rd.Read())
                 {
-                    txtvat.Text = rd[0].ToString();
+                    row.Cells["colvalue"].Value =  rd[0].ToString();
 
                 }
                 rd.Close();
@@ -3659,6 +3837,157 @@ namespace FinOrg
         private void txtvat_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void FrmItemMaster_Shown(object sender, EventArgs e)
+        {
+            try
+            {
+                Load_data();
+                Load_grid();
+                grditem.Visible = false;
+                grdbutton.Rows.Add(1);
+                grdmain.Focus();
+                first_grdrow = 0;
+                last_grdrow = 0;
+                for (int i = 0; i < grdmain.Rows.Count; i++)
+                {
+                    if (grdmain.Rows[i].Visible && first_grdrow == 0) first_grdrow = i;
+
+                    if (grdmain.Rows[i].Visible) last_grdrow = i;
+
+                }
+
+                if (grdmain.Rows[first_grdrow].Visible)
+                {
+                    grdmain.CurrentCell = grdmain["colvalue", first_grdrow];
+                    grdmain.BeginEdit(false);
+                }
+
+                //if (cmbcat.Items.Count > 1)
+                //    cmbcat.SelectedIndex = 1;
+                //cmbcat.SelectedIndex = 0;
+                isini = false;
+                txtsearch.Focus();
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+
+        private void txtsearch_Enter(object sender, EventArgs e)
+        {
+            acntrl = "txtsearch";
+        }
+
+        private void label16_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtname_Validated(object sender, EventArgs e)
+        {
+            try
+            {
+                if (txtarname.Text=="")
+                {
+                    Thread thread = new Thread(new ThreadStart(translate));
+                    thread.Start();
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+
+        }
+
+        private  void translate()
+        {
+            try
+            {
+                
+                string fname=Application.StartupPath + "\\Translate\\google-translate-sqldb.exe ";
+                string Param = " --target_lang=ar  translate --text='" + txtname.Text + "' --filename=g:\\translate.txt ";
+
+//               G:\FinOrg\Finance\bin\Debug\Translate>.\google-translate-sqldb.exe --target_lang
+//=ar  translate --text="Hello" --filename=translate.txt
+
+                Process p = new Process();
+			p.StartInfo.UseShellExecute = false;
+			p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.WindowStyle = ProcessWindowStyle.Minimized;
+            p.StartInfo.UseShellExecute = false;
+            p.StartInfo.CreateNoWindow = true;
+            p.StartInfo.FileName = fname;
+			p.StartInfo.StandardOutputEncoding = Encoding.UTF8;
+            p.StartInfo.Arguments = "--target_lang=ar  translate --text=\"" + txtname.Text + "\" --print";
+			p.Start();
+
+			string output = p.StandardOutput.ReadToEnd();
+			p.WaitForExit();
+            artext= output;
+            txtarname.BeginInvoke(new Action(() => {
+                txtarname.Text = output;
+            }));            
+           return ;
+                //Process P = Process.Start("cmd.exe", "/c " + fname + " " + Param);
+                //P.WaitForExit();
+                //int result = P.ExitCode;
+                //string line;
+                //if (result == 0)
+                //{
+
+                //   // System.IO.StreamReader file =
+                //   //new System.IO.StreamReader(txtfilename.Text);
+                //   // while ((line = file.ReadLine()) != null)
+                //   // {
+                //    txtarname.Text = output;
+
+                //   // }
+
+
+
+                //}
+
+            }
+            catch(Exception ex)
+            {
+                return ;
+
+            }
+        }
+
+        private void label10_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void grdmain_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if (grdmain.CurrentCell == null) return;
+
+            if (grdmain.CurrentCell.ColumnIndex == grdmain["colvalue", e.RowIndex].ColumnIndex) return;
+            {
+                SendKeys.Send("{RIGHT}");
+                //grdmain.CellEnter -= grdmain_CellEnter;
+                //grdmain.CurrentCell = grdmain["colvalue", e.RowIndex];
+                //grdmain.CellEnter += grdmain_CellEnter;
+
+            }
+        }
+
+       
+
+        private void grdstock_CellEnter(object sender, DataGridViewCellEventArgs e)
+
+        {
+            if (grdstock.CurrentCell == null) return;
+
+            if (grdstock.CurrentCell.ColumnIndex == grdstock["opstock", e.RowIndex].ColumnIndex) return;
+            SendKeys.Send("{RIGHT}");
+            //grdstock.CurrentCell = grdstock["opstock", e.RowIndex];
         }
     }
  }

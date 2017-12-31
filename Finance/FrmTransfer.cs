@@ -14,7 +14,7 @@ using CrystalDecisions.CrystalReports.Engine;
 using ADODB;
 namespace FinOrg
 {
-    public partial class FrmTransfer : Form
+    public partial class FrmTransfer : FinOrgForm
     {
 
         SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
@@ -4127,6 +4127,14 @@ if (!tmp.EOF) ST1 = tmp.Fields[0].Value;
 
             try
             {
+
+                if (!Program.session_valid(dt1.Value.Date.ToString("yyyy-MM-dd")))
+                {
+                    MessageBox.Show("There is no valid Finance Session Found, Please check the Entry Date or Contact Admin  ", "Invalid Transaction Date ", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+
+                }
+
                 if (isedit)
                 {
                     if (txtpriv.Text.Substring(1, 1) == "0")

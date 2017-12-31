@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmPurOrder));
             this.lbltrndate = new System.Windows.Forms.Label();
             this.lblref = new System.Windows.Forms.Label();
@@ -370,19 +370,19 @@
             // 
             // dgv1
             // 
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.Color.Khaki;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Blue;
-            this.dgv1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Khaki;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Blue;
+            this.dgv1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgv1.BackgroundColor = System.Drawing.Color.DeepSkyBlue;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Tahoma", 10F);
-            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Tahoma", 10F);
+            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dgv1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv1.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.dgv1.Location = new System.Drawing.Point(4, 160);
@@ -472,11 +472,11 @@
             // 
             this.GrdLookup.AllowUserToAddRows = false;
             this.GrdLookup.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.GrdLookup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.GrdLookup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.GrdLookup.BackgroundColor = System.Drawing.Color.White;
             this.GrdLookup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GrdLookup.Location = new System.Drawing.Point(205, 66);
+            this.GrdLookup.Location = new System.Drawing.Point(209, 72);
             this.GrdLookup.Name = "GrdLookup";
             this.GrdLookup.ReadOnly = true;
             this.GrdLookup.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -491,8 +491,8 @@
             // 
             this.grdcuslookup.AllowUserToAddRows = false;
             this.grdcuslookup.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.grdcuslookup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.grdcuslookup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.grdcuslookup.BackgroundColor = System.Drawing.Color.White;
             this.grdcuslookup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdcuslookup.Location = new System.Drawing.Point(78, 174);
@@ -753,14 +753,13 @@
             // 
             // lblmsg
             // 
-            this.lblmsg.AutoSize = true;
-            this.lblmsg.BackColor = System.Drawing.Color.Lime;
+            this.lblmsg.BackColor = System.Drawing.Color.Silver;
             this.lblmsg.Font = new System.Drawing.Font("Tahoma", 13F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblmsg.ForeColor = System.Drawing.Color.Black;
             this.lblmsg.ImeMode = System.Windows.Forms.ImeMode.On;
             this.lblmsg.Location = new System.Drawing.Point(2, 509);
             this.lblmsg.Name = "lblmsg";
-            this.lblmsg.Size = new System.Drawing.Size(30, 22);
+            this.lblmsg.Size = new System.Drawing.Size(362, 22);
             this.lblmsg.TabIndex = 56;
             this.lblmsg.Text = "**";
             // 
@@ -1459,32 +1458,29 @@
             // 
             // chkprintview
             // 
-            this.chkprintview.AutoSize = true;
-            this.chkprintview.Location = new System.Drawing.Point(368, 682);
+            this.chkprintview.Location = new System.Drawing.Point(368, 669);
             this.chkprintview.Name = "chkprintview";
-            this.chkprintview.Size = new System.Drawing.Size(73, 17);
+            this.chkprintview.Size = new System.Drawing.Size(107, 20);
             this.chkprintview.TabIndex = 93;
             this.chkprintview.Text = "View Print";
             this.chkprintview.UseVisualStyleBackColor = true;
             // 
             // lblprefex
             // 
-            this.lblprefex.AutoSize = true;
             this.lblprefex.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
             this.lblprefex.ForeColor = System.Drawing.Color.Brown;
             this.lblprefex.ImeMode = System.Windows.Forms.ImeMode.On;
             this.lblprefex.Location = new System.Drawing.Point(205, 78);
             this.lblprefex.Name = "lblprefex";
-            this.lblprefex.Size = new System.Drawing.Size(16, 19);
+            this.lblprefex.Size = new System.Drawing.Size(225, 19);
             this.lblprefex.TabIndex = 11;
             this.lblprefex.Text = "-";
             // 
             // chkdeldate
             // 
-            this.chkdeldate.AutoSize = true;
-            this.chkdeldate.Location = new System.Drawing.Point(674, 582);
+            this.chkdeldate.Location = new System.Drawing.Point(682, 582);
             this.chkdeldate.Name = "chkdeldate";
-            this.chkdeldate.Size = new System.Drawing.Size(51, 17);
+            this.chkdeldate.Size = new System.Drawing.Size(58, 19);
             this.chkdeldate.TabIndex = 94;
             this.chkdeldate.Text = "None";
             this.chkdeldate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;

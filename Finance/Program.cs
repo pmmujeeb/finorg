@@ -120,6 +120,37 @@ namespace FinOrg
                 }
             
         }
+        
+        public static bool session_valid(string sdate)
+        {
+                try
+                {
+
+
+                    ADODB.Connection ADOconn = new ADODB.Connection();
+                    ADODB.Recordset tmp = new ADODB.Recordset();
+
+                    SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
+
+
+                    ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
+
+                    ADODB.Recordset rec = new ADODB.Recordset();
+                    string sql = "SELECT FINANCE_ID FROM FINANCE_SESSION  WHERE FINANCE_STATUS=1 AND '" +  sdate  +   "' between finance_start_date and finance_end_date";
+
+                    Recordset TMP = new Recordset();
+                    TMP.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
+                    if (TMP.RecordCount == 0)
+                        return false;
+                    else
+                        return true;
+
+                }
+                            catch(Exception ex)
+                {
+                    return false;
+                }
+        }
         public static string ledger_ini(int trntype,string invno)
         {
             try

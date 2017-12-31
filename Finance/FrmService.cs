@@ -14,7 +14,7 @@ using CrystalDecisions.CrystalReports.Engine;
 using ADODB;
 namespace FinOrg
 {
-    public partial class FrmService : Form
+    public partial class FrmService : FinOrgForm
     {
 
         SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
@@ -392,6 +392,8 @@ namespace FinOrg
                 dgv1.Columns.Add(txt18);
                 DataGridViewTextBoxColumn txt19 = new DataGridViewTextBoxColumn();
                 dgv1.Columns.Add(txt19);
+                DataGridViewTextBoxColumn unitid = new DataGridViewTextBoxColumn();
+                dgv1.Columns.Add(unitid);
                 isini = true;
                 dgv1.Refresh();
                 dgv1.Columns[0].HeaderText = "Item Code";
@@ -409,6 +411,7 @@ namespace FinOrg
                 dgv1.Columns[10].HeaderText = "Fraction";
                 dgv1.Columns[11].HeaderText = "Re-order";
                 dgv1.Columns[19].HeaderText = "VAT";
+                dgv1.Columns[21].HeaderText = "unitid";
 
 
                 dgv1.Columns[0].Name = "barcode";
@@ -438,6 +441,7 @@ namespace FinOrg
                 dgv1.Columns[18].Name = "updsale";
                 dgv1.Columns[19].Name = "vat";
                 dgv1.Columns[20].Name = "vat%";
+                dgv1.Columns[21].Name = "unitid";
 
                 dgv1.Columns[6].Visible = false;
                 dgv1.Columns[10].Visible = false;
@@ -455,6 +459,7 @@ namespace FinOrg
                 dgv1.Columns[18].Visible = false;
                 dgv1.Columns[19].Visible = true;
                 dgv1.Columns[20].Visible = false;
+                dgv1.Columns[21].Visible = false;
 
  //               dgv1.Columns[1].ReadOnly = true;
                 //dgv1.Columns[3].ReadOnly = true;
@@ -747,14 +752,14 @@ namespace FinOrg
                 string sql = "";
                 if (crite != "")
                 {
-                    sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT,RETAIL_PRICE,ISNULL(STOCK,0) AS STOCK FROM         BARCODE AS H LEFT OUTER JOIN " +
+                    sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT_NAME,RETAIL_PRICE,ISNULL(STOCK,0) AS STOCK FROM         BARCODE AS H INNER JOIN UNITMASTER AS U ON H.UNIT=U.UNIT_ID  LEFT OUTER JOIN " +
                       "WR_STOCK_MASTER AS W ON H.ITEM_CODE = W.ITEM_CODE AND W.WR_CODE= "  + cmbwarehouse.SelectedValue + " INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + " AND    ITM_cAT_CODE NOT IN (" + EXCLUDE_ITM_cAT + " ) AND " + crite;
                     //sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT FROM BARCODE as h INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + "   where ITM_cAT_CODE NOT IN (" + EXCLUDE_ITM_cAT + " ) ";
                 }
                 else
                 {
                     //sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT,RETAIL_PRICE,STOCK FROM QRY_BARCODE as h INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + "   where ITM_cAT_CODE NOT IN (" + EXCLUDE_ITM_cAT + ") ";
-                    sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT,RETAIL_PRICE,ISNULL(STOCK,0) AS STOCK FROM         BARCODE AS H LEFT OUTER JOIN " +
+                    sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT_NAME,RETAIL_PRICE,ISNULL(STOCK,0) AS STOCK FROM         BARCODE AS H INNER JOIN UNITMASTER AS U ON H.UNIT=U.UNIT_ID LEFT OUTER JOIN " +
                       "WR_STOCK_MASTER AS W ON H.ITEM_CODE = W.ITEM_CODE AND W.WR_CODE= "  + cmbwarehouse.SelectedValue + " INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + " AND    ITM_cAT_CODE NOT IN (" + EXCLUDE_ITM_cAT + " ) ";
                 }
 
@@ -1583,7 +1588,7 @@ namespace FinOrg
 
 
                 //sql = "sELECT  h.Item_Code,h.DESCRIPTION,h.UNIT,h.FRACTION,s.AVG_PUR_PRICE,s.RE_ORDER,s.stock,u.unit_name from hd_ITEMMASTER h inner join unitmaster u on h.unit=u.unit_id  left join stock_master s on h.Item_Code=s.Item_Code where h.brn_code=1 and itm_cat_code=0 and h.Item_Code='" + Item_Code + "'";
-                sql = "select BdescrIPTION,stock,avg_PUR_PRICE,RETAIL_PRICE,ITEM_CODE,FRACTION,UNIT,stock,wr_code,ITEM_CODE,ITEM_ID,hfraction,barcode,bdescription,r_min_profit,vat_percent  from QRY_barcode where  wr_code =" +  cmbwarehouse.SelectedValue + " and   flag <> 'C' AND (BARCODE='" + Item_Code + "' OR (item_CODE='" + Item_Code + "' and MAIN_ID=1) OR ALIAS_NAME='" + Item_Code + "')"; // AND WR_CODE=" + Gvar.wr_code;
+                sql = "select BdescrIPTION,stock,avg_PUR_PRICE,RETAIL_PRICE,ITEM_CODE,FRACTION,UNIT_"+ Gvar.lang_letter + "NAME,stock,wr_code,ITEM_CODE,ITEM_ID,hfraction,barcode,bdescription,r_min_profit,vat_percent,UNIT_NAME,unit_id  from QRY_barcode INNER JOIN UNITMASTER AS U ON UNIT=U.UNIT_ID where  wr_code =" + cmbwarehouse.SelectedValue + " and   flag <> 'C' AND (BARCODE='" + Item_Code + "' OR (item_CODE='" + Item_Code + "' and MAIN_ID=1) OR ALIAS_NAME='" + Item_Code + "')"; // AND WR_CODE=" + Gvar.wr_code;
 
                 if (unit != "")
                 {
@@ -1647,6 +1652,7 @@ namespace FinOrg
                             dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["hfraction"].Value = rd[11].ToString();
                             dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["minprofit"].Value = rd[14].ToString();
                             dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["vat%"].Value = rd[15].ToString();
+                            dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["unitid"].Value = rd["unit_id"].ToString();
                            
                             dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["stock"].Value = rd[7].ToString();
 
@@ -2279,7 +2285,7 @@ namespace FinOrg
                             rec.Fields["price"].Value = Convert.ToDecimal(dgv1["price", i].Value) * Convert.ToDecimal(txtrate.Text);
                             rec.Fields["BARCODE"].Value = dgv1["barcode", i].Value;
                             rec.Fields["FRACTION"].Value = dgv1["fraction", i].Value;
-                            rec.Fields["UNIT"].Value = dgv1["unit", i].Value;
+                            rec.Fields["UNIT"].Value = dgv1["unitid", i].Value;
                             if (dgv1["cost", i].Value == null || dgv1["cost", i].Value == "")
                                 dgv1["cost", i].Value = 0;
                             rec.Fields["SALE_PUR_AMT"].Value = Convert.ToDecimal(dgv1["cost", i].Value) * Convert.ToDecimal(txtrate.Text);
@@ -3673,7 +3679,7 @@ namespace FinOrg
 
                 btnsave.Enabled = false;
                 btndelete.Enabled = false;
-                btnPrint.Enabled = false;
+                //btnPrint.Enabled = false;
 
             }
             catch
@@ -3737,208 +3743,218 @@ namespace FinOrg
 
         private void search_mrn()
         {
-
-
-            if (txtinvno.Text == "") return;
-            ADODB.Connection ADOconn = new ADODB.Connection();
-            string sql;
-            ADODB.Recordset rec = new ADODB.Recordset();
-            ADODB.Recordset tmp = new ADODB.Recordset();
-            rec = new ADODB.Recordset();
-            tmp = new ADODB.Recordset();
-
             try
             {
 
-                dgv1.CellEnter -= dgv1_CellEnter;
-                dgv1.SelectionChanged -= dgv1_SelectionChanged;
-
-
-                isedit = false;
-                ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
-                Conn.Close();
-                Conn.Open();
+                if (txtinvno.Text == "") return;
+                ADODB.Connection ADOconn = new ADODB.Connection();
+                string sql;
+                ADODB.Recordset rec = new ADODB.Recordset();
+                ADODB.Recordset tmp = new ADODB.Recordset();
                 rec = new ADODB.Recordset();
+                tmp = new ADODB.Recordset();
 
-                sql = "SELECT * FROM DATA_ENTRY WHERE  BRN_CODE = " + Gvar.brn_code + " AND NYEAR=" + dt1.Value.Year + " AND  TRN_TYPE=" + Convert.ToInt16(txttrn_type.Text) + "  AND INVOICE_NO= '" + txtinvno.Text.Trim() + "'";
-
-                rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                //if (tmp.Fields[0].Value)
-                load_ini();
-                if (rec.RecordCount > 0)
+                try
                 {
 
-                  
+                    dgv1.CellEnter -= dgv1_CellEnter;
+                    dgv1.SelectionChanged -= dgv1_SelectionChanged;
 
-                    object rec_no = rec.Fields["REC_NO"].Value;
 
-                    cmbcurrency.SelectedValue = rec.Fields["currency"].Value;
-                    txtinvno.Text = rec.Fields["INVOICE_NO"].Value.ToString();
-                    txttrn.Text = rec.Fields["TRAN_NO"].Value.ToString();
-                    dt1.Value = Convert.ToDateTime(rec.Fields["CURDATE"].Value.ToString());
-
-                    txtcustomer.Text = rec.Fields["ACCODE"].Value.ToString();
-                    txtcusname.Text = rec.Fields["ename"].Value.ToString();
-
-                    txtrefno.Text = rec.Fields["REF_NO"].Value.ToString();
-                    txtremarks.Text = rec.Fields["remarks"].Value.ToString();
-
-                    txtvatpcnt.Text = rec.Fields["VAT_PERCENT"].Value.ToString();
-                    txtvatamt.Text = rec.Fields["VAT_AMOUNT"].Value.ToString();
-
-                    if (Convert.ToDecimal(rec.Fields["DISC_AMT"].Value) > 0)
-                        txtdscamt.Text = (Convert.ToDecimal(rec.Fields["DISC_AMT"].Value.ToString()) / Convert.ToDecimal(txtrate.Text)).ToString();
-                  
-                    
-                    btnsave.Enabled = true;
-                    btndelete.Enabled = true;
-                    btnPrint.Enabled = true;
-                    lblinvstatus.Text = "***";
-
-                     btnsave.Enabled = true;
-                    lblmsg.Text = "Edit Entry......";
-                    lblmsg.BackColor = Color.Green;
-                    if (rec.Fields["flag"].Value.ToString() == "D")
-                    {
-                        btnsave.Enabled = false;
-                        btndelete.Enabled = false;
-                        lblinvstatus.Text = "Invoice Deleted!!!";
-                        lblmsg.Text = "Invoice Deleted!!!";
-                        lblmsg.BackColor = Color.Red;
-                    }
-
-                    var a = 0;
-
+                    isedit = false;
+                    ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
+                    Conn.Close();
+                    Conn.Open();
                     rec = new ADODB.Recordset();
 
-                    sql = "SELECT  DATA_ENTRY_GRID.*,stock FROM DATA_ENTRY_GRID left join stock_master  on DATA_ENTRY_GRID.Item_Code=stock_master.Item_Code WHERE REC_NO=" + rec_no;
+                    sql = "SELECT * FROM DATA_ENTRY WHERE  BRN_CODE = " + Gvar.brn_code + " AND NYEAR=" + dt1.Value.Year + " AND  TRN_TYPE=" + Convert.ToInt16(txttrn_type.Text) + "  AND INVOICE_NO= '" + txtinvno.Text.Trim() + "'";
 
                     rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                    //    //dgv1.Rows.Clear();
-                    //for (a=0; a< dgv1.RowCount-1;a++)
-                    //{
-                    //    dgv1.Rows.RemoveAt(a);
-                    //    }
-                    int i = 0;
-                    // dgv1.Rows.Add(rec.RecordCount+1);
-
-                    dgv1.Rows.Clear(); dgv1.Refresh();
-                    
-
-                    // foreach (DataGridViewRow row in this.dgv1.Rows)
-                    while (!rec.EOF)
-                    {
-                        //ds2.Tables[0].Rows.Add();
-                        dgv1.Rows.Add();
-                        dgv1["barcode", i].Value = rec.Fields["barcode"].Value.ToString();
-                        dgv1["itemcode", i].Value = rec.Fields["item_code"].Value.ToString();
-                        dgv1["price", i].Value = rec.Fields["FPRICE"].Value.ToString();
-                        dgv1["Description", i].Value = rec.Fields["Description"].Value.ToString();
-                        dgv1["qty", i].Value = rec.Fields["QTY"].Value.ToString();
-                        dgv1["fraction", i].Value = rec.Fields["FRACTION"].Value.ToString();
-
-                        dgv1["unit", i].Value = rec.Fields["Unit"].Value.ToString();
-                        // dgv1["stock", i].Value = rec.Fields["stock"].Value.ToString();
-                        // rec.Fields["UNIT"].Value = dgv1["unit", i].Value;
-                        dgv1.Rows[i].Cells["updsale"].Value = "0";
-                        dgv1["remarks", i].Value = rec.Fields["REMARKS"].Value.ToString();
-                        dgv1["cost", i].Value = rec.Fields["SALE_PUR_AMT"].Value.ToString();
-                        dgv1["total", i].Value = Convert.ToDecimal(rec.Fields["QTY"].Value.ToString()) * Convert.ToDecimal(rec.Fields["FPRICE"].Value.ToString());
-                       
-
-                      
-                      
-                        dgv1["proposed", i].Value = rec.Fields["PROPOSE_PRICE"].Value.ToString();
-                        object propose = rec.Fields["PROPOSE_PRICE"].Value.ToString();
-                        if (propose == "0") dgv1["proposed", i].Value = dgv1["price", i].Value;
-                        dgv1["itemid", i].Value = rec.Fields["ITEM_ID"].Value.ToString();
-                        dgv1["hfraction", i].Value = rec.Fields["hfraction"].Value.ToString();
-                        dgv1["disc", i].Value = rec.Fields["disc"].Value.ToString();
-                        i = i + 1;
-                        rec.MoveNext();
-
-                    }
-                    if (txttrn_type.Text == "22")
-                        dgv1.Columns["orderno"].Visible = false;
-
-                    find_total();
-
-
-
-                    rec = new ADODB.Recordset();
-
-                    sql = "SELECT  pay_amount,DEF_CASH_AC from TRN_PAYMENT_DET inner join ac_options on TRN_PAYMENT_DET.acc_no=ac_options.DEF_CASH_AC AND  ac_options.ID =1  where   trn_by ='" + txttrn_type.Text + "' and doc_no='" + txtinvno.Text + "'";
-
-                    rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-
-                    while (!rec.EOF)
+                    //if (tmp.Fields[0].Value)
+                    load_ini();
+                    if (rec.RecordCount > 0)
                     {
 
-                        txtcash.Text = rec.Fields["pay_amount"].Value.ToString();
-                        rec.MoveNext();
+
+
+                        object rec_no = rec.Fields["REC_NO"].Value;
+
+                        cmbcurrency.SelectedValue = rec.Fields["currency"].Value;
+                        txtinvno.Text = rec.Fields["INVOICE_NO"].Value.ToString();
+                        txttrn.Text = rec.Fields["TRAN_NO"].Value.ToString();
+                        dt1.Value = Convert.ToDateTime(rec.Fields["CURDATE"].Value.ToString());
+
+                        txtcustomer.Text = rec.Fields["ACCODE"].Value.ToString();
+                        txtcusname.Text = rec.Fields["ename"].Value.ToString();
+
+                        txtrefno.Text = rec.Fields["REF_NO"].Value.ToString();
+                        txtremarks.Text = rec.Fields["remarks"].Value.ToString();
+
+                        txtvatpcnt.Text = rec.Fields["VAT_PERCENT"].Value.ToString();
+                        txtvatamt.Text = rec.Fields["VAT_AMOUNT"].Value.ToString();
+
+                        if (Convert.ToDecimal(rec.Fields["DISC_AMT"].Value) > 0)
+                            txtdscamt.Text = (Convert.ToDecimal(rec.Fields["DISC_AMT"].Value.ToString()) / Convert.ToDecimal(txtrate.Text)).ToString();
+
+
+                        btnsave.Enabled = true;
+                        btndelete.Enabled = true;
+                        btnPrint.Enabled = true;
+                        lblinvstatus.Text = "***";
+
+                        btnsave.Enabled = true;
+                        lblmsg.Text = "Edit Entry......";
+                        lblmsg.BackColor = Color.LightGray;
+                        if (rec.Fields["flag"].Value.ToString() == "D")
+                        {
+                            btnsave.Enabled = false;
+                            btndelete.Enabled = false;
+                            lblinvstatus.Text = "Invoice Deleted!!!";
+                            lblmsg.Text = "Invoice Deleted!!!";
+                            lblmsg.BackColor = Color.Red;
+                        }
+
+                        var a = 0;
+
+                        rec = new ADODB.Recordset();
+
+                        sql = "SELECT  DATA_ENTRY_GRID.*,stock,unit_id,Unit_" + Gvar.lang_letter +"Name as UnitName FROM DATA_ENTRY_GRID inner join unitmaster as u on DATA_ENTRY_GRID.unit=unit_id  left join stock_master  on DATA_ENTRY_GRID.Item_Code=stock_master.Item_Code WHERE REC_NO=" + rec_no;
+
+                        rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
+                        //    //dgv1.Rows.Clear();
+                        //for (a=0; a< dgv1.RowCount-1;a++)
+                        //{
+                        //    dgv1.Rows.RemoveAt(a);
+                        //    }
+                        int i = 0;
+                        // dgv1.Rows.Add(rec.RecordCount+1);
+
+                        dgv1.Rows.Clear(); dgv1.Refresh();
+
+
+                        // foreach (DataGridViewRow row in this.dgv1.Rows)
+                        while (!rec.EOF)
+                        {
+                            //ds2.Tables[0].Rows.Add();
+                            dgv1.Rows.Add();
+                            dgv1["barcode", i].Value = rec.Fields["barcode"].Value.ToString();
+                            dgv1["itemcode", i].Value = rec.Fields["item_code"].Value.ToString();
+                            dgv1["price", i].Value = rec.Fields["FPRICE"].Value.ToString();
+                            dgv1["Description", i].Value = rec.Fields["Description"].Value.ToString();
+                            dgv1["qty", i].Value = rec.Fields["QTY"].Value.ToString();
+                            dgv1["fraction", i].Value = rec.Fields["FRACTION"].Value.ToString();
+
+                            dgv1["unit", i].Value = rec.Fields["Unitname"].Value.ToString();
+                            // dgv1["stock", i].Value = rec.Fields["stock"].Value.ToString();
+                            // rec.Fields["UNIT"].Value = dgv1["unit", i].Value;
+                            dgv1.Rows[i].Cells["updsale"].Value = "0";
+                            dgv1["remarks", i].Value = rec.Fields["REMARKS"].Value.ToString();
+                            dgv1["cost", i].Value = rec.Fields["SALE_PUR_AMT"].Value.ToString();
+                            dgv1["total", i].Value = Convert.ToDecimal(rec.Fields["QTY"].Value.ToString()) * Convert.ToDecimal(rec.Fields["FPRICE"].Value.ToString());
+
+
+
+
+                            dgv1["proposed", i].Value = rec.Fields["PROPOSE_PRICE"].Value.ToString();
+                            object propose = rec.Fields["PROPOSE_PRICE"].Value.ToString();
+                            if (propose == "0") dgv1["proposed", i].Value = dgv1["price", i].Value;
+                            dgv1["itemid", i].Value = rec.Fields["ITEM_ID"].Value.ToString();
+                            dgv1["hfraction", i].Value = rec.Fields["hfraction"].Value.ToString();
+                            dgv1["disc", i].Value = rec.Fields["disc"].Value.ToString();
+                            dgv1["vat", i].Value = rec.Fields["vat_amount"].Value.ToString();
+                            dgv1["vat%", i].Value = rec.Fields["vat_percent"].Value.ToString();
+                            dgv1["unitid", i].Value = rec.Fields["unit_id"].Value.ToString();
+                            
+                            i = i + 1;
+                            rec.MoveNext();
+
+                        }
+                        if (txttrn_type.Text == "22")
+                            dgv1.Columns["orderno"].Visible = false;
+
+                        find_total();
+
+
+
+                        rec = new ADODB.Recordset();
+
+                        sql = "SELECT  pay_amount,DEF_CASH_AC from TRN_PAYMENT_DET inner join ac_options on TRN_PAYMENT_DET.acc_no=ac_options.DEF_CASH_AC AND  ac_options.ID =1  where   trn_by ='" + txttrn_type.Text + "' and doc_no='" + txtinvno.Text + "'";
+
+                        rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
+
+                        while (!rec.EOF)
+                        {
+
+                            txtcash.Text = rec.Fields["pay_amount"].Value.ToString();
+                            rec.MoveNext();
+
+                        }
+
+
+                        rec = new ADODB.Recordset();
+
+                        sql = "SELECT d.acc_no,a.acc_name, d.pay_amount,DEF_CASH_AC from  accounts as a inner join TRN_PAYMENT_DET as d on a.acc_no=d.acc_no  inner join ac_options as o on d.acc_no <> o.DEF_CASH_AC AND o.ID =1 where  trn_by ='" + txttrn_type.Text + "' and doc_no='" + txtinvno.Text + "'";
+
+                        rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
+                        int r = 0;
+                        dgvpaid.Rows.Clear();
+                        //dgvpaid.Rows.Add(1);
+                        while (!rec.EOF)
+                        {
+                            // if (dgvpaid.Rows.Count < r + 1)
+                            dgvpaid.Rows.Add(1);
+                            dgvpaid["amount", r].Value = rec.Fields["pay_amount"].Value;
+                            dgvpaid["paidac", r].Value = rec.Fields["acc_no"].Value;
+                            dgvpaid["paidby", r].Value = rec.Fields["acc_name"].Value;
+                            dgvpaid["paid", r].Value = rec.Fields["pay_amount"].Value;
+
+
+
+                            r++;
+                            rec.MoveNext();
+
+                        }
+
+                        pay_calc_total();
+
+                        isedit = true;
+                        dgv1.Columns[0].ReadOnly = false;
+                        dgv1.Columns[2].ReadOnly = false;
+                        dgv1.Columns[3].ReadOnly = false;
+                        dgv1.Columns[4].ReadOnly = false;
+                        dgv1.Columns[5].ReadOnly = false;
+
+                        dgv1.CellEnter += dgv1_CellEnter;
+                        dgv1.SelectionChanged += dgv1_SelectionChanged;
 
                     }
 
 
-                    rec = new ADODB.Recordset();
-
-                    sql = "SELECT d.acc_no,a.acc_name, d.pay_amount,DEF_CASH_AC from  accounts as a inner join TRN_PAYMENT_DET as d on a.acc_no=d.acc_no  inner join ac_options as o on d.acc_no <> o.DEF_CASH_AC AND o.ID =1 where  trn_by ='" + txttrn_type.Text + "' and doc_no='" + txtinvno.Text + "'";
-
-                    rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
-                    int r = 0;
-                    dgvpaid.Rows.Clear();
-                    //dgvpaid.Rows.Add(1);
-                    while (!rec.EOF)
+                    else
                     {
-                        // if (dgvpaid.Rows.Count < r + 1)
-                        dgvpaid.Rows.Add(1);
-                        dgvpaid["amount", r].Value = rec.Fields["pay_amount"].Value;
-                        dgvpaid["paidac", r].Value = rec.Fields["acc_no"].Value;
-                        dgvpaid["paidby", r].Value = rec.Fields["acc_name"].Value;
-                        dgvpaid["paid", r].Value = rec.Fields["pay_amount"].Value;
-
-
-
-                        r++;
-                        rec.MoveNext();
-
+                        dgv1.CellEnter += dgv1_CellEnter;
+                        dgv1.SelectionChanged += dgv1_SelectionChanged;
+                        MessageBox.Show("Invalid Invoice Number", "Invalid Invoice Entry");
                     }
 
-                    pay_calc_total();
 
-                    isedit = true;
-                    dgv1.Columns[0].ReadOnly = false;
-                    dgv1.Columns[2].ReadOnly = false;
-                    dgv1.Columns[3].ReadOnly = false;
-                    dgv1.Columns[4].ReadOnly = false;
-                    dgv1.Columns[5].ReadOnly = false;
 
-                    dgv1.CellEnter += dgv1_CellEnter;
-                    dgv1.SelectionChanged += dgv1_SelectionChanged;
 
+                    cmbcurrency.Enabled = true;
+                    isdirty = false;
                 }
-
-
-                else
+                catch (SqlException ex)
                 {
+                    MessageBox.Show(ex.Message);
                     dgv1.CellEnter += dgv1_CellEnter;
                     dgv1.SelectionChanged += dgv1_SelectionChanged;
-                    MessageBox.Show("Invalid Invoice Number", "Invalid Invoice Entry");
                 }
-
-
-
-
-                cmbcurrency.Enabled = true;
-                isdirty = false;
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-                dgv1.CellEnter += dgv1_CellEnter;
-                dgv1.SelectionChanged += dgv1_SelectionChanged;
-            }
 
+            }
         }
 
         private void toolclose_Click(object sender, EventArgs e)
@@ -4921,7 +4937,7 @@ namespace FinOrg
                txtcustomer.Focus();
                 btnsave.Enabled = true;
                 lblmsg.Text = "New Entry......";
-                lblmsg.BackColor = Color.Green;
+                lblmsg.BackColor = Color.LightGray;
                 dgv1.Columns[0].ReadOnly = false;
                 dgv1.Columns[2].ReadOnly = false;
                 dgv1.Columns[3].ReadOnly = false;
@@ -5043,6 +5059,13 @@ namespace FinOrg
 
             try
             {
+
+                if(!Program.session_valid(dt1.Value.Date.ToString("yyyy-MM-dd")))
+                {
+                    MessageBox.Show("There is no valid Finance Session Found, Please check the Entry Date or Contact Admin  ", "Invalid Transaction Date ", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+
+                }
 
                 if (cmbcurrency.Enabled && isdirty)
                 {
@@ -5293,7 +5316,7 @@ namespace FinOrg
                 iserror = false;
                 ADOconn.BeginTrans();
                 lblmsg.Text = "Please Wait Saving......";
-                lblmsg.BackColor = Color.Green;
+                lblmsg.BackColor = Color.LightGray;
                 SAVE_DATAENTRY();
                 if (!iserror)
                 {
@@ -5322,7 +5345,7 @@ namespace FinOrg
                     isdirty = false;
                     ADOconn.CommitTrans();
                     lblmsg.Text = "Record Saved Successfully!!!";
-                    lblmsg.BackColor = Color.Green;
+                    lblmsg.BackColor = Color.LightGray;
                     btnsave.Enabled = false;
                     dgv1.Columns[0].ReadOnly = true;
                     dgv1.Columns[2].ReadOnly = true;

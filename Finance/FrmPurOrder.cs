@@ -14,7 +14,7 @@ using CrystalDecisions.CrystalReports.Engine;
 using ADODB;
 namespace FinOrg
 {
-    public partial class FrmPurOrder : Form
+    public partial class FrmPurOrder : FinOrgForm
     {
 
         SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
@@ -545,7 +545,8 @@ namespace FinOrg
                 dgv1.Columns.Add(txt23);
                 DataGridViewTextBoxColumn txt24 = new DataGridViewTextBoxColumn();
                 dgv1.Columns.Add(txt24);
-                
+                DataGridViewTextBoxColumn unitid = new DataGridViewTextBoxColumn();
+                dgv1.Columns.Add(unitid);
                 dgv1.Columns.Add(propose);
                 dgv1.Refresh();
                 dgv1.Columns[0].Name = "orderno";
@@ -577,6 +578,7 @@ namespace FinOrg
                 dgv1.Columns[22].Name = "id";
                 dgv1.Columns[23].Name = "vat";
                 dgv1.Columns[24].Name = "vat%";
+                dgv1.Columns[25].Name = "unitid";
 
                 dgv1.Columns["orderno"].HeaderText = "OrderNo";
                 dgv1.Columns["barcode"].HeaderText = "Item Code";
@@ -627,6 +629,7 @@ namespace FinOrg
                 dgv1.Columns["hfraction"].Visible = false;
                 dgv1.Columns["minprofit"].Visible = false;
                 dgv1.Columns["id"].Visible = false;
+                dgv1.Columns["unitid"].Visible = false;
                 dgv1.Columns["orgsaleprice"].Visible = false;
 
  //               dgv1.Columns[1].ReadOnly = true;
@@ -776,11 +779,11 @@ namespace FinOrg
                     string sql = "";
                     if (crite != "")
                     {
-                        sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT FROM BARCODE as h INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + "   where ITM_cAT_CODE NOT IN ( " + EXCLUDE_ITM_cAT + " ) AND " + crite;
+                        sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT_NAME FROM BARCODE as h INNER JOIN UNITMASTER AS U ON H.UNIT=U.UNIT_ID INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + "   where ITM_cAT_CODE NOT IN ( " + EXCLUDE_ITM_cAT + " ) AND " + crite;
                     }
                     else
                     {
-                        sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT FROM BARCODE as h INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + "   where ITM_cAT_CODE NOT IN ( " + EXCLUDE_ITM_cAT + ") ";
+                        sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT_NAME FROM BARCODE as h INNER JOIN UNITMASTER AS U ON H.UNIT=U.UNIT_ID INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + "   where ITM_cAT_CODE NOT IN ( " + EXCLUDE_ITM_cAT + ") ";
                     }
 
                     switch (txttrn_type.Text )
@@ -788,14 +791,14 @@ namespace FinOrg
                         case "2":
                             if (txtorderno.Text.Trim() == "")
                             {
-                                sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT FROM PUR_ORDER_GRID as h inner join data_entry e on  h.rec_no=e.rec_no    where e.accode ='" + txtcustomer.Text + "'   and h.invoice_no='" + dgv1["orderno", dgv1.CurrentCell.RowIndex].Value + "' and  qty-rqty >0 ";
+                                sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT_NAME FROM PUR_ORDER_GRID as h INNER JOIN UNITMASTER AS U ON H.UNIT=U.UNIT_ID inner join data_entry e on  h.rec_no=e.rec_no    where e.accode ='" + txtcustomer.Text + "'   and h.invoice_no='" + dgv1["orderno", dgv1.CurrentCell.RowIndex].Value + "' and  qty-rqty >0 ";
                                 // MessageBox.Show("Invalid Order Number");
                                 // return;
                             }
 
                             else
                             {
-                                sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT FROM PUR_ORDER_GRID as h where invoice_no='" + txtorderno.Text + "' and  qty-rqty >0 ";
+                                sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT_NAME FROM PUR_ORDER_GRID as h INNER JOIN UNITMASTER AS U ON H.UNIT=U.UNIT_ID where invoice_no='" + txtorderno.Text + "' and  qty-rqty >0 ";
                             }
                             break;
                     }
@@ -1570,11 +1573,13 @@ namespace FinOrg
                 dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["stock"].Value = "";
                 dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["vat"].Value = "";
                 dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["vat%"].Value = "";
+                dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["unitid"].Value = "";
 
 
 
                 //sql = "sELECT  h.Item_Code,h.DESCRIPTION,h.UNIT,h.FRACTION,s.AVG_PUR_PRICE,s.RE_ORDER,s.stock,u.unit_name from hd_ITEMMASTER h inner join unitmaster u on h.unit=u.unit_id  left join stock_master s on h.Item_Code=s.Item_Code where h.brn_code=1 and itm_cat_code=0 and h.Item_Code='" + Item_Code + "'";
                 sql = "select BdescrIPTION,stock,avg_PUR_PRICE,LAST_PUR_PRICE,ITEM_CODE,FRACTION,UNIT,stock,wr_code,ITEM_CODE,ITEM_ID,hfraction,barcode,bdescription,r_min_profit,RETAIL_PRICE,vat_percent  from QRY_barcode where  wr_code =" + Gvar.wr_code + " and  flag <> 'C' AND (BARCODE='" + Item_Code + "' OR (item_CODE='" + Item_Code + "' and MAIN_ID=1) OR ALIAS_NAME='" + Item_Code + "')"; // AND WR_CODE=" + Gvar.wr_code;
+                sql = "select BdescrIPTION,stock,avg_PUR_PRICE,RETAIL_PRICE,ITEM_CODE,FRACTION,UNIT_" + Gvar.lang_letter + "NAME,stock,wr_code,ITEM_CODE,ITEM_ID,hfraction,barcode,bdescription,r_min_profit,vat_percent,UNIT_NAME,unit_id  from QRY_barcode INNER JOIN UNITMASTER AS U ON UNIT=U.UNIT_ID where  wr_code =" + Gvar.wr_code + " and   flag <> 'C' AND (BARCODE='" + Item_Code + "' OR (item_CODE='" + Item_Code + "' and MAIN_ID=1) OR ALIAS_NAME='" + Item_Code + "')"; // AND WR_CODE=" + Gvar.wr_code;
 
                 switch (txttrn_type.Text)
                 {
@@ -1589,10 +1594,10 @@ namespace FinOrg
 
 
                         if (txtorderno.Text.ToString().Trim() == "" && dgv1.Columns["orderno"].Visible)
-                            sql = "select BdescrIPTION,stock,avg_PUR_PRICE,LAST_PUR_PRICE,q.ITEM_CODE,p.FRACTION,p.UNIT,stock,Q.wr_code,q.ITEM_CODE,q.ITEM_ID,hfraction,p.barcode,bdescription,r_min_profit,p.rqty,p.qty,p.price,RETAIL_PRICE  from QRY_barcode as q inner join   PUR_ORDER_GRID as p on q.barcode = p.barcode INNER JOIN DATA_ENTRY E ON P.REC_NO=E.REC_NO  where E.ACCODE=" + txtcustomer.Text + " AND  P.invoice_no='" + orderno + "' and  qty-rqty >0  and  Q.flag <> 'C' AND (q.BARCODE='" + Item_Code + "' OR (q.item_CODE='" + Item_Code + "' and MAIN_ID=1) OR ALIAS_NAME='" + Item_Code + "')"; // AND WR_CODE=" + Gvar.wr_code;
+                            sql = "select BdescrIPTION,stock,avg_PUR_PRICE,LAST_PUR_PRICE,q.ITEM_CODE,p.FRACTION,p.UNIT,stock,Q.wr_code,q.ITEM_CODE,q.ITEM_ID,hfraction,p.barcode,bdescription,r_min_profit,p.rqty,p.qty,p.price,RETAIL_PRICE,unit_id  from QRY_barcode as q INNER JOIN UNITMASTER AS U ON UNIT=U.UNIT_ID inner join   PUR_ORDER_GRID as p on q.barcode = p.barcode INNER JOIN DATA_ENTRY E ON P.REC_NO=E.REC_NO  where E.ACCODE=" + txtcustomer.Text + " AND  P.invoice_no='" + orderno + "' and  qty-rqty >0  and  Q.flag <> 'C' AND (q.BARCODE='" + Item_Code + "' OR (q.item_CODE='" + Item_Code + "' and MAIN_ID=1) OR ALIAS_NAME='" + Item_Code + "')"; // AND WR_CODE=" + Gvar.wr_code;
 
                         else
-                            sql = "select BdescrIPTION,stock,avg_PUR_PRICE,LAST_PUR_PRICE,q.ITEM_CODE,p.FRACTION,p.UNIT,stock,wr_code,q.ITEM_CODE,q.ITEM_ID,hfraction,p.barcode,bdescription,r_min_profit,p.rqty,p.qty,p.price,RETAIL_PRICE  from QRY_barcode as q inner join   PUR_ORDER_GRID as p on q.barcode = p.barcode where invoice_no='" + orderno + "' and  qty-rqty >0  and  flag <> 'C' AND (q.BARCODE='" + Item_Code + "' OR (q.item_CODE='" + Item_Code + "' and MAIN_ID=1) OR ALIAS_NAME='" + Item_Code + "')"; // AND WR_CODE=" + Gvar.wr_code;
+                            sql = "select BdescrIPTION,stock,avg_PUR_PRICE,LAST_PUR_PRICE,q.ITEM_CODE,p.FRACTION,p.UNIT,stock,wr_code,q.ITEM_CODE,q.ITEM_ID,hfraction,p.barcode,bdescription,r_min_profit,p.rqty,p.qty,p.price,RETAIL_PRICE,unit_id  from QRY_barcode as q INNER JOIN UNITMASTER AS U ON UNIT=U.UNIT_ID inner join   PUR_ORDER_GRID as p on q.barcode = p.barcode where invoice_no='" + orderno + "' and  qty-rqty >0  and  flag <> 'C' AND (q.BARCODE='" + Item_Code + "' OR (q.item_CODE='" + Item_Code + "' and MAIN_ID=1) OR ALIAS_NAME='" + Item_Code + "')"; // AND WR_CODE=" + Gvar.wr_code;
 
    
 
@@ -1643,7 +1648,7 @@ namespace FinOrg
 
                             dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["unit"].Value = rd[6].ToString();
 
-                          
+                            dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["unitid"].Value = rd["unit_id"].ToString();
                             
                              
 
@@ -2310,7 +2315,7 @@ namespace FinOrg
                             rec.Fields["price"].Value = Convert.ToDecimal( dgv1["price", i].Value) * Convert.ToDecimal(txtrate.Text) ;
                             rec.Fields["BARCODE"].Value = dgv1["barcode", i].Value;
                             rec.Fields["FRACTION"].Value = dgv1["fraction", i].Value;
-                            rec.Fields["UNIT"].Value = dgv1["unit", i].Value;
+                            rec.Fields["UNIT"].Value = dgv1["unitid", i].Value;
                             if (dgv1["cost", i].Value == null || dgv1["cost", i].Value == "")
                                 dgv1["cost", i].Value = 0;
                             rec.Fields["SALE_PUR_AMT"].Value = Convert.ToDecimal(dgv1["cost", i].Value) * Convert.ToDecimal(txtrate.Text); 
@@ -2621,7 +2626,7 @@ namespace FinOrg
 
                     lblprefex.Text = rec.Fields["inv_prefex"].Value + "-" + rec.Fields["nyear"].Value + "-" + rec.Fields["ORDER_NO"].Value.ToString();
                     lblmsg.Text = "View / Edit Entry......";
-                    lblmsg.BackColor = Color.Green;
+                    lblmsg.BackColor = Color.LightGray;
                     if (rec.Fields["flag"].Value.ToString() == "D")
                     {
                         btnsave.Enabled = false;
@@ -2636,13 +2641,13 @@ namespace FinOrg
                     rec = new ADODB.Recordset();
                     if (txttrn_type.Text == "2")
                     {
-                        sql = "SELECT  e.*,stock,p.qty as pqty,p.rqty,p.id FROM data_entry_GRID as e inner join data_entry as d on e.rec_no=d.rec_no inner join PUR_ORDER_GRID as p on e.item_code=p.item_code and e.ORDEr_recno=p.rec_no and e.trn_type=2  left join stock_master  on e.Item_Code=stock_master.Item_Code WHERE e.REC_NO=" + rec_no;
+                        sql = "SELECT  e.*,stock,p.qty as pqty,p.rqty,p.id,unit_id,unit_name FROM data_entry_GRID as e inner INNER JOIN UNITMASTER AS U ON UNIT=U.UNIT_ID inner join data_entry as d on e.rec_no=d.rec_no inner join PUR_ORDER_GRID as p on e.item_code=p.item_code and e.ORDEr_recno=p.rec_no and e.trn_type=2  left join stock_master  on e.Item_Code=stock_master.Item_Code WHERE e.REC_NO=" + rec_no;
                         trmsql = "SELECT * FROM PurOrder_Terms WHERE Order_NO = '" + txtorderno.Text.Trim() + "' AND  NYEAR=" + nyear.Text + " and  BRN_CODE =" + Gvar.brn_code;
                         btnsave.Enabled = false;
                     }
                     else
                     {
-                        sql = "SELECT  PUR_ORDER_GRID.*,stock FROM PUR_ORDER_GRID left join stock_master  on PUR_ORDER_GRID.Item_Code=stock_master.Item_Code WHERE REC_NO=" + rec_no;
+                        sql = "SELECT  PUR_ORDER_GRID.*,stock,unit_id,unit_name FROM PUR_ORDER_GRID INNER JOIN UNITMASTER AS U ON UNIT=U.UNIT_ID left join stock_master  on PUR_ORDER_GRID.Item_Code=stock_master.Item_Code WHERE REC_NO=" + rec_no;
                         trmsql = "SELECT * FROM PurOrder_Terms WHERE Order_NO = '" + txtinvno.Text.Trim() + "' AND  NYEAR=" + nyear.Text + " and  BRN_CODE =" + Gvar.brn_code;
             
                     }
@@ -2673,7 +2678,8 @@ namespace FinOrg
                         dgv1["qty", i].Value = rec.Fields["QTY"].Value.ToString();
                         dgv1["fraction", i].Value = rec.Fields["FRACTION"].Value.ToString();
 
-                        dgv1["unit", i].Value = rec.Fields["Unit"].Value.ToString();
+                        dgv1["unit", i].Value = rec.Fields["Unit_name"].Value.ToString();
+                        dgv1["unitid", i].Value = rec.Fields["Unit_id"].Value.ToString();
                         // dgv1["stock", i].Value = rec.Fields["stock"].Value.ToString();
                         // rec.Fields["UNIT"].Value = dgv1["unit", i].Value;
                         dgv1.Rows[i].Cells["updsale"].Value = "0";
@@ -2802,6 +2808,7 @@ namespace FinOrg
         private void load_ini()
 
         {
+            
             btnsave.Enabled = true;
             lastrec = 1;
             cur_col = "barcode";
@@ -3452,7 +3459,7 @@ namespace FinOrg
                 //dgv1.Focus();
                 btnsave.Enabled = true;
                 lblmsg.Text = "New Entry......";
-                lblmsg.BackColor = Color.Green;
+                lblmsg.BackColor = Color.LightGray;
                 
                 dgv1.Columns["barcode"].ReadOnly = false;
                 dgv1.Columns["unit"].ReadOnly = false;
@@ -3564,6 +3571,13 @@ namespace FinOrg
 
             try
             {
+                if (!Program.session_valid(dt1.Value.Date.ToString("yyyy-MM-dd")))
+                {
+                    MessageBox.Show("There is no valid Finance Session Found, Please check the Entry Date or Contact Admin  ", "Invalid Transaction Date ", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+
+                }
+
 
                 if (cmbcurrency.Enabled && isdirty)
                 {
@@ -3742,7 +3756,7 @@ namespace FinOrg
                 iserror = false;
                 ADOconn.BeginTrans();
                 lblmsg.Text = "Please Wait Saving......";
-                lblmsg.BackColor = Color.Green;
+                lblmsg.BackColor = Color.LightGray;
                 if (txttrn_type.Text == "2")
                 {
                     SAVE_DATAENTRY_PUR();
@@ -3779,7 +3793,7 @@ namespace FinOrg
                     ADOconn.CommitTrans();
                 
                     lblmsg.Text = "Record Saved Successfully!!!";
-                    lblmsg.BackColor = Color.Green;
+                    lblmsg.BackColor = Color.LightGray;
                     btnsave.Enabled = false;
                    
 
@@ -4533,7 +4547,7 @@ ADODB.Recordset rec = new   ADODB.Recordset();
                             rec.Fields["price"].Value = Convert.ToDecimal( dgv1["price", i].Value)* Convert.ToDecimal(txtrate.Text);
                             rec.Fields["BARCODE"].Value = dgv1["barcode", i].Value;
                             rec.Fields["FRACTION"].Value = dgv1["fraction", i].Value;
-                            rec.Fields["UNIT"].Value = dgv1["unit", i].Value;
+                            rec.Fields["UNIT"].Value = dgv1["unitid", i].Value;
                             if (dgv1["cost", i].Value == null || dgv1["cost", i].Value == "")
                                 dgv1["cost", i].Value = 0;
                             rec.Fields["SALE_PUR_AMT"].Value = Convert.ToDecimal(dgv1["cost", i].Value) * Convert.ToDecimal(txtrate.Text);

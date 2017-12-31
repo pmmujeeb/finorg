@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace FinOrg
 {
-    public partial class Frmbrowser : Form
+    public partial class Frmbrowser : FinOrgForm
     {
         public Frmbrowser()
         {

@@ -15,7 +15,7 @@ namespace FinOrg
 {
 
 
-    public partial class FrmBankrecons : Form
+    public partial class FrmBankrecons : FinOrgForm
     {
 
         SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);

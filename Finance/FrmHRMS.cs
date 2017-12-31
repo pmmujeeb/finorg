@@ -16,7 +16,7 @@ using System.Drawing.Imaging;
 
 namespace FinOrg
 {
-    public partial class FrmHRMS : Form
+    public partial class FrmHRMS : FinOrgForm
     {
 
         SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);

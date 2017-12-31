@@ -15,7 +15,7 @@ namespace FinOrg
 {
 
 
-    public partial class frmreport1 : Form
+    public partial class frmreport1 : FinOrgForm
         
     {
         

@@ -89,12 +89,12 @@
             this.btnnew = new System.Windows.Forms.Button();
             this.cmbtrntype = new System.Windows.Forms.ComboBox();
             this.btnsave = new System.Windows.Forms.Button();
+            this.lblinvstatus = new System.Windows.Forms.Label();
             this.lblmsg = new System.Windows.Forms.Label();
             this.label17 = new System.Windows.Forms.Label();
             this.txtacbalance = new System.Windows.Forms.TextBox();
             this.cmbsalesagent = new System.Windows.Forms.ComboBox();
             this.lblsaleperson = new System.Windows.Forms.Label();
-            this.lblinvstatus = new System.Windows.Forms.Label();
             this.txtremarks = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label16 = new System.Windows.Forms.Label();
@@ -844,16 +844,29 @@
             this.btnsave.UseVisualStyleBackColor = true;
             this.btnsave.Click += new System.EventHandler(this.btnsave_Click);
             // 
+            // lblinvstatus
+            // 
+            this.lblinvstatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.lblinvstatus.AutoSize = true;
+            this.lblinvstatus.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblinvstatus.ForeColor = System.Drawing.Color.Red;
+            this.lblinvstatus.ImeMode = System.Windows.Forms.ImeMode.On;
+            this.lblinvstatus.Location = new System.Drawing.Point(1165, 27);
+            this.lblinvstatus.Name = "lblinvstatus";
+            this.lblinvstatus.Size = new System.Drawing.Size(45, 25);
+            this.lblinvstatus.TabIndex = 61;
+            this.lblinvstatus.Text = "***";
+            this.lblinvstatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // lblmsg
             // 
-            this.lblmsg.AutoSize = true;
-            this.lblmsg.BackColor = System.Drawing.Color.Lime;
+            this.lblmsg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.lblmsg.Font = new System.Drawing.Font("Tahoma", 13F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblmsg.ForeColor = System.Drawing.Color.Black;
             this.lblmsg.ImeMode = System.Windows.Forms.ImeMode.On;
             this.lblmsg.Location = new System.Drawing.Point(2, 509);
             this.lblmsg.Name = "lblmsg";
-            this.lblmsg.Size = new System.Drawing.Size(30, 22);
+            this.lblmsg.Size = new System.Drawing.Size(546, 22);
             this.lblmsg.TabIndex = 56;
             this.lblmsg.Text = "**";
             // 
@@ -903,20 +916,6 @@
             this.lblsaleperson.Size = new System.Drawing.Size(98, 19);
             this.lblsaleperson.TabIndex = 58;
             this.lblsaleperson.Text = "Sales Person";
-            // 
-            // lblinvstatus
-            // 
-            this.lblinvstatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.lblinvstatus.AutoSize = true;
-            this.lblinvstatus.Font = new System.Drawing.Font("Tahoma", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblinvstatus.ForeColor = System.Drawing.Color.Red;
-            this.lblinvstatus.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.lblinvstatus.Location = new System.Drawing.Point(1165, 27);
-            this.lblinvstatus.Name = "lblinvstatus";
-            this.lblinvstatus.Size = new System.Drawing.Size(45, 25);
-            this.lblinvstatus.TabIndex = 61;
-            this.lblinvstatus.Text = "***";
-            this.lblinvstatus.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // txtremarks
             // 
@@ -1179,10 +1178,9 @@
             // 
             // chkprintview
             // 
-            this.chkprintview.AutoSize = true;
-            this.chkprintview.Location = new System.Drawing.Point(855, 616);
+            this.chkprintview.Location = new System.Drawing.Point(855, 611);
             this.chkprintview.Name = "chkprintview";
-            this.chkprintview.Size = new System.Drawing.Size(73, 17);
+            this.chkprintview.Size = new System.Drawing.Size(130, 22);
             this.chkprintview.TabIndex = 99;
             this.chkprintview.Text = "View Print";
             this.chkprintview.UseVisualStyleBackColor = true;
@@ -1261,7 +1259,6 @@
             this.Controls.Add(this.txtrate);
             this.Controls.Add(this.cmbcurrency);
             this.Controls.Add(this.lblcurrency);
-            this.Controls.Add(this.cmbwarehouse);
             this.Controls.Add(this.panelremote);
             this.Controls.Add(this.btnremote);
             this.Controls.Add(this.GrdLookup);
@@ -1307,6 +1304,7 @@
             this.Controls.Add(this.txttrn_type);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label5);
+            this.Controls.Add(this.cmbwarehouse);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.KeyPreview = true;
             this.Name = "FrmService";

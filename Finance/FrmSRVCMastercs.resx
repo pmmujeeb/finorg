@@ -577,7 +577,7 @@
     <value>On</value>
   </data>
   <data name="label3.Location" type="System.Drawing.Point, System.Drawing">
-    <value>524, 14</value>
+    <value>529, 15</value>
   </data>
   <data name="label3.Size" type="System.Drawing.Size, System.Drawing">
     <value>41, 19</value>
@@ -601,10 +601,10 @@
     <value>10</value>
   </data>
   <data name="dt1.Location" type="System.Drawing.Point, System.Drawing">
-    <value>614, 14</value>
+    <value>652, 14</value>
   </data>
   <data name="dt1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>107, 20</value>
+    <value>123, 20</value>
   </data>
   <data name="dt1.TabIndex" type="System.Int32, mscorlib">
     <value>12</value>
@@ -658,10 +658,10 @@
     <value>Tahoma, 11.25pt</value>
   </data>
   <data name="txtalias.Location" type="System.Drawing.Point, System.Drawing">
-    <value>614, 74</value>
+    <value>655, 74</value>
   </data>
   <data name="txtalias.Size" type="System.Drawing.Size, System.Drawing">
-    <value>310, 26</value>
+    <value>287, 26</value>
   </data>
   <data name="txtalias.TabIndex" type="System.Int32, mscorlib">
     <value>7</value>
@@ -685,16 +685,16 @@
     <value>On</value>
   </data>
   <data name="label9.Location" type="System.Drawing.Point, System.Drawing">
-    <value>524, 38</value>
+    <value>529, 38</value>
   </data>
   <data name="label9.Size" type="System.Drawing.Size, System.Drawing">
-    <value>84, 38</value>
+    <value>117, 38</value>
   </data>
   <data name="label9.TabIndex" type="System.Int32, mscorlib">
     <value>20</value>
   </data>
   <data name="label9.Text" xml:space="preserve">
-    <value>Cost Price</value>
+    <value>Service Charge</value>
   </data>
   <data name="label9.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
     <value>MiddleCenter</value>
@@ -823,10 +823,10 @@
     <value>Tahoma, 11.25pt</value>
   </data>
   <data name="txtcost.Location" type="System.Drawing.Point, System.Drawing">
-    <value>614, 42</value>
+    <value>655, 42</value>
   </data>
   <data name="txtcost.Size" type="System.Drawing.Size, System.Drawing">
-    <value>113, 26</value>
+    <value>120, 26</value>
   </data>
   <data name="txtcost.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>

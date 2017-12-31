@@ -14,7 +14,7 @@ using ADODB;
 namespace FinOrg
 {
 
-    public partial class FrmSRVCMaster : Form
+    public partial class FrmSRVCMaster : FinOrgForm
     {
 
 
@@ -108,6 +108,13 @@ namespace FinOrg
 
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
+            if (!Program.session_valid(dt1.Value.Date.ToString("yyyy-MM-dd")))
+            {
+                MessageBox.Show("There is no valid Finance Session Found, Please check the Entry Date or Contact Admin  ", "Invalid Transaction Date ", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+
+            }
+
             save_data();
         }
 

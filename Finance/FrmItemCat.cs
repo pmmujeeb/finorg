@@ -14,7 +14,7 @@ namespace FinOrg
 {
 
     
-    public partial class FrmItemCat : Form
+    public partial class FrmItemCat : FinOrgForm
   {
         SqlConnection Conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
         DataTable dt = new DataTable();

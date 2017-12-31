@@ -26,6 +26,20 @@ namespace FinOrg
         {
             InitializeComponent();
             panel1.Left = panel2.Left; ;
+            string val = Program.Read_User_Lang();
+            if (val == null) return;
+            string[] val1 = val.Split(',');
+            txtuser.Text = val1[0];
+
+            if (val1[1].ToString() == "arabic")
+            {
+                Languages.ChangeLanguage("arabic");
+            }
+            else
+            {
+                Languages.ChangeLanguage("english");
+            }
+             
         }
 
         private void cmdcancel_Click(object sender, EventArgs e)
@@ -121,7 +135,7 @@ namespace FinOrg
                         MessageBox.Show("Invalid User Name Or Password!!!!", "Wrong Authentication");
                         return;
                     }
-
+                    string def_lang = Program.Write_User_Lang(Languages.currentLanguage.Simplified(true), txtuser.Text);
                    
 
 
@@ -293,9 +307,11 @@ namespace FinOrg
 				if (Languages.currentLanguage.Simplified(true) == "english")
 				{
 					Languages.ChangeLanguage("arabic");
+                    Gvar.lang_letter = "";
 				}
 				else
 				{
+                    Gvar.lang_letter = "A";
 					Languages.ChangeLanguage("english");
 				}
 			}

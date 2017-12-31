@@ -15,7 +15,7 @@ using CrystalDecisions.CrystalReports.Engine;
 using ADODB;
 namespace FinOrg
 {
-    public partial class frmGLTran : Form
+    public partial class frmGLTran : FinOrgForm
     {
 
         SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
@@ -1013,6 +1013,13 @@ namespace FinOrg
 
             try
             {
+                if (!Program.session_valid(dt1.Value.Date.ToString("yyyy-MM-dd")))
+                {
+                    MessageBox.Show("There is no valid Finance Session Found, Please check the Entry Date or Contact Admin  ", "Invalid Transaction Date ", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+
+                }
+
                 save_payment();
             }
             catch (SqlException ex)

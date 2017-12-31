@@ -15,7 +15,7 @@ namespace FinOrg
 {
 
 
-    public partial class frmReport : Form
+    public partial class frmReport : FinOrgForm
     {
 
         SqlConnection Conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);

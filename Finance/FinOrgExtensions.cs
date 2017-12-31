@@ -46,17 +46,30 @@ namespace FinOrg
 		/// <returns></returns>
 		public static IEnumerable<Control> GetAllControlChildren(this Control root)
 		{
-			var stack = new Stack<Control>();
-			stack.Push(root);
+           
+                var stack = new Stack<Control>();
+                stack.Push(root);
 
-			while (stack.Any())
-			{
-				var next = stack.Pop();
-				foreach (Control child in next.Controls)
-					if (child.GetType() != typeof(MdiClient))
-						stack.Push(child);
-				yield return next;
-			}
+                while (stack.Any())
+                {
+                    var next = stack.Pop();
+                    foreach (Control child in next.Controls)
+                        if (child.GetType() != typeof(MdiClient))
+                            try
+                            {
+                                stack.Push(child);
+                               
+                            }
+                            catch(Exception ex)
+                            {
+
+                            }
+                    yield return next;
+                    
+                   
+                }
+            
+            
 		}
 
 		/// <summary>

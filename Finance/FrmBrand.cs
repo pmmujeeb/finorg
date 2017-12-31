@@ -14,7 +14,7 @@ namespace FinOrg
 {
 
     
-    public partial class FrmBrand : Form
+    public partial class FrmBrand : FinOrgForm
   {
         SqlConnection Conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
         DataTable dt = new DataTable();
@@ -163,6 +163,28 @@ namespace FinOrg
                             dgv1.CurrentCell = ccell;
 
                             ada.Update(ds, "options");
+                        }
+                        break;
+                 case 15:
+                        {
+
+                            dgv1.EndEdit();
+                            DataGridViewCell ccell = dgv1.CurrentCell;
+                            dgv1.CurrentCell = dgv1.Rows[dgv1.RowCount - 1].Cells[1];
+                            dgv1.CurrentCell = ccell;
+
+                            ada.Update(ds, "finance");
+                        }
+                        break;
+                 case 16:
+                        {
+
+                            dgv1.EndEdit();
+                            DataGridViewCell ccell = dgv1.CurrentCell;
+                            dgv1.CurrentCell = dgv1.Rows[dgv1.RowCount - 1].Cells[1];
+                            dgv1.CurrentCell = ccell;
+
+                            ada.Update(ds, "company");
                         }
                         break;
                         
@@ -591,6 +613,59 @@ namespace FinOrg
                         this.ada.Fill(this.ds, "options");
                         dv.Table = dt;
                         dgv1.DataMember = "options";
+
+                        dgv1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
+                        dgv1.AllowUserToAddRows = true;
+                        // dgv1.al
+                        dgv1.AllowUserToDeleteRows = false;
+                    }
+                    break;
+                case 15:
+                    {
+
+                        ada = new SqlDataAdapter("SELECT  FINANCE_NAME , FINANCE_START_DATE , FINANCE_END_DATE , FINANCE_STATUS AS Status FROM            FINANCE_SESSION", Conn);
+
+                        ds = new DataSet();
+                        dt = new DataTable("finance");
+                        dt.AcceptChanges();
+
+                        SqlCommandBuilder cmdBldr = new SqlCommandBuilder(ada);
+                        dgv1.DataSource = ds;
+                        this.ds.AcceptChanges();
+
+                        dgv1.Visible = true;
+
+                        this.ada.Fill(this.ds, "finance");
+                        dv.Table = dt;
+                        dgv1.DataMember = "finance";
+
+                        dgv1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
+                        dgv1.AllowUserToAddRows = true;
+                        // dgv1.al
+                        dgv1.AllowUserToDeleteRows = false;
+
+                       // DataGridViewComboBoxColumn FINANCE_STATUS = new DataGridViewComboBoxColumn();
+                        //dgv1.Columns.Add(FINANCE_STATUS);
+                    }
+                    break;
+                case 16:
+                    {
+
+                        ada = new SqlDataAdapter("select * from company", Conn);
+
+                        ds = new DataSet();
+                        dt = new DataTable("company");
+                        dt.AcceptChanges();
+
+                        SqlCommandBuilder cmdBldr = new SqlCommandBuilder(ada);
+                        dgv1.DataSource = ds;
+                        this.ds.AcceptChanges();
+
+                        dgv1.Visible = true;
+
+                        this.ada.Fill(this.ds, "company");
+                        dv.Table = dt;
+                        dgv1.DataMember = "company";
 
                         dgv1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
                         dgv1.AllowUserToAddRows = true;

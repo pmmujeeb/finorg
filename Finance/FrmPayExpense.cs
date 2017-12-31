@@ -15,7 +15,7 @@ using ADODB;
 
 namespace FinOrg
 {
-    public partial class FrmPayExpense : Form
+    public partial class FrmPayExpense : FinOrgForm
     {
         SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
         ADODB.Connection ADOconn = new ADODB.Connection();
@@ -264,6 +264,14 @@ namespace FinOrg
        
        private void saveToolStripButton_Click(object sender, EventArgs e)
        {
+
+           if (!Program.session_valid(dtentry.Value.Date.ToString("yyyy-MM-dd")))
+           {
+               MessageBox.Show("There is no valid Finance Session Found, Please check the Entry Date or Contact Admin  ", "Invalid Transaction Date ", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+               return;
+
+           }
+
            iserror = false;
            item_exp();
            if(!iserror)

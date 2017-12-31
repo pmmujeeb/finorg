@@ -56,10 +56,7 @@ namespace FinOrg
             foreach (ToolStripMenuItem toolSripItem in menuStrip.Items)
             {
 
-              
-               
-               
-                disableMenu(toolSripItem);
+              disableMenu(toolSripItem);
                // toolSripItem.Visible = true;
 
             }
@@ -1866,27 +1863,7 @@ namespace FinOrg
         }
 
         
-        private void MDIParent1_Leave(object sender, EventArgs e)
-        {
-
-        }
-
-        private void MDIParent1_Activated(object sender, EventArgs e)
-        {
-            dgmenu.Height = this.Height;
-            dgmenu.Top = menuStrip.Top + menuStrip.Height + 2;
-
-        }
-
-        private void MDIParent1_DoubleClick(object sender, EventArgs e)
-        {
-
-        }
-
-        private void MDIParent1_Validated(object sender, EventArgs e)
-        {
-
-        }
+       
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
 
@@ -1934,13 +1911,11 @@ namespace FinOrg
         }
         private void MDIParent1_Layout(object sender, LayoutEventArgs e)
         {
-
+             dgmenu.Height = this.Height;
+             dgmenu.Top = menuStrip.Top + menuStrip.Height + 2;
         }
 
-        private void MDIParent1_MouseMove(object sender, MouseEventArgs e)
-        {
-
-        }
+       
 
         private void dgmenu_MouseMove(object sender, MouseEventArgs e)
         {
@@ -2161,6 +2136,32 @@ namespace FinOrg
           childForm.MdiParent = this;
           //childForm.Text = "Window " + childFormNumber++;
           childForm.Text = "Cash Flow Detail Reports Screen";
+          childForm.Show();
+      }
+
+      private void mnufinanceSession_Click(object sender, EventArgs e)
+      {
+          if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = mnusetting.Tag.ToString();
+
+          Gvar.Gind = 15;
+          Form childForm = new FrmBrand();
+          childForm.MdiParent = this;
+
+          //childForm.Text = "Window " + childFormNumber++;
+          childForm.Text = "Finance Session Entry Screen";
+          childForm.Show();
+      }
+
+      private void mnucompanyDetail_Click(object sender, EventArgs e)
+      {
+          if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = mnusetting.Tag.ToString();
+
+          Gvar.Gind = 16;
+          Form childForm = new FrmBrand();
+          childForm.MdiParent = this;
+
+          //childForm.Text = "Window " + childFormNumber++;
+          childForm.Text = "Company Detail Entry Screen";
           childForm.Show();
       }
 

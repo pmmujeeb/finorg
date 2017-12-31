@@ -14,7 +14,7 @@ namespace FinOrg
 {
 
     
-    public partial class FrmItemUnit : Form
+    public partial class FrmItemUnit : FinOrgForm
   {
         SqlConnection Conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
         DataTable dt = new DataTable();
@@ -37,7 +37,13 @@ namespace FinOrg
                 dgv1.CurrentCell = ccell;
               
                 ada.Update(ds,"UnitMaster");
+                string sql = " update  UnitMaster set Unit_Aname=Unit_name where Unit_aname='' or Unit_Aname is null";
 
+
+
+                cmd = new SqlCommand(sql, Conn);
+
+                cmd.ExecuteNonQuery();
                 
                // ada.Update(dt);
                

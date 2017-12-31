@@ -32,7 +32,7 @@ namespace FinOrg
         public static string brn_name;
         public static string cmp_name;
         public static string Glb_strval;
-
+        public static string lang_letter;
         public static string report_path;
         public static string frm_priv;
         public static bool frm_search;

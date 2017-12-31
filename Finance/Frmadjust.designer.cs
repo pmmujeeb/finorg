@@ -577,14 +577,13 @@
             // 
             // lblmsg
             // 
-            this.lblmsg.AutoSize = true;
-            this.lblmsg.BackColor = System.Drawing.Color.Lime;
+            this.lblmsg.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             this.lblmsg.Font = new System.Drawing.Font("Tahoma", 13F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblmsg.ForeColor = System.Drawing.Color.Black;
             this.lblmsg.ImeMode = System.Windows.Forms.ImeMode.On;
             this.lblmsg.Location = new System.Drawing.Point(2, 509);
             this.lblmsg.Name = "lblmsg";
-            this.lblmsg.Size = new System.Drawing.Size(30, 22);
+            this.lblmsg.Size = new System.Drawing.Size(622, 22);
             this.lblmsg.TabIndex = 56;
             this.lblmsg.Text = "**";
             // 
@@ -676,7 +675,6 @@
             // 
             // chkprintview
             // 
-            this.chkprintview.AutoSize = true;
             this.chkprintview.Location = new System.Drawing.Point(869, 548);
             this.chkprintview.Name = "chkprintview";
             this.chkprintview.Size = new System.Drawing.Size(73, 17);

@@ -14,7 +14,7 @@ using ADODB;
 using System.Threading;
 namespace FinOrg
 {
-    public partial class frmsearchbysup : Form
+    public partial class frmsearchbysup : FinOrgForm
     {
 
 

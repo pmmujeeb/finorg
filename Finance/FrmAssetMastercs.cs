@@ -15,7 +15,7 @@ using System.Drawing.Imaging;
 namespace FinOrg
 {
 
-    public partial class FrmAssetMaster : Form
+    public partial class FrmAssetMaster : FinOrgForm
     {
 
 
@@ -69,6 +69,13 @@ namespace FinOrg
 
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
+            if (!Program.session_valid(dtpayment.Value.Date.ToString("yyyy-MM-dd")))
+            {
+                MessageBox.Show("There is no valid Finance Session Found, Please check the Entry Date or Contact Admin  ", "Invalid Transaction Date ", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+
+            }
+
             save_data();
         }
 

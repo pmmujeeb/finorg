@@ -15,7 +15,7 @@ using ADODB;
 
 namespace FinOrg
 {
-    public partial class frmdelete : Form
+    public partial class frmdelete : FinOrgForm
     {
         SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
         ADODB.Connection ADOconn = new ADODB.Connection();

@@ -28,8 +28,8 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.maintab1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.txtmove = new System.Windows.Forms.TextBox();
@@ -134,9 +134,9 @@
             this.chkstock.AutoSize = true;
             this.chkstock.Checked = true;
             this.chkstock.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.chkstock.Location = new System.Drawing.Point(465, 325);
+            this.chkstock.Location = new System.Drawing.Point(465, 321);
             this.chkstock.Name = "chkstock";
-            this.chkstock.Size = new System.Drawing.Size(152, 17);
+            this.chkstock.Size = new System.Drawing.Size(154, 17);
             this.chkstock.TabIndex = 34;
             this.chkstock.Text = "Show Only Stock Available";
             this.chkstock.UseVisualStyleBackColor = true;
@@ -218,8 +218,8 @@
             // 
             this.lst2.AllowUserToAddRows = false;
             this.lst2.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.lst2.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.lst2.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.lst2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.lst2.Enabled = false;
             this.lst2.Location = new System.Drawing.Point(138, 26);
@@ -375,8 +375,8 @@
             // 
             this.lst1.AllowUserToAddRows = false;
             this.lst1.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.lst1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.lst1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.lst1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.lst1.Enabled = false;
             this.lst1.Location = new System.Drawing.Point(138, 29);

@@ -14,7 +14,7 @@ using CrystalDecisions.CrystalReports.Engine;
 using ADODB;
 namespace FinOrg
 {
-    public partial class Frmxmenu : Form
+    public partial class Frmxmenu : FinOrgForm
     {
         SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
         ADODB.Connection ADOconn = new ADODB.Connection();

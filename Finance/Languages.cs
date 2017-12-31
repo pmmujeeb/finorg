@@ -11,7 +11,7 @@ namespace FinOrg
 {
 	public static class Languages
 	{
-		public static bool LANG_DEBUG_MODE = false;
+		public static bool LANG_DEBUG_MODE = true;
 
 
 		public static event EventHandler onLanguageChanged;

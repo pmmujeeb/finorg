@@ -14,7 +14,7 @@ using CrystalDecisions.CrystalReports.Engine;
 using ADODB;
 namespace FinOrg
 {
-    public partial class Frmadjust : Form
+    public partial class Frmadjust : FinOrgForm
     {
 
         SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
@@ -276,6 +276,8 @@ namespace FinOrg
                 dgv1.Columns.Add(txt18);
                 DataGridViewTextBoxColumn txt19 = new DataGridViewTextBoxColumn();
                 dgv1.Columns.Add(txt19);
+                DataGridViewTextBoxColumn unitid = new DataGridViewTextBoxColumn();
+                dgv1.Columns.Add(unitid);
                 isini = true;
                 dgv1.Refresh();
                 dgv1.Columns[0].HeaderText = "Item Code";
@@ -293,7 +295,7 @@ namespace FinOrg
                 dgv1.Columns[10].HeaderText = "Fraction";
                 dgv1.Columns[11].HeaderText = "Re-order";
                 dgv1.Columns[19].HeaderText = "VAT";
-
+                dgv1.Columns[21].HeaderText = "unitid";
 
                 dgv1.Columns[0].Name = "barcode";
                 dgv1.Columns[1].Name = "Description";
@@ -322,7 +324,7 @@ namespace FinOrg
                 dgv1.Columns[18].Name = "updsale";
                 dgv1.Columns[19].Name = "vat";
                 dgv1.Columns[20].Name = "vat%";
-
+                dgv1.Columns[21].Name = "unitid";
                 dgv1.Columns[5].Visible = false;
                 //dgv1.Columns[4].Visible = false;
                 dgv1.Columns[6].Visible = true;
@@ -341,7 +343,7 @@ namespace FinOrg
                 dgv1.Columns[18].Visible = false;
                 dgv1.Columns[19].Visible = false;
                 dgv1.Columns[20].Visible = false;
-
+                dgv1.Columns[21].Visible = false;
  //               dgv1.Columns[1].ReadOnly = true;
                 //dgv1.Columns[3].ReadOnly = true;
                 //dgv1.Columns[4].ReadOnly = true;
@@ -504,12 +506,12 @@ namespace FinOrg
                 string sql = "";
                 if (crite != "")
                 {
-                    sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT FROM BARCODE as h INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + "   where ITM_cAT_CODE NOT IN (" + EXCLUDE_ITM_cAT + " ) AND " + crite;
+                    sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT_NAME FROM BARCODE as h  INNER JOIN UNITMASTER AS U ON H.UNIT=U.UNIT_ID  INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + "   where ITM_cAT_CODE NOT IN (" + EXCLUDE_ITM_cAT + " ) AND " + crite;
                     //sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT FROM BARCODE as h INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + "   where ITM_cAT_CODE NOT IN (" + EXCLUDE_ITM_cAT + " ) ";
                 }
                 else
                 {
-                    sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT FROM BARCODE as h INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + "   where ITM_cAT_CODE NOT IN (" + EXCLUDE_ITM_cAT + ") ";
+                    sql = "SELECT BARCODE,DESCRIPTION AS DESCR,UNIT_NAME FROM BARCODE as h INNER JOIN UNITMASTER AS U ON H.UNIT=U.UNIT_ID INNER JOIN OPTIONS ON TRNTYPE= " + txttrn_type.Text + "   where ITM_cAT_CODE NOT IN (" + EXCLUDE_ITM_cAT + ") ";
                 }
 
 
@@ -1123,7 +1125,8 @@ namespace FinOrg
 
                 //sql = "sELECT  h.Item_Code,h.DESCRIPTION,h.UNIT,h.FRACTION,s.AVG_PUR_PRICE,s.RE_ORDER,s.stock,u.unit_name from hd_ITEMMASTER h inner join unitmaster u on h.unit=u.unit_id  left join stock_master s on h.Item_Code=s.Item_Code where h.brn_code=1 and itm_cat_code=0 and h.Item_Code='" + Item_Code + "'";
                 
-                sql = "select BdescrIPTION,stock,avg_PUR_PRICE,RETAIL_PRICE,ITEM_CODE,FRACTION,UNIT,stock,wr_code,ITEM_CODE,ITEM_ID,hfraction,barcode,bdescription,r_min_profit,vat_percent  from QRY_barcode where  wr_code =" +  cmbwarehouse.SelectedValue + " and   flag <> 'C' AND (BARCODE='" + Item_Code + "' OR (item_CODE='" + Item_Code + "' and MAIN_ID=1) OR ALIAS_NAME='" + Item_Code + "')"; // AND WR_CODE=" + cmbwarehouse.SelectedValue;
+               // sql = "select BdescrIPTION,stock,avg_PUR_PRICE,RETAIL_PRICE,ITEM_CODE,FRACTION,UNIT,stock,wr_code,ITEM_CODE,ITEM_ID,hfraction,barcode,bdescription,r_min_profit,vat_percent  from QRY_barcode where  wr_code =" +  cmbwarehouse.SelectedValue + " and   flag <> 'C' AND (BARCODE='" + Item_Code + "' OR (item_CODE='" + Item_Code + "' and MAIN_ID=1) OR ALIAS_NAME='" + Item_Code + "')"; // AND WR_CODE=" + cmbwarehouse.SelectedValue;
+                sql = "select BdescrIPTION,stock,avg_PUR_PRICE,RETAIL_PRICE,ITEM_CODE,FRACTION,UNIT_" + Gvar.lang_letter + "NAME,stock,wr_code,ITEM_CODE,ITEM_ID,hfraction,barcode,bdescription,r_min_profit,vat_percent,UNIT_NAME,unit_id   from QRY_barcode INNER JOIN UNITMASTER AS U ON UNIT=U.UNIT_ID where  wr_code =" + cmbwarehouse.SelectedValue + " and   flag <> 'C' AND (BARCODE='" + Item_Code + "' OR (item_CODE='" + Item_Code + "' and MAIN_ID=1) OR ALIAS_NAME='" + Item_Code + "')"; // AND WR_CODE=" + Gvar.wr_code;
 
                 if (unit != "")
                 {
@@ -1174,6 +1177,7 @@ namespace FinOrg
                             dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["hfraction"].Value = rd[11].ToString();
                             dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["minprofit"].Value = rd[14].ToString();
                             dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["vat%"].Value = rd[15].ToString();
+                            dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["unitid"].Value = rd["unit_id"].ToString();
                            
                             dgv1.Rows[dgv1.CurrentCell.RowIndex].Cells["stock"].Value = rd[7].ToString();
 
@@ -1710,7 +1714,7 @@ namespace FinOrg
                                 rec.Fields["price"].Value = Convert.ToDecimal(dgv1["cost", i].Value);
                             rec.Fields["BARCODE"].Value = dgv1["barcode", i].Value;
                             rec.Fields["FRACTION"].Value = dgv1["fraction", i].Value;
-                            rec.Fields["UNIT"].Value = dgv1["unit", i].Value;
+                            rec.Fields["UNIT"].Value = dgv1["unitid", i].Value;
                             if (dgv1["cost", i].Value == null || dgv1["cost", i].Value == "")
                                 dgv1["cost", i].Value = 0;
                             rec.Fields["SALE_PUR_AMT"].Value = Convert.ToDecimal(dgv1["cost", i].Value) * Convert.ToDecimal(1);
@@ -2592,7 +2596,7 @@ namespace FinOrg
 
                     
                     lblmsg.Text = "Edit Entry......";
-                    lblmsg.BackColor = Color.Green;
+                    lblmsg.BackColor = Color.LightGray;
                     if (rec.Fields["flag"].Value.ToString() == "D")
                     {
                         btnsave.Enabled = false;
@@ -2606,7 +2610,7 @@ namespace FinOrg
 
                     rec = new ADODB.Recordset();
 
-                    sql = "SELECT  DATA_ENTRY_GRID.*,stock FROM DATA_ENTRY_GRID left join stock_master  on DATA_ENTRY_GRID.Item_Code=stock_master.Item_Code WHERE REC_NO=" + rec_no;
+                    sql = "SELECT  DATA_ENTRY_GRID.*,stock,unit_id FROM DATA_ENTRY_GRID inner join unitmaster as u on DATA_ENTRY_GRID.unit=unit_id  left join stock_master  on DATA_ENTRY_GRID.Item_Code=stock_master.Item_Code WHERE REC_NO=" + rec_no;
 
                     rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
                     //    //dgv1.Rows.Clear();
@@ -2633,6 +2637,7 @@ namespace FinOrg
                         dgv1["fraction", i].Value = rec.Fields["FRACTION"].Value.ToString();
 
                         dgv1["unit", i].Value = rec.Fields["Unit"].Value.ToString();
+                        dgv1["unitid", i].Value = rec.Fields["Unit_id"].Value.ToString();
                         // dgv1["stock", i].Value = rec.Fields["stock"].Value.ToString();
                         // rec.Fields["UNIT"].Value = dgv1["unit", i].Value;
                         dgv1.Rows[i].Cells["updsale"].Value = "0";
@@ -3097,7 +3102,7 @@ namespace FinOrg
                txtcustomer.Focus();
                 btnsave.Enabled = true;
                 lblmsg.Text = "New Entry......";
-                lblmsg.BackColor = Color.Green;
+                lblmsg.BackColor = Color.LightGray;
                 dgv1.Columns[0].ReadOnly = false;
                 dgv1.Columns[2].ReadOnly = false;
                 dgv1.Columns[3].ReadOnly = false;
@@ -3217,7 +3222,13 @@ namespace FinOrg
             try
             {
 
-               
+                if (!Program.session_valid(dt1.Value.Date.ToString("yyyy-MM-dd")))
+                {
+                    MessageBox.Show("There is no valid Finance Session Found, Please check the Entry Date or Contact Admin  ", "Invalid Transaction Date ", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+
+                }
+
                 if (isedit)
                 {
                     if (txtpriv.Text.Substring(1, 1) == "0")
@@ -3379,7 +3390,7 @@ namespace FinOrg
                 iserror = false;
                 ADOconn.BeginTrans();
                 lblmsg.Text = "Please Wait Saving......";
-                lblmsg.BackColor = Color.Green;
+                lblmsg.BackColor = Color.LightGray;
                 SAVE_DATAENTRY();
                 if (!iserror)
                 {
@@ -3408,7 +3419,7 @@ namespace FinOrg
                     isdirty = false;
                     ADOconn.CommitTrans();
                     lblmsg.Text = "Record Saved Successfully!!!";
-                    lblmsg.BackColor = Color.Green;
+                    lblmsg.BackColor = Color.LightGray;
                     btnsave.Enabled = false;
                     dgv1.Columns[0].ReadOnly = true;
                     dgv1.Columns[2].ReadOnly = true;
