@@ -207,7 +207,9 @@ namespace FinOrg
 
 		public static string GetStringTranslation(string s)
 		{
-			if (!Translations.ContainsKey(s))
+			// lower
+			string key = s.Simplified(true);
+			if (!Translations.ContainsKey(key))
 			{
 				SqlConnection con = FinOrgForm.getSqlConnection();
 				SqlCommand cmd = new SqlCommand("", con);
@@ -217,19 +219,20 @@ namespace FinOrg
 					// Insert to DB
 					if (LANG_DEBUG_MODE)
 					{
-						cmd.CommandText = "INSERT INTO TRANSLATIONS (text, english) VALUES (@v, @v);";
+						cmd.CommandText = "INSERT INTO TRANSLATIONS (text, english) VALUES (@key, @v);";
+						cmd.Parameters.Add(new SqlParameter("key", key));
 						cmd.Parameters.Add(new SqlParameter("v", s));
 						cmd.ExecuteNonQuery();
 						cmd.Parameters.Clear();
 					}
 					// fetch from DB
 					cmd.CommandText = string.Format("SELECT {0} FROM TRANSLATIONS WHERE text = @v", currentLanguage);
-					cmd.Parameters.Add(new SqlParameter("v", s));
+					cmd.Parameters.Add(new SqlParameter("v", key));
 					object data = cmd.ExecuteScalar();
 					con.Close();
 					if (data != null)
 					{
-						Translations.Add(s, data.ToString());
+						Translations.Add(key, data.ToString());
 						return data.ToString();
 					}
 					else
@@ -241,7 +244,7 @@ namespace FinOrg
 				}
 			}
 			else
-				return Translations[s];
+				return Translations[key];
 		}
 
 		/// <summary>
