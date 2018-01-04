@@ -217,7 +217,7 @@ namespace FinOrg
 					// Insert to DB
 					if (LANG_DEBUG_MODE)
 					{
-						cmd.CommandText = "INSERT INTO TRANSLATIONS (text, english) VALUES (@v);";
+						cmd.CommandText = "INSERT INTO TRANSLATIONS (text, english) VALUES (@v, @v);";
 						cmd.Parameters.Add(new SqlParameter("v", s));
 						cmd.ExecuteNonQuery();
 						cmd.Parameters.Clear();
@@ -228,9 +228,12 @@ namespace FinOrg
 					object data = cmd.ExecuteScalar();
 					con.Close();
 					if (data != null)
+					{
+						Translations.Add(s, data.ToString());
 						return data.ToString();
+					}
 					else
-						return "";
+						return s;
 				} catch (Exception ef)
 				{
 					MessageBox.Show(ef.Message + "\nSQL: " + cmd.CommandText, "FinOrg Languages GetTranslation");
