@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
@@ -122,6 +123,21 @@ namespace FinOrg
 				return s.ToLower().Trim();
 			else
 				return s.Trim();
+		}
+
+
+		public static string GetSQLDateCast(this DateTime t)
+		{
+			if (t == null)
+				return null;
+
+			return "CAST('" + t.ToString("yyyy-MM-ddTHH:mm:ss", CultureInfo.InvariantCulture) + "' as datetime)";
+			return "CAST('" + t.ToString("MM/dd/yyyy h:mm:ss tt") + "' as datetime)";
+		}
+
+		public static bool TryRollback(this SqlTransaction tr)
+		{
+			try { tr.Rollback(); return true; } catch { return false; }
 		}
 	}
 }

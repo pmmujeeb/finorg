@@ -24,6 +24,9 @@ namespace FinOrg.Training_Module
 		{
 			bool ReadOnly = false;
 
+
+			ShowHideDGridView(false, subscription_datagrid);
+			ShowHideDGridView(false, customer_datagrid);
 			switch (state)
 			{
 				case FinOrgFormState.Reset:
@@ -33,9 +36,6 @@ namespace FinOrg.Training_Module
 					trans_date.Value = DateTime.Today;
 					start_date.Value = DateTime.Today;
 					items.DataSource = null;
-
-					ShowHideDGridView(false, subscription_datagrid);
-					ShowHideDGridView(false, customer_datagrid);
 
 					SetFormState(FinOrgFormState.View);
 					ReadOnly = true;
@@ -156,7 +156,7 @@ namespace FinOrg.Training_Module
 				{
 					con.Open();
 					DataSet dataset = new DataSet();
-					SqlCommand cmd = new SqlCommand("SELECT * FROM TR_SUBSCRIPTION WHERE TR_SUBSCRIPTION_CODE = @Code; SELECT * FROM TR_SUBSCRIPTION_ITEM WHERE TR_SUBSCRIPTION_CODE = @Code;", con);
+					SqlCommand cmd = new SqlCommand("SELECT ACC.ACC_NAME, ACC.ACC_ANAME, SUB.* FROM TR_SUBSCRIPTION AS SUB LEFT JOIN ACCOUNTS AS ACC ON SUB.CUSTOMER_ACC_NO = ACC.ACC_NO WHERE TR_SUBSCRIPTION_CODE = @Code; SELECT * FROM TR_SUBSCRIPTION_ITEM WHERE TR_SUBSCRIPTION_CODE = @Code;", con);
 					cmd.Parameters.Add(new SqlParameter("Code", code));
 					SqlDataAdapter adapter = new SqlDataAdapter(cmd);
 					adapter.Fill(dataset);
@@ -166,6 +166,8 @@ namespace FinOrg.Training_Module
 					trans_date.Value = DateTime.Parse(main_data["TR_SUBSCRIPTION_DATE"].ToString());
 					start_date.Value = DateTime.Parse(main_data["TR_SUBSCRIPTION_START_DATE"].ToString());
 					customer_tb.Text = main_data["CUSTOMER_ACC_NO"].ToString();
+					customer_name_label.Text = main_data["ACC_NAME"].ToString();
+					customer_name_arabic_label.Text = main_data["ACC_ANAME"].ToString();
 					total_tb.Text = main_data["TR_SUBSCRIPTION_TOTAL"].ToString();
 					discount_tb.Text = main_data["TR_SUBSCRIPTION_DISCOUNT"].ToString();
 					advance_tb.Text = main_data["TR_SUBSCRIPTION_ADVANCE"].ToString();
@@ -224,7 +226,7 @@ namespace FinOrg.Training_Module
 					if (CurrentState == FinOrgFormState.New)
 						cmd.CommandText = "INSERT INTO TR_SUBSCRIPTION (TR_SUBSCRIPTION_CODE, CUSTOMER_ACC_NO, TR_SUBSCRIPTION_DATE, TR_SUBSCRIPTION_START_DATE, TR_SUBSCRIPTION_TOTAL, TR_SUBSCRIPTION_DISCOUNT, TR_SUBSCRIPTION_ADVANCE) VALUES (@Code, @CUS_ACC_NO, @Date, @StartDate, @Total, @Discount, @Advance)";
 					else
-						cmd.CommandText = "UPDATE TR_SUBSCRIPTION SET CUSTOMER_ACC_NO = @CUS_ACC_NO, @TR_SUBSCRIPTION_DATE = @Date, @TR_SUBSCRIPTION_START_DATE = @StartDate, TR_SUBSCRIPTION_TOTAL = @Total, TR_SUBSCRIPTION_DISCOUNT = @Discount, @TR_SUBSCRIPTION_ADVANCE = @Advance WHERE TR_SUBSCRIPTION_CODE = @Code; DELETE FROM TR_SUBSCRIPTION_ITEM WHERE TR_SUBSCRIPTION_CODE = @Code";
+						cmd.CommandText = "UPDATE TR_SUBSCRIPTION SET CUSTOMER_ACC_NO = @CUS_ACC_NO, TR_SUBSCRIPTION_DATE = @Date, TR_SUBSCRIPTION_START_DATE = @StartDate, TR_SUBSCRIPTION_TOTAL = @Total, TR_SUBSCRIPTION_DISCOUNT = @Discount, TR_SUBSCRIPTION_ADVANCE = @Advance WHERE TR_SUBSCRIPTION_CODE = @Code; DELETE FROM TR_SUBSCRIPTION_ITEM WHERE TR_SUBSCRIPTION_CODE = @Code";
 					cmd.Parameters.AddWithValue("Code", code);
 					cmd.Parameters.AddWithValue("CUS_ACC_NO", int.Parse(customer_tb.Text));
 					cmd.Parameters.AddWithValue("Date", trans_date.Value);
@@ -395,7 +397,7 @@ namespace FinOrg.Training_Module
 		private void customer_tb_TextChanged(object sender, EventArgs e)
 		{
 			ShowHideDGridView(true, customer_datagrid);
-			customer_name.Text = "";
+			customer_name_label.Text = "";
 			try
 			{
 				string text = customer_tb.Text.Trim();
@@ -425,7 +427,8 @@ namespace FinOrg.Training_Module
 				return;
 			DataRowView v = ((DataRowView)customer_datagrid.SelectedRows[0].DataBoundItem);
 			customer_tb.Text = v["ACC_NO"].ToString();
-			customer_name.Text = v[Languages.currentLanguage.ToLower() == "english" ? "ACC_NAME" : "ACC_ANAME"].ToString();
+			customer_name_label.Text = v["ACC_NAME"].ToString();
+			customer_name_arabic_label.Text = v["ACC_ANAME"].ToString();
 			ShowHideDGridView(false, customer_datagrid);
 		}
 

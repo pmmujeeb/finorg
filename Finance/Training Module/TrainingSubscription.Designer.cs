@@ -62,14 +62,15 @@
 			this.code_tb = new System.Windows.Forms.TextBox();
 			this.label11 = new System.Windows.Forms.Label();
 			this.subscription_datagrid = new System.Windows.Forms.DataGridView();
+			this.servicesearch_codeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.servicesearch_customerNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.servicesearch_grandtotalColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.customer_datagrid = new System.Windows.Forms.DataGridView();
 			this.customer_codeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.customer_nameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.customer_anameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.customer_name = new System.Windows.Forms.Label();
-			this.servicesearch_codeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.servicesearch_customerNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-			this.servicesearch_grandtotalColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.customer_name_label = new System.Windows.Forms.Label();
+			this.customer_name_arabic_label = new System.Windows.Forms.Label();
 			((System.ComponentModel.ISupportInitialize)(this.items)).BeginInit();
 			this.toolStrip1.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.subscription_datagrid)).BeginInit();
@@ -220,7 +221,7 @@
 			// start_date
 			// 
 			this.start_date.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.start_date.Location = new System.Drawing.Point(447, 134);
+			this.start_date.Location = new System.Drawing.Point(447, 103);
 			this.start_date.Name = "start_date";
 			this.start_date.Size = new System.Drawing.Size(199, 20);
 			this.start_date.TabIndex = 8;
@@ -229,7 +230,7 @@
 			// label4
 			// 
 			this.label4.AutoSize = true;
-			this.label4.Location = new System.Drawing.Point(352, 137);
+			this.label4.Location = new System.Drawing.Point(352, 106);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(55, 13);
 			this.label4.TabIndex = 7;
@@ -238,7 +239,7 @@
 			// trans_date
 			// 
 			this.trans_date.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-			this.trans_date.Location = new System.Drawing.Point(447, 108);
+			this.trans_date.Location = new System.Drawing.Point(447, 77);
 			this.trans_date.Name = "trans_date";
 			this.trans_date.Size = new System.Drawing.Size(200, 20);
 			this.trans_date.TabIndex = 6;
@@ -247,7 +248,7 @@
 			// label3
 			// 
 			this.label3.AutoSize = true;
-			this.label3.Location = new System.Drawing.Point(352, 111);
+			this.label3.Location = new System.Drawing.Point(352, 80);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(30, 13);
 			this.label3.TabIndex = 5;
@@ -255,7 +256,7 @@
 			// 
 			// customer_tb
 			// 
-			this.customer_tb.Location = new System.Drawing.Point(106, 134);
+			this.customer_tb.Location = new System.Drawing.Point(106, 103);
 			this.customer_tb.Name = "customer_tb";
 			this.customer_tb.Size = new System.Drawing.Size(79, 20);
 			this.customer_tb.TabIndex = 4;
@@ -264,7 +265,7 @@
 			// label2
 			// 
 			this.label2.AutoSize = true;
-			this.label2.Location = new System.Drawing.Point(12, 137);
+			this.label2.Location = new System.Drawing.Point(12, 106);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(51, 13);
 			this.label2.TabIndex = 3;
@@ -341,7 +342,7 @@
 			// 
 			// search_tb
 			// 
-			this.search_tb.Location = new System.Drawing.Point(106, 68);
+			this.search_tb.Location = new System.Drawing.Point(106, 38);
 			this.search_tb.Name = "search_tb";
 			this.search_tb.Size = new System.Drawing.Size(199, 20);
 			this.search_tb.TabIndex = 1;
@@ -350,7 +351,7 @@
 			// label1
 			// 
 			this.label1.AutoSize = true;
-			this.label1.Location = new System.Drawing.Point(12, 71);
+			this.label1.Location = new System.Drawing.Point(12, 41);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(41, 13);
 			this.label1.TabIndex = 0;
@@ -358,7 +359,7 @@
 			// 
 			// code_tb
 			// 
-			this.code_tb.Location = new System.Drawing.Point(106, 108);
+			this.code_tb.Location = new System.Drawing.Point(106, 77);
 			this.code_tb.Name = "code_tb";
 			this.code_tb.Size = new System.Drawing.Size(199, 20);
 			this.code_tb.TabIndex = 23;
@@ -366,7 +367,7 @@
 			// label11
 			// 
 			this.label11.AutoSize = true;
-			this.label11.Location = new System.Drawing.Point(12, 111);
+			this.label11.Location = new System.Drawing.Point(12, 80);
 			this.label11.Name = "label11";
 			this.label11.Size = new System.Drawing.Size(32, 13);
 			this.label11.TabIndex = 22;
@@ -374,6 +375,7 @@
 			// 
 			// subscription_datagrid
 			// 
+			this.subscription_datagrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
 			this.subscription_datagrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.subscription_datagrid.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.servicesearch_codeColumn,
@@ -387,6 +389,27 @@
 			this.subscription_datagrid.TabIndex = 24;
 			this.subscription_datagrid.DoubleClick += new System.EventHandler(this.subscription_datagrid_DoubleClick);
 			// 
+			// servicesearch_codeColumn
+			// 
+			this.servicesearch_codeColumn.DataPropertyName = "TR_SUBSCRIPTION_CODE";
+			this.servicesearch_codeColumn.HeaderText = "Code";
+			this.servicesearch_codeColumn.Name = "servicesearch_codeColumn";
+			this.servicesearch_codeColumn.ReadOnly = true;
+			// 
+			// servicesearch_customerNameColumn
+			// 
+			this.servicesearch_customerNameColumn.DataPropertyName = "CUSTOMER_NAME";
+			this.servicesearch_customerNameColumn.HeaderText = "Customer Name";
+			this.servicesearch_customerNameColumn.Name = "servicesearch_customerNameColumn";
+			this.servicesearch_customerNameColumn.ReadOnly = true;
+			// 
+			// servicesearch_grandtotalColumn
+			// 
+			this.servicesearch_grandtotalColumn.DataPropertyName = "GRAND_TOTAL";
+			this.servicesearch_grandtotalColumn.HeaderText = "Grand Total";
+			this.servicesearch_grandtotalColumn.Name = "servicesearch_grandtotalColumn";
+			this.servicesearch_grandtotalColumn.ReadOnly = true;
+			// 
 			// customer_datagrid
 			// 
 			this.customer_datagrid.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
@@ -395,7 +418,7 @@
             this.customer_codeColumn,
             this.customer_nameColumn,
             this.customer_anameColumn});
-			this.customer_datagrid.Location = new System.Drawing.Point(510, -86);
+			this.customer_datagrid.Location = new System.Drawing.Point(510, -117);
 			this.customer_datagrid.Name = "customer_datagrid";
 			this.customer_datagrid.ReadOnly = true;
 			this.customer_datagrid.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -424,37 +447,27 @@
 			this.customer_anameColumn.Name = "customer_anameColumn";
 			this.customer_anameColumn.ReadOnly = true;
 			// 
-			// customer_name
+			// customer_name_label
 			// 
-			this.customer_name.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-			this.customer_name.CausesValidation = false;
-			this.customer_name.Location = new System.Drawing.Point(103, 157);
-			this.customer_name.Name = "customer_name";
-			this.customer_name.Size = new System.Drawing.Size(544, 23);
-			this.customer_name.TabIndex = 26;
-			this.customer_name.Text = "Customer Name";
-			this.customer_name.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.customer_name_label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.customer_name_label.CausesValidation = false;
+			this.customer_name_label.Location = new System.Drawing.Point(103, 126);
+			this.customer_name_label.Name = "customer_name_label";
+			this.customer_name_label.Size = new System.Drawing.Size(544, 23);
+			this.customer_name_label.TabIndex = 26;
+			this.customer_name_label.Text = "Customer Name";
+			this.customer_name_label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
-			// servicesearch_codeColumn
+			// customer_name_arabic_label
 			// 
-			this.servicesearch_codeColumn.DataPropertyName = "TR_SUBSCRIPTION_CODE";
-			this.servicesearch_codeColumn.HeaderText = "Code";
-			this.servicesearch_codeColumn.Name = "servicesearch_codeColumn";
-			this.servicesearch_codeColumn.ReadOnly = true;
-			// 
-			// servicesearch_customerNameColumn
-			// 
-			this.servicesearch_customerNameColumn.DataPropertyName = "CUSTOMER_NAME";
-			this.servicesearch_customerNameColumn.HeaderText = "Customer Name";
-			this.servicesearch_customerNameColumn.Name = "servicesearch_customerNameColumn";
-			this.servicesearch_customerNameColumn.ReadOnly = true;
-			// 
-			// servicesearch_grandtotalColumn
-			// 
-			this.servicesearch_grandtotalColumn.DataPropertyName = "GRAND_TOTAL";
-			this.servicesearch_grandtotalColumn.HeaderText = "Grand Total";
-			this.servicesearch_grandtotalColumn.Name = "servicesearch_grandtotalColumn";
-			this.servicesearch_grandtotalColumn.ReadOnly = true;
+			this.customer_name_arabic_label.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.customer_name_arabic_label.CausesValidation = false;
+			this.customer_name_arabic_label.Location = new System.Drawing.Point(102, 155);
+			this.customer_name_arabic_label.Name = "customer_name_arabic_label";
+			this.customer_name_arabic_label.Size = new System.Drawing.Size(544, 23);
+			this.customer_name_arabic_label.TabIndex = 27;
+			this.customer_name_arabic_label.Text = "Customer Name";
+			this.customer_name_arabic_label.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
 			// 
 			// TrainingSubscription
 			// 
@@ -483,7 +496,8 @@
 			this.Controls.Add(this.trans_date);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.customer_tb);
-			this.Controls.Add(this.customer_name);
+			this.Controls.Add(this.customer_name_label);
+			this.Controls.Add(this.customer_name_arabic_label);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.toolStrip1);
 			this.Controls.Add(this.search_tb);
@@ -537,12 +551,13 @@
 		private System.Windows.Forms.DataGridViewComboBoxColumn priority_CBColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn rate_DGColumn;
 		private System.Windows.Forms.DataGridView customer_datagrid;
-		private System.Windows.Forms.Label customer_name;
+		private System.Windows.Forms.Label customer_name_label;
 		private System.Windows.Forms.DataGridViewTextBoxColumn customer_codeColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn customer_nameColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn customer_anameColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn servicesearch_codeColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn servicesearch_customerNameColumn;
 		private System.Windows.Forms.DataGridViewTextBoxColumn servicesearch_grandtotalColumn;
+		private System.Windows.Forms.Label customer_name_arabic_label;
 	}
 }

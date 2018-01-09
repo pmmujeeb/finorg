@@ -42,7 +42,7 @@ namespace FinOrg.Training_Module
 
 				dgv1.DataSource = tbl.DefaultView;
 
-				dgv1.Columns[0].HeaderText = Languages.GetStringTranslation("Code");				
+				dgv1.Columns[0].HeaderText = Languages.GetStringTranslation("Code");
 				dgv1.Columns[1].HeaderText = Languages.GetStringTranslation("English Name");
 				dgv1.Columns[2].HeaderText = Languages.GetStringTranslation("Arabic Name");
 				dgv1.Columns[3].HeaderText = Languages.GetStringTranslation("Days");

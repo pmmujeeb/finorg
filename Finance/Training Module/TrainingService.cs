@@ -44,7 +44,7 @@ namespace FinOrg.Training_Module
 					searchBox.Text = string.Empty;
 					ratesDataGrid.DataSource = null;
 
-					servicesDataGrid.Visible = false;
+					ShowHideServiceDGridView(false);
 
 					SetFormState(FinOrgFormState.View);
 					ReadOnly = true;
@@ -209,7 +209,7 @@ namespace FinOrg.Training_Module
 					if (CurrentState == FinOrgFormState.New)
 						cmd.CommandText = "INSERT INTO TR_SERVICES (TR_SERVICE_CODE, TR_SERVICE_NAME, TR_SERVICE_ANAME) VALUES (@Code, @Name, @EName);";
 					else
-						cmd.CommandText = "UPDATE TR_SERVICES SET TR_SERVICE_NAME = @Name, TR_SERVICE_ANAME = @EName; DELETE FROM TR_SERVICE_RATES WHERE TR_SERVICE_CODE = @Code;";
+						cmd.CommandText = "UPDATE TR_SERVICES SET TR_SERVICE_NAME = @Name, TR_SERVICE_ANAME = @EName WHERE TR_SERVICE_CODE = @Code; DELETE FROM TR_SERVICE_RATES WHERE TR_SERVICE_CODE = @Code;";
 					cmd.Parameters.Add(new SqlParameter("Code", code));
 					cmd.Parameters.Add(new SqlParameter("Name", service_ename_tb.Text.Trim()));
 					cmd.Parameters.Add(new SqlParameter("EName", service_aname_tb.Text.Trim()));
