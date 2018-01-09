@@ -343,6 +343,30 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Training Module\TrainingPeriod.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Training Module\TrainingPeriod.Designer.cs">
+      <DependentUpon>TrainingPeriod.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Training Module\TrainingPriority.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Training Module\TrainingPriority.Designer.cs">
+      <DependentUpon>TrainingPriority.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Training Module\TrainingService.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Training Module\TrainingService.Designer.cs">
+      <DependentUpon>TrainingService.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Training Module\TrainingSubscription.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Training Module\TrainingSubscription.Designer.cs">
+      <DependentUpon>TrainingSubscription.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="FrmAccounts.resx">
       <DependentUpon>FrmAccounts.cs</DependentUpon>
       <SubType>Designer</SubType>
@@ -479,6 +503,18 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Training Module\TrainingPeriod.resx">
+      <DependentUpon>TrainingPeriod.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Training Module\TrainingPriority.resx">
+      <DependentUpon>TrainingPriority.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Training Module\TrainingService.resx">
+      <DependentUpon>TrainingService.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Training Module\TrainingSubscription.resx">
+      <DependentUpon>TrainingSubscription.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="app.config">
       <SubType>Designer</SubType>
     </None>
