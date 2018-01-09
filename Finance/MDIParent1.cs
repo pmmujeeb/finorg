@@ -26,6 +26,7 @@ namespace FinOrg
         bool menumatch = false;
         SqlCommand cmd1 = new SqlCommand();
         int mnutype = 0;
+        string seccode = "";
         
         Gvar.Menu_item menu_item = new Gvar.Menu_item();
         private int childFormNumber = 0;
@@ -52,16 +53,47 @@ namespace FinOrg
             }
             
             menuStrip.Height = 35;
-            if (Gvar._SuperUserid == 1) return;
-            foreach (ToolStripMenuItem toolSripItem in menuStrip.Items)
+            if (Gvar._SuperUserid != 1)
             {
+                foreach (ToolStripMenuItem toolSripItem in menuStrip.Items)
+                {
 
-              disableMenu(toolSripItem);
-               // toolSripItem.Visible = true;
+                    disableMenu(toolSripItem,"");
+                    // toolSripItem.Visible = true;
 
+                }
             }
 
-           
+            for (int i=0;i<seccode.Length-1;i++)
+            {
+                if (seccode.Substring(i,1).ToString()=="0")
+                menuStrip.Items[i].Visible = false;
+                  }
+
+            ADODB.Connection ADOconn = new ADODB.Connection();
+           if (ADOconn.State==0)
+            ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
+            ADODB.Recordset cus = new ADODB.Recordset();
+
+            cus = new ADODB.Recordset();
+
+            string sql = "";
+            sql = "select * from disabled_menu where flag=1";
+            cus.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
+            while (!cus.EOF)
+            {
+
+                foreach (ToolStripMenuItem toolSripItem in menuStrip.Items)
+                {
+
+                    disableMenu(toolSripItem,cus.Fields["menu_code"].Value.ToString());
+                    // toolSripItem.Visible = true;
+
+                }
+
+                cus.MoveNext();
+            }
+
            
         }
 
@@ -70,10 +102,25 @@ namespace FinOrg
          ADODB.Connection ADOconn = new ADODB.Connection();
                ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
                ADODB.Recordset cus = new ADODB.Recordset();
+
+             cus = new ADODB.Recordset();
+
+             string sql = "";
+            sql = "select * from company";
+           
+            cus.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
+            while (!cus.EOF)
+            {
+                seccode = cus.Fields["sec_code"].Value.ToString();
+                Gvar.cmp_name = cus.Fields["short_name"].Value.ToString();
+                Gvar.cmp_aname = cus.Fields["short_aname"].Value.ToString();
+                cus.MoveNext();
+            }
+
                
             cus = new ADODB.Recordset();
             //string sql = "SELECT menu_code FROM menu_master where id in (select form_id from userpriv where dsp=1 and group_name = (select group_name from userinfo where userid='" + Gvar.Userid+ "'))";
-            string sql = "";
+             sql = "";
             sql = "SELECT m.id,m.menu_code, m.menu_type,m.menu_name as Mmenu_name,m.menu_code,m.head,p.* FROM menu_master as M left join userpriv as p on  m.id=p.form_id where p.dsp=1 and p.group_name = (select group_name from userinfo where Flag='A' and  userid='" + Gvar.Userid + "') Order by id";
             if (Gvar._SuperUserid == 1)
             {
@@ -82,6 +129,9 @@ namespace FinOrg
             cus.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
             while(!cus.EOF)
             {
+                 //this.Controls[1].Text="1";
+
+                //this.Controls[cus.Fields["menu_code"].Value.ToString()].Text = cus.Fields["Mmenu_name"].Value.ToString();
                 string mnu = cus.Fields["menu_code"].Value.ToString();
                 string prv ;
                 int ins, upd, del;
@@ -117,6 +167,7 @@ namespace FinOrg
                    if( !values.Any(cus.Fields["menu_code"].Value.ToString().Contains))
                     //if (cus.Fields["menu_code"].Value.ToString().Containany.IndexOf("MainMenu","mnuexit",'mnuwindow') >0)
                     cmbMainMenu.Items.Add(cus.Fields["Mmenu_name"].Value.ToString().Replace('&',' ').Trim());
+               
                 }
 
                 cus.MoveNext();
@@ -155,13 +206,14 @@ namespace FinOrg
 
 
 
-        private void disableMenu(ToolStripMenuItem menuItem)
+        private void disableMenu(ToolStripMenuItem menuItem , string menu_name)
         {            //toolSripItems.Add(menuItem);   
             // if sub menu contain child dropdown items 
             Boolean fnd = false;
             Boolean isitemfound = false;
             string head_name;
             ToolStripMenuItem m = new ToolStripMenuItem() ;
+            if (menu_name=="")
             menuItem.Visible = true;
             if (menuItem.HasDropDownItems)
             {
@@ -171,6 +223,7 @@ namespace FinOrg
                     if (toolSripItem is ToolStripSeparator)
                         if (fnd) continue;
                         else 
+                            if(menu_name=="")
                         toolSripItem.Visible = false; ;
                     
                         try
@@ -188,7 +241,7 @@ namespace FinOrg
                                 if (m.HasDropDownItems)
                                 {
                                     head_name = toolSripItem.Name;
-                                    disableMenu(m);
+                                    disableMenu(m, menu_name);
                                    
                                 }
                             }
@@ -200,31 +253,52 @@ namespace FinOrg
                         //    insert_menu(menuItem.Text, toolSripItem.Name, 1, toolSripItem.Text, "", 'A');
                         fnd = false;
                         if (toolSripItem is ToolStripSeparator) continue;
-                        for (int i = 0; i < lstmenu.Items.Count; i++)
+                        if (menu_name == "")
                         {
-                            string mnu =  lstmenu.Items[i].ToString();
-                            if (toolSripItem.Name == mnu)
+                            for (int i = 0; i < lstmenu.Items.Count; i++)
                             {
-                                toolSripItem.Tag = lstpriv.Items[i].ToString();
-                                fnd = true;
-                               // toolSripItem.GetCurrentParent();
-                                toolSripItem.Visible = true;
-                               
-                                isitemfound = true;
-                                //continue;
-                                
+                                string mnu = lstmenu.Items[i].ToString();
+                                if (toolSripItem.Name == mnu)
+                                {
+                                    toolSripItem.Tag = lstpriv.Items[i].ToString();
+                                    fnd = true;
+                                    // toolSripItem.GetCurrentParent();
+                                    toolSripItem.Visible = true;
+
+                                    isitemfound = true;
+                                    //continue;
+
+                                }
+
                             }
-                            
+                            if (!fnd && toolSripItem.Name != head_name)
+                                toolSripItem.Visible = false;
                         }
-                        if (!fnd && toolSripItem.Name != head_name )
-                            toolSripItem.Visible = false;
-                        
+                        else
+
+                        {
+                           
+                                if (toolSripItem.Name == menu_name)
+                                {
+                                   
+                                    
+                                   toolSripItem.Visible = false;
+                                    return;
+                                    
+
+                                }
+
+                           
+                           
+                        }
+
+
                     {                        //call recursively         
                         //disableMenu((ToolStripMenuItem)toolSripItem);
                     }
                 }
 
-                if (!isitemfound)
+                if (!isitemfound && menu_name=="")
                 {
                     menuItem.Visible = false;
                 }
@@ -318,6 +392,15 @@ namespace FinOrg
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
+
+            Form frm = this.ActiveMdiChild;
+            // string a = frm.Name;
+            if (frm != null)
+            {
+                MessageBox.Show("Please close all Opened Screen and Try again?", "Exit Apps", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                
+                return;
+            }
             DialogResult result = MessageBox.Show("Do you want to Exit from Application?", "Exit Apps", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
@@ -611,10 +694,10 @@ namespace FinOrg
       
         private void searchViewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form childForm = new frmsearchveh();
+            Form childForm = new frmitemview();
             childForm.MdiParent = this;
             //childForm.Text = "Window " + childFormNumber++;
-            childForm.Text = "Vehicle Search Screen";
+            childForm.Text = "Item Search Screen";
             childForm.Show();
         }
 
@@ -734,7 +817,7 @@ namespace FinOrg
         private void serviceMasterToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Gvar.invno = "0";
-            if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = serviceMasterToolStripMenuItem.Tag.ToString();
+            if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = mnuserviceMaster.Tag.ToString();
             //childForm.Text = "Window " + childFormNumber++;
             Form childForm = new FrmSRVCMaster();
             childForm.MdiParent = this;
@@ -1376,13 +1459,17 @@ namespace FinOrg
 
         }
 
-        private void MDIParent1_Deactivate(object sender, EventArgs e)
-        {
-
-        }
-
+       
         private void MDIParent1_FormClosing(object sender, FormClosingEventArgs e)
         {
+             Form frm = this.ActiveMdiChild;
+           // string a = frm.Name;
+             if (frm != null)
+             {
+                 MessageBox.Show("Please close all Opened Screen and Try again?", "Exit Apps", MessageBoxButtons.OK,MessageBoxIcon.Exclamation);
+                 e.Cancel = true;
+                 return;
+             }
             DialogResult result = MessageBox.Show("Do you want to Exit from Application?", "Exit Apps", MessageBoxButtons.YesNo);
             if (result != DialogResult.Yes)
             {
@@ -1869,6 +1956,11 @@ namespace FinOrg
 
             try
             {
+
+
+                Form frm = this.ActiveMdiChild;
+                // string a = frm.Name;
+               
                 int ky = msg.WParam.ToInt32();
                 if (msg.WParam.ToInt32() == 18 )
                 {
@@ -1880,8 +1972,12 @@ namespace FinOrg
                     }
                     else
                     {
-                        dgmenu.Width = 200;
-                        dgmenu.Columns[0].Width = 197;
+                        if (frm == null)
+                        {
+                            dgmenu.Width = 200;
+                            dgmenu.Columns[0].Width = 197;
+                            dgmenu.Focus();
+                        }
                     }
                     
                 }
@@ -1919,9 +2015,15 @@ namespace FinOrg
 
         private void dgmenu_MouseMove(object sender, MouseEventArgs e)
         {
-            dgmenu.Width = 200;
-            dgmenu.Columns[0].Width = 197;
-            dgmenu.Focus();
+
+            Form frm = this.ActiveMdiChild;
+           // string a = frm.Name;
+            if (frm == null)
+            {
+                dgmenu.Width = 200;
+                dgmenu.Columns[0].Width = 197;
+                dgmenu.Focus();
+            }
         }
 
         private void dgmenu_MouseLeave(object sender, EventArgs e)
@@ -2042,7 +2144,7 @@ namespace FinOrg
             cus = new ADODB.Recordset();
             //string sql = "SELECT menu_code FROM menu_master where id in (select form_id from userpriv where dsp=1 and group_name = (select group_name from userinfo where userid='" + Gvar.Userid+ "'))";
             string sql = "";
-            sql = "SELECT m.id,m.menu_code,m.menu_name as Mmenu_name FROM menu_xpress as M inner join userpriv as p on  m.id=p.form_id where  m.group_name = (select group_name from userinfo where userid='" + Gvar.Userid + "') Order by id";
+            sql = "SELECT distinct m.id,m.menu_code,m.menu_name as Mmenu_name FROM menu_xpress as M inner join userpriv as p on  m.id=p.form_id where   upper(m.group_name) = (select upper(group_name) from userinfo where userid='" + Gvar.Userid + "') Order by id";
             if (Gvar._SuperUserid == 1)
             {
                // sql = "SELECT distinct m.id, m.menu_code, m.menu_type,m.menu_name as Mmenu_name,m.menu_code,m.head,p.* FROM menu_master as M left join userpriv as p on  m.id=p.form_id order by id";
@@ -2163,6 +2265,51 @@ namespace FinOrg
           //childForm.Text = "Window " + childFormNumber++;
           childForm.Text = "Company Detail Entry Screen";
           childForm.Show();
+      }
+
+      private void dgmenu_MouseClick(object sender, MouseEventArgs e)
+      {
+          dgmenu.Width = 200;
+          dgmenu.Columns[0].Width = 197;
+          dgmenu.Focus();
+      }
+
+      private void mnudeliveryNote_Click(object sender, EventArgs e)
+      {
+          Gvar.invno = "0";
+          Gvar.trntype = 16;
+          if (Gvar._SuperUserid == 1) Gvar.frm_priv = "111"; else Gvar.frm_priv = PurchaseOrderMenuItem.Tag.ToString();
+          Form childForm = new FrmPurOrder();
+          childForm.MdiParent = this;
+
+
+          //childForm.Text = "Window " + childFormNumber++;
+          childForm.Text = "Delivery Note Entry Screen";
+
+          childForm.Show();
+      }
+
+      private void mnusoldpricediffreport_Click(object sender, EventArgs e)
+      {
+          Gvar.Gind = 3;
+          Gvar.rptidx = 24;
+          Form childForm = new frmreport1();
+          childForm.MdiParent = this;
+          //childForm.Text = "Window " + childFormNumber++;
+          childForm.Text = "Sales diffrence  Reports  Screen";
+          childForm.Show();
+      }
+
+      private void mnueditedreport_Click(object sender, EventArgs e)
+      {
+          Gvar.Gind = 2;
+          Gvar.rptidx = 25;
+          Form childForm = new frmreport1();
+          childForm.MdiParent = this;
+          //childForm.Text = "Window " + childFormNumber++;
+          childForm.Text = "Daily Transaction Reports Screen";
+          childForm.Show();
+
       }
 
         }

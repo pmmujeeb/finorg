@@ -1,0 +1,689 @@
+SALARY_AC	numeric(18, 0)	Checked
+ASSET_AC	numeric(18, 0)	Checked
+ASSET_OB	numeric(18, 0)	Checked
+USE [Finance]
+GO
+
+/****** Object:  Table [dbo].[ASSET_MASTER]    Script Date: 10/15/2017 07:39:46 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[ASSET_MASTER](
+	[ASSET_CODE] [varchar](50) NOT NULL,
+	[DESCRIPTION] [varchar](100) NULL,
+	[USER_ID] [varchar](50) NULL,
+	[AST_CAT_CODE] [int] NULL,
+	[UNIT] [varchar](50) NOT NULL,
+	[FLAG] [varchar](50) NULL,
+	[PART_NO] [varchar](50) NULL,
+	[BRAND] [varchar](50) NULL,
+	[ALIAS_NAME] [varchar](50) NULL,
+	[BRN_CODE] [smallint] NULL,
+	[AR_DESC] [varchar](75) NULL,
+	[UPD_FLAG] [char](1) NULL,
+	[BARCODE] [varchar](50) NULL,
+	[ASSET_COST] [numeric](18, 0) NULL,
+	[YEAR_DEPRECATION] [real] NULL,
+	[SUPLIER_NAME] [nvarchar](150) NULL,
+	[WARRENTY_EXPIRE_DATE] [date] NULL,
+	[Asset_Effect_Date] [date] NULL,
+	[create_date] [date] NULL,
+	[PAID_AC] [numeric](18, 0) NULL,
+	[REMARKS] [text] NULL,
+ CONSTRAINT [PK_ASSET_MASTER] PRIMARY KEY CLUSTERED 
+(
+	[ASSET_CODE] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[ASSET_MASTER] ADD  CONSTRAINT [DF_ASSET_MASTER_create_date]  DEFAULT (getdate()) FOR [create_date]
+GO
+USE [Finance]
+GO
+
+/****** Object:  Table [dbo].[ASSET_CAT]    Script Date: 10/15/2017 16:03:58 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[ASSET_CAT](
+	[AST_CAT_CODE] [int] NOT NULL,
+	[AST_CAT_NAME] [nvarchar](50) NULL,
+	[AST_CAT_ANAME] [nvarchar](50) NULL,
+ CONSTRAINT [aaaaaIST_CAT_PK] PRIMARY KEY NONCLUSTERED 
+(
+	[AST_CAT_CODE] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+
+
+
+**10 SEP 2017
+ADD RECORD ON ACCOUNTS AND MASTER
+5024	ITEM EXPENSE 	99	1		A	670	2017-03-18 07:35:40.637	2017-03-18 07:35:41.000	1	NULL	407	5023	SR
+5015	 EXPENSE LEDGER AC	99	1		A	671	2017-03-18 07:35:40.637	2017-03-18 07:35:41.000	1	NULL	407	5023	SR
+ADD  FILED ON AC_OPTION
+EXP_ITEM_AC	varchar(50)	Checked
+**04 sep 17
+add Menu_dock Varchar(20) on userinfo
+
+DRCR	varchar(1)	Checked
+DRCR1	varchar(1)	Checked
+PAYBY	int	Checked
+
+CREATE TABLE [dbo].[TRANSFER_INFO](
+	[INVOICE_NO] [varchar](50) NOT NULL,
+	[BRN_CODE] [smallint] NOT NULL,
+	[NYEAR] [int] NOT NULL,
+	[BRN_FROM] [int] NULL,
+	[BRN_TO] [int] NULL,
+	[WR_FROM] [int] NULL,
+	[WR_TO] [int] NULL,
+ CONSTRAINT [PK_TRNASFER_INFO] PRIMARY KEY CLUSTERED 
+(
+	[INVOICE_NO] ASC,
+	[BRN_CODE] ASC,
+	[NYEAR] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+-2	EXTRA ITEM ADDITION	1	0	«·»‰œ «·«÷«›Ì	5018	EXTRA ITEM ADDITION	C	D	0
+-1	PRODUCT ITEM	1	0	  ÕÊÌ· »‰œ ›Ì	5022	PRODUCT ITEM	C	D	0
+0	OPENING STOCK	1	NULL	«›  «Õ «·»Ê—’…	5020	OPENING STOCK	C	D	0
+1	CASH PURCHASE	1	NULL	 «·„‘ —Ì«  «·‰ﬁœÌ…	5004	CASH PURCHASE	C	D	1
+2	CREDIT PURCHASE	1	NULL	 ‘—«¡ «·«∆ „«‰	5005	CREDIT PURCHASE	C	D	0
+3	CASH SALES RETURN	1	NULL	 «·„»Ì⁄«  «·‰ﬁœÌ… «·⁄Êœ…	5006	CASH SALES RETURN	C	D	1
+4	CREDIT SALES RETURN	1	NULL	 „»Ì⁄«  «·«∆ „«‰ «·⁄Êœ…	5007	CREDIT SALES RETURN	C	D	0
+5	TRNASFER FROM BRANCH	1	NULL	  ‰ﬁ· „‰ ›—⁄	5010	TRNASFER FROM BRANCH	C	D	0
+6	CASH SALES	1	NULL	 «·„»Ì⁄«  «·‰ﬁœÌ…	5002	CASH SALES	D	C	1
+7	CREDIT SALES	1	NULL	 „»Ì⁄«  «·«∆ „«‰	5003	CREDIT SALES	D	C	0
+8	CASH PURCHASE RETURN	1	NULL	 «·„‘ —Ì«  «·‰ﬁœÌ… «·⁄Êœ…	5008	CASH PURCHASE RETURN	D	C	1
+9	CREDIT PURCHASE_RETURN	1	NULL	 ‘—«¡ «·«∆ „«‰ «·⁄Êœ…	5009	CREDIT PURCHASE_RETURN	D	C	0
+10	TRNASFER	1	NULL	 ‰ﬁ·	5011	TRNASFER	D	C	0
+11	DAMAGED ITEM	1	NULL	 «·»‰œ «· «·›…	5024	DAMAGED ITEM	D	C	0
+12	OPENING BALANCE	1	NULL	 «·—’Ìœ «·«›  «ÕÌ	5016	OPENING BALANCE	D	C	0
+13	CONVERT ITEM OUT	1	0	  ÕÊÌ· „‰ «·»‰œ	5022	CONVERT ITEM OUT	NULL	NULL	0
+14	DELIVERY NOTE	1	1	DELIVERY NOTE	5023	DELIVERY NOTE	NULL	NULL	0
+15	NEW SERVICE	1	1	NEW SERVICE	5024	NEW SERVICE	NULL	NULL	0
+22	PURCHASE ORDER	1	0	PURCHASE ORDER	5025	PURCHASE ORDER	NULL	NULL	0
+NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL
+
+
+*****
+CREATE VIEW [dbo].[V_GRPACCOUNTS]
+AS
+SELECT    dbo.ACCOUNTS.GROUP_AC AS ACC_NO,  SUM(dbo.TRN_ACCOUNTS.PAY_AMOUNT) AS Pay_Amount, dbo.TRN_ACCOUNTS.DR_CR
+FROM         dbo.TRN_ACCOUNTS INNER JOIN
+                      dbo.ACCOUNTS ON dbo.TRN_ACCOUNTS.ACC_NO = dbo.ACCOUNTS.ACC_NO
+GROUP BY dbo.ACCOUNTS.GROUP_AC, dbo.TRN_ACCOUNTS.DR_CR
+
+GO
+
+
+
+DELETE FROM DATA_ENTRY_GRID WHERE REC_NO NOT  IN (SELECT REC_NO FROM DATA_ENTRY)
+
+UNIT_QTY	real	Checked
+UNIT_PRICE	real	Checked
+COST_CENTER	int	Checked
+FPRICE	float	Checked
+UNIT_TRN_AMOUNT	real	Checked
+TRN_TYPE	int	Checked
+INVOICE_NO	nvarchar(50)	Checked
+UPDATE DATA_ENTRY_GRID SET
+
+UNIT_QTY=QTY,
+UNIT_PRICE=PRICE,
+COST_CENTER=0,
+FPRICE=PRICE,
+UNIT_TRN_AMOUNT=SALE_PUR_AMT,
+TRN_TYPE=DATA_ENTRY.TRN_TYPE,
+INVOICE_NO=DATA_ENTRY.INVOICE_NO
+FROM DATA_ENTRY INNER JOIN DATA_ENTRY_GRID ON DATA_ENTRY.REC_NO=DATA_ENTRY_GRID.REC_NO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[TRN_ITM_DETAIL]
+AS
+SELECT     dbo.DATA_ENTRY_GRID.REC_NO, dbo.DATA_ENTRY.TRAN_NO AS TRN_NO, dbo.DATA_ENTRY_GRID.ITEM_CODE, dbo.DATA_ENTRY_GRID.UNIT_QTY AS QTY, 
+                      dbo.DATA_ENTRY_GRID.PRICE AS UNIT_PRICE, dbo.DATA_ENTRY_GRID.DISC AS DISCOUNT, dbo.DATA_ENTRY_GRID.UNIT_TRN_AMOUNT AS SALE_PUR_AMOUNT, 
+                      dbo.DATA_ENTRY.TRN_TYPE, dbo.DATA_ENTRY_GRID.FPRICE, dbo.DATA_ENTRY_GRID.UNIT, dbo.DATA_ENTRY_GRID.QTY AS UNIT_QTY, 
+                      dbo.DATA_ENTRY_GRID.BARCODE, dbo.DATA_ENTRY_GRID.UNIT_PRICE AS PRICE, dbo.DATA_ENTRY_GRID.REMARKS, dbo.DATA_ENTRY_GRID.BRN_CODE, 
+                      dbo.DATA_ENTRY_GRID.WR_CODE, dbo.DATA_ENTRY_GRID.ENTRY_STATUS, dbo.DATA_ENTRY.INVOICE_NO, dbo.DATA_ENTRY_GRID.COST_CENTER
+FROM         dbo.DATA_ENTRY INNER JOIN
+                      dbo.DATA_ENTRY_GRID ON dbo.DATA_ENTRY.REC_NO = dbo.DATA_ENTRY_GRID.REC_NO
+WHERE     (dbo.DATA_ENTRY.FLAG <> N'D')
+
+GO
+
+CREATE VIEW [dbo].[TRN_MASTER] AS 
+SELECT     TRAN_NO AS TRN_NO, INVOICE_NO AS INV_NO, CURDATE AS DATE_TIME, ACCODE AS CUS_CODE, ENAME AS CUS_NAME, TRN_TYPE, G_TOTAL AS TOT_AMOUNT, 
+                      DISC_AMT AS DISCOUNT, USER_NAME AS USER_ID, ENTRY_TYPE AS SALE_TYPE, FRN_AMOUNT AS FNET_AMOUNT, NET_AMOUNT, FLAG, SALES_CODE, 
+                      BRN_CODE, WR_CODE, REF_NO, NYEAR, ENTRY_STATUS, CURDATE AS DATE_STATUS, CURDATE AS CUR_DATE, REMARKS
+FROM         DATA_ENTRY
+WHERE     (FLAG <> N'D')
+GO
+
+ADD FILED AVG_PUR_PRICE TO QRY_BARCODE VIEW
+
+add field on Ac_options
+COST_ITEM_AC	int	Checked
+DEF_CASH_AC	numeric(18, 0)	Checked
+stock_ac
+
+
+add fieled on  accounts
+GROUP_AC
+
+
+
+trn_master need trn_no unique index
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER VIEW [dbo].[TRN_ACC_SUM]
+AS
+SELECT     ACC_NO, ROUND(SUM(CASE WHEN TRN_ACCOUNTS.DR_CR = 'C' THEN TRN_ACCOUNTS.PAY_AMOUNT ELSE 0 END), 3) AS CR_AMOUNT, 
+                      ROUND(SUM(CASE WHEN TRN_ACCOUNTS.DR_CR = 'D' THEN TRN_ACCOUNTS.PAY_AMOUNT ELSE 0 END), 3) AS DR_AMOUNT
+FROM         dbo.TRN_ACCOUNTS
+GROUP BY ACC_NO
+
+GO
+
+
+CREATE VIEW [dbo].[Project_Ac_Exp]
+AS
+SELECT     dbo.TRN_ACCOUNTS.ACC_NO, SUM(dbo.TRN_ACCOUNTS.PAY_AMOUNT) AS Sumamt, dbo.TRN_ACCOUNTS.DR_CR, dbo.Project_Master.Project_Code, 
+                      dbo.Project_Master.Cost_Code
+FROM         dbo.TRN_ACCOUNTS INNER JOIN
+                      dbo.ACCOUNTS ON dbo.TRN_ACCOUNTS.ACC_NO = dbo.ACCOUNTS.ACC_NO INNER JOIN
+                      dbo.AC_OPTIONS ON dbo.ACCOUNTS.ACC_TYPE_CODE = dbo.AC_OPTIONS.EXP_AC_TYPE INNER JOIN
+                      dbo.Project_Master ON dbo.TRN_ACCOUNTS.ACC_NO = dbo.Project_Master.Client_code
+GROUP BY dbo.TRN_ACCOUNTS.DR_CR, dbo.Project_Master.Project_Code, dbo.Project_Master.Cost_Code, dbo.TRN_ACCOUNTS.ACC_NO
+
+GO
+
+
+USE [Finance]
+GO
+
+/****** Object:  Table [dbo].[Proj_Status]    Script Date: 02/25/2017 23:12:47 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[Proj_Status](
+	[Status_code] [int] NOT NULL,
+	[Status] [varchar](50) NULL,
+ CONSTRAINT [PK_Proj_Status] PRIMARY KEY CLUSTERED 
+(
+	[Status_code] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+
+USE [Finance]
+GO
+
+/****** Object:  Table [dbo].[PROJ_MASTER]    Script Date: 02/25/2017 23:12:52 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[PROJ_MASTER](
+	[PROJ_CODE] [int] NOT NULL,
+	[PROJ_NAME] [varchar](50) NULL,
+ CONSTRAINT [PK_PROJ_MASTER] PRIMARY KEY CLUSTERED 
+(
+	[PROJ_CODE] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+1	Started
+2	On Progress
+3	Half Completed
+4	Completed
+5	Suspended
+6	Delivered
+7	On Hold
+NULL	NULL
+
+
+
+OPENING_STOCK_AC	numeric(18, 0)	Checked
+DISCOUNT_AC	numeric(18, 0)	Checked
+MAX_LEN_ITEMCODE	int	Checked
+CASH_SALE_AC	int	Checked
+CASH_PUR_AC	int	Checked
+BANK_NOS	varchar(50)	Checked
+
+
+16 FEB 17
+TRN_ACC
+Reference_no	varchar(50)	Checked
+DR_CR	varchar(1)	Checked
+USER_ID	int	Checked
+NARRATION	varchar(100)	Checked
+PAY_DATE	datetime	Checked
+
+ACC_OPTION
+SHOW_COST	int	Checked
+SHOW_DEPT	int	Checked
+
+27 nov 2016
+CREATE TRIGGER [dbo].updateCounter
+ON [dbo].[Veh_Master]
+AFTER INSERT
+AS 
+DECLARE @Cnt AS int
+
+BEGIN   
+    SET NOCOUNT ON;
+
+    -- update your table, using a set-based approach
+    -- from the "Inserted" pseudo table which CAN and WILL
+    -- contain multiple rows!
+    set @Cnt = (select max(veh_no)  from veh_master where cmp_code= (select cmp_code from inserted));
+    UPDATE [dbo].[Vehowners] 
+    SET  [Counter] = @cnt where vehowner_id=(select cmp_code from inserted);
+    
+END
+
+
+
+26 oct 2016
+
+USE [Rentex]
+GO
+
+/****** Object:  View [dbo].[V_Vehdet]    Script Date: 10/27/2016 11:43:07 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER VIEW [dbo].[V_Vehdet]
+AS
+SELECT     dbo.Veh_Master.Plate_A_No, dbo.VehBrand.Brand_name, dbo.VehType.VehType_name, dbo.VehModel.VehModel_name, dbo.Veh_Master.Veh_Color, 
+                      dbo.Veh_Issue_Return.Rent_Type, dbo.Veh_Issue_Return.Rent_price, dbo.Veh_Issue_Return.Rent_Start_Date, dbo.Veh_Issue_Return.Veh_Expect_Return, 
+                      dbo.Veh_Issue_Return.Allowed_KM, dbo.Veh_Issue_Return.Excess_KM_Amt, dbo.Veh_Issue_Return.Issue_date, dbo.Veh_Issue_Return.Issue_Time, 
+                      dbo.Veh_Issue_Return.Issue_ODO, dbo.Veh_Issue_Return.Return_Date, dbo.Veh_Issue_Return.Return_ODO, dbo.Veh_Issue_Return.Rent_Total_Amount, 
+                      dbo.Veh_Issue_Return.Total_KMExcess_amt, dbo.Veh_Issue_Return.Total_damage_amount, dbo.Veh_Issue_Return.Total_TAMM, 
+                      dbo.Veh_Issue_Return.other_amount, dbo.Veh_Master.Veh_no, dbo.Veh_Master.Plate_no, dbo.Veh_Master.Veh_Name, dbo.Veh_Issue_Return.Issue_No, 
+                      dbo.Veh_Issue_Return.Cus_code, dbo.Veh_Issue_Return.Rent_received_Amount, dbo.Veh_Issue_Return.Veh_Actual_Return, 
+                      dbo.Veh_Issue_Return.Total_Discount
+FROM         dbo.Veh_Master INNER JOIN
+                      dbo.Veh_Issue_Return ON dbo.Veh_Master.Veh_no = dbo.Veh_Issue_Return.Veh_no LEFT OUTER JOIN
+                      dbo.VehType ON dbo.Veh_Master.Veh_type = dbo.VehType.VehType_id LEFT OUTER JOIN
+                      dbo.VehModel ON dbo.Veh_Master.Model = dbo.VehModel.VehModel_id LEFT OUTER JOIN
+                      dbo.VehBrand ON dbo.Veh_Master.Veh_Brand = dbo.VehBrand.Brand_id
+
+GO
+
+
+
+
+USE [Rentex]
+GO
+/****** Object:  StoredProcedure [dbo].[upd_adv_amt]    Script Date: 10/26/2016 16:34:43 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[upd_adv_amt]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+	
+Update veh_issue_return set rent_total_amount=p.tot_amt from veh_issue_return as v inner join
+(
+
+select m.veh_no,m.issue_no,sum(m.rent_due_amount) as tot_amt
+from veh_received_monthly as m
+ group by m.veh_no,m.issue_no  
+) as p
+on v.veh_no=p.veh_no and v.issue_no=p.issue_no
+
+
+
+update veh_issue_return set rent_adv_amount=  case when recamt-p.Paid_amt < 0 then  abs(recamt-p.Paid_amt) else 0 end  
+--,rent_received_amount=p.paid_amt 
+from veh_issue_return as v inner join
+(
+select d.veh_no,d.issue_no, sum(d.rent_received_amount)   as Paid_amt from veh_received_det as d  group by d.veh_no,d.issue_no  
+) as p
+on v.veh_no=p.veh_no and v.issue_no=p.issue_no
+inner join
+(select e.veh_no,e.issue_no, sum(e.rent_received_amount)   as recamt 
+
+from  veh_received_monthly as e 
+
+ group by e.veh_no,e.issue_no  
+
+) as q
+
+ on (v.veh_no = q.veh_no and v.issue_no=q.issue_no )
+
+
+
+END
+
+
+13 oct 2016
+
+add on more info 
+REF_CONTACT_NO
+company
+
+*****************
+veh_exp_det
+
+
+veh_no	numeric(18, 0)	Checked
+Veh_Exp_no	int	Unchecked
+exp_date	datetime	Checked
+Voucher_No	varchar(20)	Checked
+Remarks	varchar(MAX)	Checked
+exp_To_AC	numeric(18, 0)	Checked
+User_Id	int	Checked
+cur_date	datetime	Checked
+Exp_Amount	float	Checked
+Issue_No	int	Checked
+EXPENSE_TYPE	varchar(30)	Checked
+Parts	float	Checked
+Labour	float	Checked
+Serviced_date	datetime	Checked
+Serviced_ODO	varchar(30)	Checked
+Workshop	varchar(50)	Checked
+Exp_paid	float	Checked
+exp_from_AC	numeric(18, 0)	Checked
+
+USE [Rentex]
+GO
+
+/****** Object:  View [dbo].[Veh_Cusdet]    Script Date: 08/16/2016 14:58:59 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER VIEW [dbo].[Veh_Cusdet]
+AS
+SELECT     dbo.Veh_Customer.Cus_Name, dbo.Veh_Customer.Id_Number, dbo.Veh_Customer.ID_issued_at, dbo.Veh_Customer.ID_Expiry_Date, dbo.Veh_Customer.License_No, 
+                      dbo.Veh_Customer.Licence_Issued_at, dbo.Veh_Customer.Licence_exp_date, dbo.Veh_Customer.Nationality, dbo.Veh_Sponsor.Sponsor_Name, 
+                      dbo.Veh_Sponsor.Address, dbo.Veh_Customer.Address AS ResiAddress, dbo.Veh_Customer.Mobile, dbo.Veh_Sponsor.Contact_Name, dbo.Veh_Customer.office_no, 
+                      dbo.Veh_Customer.EmailId, dbo.Veh_Customer.Cus_code
+FROM         dbo.Veh_Customer LEFT OUTER JOIN
+                      dbo.Veh_Sponsor ON dbo.Veh_Customer.Sponsor_code = dbo.Veh_Sponsor.Sponsor_code
+
+GO
+
+USE [Rentex]
+GO
+
+/****** Object:  View [dbo].[V_Vehdet]    Script Date: 08/16/2016 14:59:33 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+ALTER VIEW [dbo].[V_Vehdet]
+AS
+SELECT     dbo.Veh_Master.Plate_A_No, dbo.VehBrand.Brand_name, dbo.VehType.VehType_name, dbo.VehModel.VehModel_name, dbo.Veh_Master.Veh_Color, 
+                      dbo.Veh_Issue_Return.Rent_Type, dbo.Veh_Issue_Return.Rent_price, dbo.Veh_Issue_Return.Rent_Start_Date, dbo.Veh_Issue_Return.Veh_Expect_Return, 
+                      dbo.Veh_Issue_Return.Allowed_KM, dbo.Veh_Issue_Return.Excess_KM_Amt, dbo.Veh_Issue_Return.Issue_date, dbo.Veh_Issue_Return.Issue_Time, 
+                      dbo.Veh_Issue_Return.Issue_ODO, dbo.Veh_Issue_Return.Return_Date, dbo.Veh_Issue_Return.Return_ODO, dbo.Veh_Issue_Return.Rent_Total_Amount, 
+                      dbo.Veh_Issue_Return.Total_KMExcess_amt, dbo.Veh_Issue_Return.Total_damage_amount, dbo.Veh_Issue_Return.Total_TAMM, 
+                      dbo.Veh_Issue_Return.other_amount, dbo.Veh_Master.Veh_no, dbo.Veh_Master.Plate_no, dbo.Veh_Master.Veh_Name, dbo.Veh_Issue_Return.Issue_No, 
+                      dbo.Veh_Issue_Return.Cus_code
+FROM         dbo.Veh_Master INNER JOIN
+                      dbo.Veh_Issue_Return ON dbo.Veh_Master.Veh_no = dbo.Veh_Issue_Return.Veh_no LEFT OUTER JOIN
+                      dbo.VehType ON dbo.Veh_Master.Veh_type = dbo.VehType.VehType_id LEFT OUTER JOIN
+                      dbo.VehModel ON dbo.Veh_Master.Model = dbo.VehModel.VehModel_id LEFT OUTER JOIN
+                      dbo.VehBrand ON dbo.Veh_Master.Veh_Brand = dbo.VehBrand.Brand_id
+
+GO
+
+
+
+
+CREATE TABLE [dbo].[CUS_MORE_INFO](
+	[IDNUMBER] [varchar](10) NOT NULL,
+	[ID_ISSUE_PLACE] [varchar](30) NULL,
+	[ID_EXPIRY_DATE] [varchar](30) NULL,
+	[LIC_NUMBER] [varchar](10) NULL,
+	[LIC_ISSUE_PLACE] [varchar](30) NULL,
+	[LIC_EXPIRY_DATE] [varchar](30) NULL,
+	[NATIONALITY] [varchar](50) NULL,
+	[ENAME] [varchar](50) NULL,
+	[VEH_NO] [numeric](18, 0) NULL,
+	[ISSUE_NO] [bigint] NULL,
+	[CUSTOMER_NO] [numeric](18, 0) NULL,
+	[REF_CONTACT_NO] [varchar](50) NULL,
+	[COMPANY] [varchar](50) NULL,
+ CONSTRAINT [PK_CUS_MORE_INFO] PRIMARY KEY CLUSTERED 
+(
+	[IDNUMBER] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+
+add fileds on issue_return
+
+Total_TAMM	float	Checked
+Total_Discount	float	Checked
+
+
+add fileds on Customer
+
+ID_issued_at	varchar(50)	Checked
+ID_Expiry_Date	datetime	Checked
+License_No	varchar(50)	Checked
+Licence_Issued_at	varchar(50)	Checked
+Licence_exp_date	datetime	Checked
+Nationality	varchar(50)	Checked
+EmailId	varchar(50)	Checked
+
+
+add fileds on Veh_thum
+
+amunt float
+ issue_no  bigint
+
+add new field on recieved_det as veh_no, issue_no
+
+
+update veh_received_det set veh_no = cast(substring(pay_ref_no,0,charindex('-',pay_ref_no,0)) as numeric),
+issue_no=cast(replace( substring(pay_ref_no,charindex('-',pay_ref_no,0)+1,1),'O',0) as numeric)
+where substring(pay_ref_no,0,charindex('-',pay_ref_no,0)) <> ''
+
+select pay_ref_no,substring(pay_ref_no,0,charindex('-',pay_ref_no,0)) as veh_no,
+replace( substring(pay_ref_no,charindex('-',pay_ref_no,0)+1,1),'O',0) as issue_no
+
+from veh_received_det
+
+
+
+
+
+USE [Rentex]
+GO
+/****** Object:  StoredProcedure [dbo].[upd_adv_amt]    Script Date: 12/01/2015 09:57:27 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[upd_adv_amt]
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+	
+Update veh_issue_return set rent_total_amount=p.tot_amt from veh_issue_return as v inner join
+(
+
+select m.veh_no,m.issue_no,sum(m.rent_due_amount) as tot_amt
+from veh_received_monthly as m
+ group by m.veh_no,m.issue_no  
+) as p
+on v.veh_no=p.veh_no and v.issue_no=p.issue_no
+
+
+
+	
+update veh_issue_return set rent_adv_amount= case when rent_total_amount-p.Paid_amt < 0 then  abs(rent_total_amount-p.Paid_amt) else 0 end ,rent_received_amount=p.paid_amt from veh_issue_return as v inner join
+(
+select d.veh_no,d.issue_no,sum(d.rent_received_amount)   as Paid_amt 
+from veh_received_det as d
+group by d.veh_no,d.issue_no  
+) as p
+on v.veh_no=p.veh_no and v.issue_no=p.issue_no
+
+END
+
+
+change cus_code type to numeric
+add flag on accounts
+
+
+
+USE [Rentex]
+GO
+/****** Object:  Table [dbo].[Grid_Master]    Script Date: 10/18/2015 23:48:41 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+SET ANSI_PADDING ON
+GO
+CREATE TABLE [dbo].[Grid_Master](
+	[row] [int] NOT NULL,
+	[doc_no] [varchar](50) NOT NULL,
+	[Col1] [nvarchar](50)  NULL,
+	[Col2] [nvarchar](50)  NOT NULL,
+	[Col3] [nvarchar](50)  NULL,
+	[Col4] [nvarchar](50)  NULL,
+	[Col5] [nvarchar](50)  NULL,
+	[Col6] [nvarchar](50)  NULL,
+	[Col7] [nvarchar](50)  NULL,
+	[Col8] [nvarchar](50)  NULL,
+	[Col9] [nvarchar](50)  NULL,
+	[Col10] [nvarchar](50)  NULL,
+	[Col11] [nvarchar](50)  NULL,
+	[Col12] [nvarchar](50)  NULL,
+	[Col13] [nvarchar](50)  NULL,
+	[Col14] [nvarchar](50)  NULL,
+	[Col15] [nvarchar](50)  NULL,
+	[Col16] [nvarchar](50)  NULL,
+	[Col17] [nvarchar](50)  NULL,
+	[Col18] [nvarchar](50)  NULL,
+	[Col19] [nvarchar](50)  NULL,
+	[Col20] [nvarchar](50)  NULL,
+	[TRN_BY] [int] NULL,
+ CONSTRAINT [PK_Grid_Master] PRIMARY KEY CLUSTERED 
+(
+	[row] ASC,
+	[doc_no] ASC
+)WITH (IGNORE_DUP_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+SET ANSI_PADDING OFF
+
+
+
+
+SELECT     Cus_code, Cus_Name, office_no, Mobile, contact_no, Address, 0 AS Expr1, 1 AS Expr2, 1 AS Expr3, Cus_Name AS Expr4, Id_Number
+FROM         dbo.Veh_Customer
+
+
+-- ================================================
+-- Template generated from Template Explorer using:
+-- Create Procedure (New Menu).SQL
+--
+-- Use the Specify Values for Template Parameters 
+-- command (Ctrl-Shift-M) to fill in the parameter 
+-- values below.
+--
+-- This block of comments will not be included in
+-- the definition of the procedure.
+-- ================================================
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+CREATE PROCEDURE upd_adv_amt
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+update veh_issue_return set rent_adv_amount=p.adv_amt from veh_issue_return as v inner join
+(
+
+select m.veh_no,m.issue_no,sum(m.rent_received_amount) as Monthamt,sum(d.rent_received_amount) as Tot_Paid ,
+abs(sum(m.rent_received_amount) -sum(d.rent_received_amount)) as adv_amt
+from veh_received_monthly as m
+inner join veh_received_det as d on (m.pay_ref_no=d.pay_ref_no)
+ group by m.veh_no,m.issue_no  having sum(m.rent_received_amount) -sum(d.rent_received_amount) <0
+
+) as p
+on v.veh_no=p.veh_no and v.issue_no=p.issue_no
+
+END
+GO

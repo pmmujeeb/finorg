@@ -238,7 +238,7 @@ namespace FinOrg
                                 sql = "sELECT  Acc_Name,cast(Acc_No as varchar) as Acc_no,row_number() over (order by Acc_Name) as Rownum froM Accounts where acc_type_code=3";
 
                             if (Gvar.rptidx == 105 || Gvar.rptidx == 106)
-                                sql = "sELECT  Acc_Name,cast(Acc_No as varchar) as Acc_no,row_number() over (order by Acc_Name) as Rownum froM Accounts where acc_type_code=1";
+                                sql = "sELECT  Acc_Name,cast(Acc_No as varchar) as Acc_no,row_number() over (order by Acc_Name) as Rownum froM Accounts where acc_type_code=1 and acc_level=4";
 
                             ada2 = new SqlDataAdapter(sql, Conn);
                             dt2 = new DataTable("Accounts");
@@ -350,8 +350,8 @@ namespace FinOrg
                 try
                 {
 
-                    if (Gvar.rptidx < 100 && Gvar.rptidx > 106)
-                    { 
+                    //if (Gvar.rptidx < 100 && Gvar.rptidx > 106)
+                    //{ 
                     sql = "SELECT * FROM AC_OPTIONS WHERE  ac_options.ID =1";
 
                     rec.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
@@ -380,9 +380,9 @@ namespace FinOrg
                     }
                         emptype = Convert.ToInt16(rec.Fields["emp_ac_type"].Value.ToString());
                        
-                    }
+                    //}
 
-                    else
+                    //else
                     {
                         lbldept.Visible = false;
                         cmbdept.Visible = false;
@@ -871,23 +871,28 @@ namespace FinOrg
 
                             string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
                             string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
-
+                             string crt4="1=1";
                             if (Gvar.rptidx == 102)
                             {
                                 crt1 = "  {ACCOUNTS.ACC_TYPE_CODE}=2";
+                                crt4 = "{accounts.acc_no} ";
                             }
                             else
                             {
                                 if (Gvar.rptidx == 104)
                                 {
                                     crt1 = "  {ACCOUNTS.ACC_TYPE_CODE}=3";
+                                    crt4 = "{accounts.acc_no} ";
                                 }
 
                             }
-                            string crt4="1=1";
+                           
                             string crt2 = "1=1";
+                            
+                           
                             if (Gvar.rptidx == 106)
                             {
+                                
                                 crt1 = "{ACCOUNTS.ACC_TYPE_CODE}=1";
                                 crt4 = "{accounts.gl_acc_no} ";
                                 if (cmbowner.SelectedIndex < 1)
@@ -1001,7 +1006,7 @@ namespace FinOrg
 
                                 }
                                // crt4 = "{accounts.acc_no}  in [" + crt4 + "]";
-                                crt4 = crt4 + " in [" + crite4 + "]";
+                                crt4 = crt4 + "  in [" + crite4 + "]";
                             }
 
                             if (!fnd)

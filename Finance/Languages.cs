@@ -161,7 +161,7 @@ namespace FinOrg
                     if (c.IsTranslatableControl() && !string.IsNullOrEmpty(c.Name))
                     {
                         f.ControlDefaultValues.Add(c.Name, c.Text.Simplified(true));
-                        c.AutoSize = false;
+                       // c.AutoSize = false;
                     }
 
                     // if Control is a type of ToolStrip, iterate for ToolStripItem

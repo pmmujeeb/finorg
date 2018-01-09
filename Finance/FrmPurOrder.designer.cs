@@ -138,6 +138,7 @@
             this.lblvat = new System.Windows.Forms.Label();
             this.txtvatpcnt = new System.Windows.Forms.TextBox();
             this.txtvatamt = new System.Windows.Forms.TextBox();
+            this.panel1 = new System.Windows.Forms.Panel();
             this.toolStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GrdLookup)).BeginInit();
@@ -145,6 +146,7 @@
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdbutton)).BeginInit();
             this.pnladdress.SuspendLayout();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // lbltrndate
@@ -397,6 +399,7 @@
             this.dgv1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv1_CellContentClick);
             this.dgv1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv1_CellEnter);
             this.dgv1.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv1_CellLeave);
+            this.dgv1.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv1_RowEnter);
             this.dgv1.SelectionChanged += new System.EventHandler(this.dgv1_SelectionChanged);
             this.dgv1.UserDeletingRow += new System.Windows.Forms.DataGridViewRowCancelEventHandler(this.dgv1_UserDeletingRow);
             this.dgv1.DoubleClick += new System.EventHandler(this.dgv1_DoubleClick);
@@ -445,13 +448,12 @@
             // 
             // lblcustomer
             // 
-            this.lblcustomer.AutoSize = true;
             this.lblcustomer.Font = new System.Drawing.Font("Tahoma", 12F);
             this.lblcustomer.ForeColor = System.Drawing.Color.Black;
             this.lblcustomer.ImeMode = System.Windows.Forms.ImeMode.On;
             this.lblcustomer.Location = new System.Drawing.Point(12, 107);
             this.lblcustomer.Name = "lblcustomer";
-            this.lblcustomer.Size = new System.Drawing.Size(67, 19);
+            this.lblcustomer.Size = new System.Drawing.Size(96, 19);
             this.lblcustomer.TabIndex = 36;
             this.lblcustomer.Text = "Supplier";
             // 
@@ -476,7 +478,7 @@
             this.GrdLookup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
             this.GrdLookup.BackgroundColor = System.Drawing.Color.White;
             this.GrdLookup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.GrdLookup.Location = new System.Drawing.Point(209, 72);
+            this.GrdLookup.Location = new System.Drawing.Point(199, 73);
             this.GrdLookup.Name = "GrdLookup";
             this.GrdLookup.ReadOnly = true;
             this.GrdLookup.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -865,7 +867,7 @@
             this.label19.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label19.ForeColor = System.Drawing.Color.DarkRed;
             this.label19.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label19.Location = new System.Drawing.Point(3, 546);
+            this.label19.Location = new System.Drawing.Point(6, 11);
             this.label19.Name = "label19";
             this.label19.Size = new System.Drawing.Size(107, 18);
             this.label19.TabIndex = 47;
@@ -885,10 +887,10 @@
             // 
             // cmbterm
             // 
-            this.cmbterm.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.cmbterm.BackColor = System.Drawing.Color.White;
             this.cmbterm.Font = new System.Drawing.Font("Tahoma", 10F);
             this.cmbterm.FormattingEnabled = true;
-            this.cmbterm.Location = new System.Drawing.Point(118, 541);
+            this.cmbterm.Location = new System.Drawing.Point(121, 6);
             this.cmbterm.Name = "cmbterm";
             this.cmbterm.Size = new System.Drawing.Size(194, 24);
             this.cmbterm.TabIndex = 6;
@@ -899,7 +901,7 @@
             this.label11.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label11.ForeColor = System.Drawing.Color.DarkRed;
             this.label11.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label11.Location = new System.Drawing.Point(1, 578);
+            this.label11.Location = new System.Drawing.Point(4, 43);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(100, 18);
             this.label11.TabIndex = 47;
@@ -907,10 +909,10 @@
             // 
             // cmbmode
             // 
-            this.cmbmode.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.cmbmode.BackColor = System.Drawing.Color.White;
             this.cmbmode.Font = new System.Drawing.Font("Tahoma", 10F);
             this.cmbmode.FormattingEnabled = true;
-            this.cmbmode.Location = new System.Drawing.Point(118, 574);
+            this.cmbmode.Location = new System.Drawing.Point(121, 39);
             this.cmbmode.Name = "cmbmode";
             this.cmbmode.Size = new System.Drawing.Size(196, 24);
             this.cmbmode.TabIndex = 7;
@@ -964,7 +966,7 @@
             this.button2.ForeColor = System.Drawing.Color.Navy;
             this.button2.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button2.ImageIndex = 4;
-            this.button2.Location = new System.Drawing.Point(320, 540);
+            this.button2.Location = new System.Drawing.Point(323, 5);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(27, 25);
             this.button2.TabIndex = 50;
@@ -982,7 +984,7 @@
             this.button3.ForeColor = System.Drawing.Color.Navy;
             this.button3.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button3.ImageIndex = 4;
-            this.button3.Location = new System.Drawing.Point(320, 573);
+            this.button3.Location = new System.Drawing.Point(323, 38);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(27, 25);
             this.button3.TabIndex = 51;
@@ -1126,7 +1128,7 @@
             this.button5.ForeColor = System.Drawing.Color.Navy;
             this.button5.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button5.ImageIndex = 4;
-            this.button5.Location = new System.Drawing.Point(319, 603);
+            this.button5.Location = new System.Drawing.Point(322, 68);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(27, 25);
             this.button5.TabIndex = 52;
@@ -1143,7 +1145,7 @@
             this.label5.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.DarkRed;
             this.label5.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.label5.Location = new System.Drawing.Point(0, 608);
+            this.label5.Location = new System.Drawing.Point(3, 73);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(125, 18);
             this.label5.TabIndex = 47;
@@ -1151,10 +1153,10 @@
             // 
             // cmbaddress
             // 
-            this.cmbaddress.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.cmbaddress.BackColor = System.Drawing.Color.White;
             this.cmbaddress.Font = new System.Drawing.Font("Tahoma", 10F);
             this.cmbaddress.FormattingEnabled = true;
-            this.cmbaddress.Location = new System.Drawing.Point(118, 604);
+            this.cmbaddress.Location = new System.Drawing.Point(121, 69);
             this.cmbaddress.Name = "cmbaddress";
             this.cmbaddress.Size = new System.Drawing.Size(195, 24);
             this.cmbaddress.TabIndex = 8;
@@ -1361,7 +1363,7 @@
             this.lblleftsign.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblleftsign.ForeColor = System.Drawing.Color.DarkRed;
             this.lblleftsign.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.lblleftsign.Location = new System.Drawing.Point(0, 633);
+            this.lblleftsign.Location = new System.Drawing.Point(3, 98);
             this.lblleftsign.Name = "lblleftsign";
             this.lblleftsign.Size = new System.Drawing.Size(98, 18);
             this.lblleftsign.TabIndex = 47;
@@ -1369,10 +1371,10 @@
             // 
             // cmbleftsign
             // 
-            this.cmbleftsign.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.cmbleftsign.BackColor = System.Drawing.Color.White;
             this.cmbleftsign.Font = new System.Drawing.Font("Tahoma", 10F);
             this.cmbleftsign.FormattingEnabled = true;
-            this.cmbleftsign.Location = new System.Drawing.Point(118, 632);
+            this.cmbleftsign.Location = new System.Drawing.Point(121, 97);
             this.cmbleftsign.Name = "cmbleftsign";
             this.cmbleftsign.Size = new System.Drawing.Size(196, 24);
             this.cmbleftsign.TabIndex = 9;
@@ -1383,7 +1385,7 @@
             this.lblrightsign.Font = new System.Drawing.Font("Tahoma", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblrightsign.ForeColor = System.Drawing.Color.DarkRed;
             this.lblrightsign.ImeMode = System.Windows.Forms.ImeMode.On;
-            this.lblrightsign.Location = new System.Drawing.Point(1, 663);
+            this.lblrightsign.Location = new System.Drawing.Point(4, 128);
             this.lblrightsign.Name = "lblrightsign";
             this.lblrightsign.Size = new System.Drawing.Size(105, 18);
             this.lblrightsign.TabIndex = 47;
@@ -1391,10 +1393,10 @@
             // 
             // cmbrightsign
             // 
-            this.cmbrightsign.BackColor = System.Drawing.Color.DeepSkyBlue;
+            this.cmbrightsign.BackColor = System.Drawing.Color.White;
             this.cmbrightsign.Font = new System.Drawing.Font("Tahoma", 10F);
             this.cmbrightsign.FormattingEnabled = true;
-            this.cmbrightsign.Location = new System.Drawing.Point(118, 662);
+            this.cmbrightsign.Location = new System.Drawing.Point(121, 127);
             this.cmbrightsign.Name = "cmbrightsign";
             this.cmbrightsign.Size = new System.Drawing.Size(196, 24);
             this.cmbrightsign.TabIndex = 10;
@@ -1427,7 +1429,7 @@
             this.button6.ForeColor = System.Drawing.Color.Navy;
             this.button6.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button6.ImageIndex = 4;
-            this.button6.Location = new System.Drawing.Point(320, 632);
+            this.button6.Location = new System.Drawing.Point(323, 97);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(27, 25);
             this.button6.TabIndex = 53;
@@ -1445,7 +1447,7 @@
             this.button7.ForeColor = System.Drawing.Color.Navy;
             this.button7.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
             this.button7.ImageIndex = 4;
-            this.button7.Location = new System.Drawing.Point(320, 662);
+            this.button7.Location = new System.Drawing.Point(323, 127);
             this.button7.Name = "button7";
             this.button7.Size = new System.Drawing.Size(27, 25);
             this.button7.TabIndex = 54;
@@ -1478,12 +1480,11 @@
             // 
             // chkdeldate
             // 
-            this.chkdeldate.Location = new System.Drawing.Point(682, 582);
+            this.chkdeldate.Location = new System.Drawing.Point(676, 576);
             this.chkdeldate.Name = "chkdeldate";
-            this.chkdeldate.Size = new System.Drawing.Size(58, 19);
+            this.chkdeldate.Size = new System.Drawing.Size(102, 19);
             this.chkdeldate.TabIndex = 94;
             this.chkdeldate.Text = "None";
-            this.chkdeldate.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.chkdeldate.UseVisualStyleBackColor = true;
             // 
             // lblvat
@@ -1526,6 +1527,28 @@
             this.txtvatamt.Visible = false;
             this.txtvatamt.TextChanged += new System.EventHandler(this.txtvatamt_TextChanged);
             // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.label5);
+            this.panel1.Controls.Add(this.label19);
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.button3);
+            this.panel1.Controls.Add(this.button5);
+            this.panel1.Controls.Add(this.button6);
+            this.panel1.Controls.Add(this.button7);
+            this.panel1.Controls.Add(this.cmbterm);
+            this.panel1.Controls.Add(this.label11);
+            this.panel1.Controls.Add(this.cmbmode);
+            this.panel1.Controls.Add(this.lblleftsign);
+            this.panel1.Controls.Add(this.cmbaddress);
+            this.panel1.Controls.Add(this.lblrightsign);
+            this.panel1.Controls.Add(this.cmbleftsign);
+            this.panel1.Controls.Add(this.cmbrightsign);
+            this.panel1.Location = new System.Drawing.Point(-1, 537);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(365, 160);
+            this.panel1.TabIndex = 98;
+            // 
             // FrmPurOrder
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1533,6 +1556,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.DeepSkyBlue;
             this.ClientSize = new System.Drawing.Size(1259, 750);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.lblvat);
             this.Controls.Add(this.txtvatpcnt);
             this.Controls.Add(this.txtvatamt);
@@ -1550,27 +1574,12 @@
             this.Controls.Add(this.grdbutton);
             this.Controls.Add(this.lblinvstatus);
             this.Controls.Add(this.cmbport);
-            this.Controls.Add(this.cmbrightsign);
-            this.Controls.Add(this.cmbleftsign);
-            this.Controls.Add(this.lblrightsign);
-            this.Controls.Add(this.cmbaddress);
-            this.Controls.Add(this.lblleftsign);
-            this.Controls.Add(this.cmbmode);
-            this.Controls.Add(this.label5);
             this.Controls.Add(this.label15);
             this.Controls.Add(this.label12);
-            this.Controls.Add(this.label11);
-            this.Controls.Add(this.cmbterm);
-            this.Controls.Add(this.button7);
-            this.Controls.Add(this.button6);
-            this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.cmbshipterm);
-            this.Controls.Add(this.label19);
             this.Controls.Add(this.label14);
             this.Controls.Add(this.label16);
             this.Controls.Add(this.nyear);
@@ -1627,6 +1636,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.grdbutton)).EndInit();
             this.pnladdress.ResumeLayout(false);
             this.pnladdress.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -1739,5 +1750,6 @@
        private System.Windows.Forms.Label lblvat;
        private System.Windows.Forms.TextBox txtvatpcnt;
        private System.Windows.Forms.TextBox txtvatamt;
+       private System.Windows.Forms.Panel panel1;
     }
 }

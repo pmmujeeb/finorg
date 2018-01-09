@@ -369,7 +369,7 @@ namespace FinOrg
                // dgv1.Columns[7].InheritedStyle.BackColor = Color.Beige;
                // Style.ApplyStyle(this.dataGridView1.Columns[1].DefaultCellStyle);
 
-                
+                dgv1.RowHeadersWidth = 60;
 
 
                 Conn.Close();

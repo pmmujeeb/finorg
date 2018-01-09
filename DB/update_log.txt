@@ -1,0 +1,43 @@
+***01/01/2018
+Change Unitid data type in Unit master
+	effect the itm reports
+Add sec_code to company -11110000
+add auto_search on ac_options
+add table as below,
+
+CREATE TABLE [dbo].[Disabled_menu](
+	[id] [int] NOT NULL,
+	[menu_code] [nvarchar](50) NULL,
+	[Flag] [bit] NULL,
+ CONSTRAINT [PK_Disabled_menu] PRIMARY KEY CLUSTERED 
+(
+	[id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[Disabled_menu] ADD  CONSTRAINT [DF_Disabled_menu_Flag]  DEFAULT ((1)) FOR [Flag]
+GO
+
+
+1	mnuCashSales	1
+2	mnucashSalesReturn	1
+3	mnuCashPurchase	1
+4	mnucashPurchaseReturn	1
+*** 01/01/2018
+
+
+1	PurchaseOrderMenuItem	1
+2	orderRecieptMenuItem	1
+3	productMenuItem	1
+4	rawItemsMenuItem	1
+5	mnuserviceMaster	1
+
+**03/01/2018
+
+add filed on option show_col
+0091
+
+
+mnuCashPurchase

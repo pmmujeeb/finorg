@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MDIParent1));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.MainMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem13 = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,6 +43,9 @@
             this.mnuentrysetting = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuglentrysetting = new System.Windows.Forms.ToolStripMenuItem();
             this.mnusetting = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator30 = new System.Windows.Forms.ToolStripSeparator();
+            this.mnufinanceSession = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnucompanyDetail = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuInventory = new System.Windows.Forms.ToolStripMenuItem();
             this.MnuMaster = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuItemcat = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,7 +68,7 @@
             this.OPStockMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuItemMaster = new System.Windows.Forms.ToolStripMenuItem();
             this.rawItemsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.serviceMasterToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnuserviceMaster = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.purchaseToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.PurchaseOrderMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -74,7 +77,7 @@
             this.mnuCashPurchase = new System.Windows.Forms.ToolStripMenuItem();
             this.purchaseReToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator12 = new System.Windows.Forms.ToolStripSeparator();
-            this.cashPurchaseReturnToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnucashPurchaseReturn = new System.Windows.Forms.ToolStripMenuItem();
             this.creditPurchaseReturnToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator19 = new System.Windows.Forms.ToolStripSeparator();
             this.purchaseExpensemenu = new System.Windows.Forms.ToolStripMenuItem();
@@ -82,8 +85,10 @@
             this.salesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCashSales = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuCreditSale = new System.Windows.Forms.ToolStripMenuItem();
-            this.cashSalesReturnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnucashSalesReturn = new System.Windows.Forms.ToolStripMenuItem();
             this.creditSalesReturnToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnudeliverytoolsep = new System.Windows.Forms.ToolStripSeparator();
+            this.mnudeliveryNote = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
             this.mnutransferMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuitemadjust = new System.Windows.Forms.ToolStripMenuItem();
@@ -98,6 +103,8 @@
             this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
             this.mnuitemmovement = new System.Windows.Forms.ToolStripMenuItem();
             this.mnuitemTransactionDetai = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnusoldpricediffreport = new System.Windows.Forms.ToolStripMenuItem();
+            this.mnueditedreport = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator21 = new System.Windows.Forms.ToolStripSeparator();
             this.purchaseOrdermnu = new System.Windows.Forms.ToolStripMenuItem();
             this.packingSlipmnu = new System.Windows.Forms.ToolStripMenuItem();
@@ -193,9 +200,6 @@
             this.cmbMainMenu = new System.Windows.Forms.ComboBox();
             this.btnarow = new System.Windows.Forms.Button();
             this.btnlang = new System.Windows.Forms.Button();
-            this.mnufinanceSession = new System.Windows.Forms.ToolStripMenuItem();
-            this.mnucompanyDetail = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator30 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip.SuspendLayout();
             this.toolStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
@@ -316,6 +320,25 @@
             this.mnusetting.Text = "Entry Settings";
             this.mnusetting.Click += new System.EventHandler(this.mnusetting_Click);
             // 
+            // toolStripSeparator30
+            // 
+            this.toolStripSeparator30.Name = "toolStripSeparator30";
+            this.toolStripSeparator30.Size = new System.Drawing.Size(218, 6);
+            // 
+            // mnufinanceSession
+            // 
+            this.mnufinanceSession.Name = "mnufinanceSession";
+            this.mnufinanceSession.Size = new System.Drawing.Size(221, 22);
+            this.mnufinanceSession.Text = "Finance Session";
+            this.mnufinanceSession.Click += new System.EventHandler(this.mnufinanceSession_Click);
+            // 
+            // mnucompanyDetail
+            // 
+            this.mnucompanyDetail.Name = "mnucompanyDetail";
+            this.mnucompanyDetail.Size = new System.Drawing.Size(221, 22);
+            this.mnucompanyDetail.Text = "Company Detail";
+            this.mnucompanyDetail.Click += new System.EventHandler(this.mnucompanyDetail_Click);
+            // 
             // mnuInventory
             // 
             this.mnuInventory.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -323,7 +346,7 @@
             this.productMenuItem,
             this.mnuItemMaster,
             this.rawItemsMenuItem,
-            this.serviceMasterToolStripMenuItem,
+            this.mnuserviceMaster,
             this.toolStripSeparator8,
             this.purchaseToolStripMenuItem1,
             this.toolStripSeparator13,
@@ -514,13 +537,13 @@
             this.rawItemsMenuItem.Text = "Raw Items";
             this.rawItemsMenuItem.Click += new System.EventHandler(this.rawItemsMenuItem_Click);
             // 
-            // serviceMasterToolStripMenuItem
+            // mnuserviceMaster
             // 
-            this.serviceMasterToolStripMenuItem.Name = "serviceMasterToolStripMenuItem";
-            this.serviceMasterToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
-            this.serviceMasterToolStripMenuItem.Text = "Service Master";
-            this.serviceMasterToolStripMenuItem.Visible = false;
-            this.serviceMasterToolStripMenuItem.Click += new System.EventHandler(this.serviceMasterToolStripMenuItem_Click);
+            this.mnuserviceMaster.Name = "mnuserviceMaster";
+            this.mnuserviceMaster.Size = new System.Drawing.Size(223, 22);
+            this.mnuserviceMaster.Text = "Service Master";
+            this.mnuserviceMaster.Visible = false;
+            this.mnuserviceMaster.Click += new System.EventHandler(this.serviceMasterToolStripMenuItem_Click);
             // 
             // toolStripSeparator8
             // 
@@ -536,7 +559,7 @@
             this.mnuCashPurchase,
             this.purchaseReToolStripMenuItem,
             this.toolStripSeparator12,
-            this.cashPurchaseReturnToolStripMenuItem1,
+            this.mnucashPurchaseReturn,
             this.creditPurchaseReturnToolStripMenuItem1,
             this.toolStripSeparator19,
             this.purchaseExpensemenu});
@@ -548,71 +571,69 @@
             // PurchaseOrderMenuItem
             // 
             this.PurchaseOrderMenuItem.Name = "PurchaseOrderMenuItem";
-            this.PurchaseOrderMenuItem.Size = new System.Drawing.Size(255, 22);
+            this.PurchaseOrderMenuItem.Size = new System.Drawing.Size(264, 22);
             this.PurchaseOrderMenuItem.Text = "Purchase Order";
             this.PurchaseOrderMenuItem.Click += new System.EventHandler(this.PurchaseOrderMenuItem_Click_1);
             // 
             // orderRecieptMenuItem
             // 
             this.orderRecieptMenuItem.Name = "orderRecieptMenuItem";
-            this.orderRecieptMenuItem.Size = new System.Drawing.Size(255, 22);
+            this.orderRecieptMenuItem.Size = new System.Drawing.Size(264, 22);
             this.orderRecieptMenuItem.Text = "Packing Slip";
             this.orderRecieptMenuItem.Click += new System.EventHandler(this.orderRecieptMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
             this.toolStripSeparator5.Name = "toolStripSeparator5";
-            this.toolStripSeparator5.Size = new System.Drawing.Size(252, 6);
+            this.toolStripSeparator5.Size = new System.Drawing.Size(261, 6);
             // 
             // mnuCashPurchase
             // 
             this.mnuCashPurchase.ForeColor = System.Drawing.Color.Green;
             this.mnuCashPurchase.Name = "mnuCashPurchase";
-            this.mnuCashPurchase.Size = new System.Drawing.Size(255, 22);
+            this.mnuCashPurchase.Size = new System.Drawing.Size(264, 22);
             this.mnuCashPurchase.Text = "Cash Purchase Entry";
-            this.mnuCashPurchase.Visible = false;
             this.mnuCashPurchase.Click += new System.EventHandler(this.mnuPurchase_Click);
             // 
             // purchaseReToolStripMenuItem
             // 
             this.purchaseReToolStripMenuItem.ForeColor = System.Drawing.Color.Green;
             this.purchaseReToolStripMenuItem.Name = "purchaseReToolStripMenuItem";
-            this.purchaseReToolStripMenuItem.Size = new System.Drawing.Size(255, 22);
-            this.purchaseReToolStripMenuItem.Text = "Purchase Entry";
+            this.purchaseReToolStripMenuItem.Size = new System.Drawing.Size(264, 22);
+            this.purchaseReToolStripMenuItem.Text = "Credit Purchase Entry";
             this.purchaseReToolStripMenuItem.Click += new System.EventHandler(this.mnucrPurchase_Click);
             // 
             // toolStripSeparator12
             // 
             this.toolStripSeparator12.Name = "toolStripSeparator12";
-            this.toolStripSeparator12.Size = new System.Drawing.Size(252, 6);
+            this.toolStripSeparator12.Size = new System.Drawing.Size(261, 6);
             // 
-            // cashPurchaseReturnToolStripMenuItem1
+            // mnucashPurchaseReturn
             // 
-            this.cashPurchaseReturnToolStripMenuItem1.BackColor = System.Drawing.Color.White;
-            this.cashPurchaseReturnToolStripMenuItem1.ForeColor = System.Drawing.Color.Red;
-            this.cashPurchaseReturnToolStripMenuItem1.Name = "cashPurchaseReturnToolStripMenuItem1";
-            this.cashPurchaseReturnToolStripMenuItem1.Size = new System.Drawing.Size(255, 22);
-            this.cashPurchaseReturnToolStripMenuItem1.Text = "Cash Purchase Return";
-            this.cashPurchaseReturnToolStripMenuItem1.Visible = false;
-            this.cashPurchaseReturnToolStripMenuItem1.Click += new System.EventHandler(this.cashPurchaseReturnToolStripMenuItem_Click);
+            this.mnucashPurchaseReturn.BackColor = System.Drawing.Color.White;
+            this.mnucashPurchaseReturn.ForeColor = System.Drawing.Color.Red;
+            this.mnucashPurchaseReturn.Name = "mnucashPurchaseReturn";
+            this.mnucashPurchaseReturn.Size = new System.Drawing.Size(264, 22);
+            this.mnucashPurchaseReturn.Text = "Cash Purchase Return";
+            this.mnucashPurchaseReturn.Click += new System.EventHandler(this.cashPurchaseReturnToolStripMenuItem_Click);
             // 
             // creditPurchaseReturnToolStripMenuItem1
             // 
             this.creditPurchaseReturnToolStripMenuItem1.ForeColor = System.Drawing.Color.Red;
             this.creditPurchaseReturnToolStripMenuItem1.Name = "creditPurchaseReturnToolStripMenuItem1";
-            this.creditPurchaseReturnToolStripMenuItem1.Size = new System.Drawing.Size(255, 22);
-            this.creditPurchaseReturnToolStripMenuItem1.Text = "Purchase Return";
+            this.creditPurchaseReturnToolStripMenuItem1.Size = new System.Drawing.Size(264, 22);
+            this.creditPurchaseReturnToolStripMenuItem1.Text = "Credit Purchase Return";
             this.creditPurchaseReturnToolStripMenuItem1.Click += new System.EventHandler(this.creditPurchaseReturnToolStripMenuItem_Click);
             // 
             // toolStripSeparator19
             // 
             this.toolStripSeparator19.Name = "toolStripSeparator19";
-            this.toolStripSeparator19.Size = new System.Drawing.Size(252, 6);
+            this.toolStripSeparator19.Size = new System.Drawing.Size(261, 6);
             // 
             // purchaseExpensemenu
             // 
             this.purchaseExpensemenu.Name = "purchaseExpensemenu";
-            this.purchaseExpensemenu.Size = new System.Drawing.Size(255, 22);
+            this.purchaseExpensemenu.Size = new System.Drawing.Size(264, 22);
             this.purchaseExpensemenu.Text = "Purchase Expense";
             this.purchaseExpensemenu.Click += new System.EventHandler(this.purchaseExpensemenu_Click);
             // 
@@ -626,8 +647,10 @@
             this.salesToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.mnuCashSales,
             this.mnuCreditSale,
-            this.cashSalesReturnToolStripMenuItem,
-            this.creditSalesReturnToolStripMenuItem});
+            this.mnucashSalesReturn,
+            this.creditSalesReturnToolStripMenuItem,
+            this.mnudeliverytoolsep,
+            this.mnudeliveryNote});
             this.salesToolStripMenuItem.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
             this.salesToolStripMenuItem.Name = "salesToolStripMenuItem";
             this.salesToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
@@ -637,33 +660,43 @@
             // 
             this.mnuCashSales.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.mnuCashSales.Name = "mnuCashSales";
-            this.mnuCashSales.Size = new System.Drawing.Size(226, 22);
+            this.mnuCashSales.Size = new System.Drawing.Size(235, 22);
             this.mnuCashSales.Text = "Cash Sales";
-            this.mnuCashSales.Visible = false;
             this.mnuCashSales.Click += new System.EventHandler(this.mnuSales_Click);
             // 
             // mnuCreditSale
             // 
             this.mnuCreditSale.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
             this.mnuCreditSale.Name = "mnuCreditSale";
-            this.mnuCreditSale.Size = new System.Drawing.Size(226, 22);
-            this.mnuCreditSale.Text = "Sales";
+            this.mnuCreditSale.Size = new System.Drawing.Size(235, 22);
+            this.mnuCreditSale.Text = "Credit Sales";
             this.mnuCreditSale.Click += new System.EventHandler(this.mnuCreditSale_Click);
             // 
-            // cashSalesReturnToolStripMenuItem
+            // mnucashSalesReturn
             // 
-            this.cashSalesReturnToolStripMenuItem.Name = "cashSalesReturnToolStripMenuItem";
-            this.cashSalesReturnToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.cashSalesReturnToolStripMenuItem.Text = "Cash Sales Return";
-            this.cashSalesReturnToolStripMenuItem.Visible = false;
-            this.cashSalesReturnToolStripMenuItem.Click += new System.EventHandler(this.cashSalesReturnToolStripMenuItem_Click);
+            this.mnucashSalesReturn.Name = "mnucashSalesReturn";
+            this.mnucashSalesReturn.Size = new System.Drawing.Size(235, 22);
+            this.mnucashSalesReturn.Text = "Cash Sales Return";
+            this.mnucashSalesReturn.Click += new System.EventHandler(this.cashSalesReturnToolStripMenuItem_Click);
             // 
             // creditSalesReturnToolStripMenuItem
             // 
             this.creditSalesReturnToolStripMenuItem.Name = "creditSalesReturnToolStripMenuItem";
-            this.creditSalesReturnToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.creditSalesReturnToolStripMenuItem.Text = "Sales Return";
+            this.creditSalesReturnToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.creditSalesReturnToolStripMenuItem.Text = "Credit Sales Return";
             this.creditSalesReturnToolStripMenuItem.Click += new System.EventHandler(this.creditSalesReturnToolStripMenuItem_Click);
+            // 
+            // mnudeliverytoolsep
+            // 
+            this.mnudeliverytoolsep.Name = "mnudeliverytoolsep";
+            this.mnudeliverytoolsep.Size = new System.Drawing.Size(232, 6);
+            // 
+            // mnudeliveryNote
+            // 
+            this.mnudeliveryNote.Name = "mnudeliveryNote";
+            this.mnudeliveryNote.Size = new System.Drawing.Size(235, 22);
+            this.mnudeliveryNote.Text = "Delivery Note";
+            this.mnudeliveryNote.Click += new System.EventHandler(this.mnudeliveryNote_Click);
             // 
             // toolStripSeparator11
             // 
@@ -691,14 +724,14 @@
             // mnuadjustaddition
             // 
             this.mnuadjustaddition.Name = "mnuadjustaddition";
-            this.mnuadjustaddition.Size = new System.Drawing.Size(145, 22);
+            this.mnuadjustaddition.Size = new System.Drawing.Size(152, 22);
             this.mnuadjustaddition.Text = "Addition";
             this.mnuadjustaddition.Click += new System.EventHandler(this.mnuadjustaddition_Click);
             // 
             // mnuadjustdeletion
             // 
             this.mnuadjustdeletion.Name = "mnuadjustdeletion";
-            this.mnuadjustdeletion.Size = new System.Drawing.Size(145, 22);
+            this.mnuadjustdeletion.Size = new System.Drawing.Size(152, 22);
             this.mnuadjustdeletion.Text = "Deletion";
             this.mnuadjustdeletion.Click += new System.EventHandler(this.mnuadjustdeletion_Click);
             // 
@@ -717,6 +750,8 @@
             this.toolStripSeparator9,
             this.mnuitemmovement,
             this.mnuitemTransactionDetai,
+            this.mnusoldpricediffreport,
+            this.mnueditedreport,
             this.toolStripSeparator21,
             this.purchaseOrdermnu,
             this.packingSlipmnu,
@@ -777,6 +812,20 @@
             this.mnuitemTransactionDetai.Text = "Item Transaction Detail";
             this.mnuitemTransactionDetai.Click += new System.EventHandler(this.mnuitemTransactionDetai_Click);
             // 
+            // mnusoldpricediffreport
+            // 
+            this.mnusoldpricediffreport.Name = "mnusoldpricediffreport";
+            this.mnusoldpricediffreport.Size = new System.Drawing.Size(299, 22);
+            this.mnusoldpricediffreport.Text = "Sold Price Diffrence Report";
+            this.mnusoldpricediffreport.Click += new System.EventHandler(this.mnusoldpricediffreport_Click);
+            // 
+            // mnueditedreport
+            // 
+            this.mnueditedreport.Name = "mnueditedreport";
+            this.mnueditedreport.Size = new System.Drawing.Size(299, 22);
+            this.mnueditedreport.Text = "Edited Invoice Report";
+            this.mnueditedreport.Click += new System.EventHandler(this.mnueditedreport_Click);
+            // 
             // toolStripSeparator21
             // 
             this.toolStripSeparator21.Name = "toolStripSeparator21";
@@ -819,7 +868,6 @@
             this.searchViewToolStripMenuItem.Name = "searchViewToolStripMenuItem";
             this.searchViewToolStripMenuItem.Size = new System.Drawing.Size(223, 22);
             this.searchViewToolStripMenuItem.Text = "&Search View";
-            this.searchViewToolStripMenuItem.Visible = false;
             this.searchViewToolStripMenuItem.Click += new System.EventHandler(this.searchViewToolStripMenuItem_Click);
             // 
             // masterEntryToolStripMenuItem
@@ -912,7 +960,7 @@
             // 
             this.receivableEntryToolStripMenuItem.Name = "receivableEntryToolStripMenuItem";
             this.receivableEntryToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
-            this.receivableEntryToolStripMenuItem.Text = "&Receivable Entry";
+            this.receivableEntryToolStripMenuItem.Text = "GL Transaction Entry";
             this.receivableEntryToolStripMenuItem.Click += new System.EventHandler(this.receivableEntryToolStripMenuItem_Click);
             // 
             // payableEntryToolStripMenuItem
@@ -920,6 +968,7 @@
             this.payableEntryToolStripMenuItem.Name = "payableEntryToolStripMenuItem";
             this.payableEntryToolStripMenuItem.Size = new System.Drawing.Size(248, 22);
             this.payableEntryToolStripMenuItem.Text = "&Payable Entry";
+            this.payableEntryToolStripMenuItem.Visible = false;
             this.payableEntryToolStripMenuItem.Click += new System.EventHandler(this.payableEntryToolStripMenuItem_Click);
             // 
             // toolStripSeparator14
@@ -1526,8 +1575,8 @@
             this.dgmenu.AllowUserToDeleteRows = false;
             this.dgmenu.AllowUserToResizeColumns = false;
             this.dgmenu.AllowUserToResizeRows = false;
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.AliceBlue;
-            this.dgmenu.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.AliceBlue;
+            this.dgmenu.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dgmenu.BackgroundColor = System.Drawing.Color.White;
             this.dgmenu.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgmenu.ColumnHeadersVisible = false;
@@ -1546,6 +1595,7 @@
             this.dgmenu.Size = new System.Drawing.Size(2, 535);
             this.dgmenu.TabIndex = 1;
             this.dgmenu.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgmenu_CellContentClick);
+            this.dgmenu.MouseClick += new System.Windows.Forms.MouseEventHandler(this.dgmenu_MouseClick);
             this.dgmenu.MouseLeave += new System.EventHandler(this.dgmenu_MouseLeave);
             this.dgmenu.MouseMove += new System.Windows.Forms.MouseEventHandler(this.dgmenu_MouseMove);
             // 
@@ -1614,25 +1664,6 @@
             this.btnlang.Visible = false;
             this.btnlang.Click += new System.EventHandler(this.btnlang_Click);
             // 
-            // mnufinanceSession
-            // 
-            this.mnufinanceSession.Name = "mnufinanceSession";
-            this.mnufinanceSession.Size = new System.Drawing.Size(221, 22);
-            this.mnufinanceSession.Text = "Finance Session";
-            this.mnufinanceSession.Click += new System.EventHandler(this.mnufinanceSession_Click);
-            // 
-            // mnucompanyDetail
-            // 
-            this.mnucompanyDetail.Name = "mnucompanyDetail";
-            this.mnucompanyDetail.Size = new System.Drawing.Size(221, 22);
-            this.mnucompanyDetail.Text = "Company Detail";
-            this.mnucompanyDetail.Click += new System.EventHandler(this.mnucompanyDetail_Click);
-            // 
-            // toolStripSeparator30
-            // 
-            this.toolStripSeparator30.Name = "toolStripSeparator30";
-            this.toolStripSeparator30.Size = new System.Drawing.Size(218, 6);
-            // 
             // MDIParent1
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
@@ -1661,7 +1692,6 @@
             this.Text = "Finance and Inventory System";
             this.TransparencyKey = System.Drawing.Color.White;
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
-            this.Deactivate += new System.EventHandler(this.MDIParent1_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MDIParent1_FormClosing);
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MDIParent1_FormClosed);
             this.Load += new System.EventHandler(this.MDIParent1_Load);
@@ -1761,7 +1791,7 @@
         private System.Windows.Forms.ToolStripMenuItem cuurencyMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuCashPurchase;
         private System.Windows.Forms.ToolStripMenuItem purchaseReToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem cashPurchaseReturnToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem mnucashPurchaseReturn;
         private System.Windows.Forms.ToolStripMenuItem creditPurchaseReturnToolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem mnuInventory;
         private System.Windows.Forms.ToolStripMenuItem productMenuItem;
@@ -1769,11 +1799,11 @@
         private System.Windows.Forms.ToolStripMenuItem damagedItemMenuItem;
         private System.Windows.Forms.ToolStripMenuItem mnuItemMaster;
         private System.Windows.Forms.ToolStripMenuItem rawItemsMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem serviceMasterToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnuserviceMaster;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
         private System.Windows.Forms.ToolStripMenuItem mnuCashSales;
         private System.Windows.Forms.ToolStripMenuItem mnuCreditSale;
-        private System.Windows.Forms.ToolStripMenuItem cashSalesReturnToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem mnucashSalesReturn;
         private System.Windows.Forms.ToolStripMenuItem creditSalesReturnToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
         private System.Windows.Forms.ToolStripMenuItem mnutransferMenuItem;
@@ -1848,6 +1878,10 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator30;
         private System.Windows.Forms.ToolStripMenuItem mnufinanceSession;
         private System.Windows.Forms.ToolStripMenuItem mnucompanyDetail;
+        private System.Windows.Forms.ToolStripSeparator mnudeliverytoolsep;
+        private System.Windows.Forms.ToolStripMenuItem mnudeliveryNote;
+        private System.Windows.Forms.ToolStripMenuItem mnusoldpricediffreport;
+        private System.Windows.Forms.ToolStripMenuItem mnueditedreport;
         //private Microsoft.VisualBasic.PowerPacks.ShapeContainer shapeContainer1;
         //private Microsoft.VisualBasic.PowerPacks.RectangleShape b1;
     }

@@ -29,24 +29,30 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmItemMaster));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle20 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle17 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle18 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle19 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle21 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle22 = new System.Windows.Forms.DataGridViewCellStyle();
             this.od1 = new System.Windows.Forms.OpenFileDialog();
+            this.chksearch = new System.Windows.Forms.CheckBox();
             this.cmbunitaname = new System.Windows.Forms.ComboBox();
             this.cmbbranch = new System.Windows.Forms.ComboBox();
             this.toolStrip = new System.Windows.Forms.ToolStrip();
@@ -73,8 +79,19 @@
             this.label3 = new System.Windows.Forms.Label();
             this.dt1 = new System.Windows.Forms.DateTimePicker();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.txtalias = new System.Windows.Forms.TextBox();
+            this.label14 = new System.Windows.Forms.Label();
+            this.grdbutton = new System.Windows.Forms.DataGridView();
+            this.btaddbarcode = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.btsave = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.btnew = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.bcategory = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.bunits = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.prnbarcode = new System.Windows.Forms.DataGridViewButtonColumn();
             this.tab1 = new System.Windows.Forms.TabControl();
             this.tabbarcode = new System.Windows.Forms.TabPage();
+            this.cmbbarunit = new System.Windows.Forms.ComboBox();
+            this.chkscreen = new System.Windows.Forms.CheckBox();
             this.label18 = new System.Windows.Forms.Label();
             this.txtbarcodecount = new System.Windows.Forms.TextBox();
             this.grdbarcode = new System.Windows.Forms.DataGridView();
@@ -100,11 +117,13 @@
             this.CMBSUP = new System.Windows.Forms.ComboBox();
             this.btnaddsup = new System.Windows.Forms.Button();
             this.txtgrd = new System.Windows.Forms.TextBox();
+            this.lblbranch = new System.Windows.Forms.Label();
             this.grdstock = new System.Windows.Forms.DataGridView();
             this.warehouse = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.clstock = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.opstock = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.wrcode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.label8 = new System.Windows.Forms.Label();
             this.grdmain = new System.Windows.Forms.DataGridView();
             this.caption = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ismandatory = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -120,10 +139,12 @@
             this.label9 = new System.Windows.Forms.Label();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.txtstock = new System.Windows.Forms.TextBox();
+            this.btnbrowse = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
             this.label25 = new System.Windows.Forms.Label();
             this.cmbunit = new System.Windows.Forms.ComboBox();
             this.txtopstock = new System.Windows.Forms.TextBox();
+            this.txtsearch = new System.Windows.Forms.TextBox();
             this.grdlookup = new System.Windows.Forms.DataGridView();
             this.txtclstock = new System.Windows.Forms.TextBox();
             this.txtfraction = new System.Windows.Forms.TextBox();
@@ -138,27 +159,17 @@
             this.label6 = new System.Windows.Forms.Label();
             this.txtwhprice = new System.Windows.Forms.TextBox();
             this.txtretailprice = new System.Windows.Forms.TextBox();
-            this.grdbutton = new System.Windows.Forms.DataGridView();
-            this.btaddbarcode = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.btsave = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.btnew = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.bcategory = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.bunits = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.prnbarcode = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.btnbrowse = new System.Windows.Forms.Button();
+            this.txtbarcode = new System.Windows.Forms.TextBox();
             this.txttrn_type = new System.Windows.Forms.TextBox();
             this.txtfilename = new System.Windows.Forms.TextBox();
             this.grditem = new System.Windows.Forms.DataGridView();
             this.cmbcatcode = new System.Windows.Forms.ComboBox();
-            this.txtsearch = new System.Windows.Forms.TextBox();
             this.txtpriv = new System.Windows.Forms.TextBox();
             this.txtolditm = new System.Windows.Forms.TextBox();
-            this.label8 = new System.Windows.Forms.Label();
             this.txtitemno = new System.Windows.Forms.TextBox();
-            this.lblbranch = new System.Windows.Forms.Label();
-            this.chksearch = new System.Windows.Forms.CheckBox();
             this.toolStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdbutton)).BeginInit();
             this.tab1.SuspendLayout();
             this.tabbarcode.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdbarcode)).BeginInit();
@@ -168,13 +179,18 @@
             ((System.ComponentModel.ISupportInitialize)(this.grdmain)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdlookup)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grdbutton)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.grditem)).BeginInit();
             this.SuspendLayout();
             // 
             // od1
             // 
             resources.ApplyResources(this.od1, "od1");
+            // 
+            // chksearch
+            // 
+            resources.ApplyResources(this.chksearch, "chksearch");
+            this.chksearch.Name = "chksearch";
+            this.chksearch.UseVisualStyleBackColor = true;
             // 
             // cmbunitaname
             // 
@@ -327,6 +343,7 @@
             // cmbcat
             // 
             this.cmbcat.DisplayMember = "itm_cat_name";
+            this.cmbcat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbcat.FormattingEnabled = true;
             resources.ApplyResources(this.cmbcat, "cmbcat");
             this.cmbcat.Name = "cmbcat";
@@ -348,6 +365,7 @@
             resources.ApplyResources(this.Txtitem, "Txtitem");
             this.Txtitem.Name = "Txtitem";
             this.Txtitem.Tag = "1";
+            this.Txtitem.Enter += new System.EventHandler(this.Txtitem_Enter);
             this.Txtitem.Validated += new System.EventHandler(this.Txtitem_Validated);
             // 
             // label3
@@ -365,18 +383,29 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.txtalias);
+            this.groupBox1.Controls.Add(this.label14);
+            this.groupBox1.Controls.Add(this.chksearch);
+            this.groupBox1.Controls.Add(this.grdbutton);
             this.groupBox1.Controls.Add(this.tab1);
             this.groupBox1.Controls.Add(this.txtgrd);
+            this.groupBox1.Controls.Add(this.cmbbranch);
+            this.groupBox1.Controls.Add(this.lblbranch);
             this.groupBox1.Controls.Add(this.grdstock);
+            this.groupBox1.Controls.Add(this.label8);
             this.groupBox1.Controls.Add(this.grdmain);
             this.groupBox1.Controls.Add(this.label12);
             this.groupBox1.Controls.Add(this.label9);
             this.groupBox1.Controls.Add(this.pictureBox1);
             this.groupBox1.Controls.Add(this.txtstock);
+            this.groupBox1.Controls.Add(this.dt1);
+            this.groupBox1.Controls.Add(this.btnbrowse);
             this.groupBox1.Controls.Add(this.label11);
+            this.groupBox1.Controls.Add(this.label3);
             this.groupBox1.Controls.Add(this.label25);
             this.groupBox1.Controls.Add(this.cmbunit);
             this.groupBox1.Controls.Add(this.txtopstock);
+            this.groupBox1.Controls.Add(this.txtsearch);
             this.groupBox1.Controls.Add(this.grdlookup);
             this.groupBox1.Controls.Add(this.txtclstock);
             this.groupBox1.Controls.Add(this.txtfraction);
@@ -400,6 +429,126 @@
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 
+            // txtalias
+            // 
+            resources.ApplyResources(this.txtalias, "txtalias");
+            this.txtalias.Name = "txtalias";
+            this.txtalias.Tag = "";
+            // 
+            // label14
+            // 
+            resources.ApplyResources(this.label14, "label14");
+            this.label14.ForeColor = System.Drawing.Color.Black;
+            this.label14.Name = "label14";
+            // 
+            // grdbutton
+            // 
+            this.grdbutton.AllowUserToAddRows = false;
+            this.grdbutton.AllowUserToDeleteRows = false;
+            this.grdbutton.AllowUserToResizeColumns = false;
+            this.grdbutton.AllowUserToResizeRows = false;
+            this.grdbutton.BackgroundColor = System.Drawing.Color.White;
+            this.grdbutton.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
+            this.grdbutton.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
+            this.grdbutton.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
+            this.grdbutton.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.grdbutton.ColumnHeadersVisible = false;
+            this.grdbutton.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.btaddbarcode,
+            this.btsave,
+            this.btnew,
+            this.bcategory,
+            this.bunits,
+            this.prnbarcode});
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.WhiteSmoke;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Red;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grdbutton.DefaultCellStyle = dataGridViewCellStyle3;
+            resources.ApplyResources(this.grdbutton, "grdbutton");
+            this.grdbutton.Name = "grdbutton";
+            this.grdbutton.RowHeadersVisible = false;
+            this.grdbutton.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.grdbutton.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Red;
+            this.grdbutton.RowTemplate.Height = 50;
+            this.grdbutton.RowTemplate.ReadOnly = true;
+            this.grdbutton.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdbutton_CellClick);
+            this.grdbutton.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdbutton_CellContentClick);
+            this.grdbutton.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdbutton_CellEnter);
+            this.grdbutton.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdbutton_CellLeave);
+            this.grdbutton.Enter += new System.EventHandler(this.grdbutton_Enter);
+            this.grdbutton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.grdbutton_KeyDown);
+            this.grdbutton.Leave += new System.EventHandler(this.grdbutton_Leave);
+            // 
+            // btaddbarcode
+            // 
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.Gold;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Red;
+            this.btaddbarcode.DefaultCellStyle = dataGridViewCellStyle1;
+            resources.ApplyResources(this.btaddbarcode, "btaddbarcode");
+            this.btaddbarcode.Name = "btaddbarcode";
+            this.btaddbarcode.ReadOnly = true;
+            this.btaddbarcode.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.btaddbarcode.Text = "Add Unit";
+            this.btaddbarcode.UseColumnTextForButtonValue = true;
+            // 
+            // btsave
+            // 
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.Color.Red;
+            this.btsave.DefaultCellStyle = dataGridViewCellStyle2;
+            this.btsave.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            resources.ApplyResources(this.btsave, "btsave");
+            this.btsave.Name = "btsave";
+            this.btsave.ReadOnly = true;
+            this.btsave.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.btsave.Text = "Save";
+            this.btsave.UseColumnTextForButtonValue = true;
+            // 
+            // btnew
+            // 
+            this.btnew.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            resources.ApplyResources(this.btnew, "btnew");
+            this.btnew.Name = "btnew";
+            this.btnew.ReadOnly = true;
+            this.btnew.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.btnew.Text = "New Item";
+            this.btnew.UseColumnTextForButtonValue = true;
+            // 
+            // bcategory
+            // 
+            this.bcategory.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            resources.ApplyResources(this.bcategory, "bcategory");
+            this.bcategory.Name = "bcategory";
+            this.bcategory.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.bcategory.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.bcategory.Text = "Category";
+            this.bcategory.UseColumnTextForButtonValue = true;
+            // 
+            // bunits
+            // 
+            this.bunits.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            resources.ApplyResources(this.bunits, "bunits");
+            this.bunits.Name = "bunits";
+            this.bunits.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.bunits.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.bunits.Text = "Units";
+            this.bunits.UseColumnTextForButtonValue = true;
+            // 
+            // prnbarcode
+            // 
+            this.prnbarcode.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            resources.ApplyResources(this.prnbarcode, "prnbarcode");
+            this.prnbarcode.Name = "prnbarcode";
+            this.prnbarcode.Text = "Print Barcode";
+            this.prnbarcode.UseColumnTextForButtonValue = true;
+            // 
             // tab1
             // 
             this.tab1.Controls.Add(this.tabbarcode);
@@ -407,9 +556,12 @@
             resources.ApplyResources(this.tab1, "tab1");
             this.tab1.Name = "tab1";
             this.tab1.SelectedIndex = 0;
+            this.tab1.TabStop = false;
             // 
             // tabbarcode
             // 
+            this.tabbarcode.Controls.Add(this.cmbbarunit);
+            this.tabbarcode.Controls.Add(this.chkscreen);
             this.tabbarcode.Controls.Add(this.label18);
             this.tabbarcode.Controls.Add(this.txtbarcodecount);
             this.tabbarcode.Controls.Add(this.grdbarcode);
@@ -418,6 +570,23 @@
             resources.ApplyResources(this.tabbarcode, "tabbarcode");
             this.tabbarcode.Name = "tabbarcode";
             this.tabbarcode.UseVisualStyleBackColor = true;
+            // 
+            // cmbbarunit
+            // 
+            this.cmbbarunit.DisplayMember = "Unit_name";
+            resources.ApplyResources(this.cmbbarunit, "cmbbarunit");
+            this.cmbbarunit.FormattingEnabled = true;
+            this.cmbbarunit.Name = "cmbbarunit";
+            this.cmbbarunit.Tag = "1";
+            this.cmbbarunit.ValueMember = "Unit_id";
+            this.cmbbarunit.KeyDown += new System.Windows.Forms.KeyEventHandler(this.cmbbarunit_KeyDown);
+            this.cmbbarunit.Leave += new System.EventHandler(this.cmbbarunit_Leave);
+            // 
+            // chkscreen
+            // 
+            resources.ApplyResources(this.chkscreen, "chkscreen");
+            this.chkscreen.Name = "chkscreen";
+            this.chkscreen.UseVisualStyleBackColor = true;
             // 
             // label18
             // 
@@ -433,21 +602,20 @@
             // 
             // grdbarcode
             // 
-            this.grdbarcode.AllowUserToAddRows = false;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.Silver;
-            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Blue;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.Color.Navy;
-            this.grdbarcode.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.Silver;
+            dataGridViewCellStyle4.ForeColor = System.Drawing.Color.Blue;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.Color.Navy;
+            this.grdbarcode.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
             this.grdbarcode.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdbarcode.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdbarcode.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.grdbarcode.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdbarcode.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.barcode,
@@ -460,80 +628,82 @@
             this.itemcode,
             this.Unitid,
             this.DescriptionAr});
-            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.Color.Navy;
-            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.grdbarcode.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.Color.Navy;
+            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grdbarcode.DefaultCellStyle = dataGridViewCellStyle8;
             resources.ApplyResources(this.grdbarcode, "grdbarcode");
             this.grdbarcode.Name = "grdbarcode";
-            this.grdbarcode.ReadOnly = true;
-            this.grdbarcode.RowHeadersVisible = false;
+            this.grdbarcode.RowTemplate.DefaultCellStyle.ForeColor = System.Drawing.Color.Blue;
+            this.grdbarcode.RowTemplate.DefaultCellStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.grdbarcode.RowTemplate.DefaultCellStyle.SelectionForeColor = System.Drawing.Color.Red;
+            this.grdbarcode.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdbarcode_CellClick);
+            this.grdbarcode.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdbarcode_CellEnter);
             this.grdbarcode.Enter += new System.EventHandler(this.grdbarcode_Enter);
+            this.grdbarcode.KeyDown += new System.Windows.Forms.KeyEventHandler(this.grdbarcode_KeyDown);
             this.grdbarcode.Leave += new System.EventHandler(this.grdbarcode_Leave);
             // 
             // barcode
             // 
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle6.ForeColor = System.Drawing.Color.Blue;
+            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.Red;
+            this.barcode.DefaultCellStyle = dataGridViewCellStyle6;
             resources.ApplyResources(this.barcode, "barcode");
             this.barcode.Name = "barcode";
-            this.barcode.ReadOnly = true;
             // 
             // description
             // 
+            dataGridViewCellStyle7.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle7.SelectionForeColor = System.Drawing.Color.Blue;
+            this.description.DefaultCellStyle = dataGridViewCellStyle7;
             resources.ApplyResources(this.description, "description");
             this.description.Name = "description";
-            this.description.ReadOnly = true;
             // 
             // unit
             // 
             resources.ApplyResources(this.unit, "unit");
             this.unit.Name = "unit";
-            this.unit.ReadOnly = true;
             // 
             // fraction
             // 
             resources.ApplyResources(this.fraction, "fraction");
             this.fraction.Name = "fraction";
-            this.fraction.ReadOnly = true;
             // 
             // ItemId
             // 
             resources.ApplyResources(this.ItemId, "ItemId");
             this.ItemId.Name = "ItemId";
-            this.ItemId.ReadOnly = true;
             // 
             // saleprice1
             // 
             resources.ApplyResources(this.saleprice1, "saleprice1");
             this.saleprice1.Name = "saleprice1";
-            this.saleprice1.ReadOnly = true;
             // 
             // saleprice2
             // 
             resources.ApplyResources(this.saleprice2, "saleprice2");
             this.saleprice2.Name = "saleprice2";
-            this.saleprice2.ReadOnly = true;
             // 
             // itemcode
             // 
             resources.ApplyResources(this.itemcode, "itemcode");
             this.itemcode.Name = "itemcode";
-            this.itemcode.ReadOnly = true;
             // 
             // Unitid
             // 
             resources.ApplyResources(this.Unitid, "Unitid");
             this.Unitid.Name = "Unitid";
-            this.Unitid.ReadOnly = true;
             // 
             // DescriptionAr
             // 
             resources.ApplyResources(this.DescriptionAr, "DescriptionAr");
             this.DescriptionAr.Name = "DescriptionAr";
-            this.DescriptionAr.ReadOnly = true;
             // 
             // btnprint
             // 
@@ -541,7 +711,7 @@
             resources.ApplyResources(this.btnprint, "btnprint");
             this.btnprint.Name = "btnprint";
             this.btnprint.UseVisualStyleBackColor = true;
-            this.btnprint.Click += new System.EventHandler(this.btnaddbarcode_Click);
+            this.btnprint.Click += new System.EventHandler(this.btnprint_Click);
             // 
             // btnaddbarcode
             // 
@@ -564,8 +734,8 @@
             // grdsup
             // 
             this.grdsup.AllowUserToAddRows = false;
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
-            this.grdsup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(224)))), ((int)(((byte)(192)))));
+            this.grdsup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle9;
             this.grdsup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdsup.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1,
@@ -631,59 +801,67 @@
             resources.ApplyResources(this.txtgrd, "txtgrd");
             this.txtgrd.Name = "txtgrd";
             // 
+            // lblbranch
+            // 
+            resources.ApplyResources(this.lblbranch, "lblbranch");
+            this.lblbranch.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.lblbranch.Name = "lblbranch";
+            // 
             // grdstock
             // 
             this.grdstock.AllowUserToAddRows = false;
             this.grdstock.AllowUserToDeleteRows = false;
             this.grdstock.AllowUserToResizeColumns = false;
             this.grdstock.AllowUserToResizeRows = false;
-            dataGridViewCellStyle5.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.Color.Navy;
-            this.grdstock.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle10.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.Color.Navy;
+            this.grdstock.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle10;
             this.grdstock.BackgroundColor = System.Drawing.Color.White;
             this.grdstock.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle6.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle6.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle6.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdstock.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle11.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle11.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle11.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdstock.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle11;
             this.grdstock.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.grdstock.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.warehouse,
             this.clstock,
             this.opstock,
             this.wrcode});
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.Color.Navy;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.grdstock.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle14.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle14.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle14.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle14.SelectionForeColor = System.Drawing.Color.Navy;
+            dataGridViewCellStyle14.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grdstock.DefaultCellStyle = dataGridViewCellStyle14;
             resources.ApplyResources(this.grdstock, "grdstock");
             this.grdstock.Name = "grdstock";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.grdstock.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle15.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.grdstock.RowHeadersDefaultCellStyle = dataGridViewCellStyle15;
             this.grdstock.RowHeadersVisible = false;
             this.grdstock.RowTemplate.Height = 32;
             this.grdstock.StandardTab = true;
             this.grdstock.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdstock_CellEnter);
+            this.grdstock.Enter += new System.EventHandler(this.grdstock_Enter);
+            this.grdstock.Leave += new System.EventHandler(this.grdstock_Leave);
             // 
             // warehouse
             // 
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.warehouse.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle12.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.warehouse.DefaultCellStyle = dataGridViewCellStyle12;
             this.warehouse.Frozen = true;
             resources.ApplyResources(this.warehouse, "warehouse");
             this.warehouse.Name = "warehouse";
@@ -691,10 +869,10 @@
             // 
             // clstock
             // 
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle8.ForeColor = System.Drawing.Color.Blue;
-            this.clstock.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.Blue;
+            this.clstock.DefaultCellStyle = dataGridViewCellStyle13;
             this.clstock.Frozen = true;
             resources.ApplyResources(this.clstock, "clstock");
             this.clstock.Name = "clstock";
@@ -710,16 +888,22 @@
             resources.ApplyResources(this.wrcode, "wrcode");
             this.wrcode.Name = "wrcode";
             // 
+            // label8
+            // 
+            resources.ApplyResources(this.label8, "label8");
+            this.label8.ForeColor = System.Drawing.Color.RoyalBlue;
+            this.label8.Name = "label8";
+            // 
             // grdmain
             // 
             this.grdmain.AllowUserToAddRows = false;
             this.grdmain.AllowUserToDeleteRows = false;
             this.grdmain.AllowUserToResizeColumns = false;
             this.grdmain.AllowUserToResizeRows = false;
-            dataGridViewCellStyle11.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle11.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle11.SelectionForeColor = System.Drawing.Color.Blue;
-            this.grdmain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle16.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.Color.Blue;
+            this.grdmain.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle16;
             this.grdmain.BackgroundColor = System.Drawing.Color.White;
             this.grdmain.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
             this.grdmain.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -735,14 +919,14 @@
             this.tablename,
             this.flag,
             this.fieldval});
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle15.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            dataGridViewCellStyle15.ForeColor = System.Drawing.Color.Black;
-            dataGridViewCellStyle15.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle15.SelectionForeColor = System.Drawing.Color.Navy;
-            dataGridViewCellStyle15.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.grdmain.DefaultCellStyle = dataGridViewCellStyle15;
+            dataGridViewCellStyle20.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle20.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle20.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            dataGridViewCellStyle20.ForeColor = System.Drawing.Color.Black;
+            dataGridViewCellStyle20.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle20.SelectionForeColor = System.Drawing.Color.Navy;
+            dataGridViewCellStyle20.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.grdmain.DefaultCellStyle = dataGridViewCellStyle20;
             resources.ApplyResources(this.grdmain, "grdmain");
             this.grdmain.Name = "grdmain";
             this.grdmain.RowHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
@@ -757,26 +941,26 @@
             // 
             // caption
             // 
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.caption.DefaultCellStyle = dataGridViewCellStyle12;
+            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            dataGridViewCellStyle17.Font = new System.Drawing.Font("Verdana", 12F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.caption.DefaultCellStyle = dataGridViewCellStyle17;
             resources.ApplyResources(this.caption, "caption");
             this.caption.Name = "caption";
             this.caption.ReadOnly = true;
             // 
             // ismandatory
             // 
-            dataGridViewCellStyle13.ForeColor = System.Drawing.Color.Maroon;
-            this.ismandatory.DefaultCellStyle = dataGridViewCellStyle13;
+            dataGridViewCellStyle18.ForeColor = System.Drawing.Color.Maroon;
+            this.ismandatory.DefaultCellStyle = dataGridViewCellStyle18;
             resources.ApplyResources(this.ismandatory, "ismandatory");
             this.ismandatory.Name = "ismandatory";
             this.ismandatory.ReadOnly = true;
             // 
             // colvalue
             // 
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.ForeColor = System.Drawing.Color.Blue;
-            this.colvalue.DefaultCellStyle = dataGridViewCellStyle14;
+            dataGridViewCellStyle19.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle19.ForeColor = System.Drawing.Color.Blue;
+            this.colvalue.DefaultCellStyle = dataGridViewCellStyle19;
             resources.ApplyResources(this.colvalue, "colvalue");
             this.colvalue.Name = "colvalue";
             // 
@@ -848,6 +1032,14 @@
             this.txtstock.Name = "txtstock";
             this.txtstock.TabStop = false;
             // 
+            // btnbrowse
+            // 
+            resources.ApplyResources(this.btnbrowse, "btnbrowse");
+            this.btnbrowse.ForeColor = System.Drawing.Color.Navy;
+            this.btnbrowse.Name = "btnbrowse";
+            this.btnbrowse.UseVisualStyleBackColor = true;
+            this.btnbrowse.Click += new System.EventHandler(this.btnbrowse_Click);
+            // 
             // label11
             // 
             resources.ApplyResources(this.label11, "label11");
@@ -879,13 +1071,23 @@
             this.txtopstock.ReadOnly = true;
             this.txtopstock.TabStop = false;
             // 
+            // txtsearch
+            // 
+            resources.ApplyResources(this.txtsearch, "txtsearch");
+            this.txtsearch.Name = "txtsearch";
+            this.txtsearch.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
+            this.txtsearch.DoubleClick += new System.EventHandler(this.textBox1_DoubleClick);
+            this.txtsearch.Enter += new System.EventHandler(this.txtsearch_Enter);
+            this.txtsearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
+            this.txtsearch.Leave += new System.EventHandler(this.textBox1_Leave);
+            // 
             // grdlookup
             // 
             this.grdlookup.AllowUserToAddRows = false;
             this.grdlookup.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.Color.Navy;
-            this.grdlookup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle21.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            dataGridViewCellStyle21.ForeColor = System.Drawing.Color.Navy;
+            this.grdlookup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle21;
             this.grdlookup.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.AllCellsExceptHeader;
             this.grdlookup.BackgroundColor = System.Drawing.SystemColors.ButtonFace;
             this.grdlookup.BorderStyle = System.Windows.Forms.BorderStyle.None;
@@ -936,6 +1138,8 @@
             this.txtarname.Name = "txtarname";
             this.txtarname.Tag = "1";
             this.txtarname.TextChanged += new System.EventHandler(this.txtname_TextChanged);
+            this.txtarname.Enter += new System.EventHandler(this.txtarname_Enter);
+            this.txtarname.Leave += new System.EventHandler(this.txtarname_Leave);
             this.txtarname.Validated += new System.EventHandler(this.txtname_Validated);
             // 
             // txtname
@@ -990,97 +1194,11 @@
             this.txtretailprice.Name = "txtretailprice";
             this.txtretailprice.Tag = "1";
             // 
-            // grdbutton
+            // txtbarcode
             // 
-            this.grdbutton.AllowUserToAddRows = false;
-            this.grdbutton.AllowUserToDeleteRows = false;
-            this.grdbutton.AllowUserToResizeColumns = false;
-            this.grdbutton.AllowUserToResizeRows = false;
-            this.grdbutton.BackgroundColor = System.Drawing.Color.White;
-            this.grdbutton.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.RaisedHorizontal;
-            this.grdbutton.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.Disable;
-            this.grdbutton.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            this.grdbutton.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
-            this.grdbutton.ColumnHeadersVisible = false;
-            this.grdbutton.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.btaddbarcode,
-            this.btsave,
-            this.btnew,
-            this.bcategory,
-            this.bunits,
-            this.prnbarcode});
-            resources.ApplyResources(this.grdbutton, "grdbutton");
-            this.grdbutton.Name = "grdbutton";
-            this.grdbutton.RowHeadersVisible = false;
-            this.grdbutton.RowTemplate.Height = 50;
-            this.grdbutton.RowTemplate.ReadOnly = true;
-            this.grdbutton.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdbutton_CellClick);
-            this.grdbutton.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdbutton_CellContentClick);
-            this.grdbutton.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.grdbutton_CellEnter);
-            this.grdbutton.Enter += new System.EventHandler(this.grdbutton_Enter);
-            this.grdbutton.KeyDown += new System.Windows.Forms.KeyEventHandler(this.grdbutton_KeyDown);
-            this.grdbutton.Leave += new System.EventHandler(this.grdbutton_Leave);
-            // 
-            // btaddbarcode
-            // 
-            resources.ApplyResources(this.btaddbarcode, "btaddbarcode");
-            this.btaddbarcode.Name = "btaddbarcode";
-            this.btaddbarcode.ReadOnly = true;
-            this.btaddbarcode.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.btaddbarcode.Text = "Add Unit";
-            this.btaddbarcode.UseColumnTextForButtonValue = true;
-            // 
-            // btsave
-            // 
-            resources.ApplyResources(this.btsave, "btsave");
-            this.btsave.Name = "btsave";
-            this.btsave.ReadOnly = true;
-            this.btsave.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.btsave.Text = "Save";
-            this.btsave.UseColumnTextForButtonValue = true;
-            // 
-            // btnew
-            // 
-            resources.ApplyResources(this.btnew, "btnew");
-            this.btnew.Name = "btnew";
-            this.btnew.ReadOnly = true;
-            this.btnew.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.btnew.Text = "New Item";
-            this.btnew.UseColumnTextForButtonValue = true;
-            // 
-            // bcategory
-            // 
-            resources.ApplyResources(this.bcategory, "bcategory");
-            this.bcategory.Name = "bcategory";
-            this.bcategory.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.bcategory.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.bcategory.Text = "Category";
-            this.bcategory.UseColumnTextForButtonValue = true;
-            // 
-            // bunits
-            // 
-            resources.ApplyResources(this.bunits, "bunits");
-            this.bunits.Name = "bunits";
-            this.bunits.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.bunits.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.bunits.Text = "Units";
-            this.bunits.UseColumnTextForButtonValue = true;
-            // 
-            // prnbarcode
-            // 
-            resources.ApplyResources(this.prnbarcode, "prnbarcode");
-            this.prnbarcode.Name = "prnbarcode";
-            this.prnbarcode.Text = "Print Barcode";
-            this.prnbarcode.UseColumnTextForButtonValue = true;
-            // 
-            // btnbrowse
-            // 
-            resources.ApplyResources(this.btnbrowse, "btnbrowse");
-            this.btnbrowse.ForeColor = System.Drawing.Color.Navy;
-            this.btnbrowse.Image = global::FinOrg.Properties.Resources.WZLOCATE;
-            this.btnbrowse.Name = "btnbrowse";
-            this.btnbrowse.UseVisualStyleBackColor = true;
-            this.btnbrowse.Click += new System.EventHandler(this.btnbrowse_Click);
+            resources.ApplyResources(this.txtbarcode, "txtbarcode");
+            this.txtbarcode.Name = "txtbarcode";
+            this.txtbarcode.Tag = "1";
             // 
             // txttrn_type
             // 
@@ -1096,8 +1214,8 @@
             // 
             this.grditem.AllowUserToAddRows = false;
             this.grditem.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle17.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.grditem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle17;
+            dataGridViewCellStyle22.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.grditem.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle22;
             this.grditem.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             resources.ApplyResources(this.grditem, "grditem");
             this.grditem.Name = "grditem";
@@ -1115,16 +1233,6 @@
             this.cmbcatcode.Name = "cmbcatcode";
             this.cmbcatcode.ValueMember = "itm_cat_code";
             // 
-            // txtsearch
-            // 
-            resources.ApplyResources(this.txtsearch, "txtsearch");
-            this.txtsearch.Name = "txtsearch";
-            this.txtsearch.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
-            this.txtsearch.DoubleClick += new System.EventHandler(this.textBox1_DoubleClick);
-            this.txtsearch.Enter += new System.EventHandler(this.txtsearch_Enter);
-            this.txtsearch.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox1_KeyDown);
-            this.txtsearch.Leave += new System.EventHandler(this.textBox1_Leave);
-            // 
             // txtpriv
             // 
             resources.ApplyResources(this.txtpriv, "txtpriv");
@@ -1136,62 +1244,39 @@
             this.txtolditm.Name = "txtolditm";
             this.txtolditm.Tag = "1";
             // 
-            // label8
-            // 
-            resources.ApplyResources(this.label8, "label8");
-            this.label8.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.label8.Name = "label8";
-            // 
             // txtitemno
             // 
             resources.ApplyResources(this.txtitemno, "txtitemno");
             this.txtitemno.Name = "txtitemno";
             this.txtitemno.Tag = "1";
             // 
-            // lblbranch
-            // 
-            resources.ApplyResources(this.lblbranch, "lblbranch");
-            this.lblbranch.ForeColor = System.Drawing.Color.RoyalBlue;
-            this.lblbranch.Name = "lblbranch";
-            // 
-            // chksearch
-            // 
-            resources.ApplyResources(this.chksearch, "chksearch");
-            this.chksearch.Name = "chksearch";
-            this.chksearch.UseVisualStyleBackColor = true;
-            // 
             // FrmItemMaster
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             resources.ApplyResources(this, "$this");
-            this.Controls.Add(this.chksearch);
+            this.Controls.Add(this.txtbarcode);
             this.Controls.Add(this.cmbunitaname);
-            this.Controls.Add(this.cmbbranch);
-            this.Controls.Add(this.lblbranch);
-            this.Controls.Add(this.label8);
-            this.Controls.Add(this.grdbutton);
             this.Controls.Add(this.grditem);
             this.Controls.Add(this.txtitemno);
-            this.Controls.Add(this.btnbrowse);
             this.Controls.Add(this.txtolditm);
-            this.Controls.Add(this.dt1);
             this.Controls.Add(this.txttrn_type);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.txtpriv);
             this.Controls.Add(this.txtfilename);
-            this.Controls.Add(this.txtsearch);
             this.Controls.Add(this.cmbcatcode);
             this.Controls.Add(this.toolStrip);
             this.Controls.Add(this.groupBox1);
             this.KeyPreview = true;
             this.Name = "FrmItemMaster";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.Frmentry_Load_1);
             this.Shown += new System.EventHandler(this.FrmItemMaster_Shown);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FrmItemMaster_KeyDown);
+            this.Resize += new System.EventHandler(this.FrmItemMaster_Resize);
             this.toolStrip.ResumeLayout(false);
             this.toolStrip.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdbutton)).EndInit();
             this.tab1.ResumeLayout(false);
             this.tabbarcode.ResumeLayout(false);
             this.tabbarcode.PerformLayout();
@@ -1203,7 +1288,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.grdmain)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grdlookup)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grdbutton)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.grditem)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -1263,7 +1347,6 @@
        private System.Windows.Forms.TabControl tab1;
        private System.Windows.Forms.TabPage tabbarcode;
        private System.Windows.Forms.TabPage tabsupplier;
-       private System.Windows.Forms.DataGridView grdbarcode;
        private System.Windows.Forms.Button btnaddbarcode;
        private System.Windows.Forms.DataGridView grdmain;
        private System.Windows.Forms.DataGridView grdlookup;
@@ -1284,12 +1367,6 @@
        private System.Windows.Forms.TextBox txtitemno;
        private System.Windows.Forms.ComboBox cmbbranch;
        private System.Windows.Forms.Label lblbranch;
-       private System.Windows.Forms.DataGridViewButtonColumn btaddbarcode;
-       private System.Windows.Forms.DataGridViewButtonColumn btsave;
-       private System.Windows.Forms.DataGridViewButtonColumn btnew;
-       private System.Windows.Forms.DataGridViewButtonColumn bcategory;
-       private System.Windows.Forms.DataGridViewButtonColumn bunits;
-       private System.Windows.Forms.DataGridViewButtonColumn prnbarcode;
        private System.Windows.Forms.TextBox txtarname;
        private System.Windows.Forms.Label label5;
        private System.Windows.Forms.ComboBox cmbunitaname;
@@ -1304,6 +1381,21 @@
        private System.Windows.Forms.DataGridViewTextBoxColumn tablename;
        private System.Windows.Forms.DataGridViewTextBoxColumn flag;
        private System.Windows.Forms.DataGridViewTextBoxColumn fieldval;
+       private System.Windows.Forms.Button btnprint;
+       private System.Windows.Forms.DataGridViewTextBoxColumn warehouse;
+       private System.Windows.Forms.DataGridViewTextBoxColumn clstock;
+       private System.Windows.Forms.DataGridViewTextBoxColumn opstock;
+       private System.Windows.Forms.DataGridViewTextBoxColumn wrcode;
+       private System.Windows.Forms.Label label7;
+       private System.Windows.Forms.TextBox txtwhprice;
+       private System.Windows.Forms.TextBox txtretailprice;
+       private System.Windows.Forms.CheckBox chksearch;
+       private System.Windows.Forms.TextBox txtalias;
+       private System.Windows.Forms.Label label14;
+       private System.Windows.Forms.TextBox txtbarcode;
+       private System.Windows.Forms.DataGridView grdbarcode;
+       private System.Windows.Forms.CheckBox chkscreen;
+       private System.Windows.Forms.ComboBox cmbbarunit;
        private System.Windows.Forms.DataGridViewTextBoxColumn barcode;
        private System.Windows.Forms.DataGridViewTextBoxColumn description;
        private System.Windows.Forms.DataGridViewTextBoxColumn unit;
@@ -1314,14 +1406,11 @@
        private System.Windows.Forms.DataGridViewTextBoxColumn itemcode;
        private System.Windows.Forms.DataGridViewTextBoxColumn Unitid;
        private System.Windows.Forms.DataGridViewTextBoxColumn DescriptionAr;
-       private System.Windows.Forms.Button btnprint;
-       private System.Windows.Forms.DataGridViewTextBoxColumn warehouse;
-       private System.Windows.Forms.DataGridViewTextBoxColumn clstock;
-       private System.Windows.Forms.DataGridViewTextBoxColumn opstock;
-       private System.Windows.Forms.DataGridViewTextBoxColumn wrcode;
-       private System.Windows.Forms.Label label7;
-       private System.Windows.Forms.TextBox txtwhprice;
-       private System.Windows.Forms.TextBox txtretailprice;
-       private System.Windows.Forms.CheckBox chksearch;
+       private System.Windows.Forms.DataGridViewButtonColumn btaddbarcode;
+       private System.Windows.Forms.DataGridViewButtonColumn btsave;
+       private System.Windows.Forms.DataGridViewButtonColumn btnew;
+       private System.Windows.Forms.DataGridViewButtonColumn bcategory;
+       private System.Windows.Forms.DataGridViewButtonColumn bunits;
+       private System.Windows.Forms.DataGridViewButtonColumn prnbarcode;
     }
 }

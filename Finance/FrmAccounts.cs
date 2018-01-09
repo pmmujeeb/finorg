@@ -606,7 +606,7 @@ namespace FinOrg
                         //sql = "select acc_type_code,acc_type_name from acc_type inner join ac_options on acc_type_code <> cus_ac_type and acc_type_code <> sup_ac_type  ";
                         sql = "select acc_type_code,acc_type_name from acc_type  where gl_type=1";
                         //sql1 = "SELECT CAST(ACC_NO AS VARCHAR) AS ACC_NO,ACC_NAME from Accounts inner join ac_options on acc_type_code <> cus_ac_type and acc_type_code <> sup_ac_type ";
-                        sql1 = "SELECT CAST(ACC_NO AS VARCHAR) AS ACC_NO,ACC_NAME from Accounts WHERE ACC_TYPE_CODE=1";
+                        sql1 = "SELECT CAST(ACC_NO AS VARCHAR) AS ACC_NO,ACC_NAME from Accounts WHERE ACC_TYPE_CODE=1 and ACC_LEVEL=4";
                         if (tabControl1.TabPages.Count > 1)
                             tabControl1.TabPages.RemoveAt(1);
                         lblcrlimit.Visible = false;
@@ -615,9 +615,9 @@ namespace FinOrg
 
                         break;
                     case "201":
-                        sql = "select acc_no,acc_name from accounts  inner join ac_options on LEVEL3_NO = cus_ac_type AND  ac_options.ID =1 WHERE ACC_TYPE_CODE=1  ";
+                        sql = "select acc_no,acc_name from accounts  inner join ac_options on LEVEL3_NO = cus_ac_type AND  ac_options.ID =1 WHERE ACC_TYPE_CODE=1 and ACC_LEVEL=4 ";
                         // sql = "select acc_type_code,acc_type_name from acc_type  where gl_type=1";
-                        sql1 = "SELECT CAST(ACC_NO AS VARCHAR) AS ACC_NO,ACC_NAME from Accounts WHERE ACC_TYPE_CODE=1";
+                        sql1 = "SELECT CAST(ACC_NO AS VARCHAR) AS ACC_NO,ACC_NAME from Accounts WHERE ACC_TYPE_CODE=1 and ACC_LEVEL=4";
                         txtaccno.ReadOnly = false;
                         cmbtype.Visible = false;
                         lblaccclass.Visible = false;
@@ -641,8 +641,8 @@ namespace FinOrg
                         break;
                     case "202":
                         cmbtype.Visible = false;
-                        sql = "select acc_no,acc_name from accounts inner join ac_options on  LEVEL3_NO = sup_ac_type AND  ac_options.ID =1  WHERE ACC_TYPE_CODE=1";
-                        sql1 = "SELECT CAST(ACC_NO AS VARCHAR) AS ACC_NO,ACC_NAME from Accounts WHERE ACC_TYPE_CODE=3";
+                        sql = "select acc_no,acc_name from accounts inner join ac_options on  LEVEL3_NO = sup_ac_type AND  ac_options.ID =1  WHERE ACC_TYPE_CODE=1 and ACC_LEVEL=4";
+                        sql1 = "SELECT CAST(ACC_NO AS VARCHAR) AS ACC_NO,ACC_NAME from Accounts WHERE ACC_TYPE_CODE=3 and ACC_LEVEL=4";
                         txtaccno.ReadOnly = false;
                         cmbtype.Visible = false;
                         lblaccclass.Visible = false;
@@ -658,6 +658,8 @@ namespace FinOrg
                         cmbtbno.Visible = true;
                        cmblevel.Visible = false;
                         lbllevel.Visible = false;
+                        lblcrlimit.Visible = false;
+                        txtcrlimit.Visible = false;
                          newToolStripButton.Enabled = true;
                         saveToolStripButton.Enabled = true;
                         tooldelete.Enabled = true;
@@ -671,12 +673,12 @@ namespace FinOrg
 
 
                 ada = new SqlDataAdapter(sql, Conn);
-                dt = new DataTable("Acc_group");
+                DataTable dttb = new DataTable("Acc_group");
 
-                ada.Fill(dt);
+                ada.Fill(dttb);
                 cmbtbno.DisplayMember ="acc_name";
                 cmbtbno.ValueMember = "acc_no";
-                cmbtbno.DataSource = dt;
+                cmbtbno.DataSource = dttb;
                 if (txttrn_type.Text == "201")
                     cmbtbno.SelectedValue = receivable_acno;
                 if(txttrn_type.Text=="202")

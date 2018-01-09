@@ -136,7 +136,7 @@
             this.chkstock.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chkstock.Location = new System.Drawing.Point(465, 321);
             this.chkstock.Name = "chkstock";
-            this.chkstock.Size = new System.Drawing.Size(154, 17);
+            this.chkstock.Size = new System.Drawing.Size(152, 17);
             this.chkstock.TabIndex = 34;
             this.chkstock.Text = "Show Only Stock Available";
             this.chkstock.UseVisualStyleBackColor = true;
@@ -455,8 +455,8 @@
             this.ClientSize = new System.Drawing.Size(1148, 664);
             this.Controls.Add(this.maintab1);
             this.Name = "frmreport1";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Frmreport";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmReport_Load);
             this.maintab1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

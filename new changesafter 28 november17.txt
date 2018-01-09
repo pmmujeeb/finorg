@@ -1,0 +1,59 @@
+add item_no on hd_itemmaster
+add salary_paid_ac on ac_options
+add PAID_TRNO3, 4 to salary_det
+ADD AST_AC_TYPE ON AC_OPTION
+add amt_status int on Bal_sheet
+
+
+
+-4	0	False	32	Current Liability	0	Wages  PAYABLE	11	1
+-3	0	False	31	Current Liability	0	Interest  PAYABLE	11	1
+-2	0	False	30	Current Liability	0	Notes PAYABLE	11	1
+-1	0	False	3	Current Asset	0	Pre Paid Rent	0	1
+2	2	True	0	Current Asset	0	Account Receivable	0	1
+3	3	True	0	Current Liability	0	Account Payable	11	1
+7	7	True	0	Current Asset	1	Cash	0	1
+603	0	False	10	Fixed Asset	0	Less Accumalated Depreciation	1	-1
+5020	0	False	2	Current Asset	0	Inventory	0	1
+NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL	NULL
+
+USE [Finance]
+GO
+
+/****** Object:  View [dbo].[V_BALANCE_SHEET]    Script Date: 12/04/2017 15:44:41 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE VIEW [dbo].[V_BALANCE_SHEET]
+AS
+SELECT     V.ACC_NO, CASE WHEN (P1.IS_GROUP = 1 AND P1.DETAIL = 1) THEN A1.ACC_NAME ELSE P1.ACC_NAME  END AS NAME, P1.ACC_NAME, V.AMOUNT, 
+                      P1.IS_GROUP,CASE WHEN (P1.IS_GROUP = 1 AND P1.DETAIL = 1) THEN 0 ELSE  P1.ORDER_BY  END  as ORDER_BY, P1.PL_ACC_TYPE, P1.GROUP_NAME, P1.GROUP_CODE,P1.AMT_STATUS
+FROM         (SELECT     CASE WHEN P.DETAIL = 1 AND IS_GROUP = 1 THEN A.ACC_NO ELSE P.ACC_NO END AS ACC_NO, 
+                                              SUM(CASE WHEN T .DR_CR = 'D' THEN PAY_AMOUNT ELSE PAY_AMOUNT * - 1 END) AS AMOUNT, MIN(P.Acc_No) AS PACC_NO
+                        FROM         dbo.TRN_ACCOUNTS AS T LEFT OUTER JOIN
+                                              dbo.REPORT_DT ON T .PAY_DATE <= dbo.REPORT_DT.BalDate INNER JOIN
+                                              dbo.ACCOUNTS AS A ON T .ACC_NO = A.ACC_NO RIGHT JOIN
+                                              dbo.BAL_SHEET AS P ON T .ACC_NO = CASE WHEN IS_GROUP = 0 THEN P.ACC_NO END OR 
+                                              A.ACC_TYPE_CODE = CASE WHEN IS_GROUP = 1 THEN P.ACC_NO ELSE - 1 END AND A.ACC_NO NOT IN
+                                                  (SELECT     Acc_No
+                                                     FROM         dbo.PL_EXPENSE)
+                        GROUP BY CASE WHEN P.DETAIL = 1 AND IS_GROUP = 1 THEN A.ACC_NO ELSE P.ACC_NO END) AS V LEFT OUTER JOIN
+                      dbo.BAL_SHEET AS P1 ON V.PACC_NO = P1.Acc_No LEFT OUTER JOIN
+                      dbo.ACCOUNTS AS A1 ON A1.ACC_NO = V.ACC_NO LEFT OUTER JOIN
+                      dbo.ACC_TYPE AS AT ON AT.ACC_TYPE_CODE = V.ACC_NO
+UNION ALL
+SELECT     AST_CAT_CODE, MIN(AST_CAT_NAME) AS ANAME, MIN(AST_CAT_NAME) AS ACC_NAME, 
+                      SUM(CASE WHEN T .DR_CR = 'D' THEN PAY_AMOUNT ELSE PAY_AMOUNT * - 1 END) AS AMOUNT, 0,1, 0, 'Fixed Asset', 1,1
+FROM         AC_OPTIONS LEFT JOIN
+                      TRN_TYPE ON 1 = 1 LEFT JOIN
+                      asset_Cat ON TRN_CODE = AST_AC_TYPE LEFT JOIN
+                      trn_Accounts AS T ON t .ACC_NO = TRN_TYPE.ACC_NO AND T .PAYBY = AST_CAT_CODE
+ LEFT   JOIN
+                                              dbo.REPORT_DT ON T .PAY_DATE <= dbo.REPORT_DT.BalDate
+WHERE     AST_CAT_CODE IS NOT NULL
+GROUP BY AST_CAT_CODE
+
+GO

@@ -62,7 +62,7 @@
             this.Controls.Add(this.btnclose);
             this.Controls.Add(this.crv1);
             this.Name = "FrmrepView";
-            this.Text = "FrmrepView";
+            this.Text = "View Report";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.FrmrepView_Load);
             this.ResumeLayout(false);

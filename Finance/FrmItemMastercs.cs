@@ -22,7 +22,7 @@ namespace FinOrg
 
 
         SqlConnectionStringBuilder decoder = new SqlConnectionStringBuilder(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
-
+        ADODB.Connection ADOconn = new ADODB.Connection();
         SqlConnection Conn = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["Con"].ConnectionString);
         DataTable dt = new DataTable();
         DataView dv = new DataView();
@@ -31,7 +31,7 @@ namespace FinOrg
         SqlDataReader rd;
         SqlCommand cmd1 = new SqlCommand();
         SqlDataAdapter aditem = new SqlDataAdapter();
-
+        Recordset tmp = new Recordset();
         int dblclk_row;
         int last_row;
         int last_col;
@@ -58,9 +58,9 @@ namespace FinOrg
             isini = true;
             entrytype = Gvar.Gind;
             txttrn_type.Text = Gvar.trntype.ToString();
-            
+            //grdbarcode.Rows.Add(5);
 
-
+            ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
 
         }
 
@@ -75,7 +75,7 @@ namespace FinOrg
 
             }
 
-            if (grdbarcode.Rows.Count == 0)
+           // if (grdbarcode.Rows.Count == 0)
                 add_barcode();
             save_data();
         }
@@ -144,6 +144,7 @@ namespace FinOrg
                 SqlDataReader rd = cmd.ExecuteReader();
                 grdstock.ReadOnly = false;
                 //grdstock.BeginEdit(true);
+                grdstock.DataSource = null;
                 grdstock.Rows.Clear();
                 isini = true;
                 while (rd.Read())
@@ -205,11 +206,10 @@ namespace FinOrg
 
         }
 
-
-
-
-        private void Load_data()
+        
+        private void load_grditem()
         {
+           
             try
             {
                 Conn.Close();
@@ -229,7 +229,7 @@ namespace FinOrg
                 SqlCommand cmd = new SqlCommand(sql, Conn);
                 //SqlDataReader rd = cmd.ExecuteReader();
 
-
+                isini = true;
 
                 aditem = new SqlDataAdapter(cmd);
 
@@ -241,11 +241,35 @@ namespace FinOrg
                 grditem.DataSource = dv;
                 grditem.Columns[1].Width = 300;
                 grditem.Columns[0].Width = 175;
-                //MessageBox.Show(rd["isrefund"].ToString());
-                //if (Gvar._SuperUserid != 1)
-                //{
-                //    saveToolStripButton.Enabled = false;
+            }
+                 catch(Exception ex)
+            {
 
+                 }
+                //MessageBox.Show(rd["isrefund"].ToString());
+            }
+
+
+        private void Load_data()
+        {
+            try
+            {
+                load_grditem();
+                Conn.Close();
+                Conn.Open();
+                saveToolStripButton.Enabled = true;
+                toolRefund.Enabled = true;
+                string sqlunt;
+                string sqlcat;
+
+                sql = "sELECT  DISTINCT Item_Code,DESCRIPTION,ITM_CAT_CODE,AVG_PUR_PRICE ,BSTOCK from ITEMMASTER INNER JOIN AC_OPTIONS ON ITM_CAT_CODE <> RAW_ITM_CAT AND   ac_options.ID =1  where itm_cat_code <> 0";
+                sqlcat = "sELECT  itm_cat_code,ITM_CAT_name froM ITEM_CAT where itm_cat_code<>0 ";
+                if (entrytype == 2)
+                {
+                    sql = "sELECT  DISTINCT Item_Code,DESCRIPTION,ITM_CAT_CODE,AVG_PUR_PRICE ,BSTOCK from ITEMMASTER INNER JOIN AC_OPTIONS ON ITM_CAT_CODE = RAW_ITM_CAT AND     ac_options.ID =1  where itm_cat_code <> 0";
+                    sqlcat = "sELECT  itm_cat_code,ITM_CAT_name  froM ITEM_CAT INNER JOIN AC_OPTIONS ON ITM_CAT_CODE = RAW_ITM_CAT AND   ac_options.ID =1 where itm_cat_code<>0 ";
+
+                }
 
                 //}
                 sql = "select Branch_code,Branch_Name from BRANCHES ";
@@ -313,6 +337,10 @@ namespace FinOrg
                 cmbunitaname.ValueMember = "Unit_id";
                 cmbunitaname.DataSource = dt3;
                 cmbunit.DataSource = dt3;
+                cmbbarunit.DisplayMember = "unit_"+ Gvar.lang_letter + "name";
+                cmbbarunit.ValueMember = "Unit_id";
+                cmbbarunit.DataSource = dt3;
+
                // cmbunitaname.SelectedIndex = 0;
 
 
@@ -403,6 +431,40 @@ namespace FinOrg
 
 
                         break;
+
+                        case 10:
+                        {
+                           
+                            string itemname = txtalias.Text;
+                            if (txtname.Text == "") txtname.Text = "";
+                            if (txtarname.Text == "") txtarname.Text = "";
+                            if (txtretailprice.Text == "") txtretailprice.Text = "0";
+
+                            if(txtbarcode.Text=="")
+                            {
+                                MessageBox.Show("Please select the Barcode Item To Print from The barcode list","Invalid Barcode",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                                return;
+                            }
+                            if(itemname=="")
+                            {
+                                itemname = txtarname.Text.ToString() + ":" + txtname.Text.ToString();
+
+                            }
+
+                            rep_path = Gvar.report_path + "\\reports\\barcode.rpt";
+
+                            CrRep.Load(rep_path);
+                            CrRep.DataDefinition.FormulaFields["items"].Text = "'*" + txtbarcode.Text + "*'";
+                            CrRep.DataDefinition.FormulaFields["coname"].Text = "'" + Gvar.cmp_aname + ":" + Gvar.cmp_name + "'";
+                            CrRep.DataDefinition.FormulaFields["itemname"].Text = "'"+  itemname + "'";
+                            CrRep.DataDefinition.FormulaFields["item_ename"].Text = "'" + txtname.Text + "'";
+                            CrRep.DataDefinition.FormulaFields["item_aname"].Text = "'" + txtarname.Text + "'";
+                            CrRep.DataDefinition.FormulaFields["price"].Text = "'SR " + string.Format("{0:F2}", txtretailprice.Text.ToString()) + "'";
+                            
+                        }
+
+
+                        break;
                 }
 
                 //crconnectioninfo.ServerName = "Mujeeb";
@@ -416,13 +478,14 @@ namespace FinOrg
 
                 //CrRep.PrintOptions.PaperSize= CrystalDecisions.Shared.PaperSize.PaperEnvelope10;
 
-
-                if (crt != "")
+                if (idx != 10)
                 {
-                    CrRep.RecordSelectionFormula = crt;
+                    if (crt != "")
+                    {
+                        CrRep.RecordSelectionFormula = crt;
+                    }
+                    CrRep.OpenSubreport("HEADER.rpt").DataDefinition.FormulaFields["RPTHEAD"].Text = "'" + CrRep.SummaryInfo.ReportTitle + "'";
                 }
-                CrRep.OpenSubreport("HEADER.rpt").DataDefinition.FormulaFields["RPTHEAD"].Text = "'" + CrRep.SummaryInfo.ReportTitle + "'";
-
                 CrystalDecisions.Shared.ConnectionInfo crconnectioninfo = new CrystalDecisions.Shared.ConnectionInfo();
                 CrystalDecisions.Shared.TableLogOnInfos crtablelogoninfos = new CrystalDecisions.Shared.TableLogOnInfos();
                 CrystalDecisions.Shared.TableLogOnInfo crtablelogoninfo = new CrystalDecisions.Shared.TableLogOnInfo();
@@ -460,13 +523,19 @@ namespace FinOrg
                 //CrRep.ReadRecords();
 
                 //CrRep.Refresh();
+                
+                if (idx==10 && !chkscreen.Checked)
+                {
+                    int n = 0;
+                    if (txtbarcodecount.Text == "") txtbarcodecount.Text = "1";
+                    n = Convert.ToInt16(txtbarcodecount.Text);
+                    for (int i = 1; i <= n; i++)
+                    {
+                        CrRep.PrintToPrinter(1, true, 0, 0);
 
-                //if (chkprinter.Checked)
-                //{
-
-
-                //    CrRep.PrintToPrinter(1, true, 0, 0);
-                //}
+                    }
+                    return;
+                }
                 //else
                 //{
                 FrmrepView frm = new FrmrepView();
@@ -527,8 +596,9 @@ namespace FinOrg
                 //}
 
                 Conn.Close();
-                Conn.Open();
-
+                //Conn.Open();
+                //saveToolStripButton.Enabled = false;
+                //grdbutton["btnsave",0].
                 bool isempty;
                 isempty = false;
                 // foreach (Control tx in this.Controls)
@@ -567,6 +637,8 @@ namespace FinOrg
                         return;
                     }
                 }
+
+                if (txtarname.Text.Trim() == "") txtarname.Text = txtname.Text;
 
                 for (int i = 0; i < grdmain.Rows.Count; i++)
                 {
@@ -618,14 +690,11 @@ namespace FinOrg
 
                     sql = "SELECT Item_Code FROM HD_ITEMMASTER where Item_Code ='" + Txtitem.Text.Trim() + "'";
 
-                    cmd = new SqlCommand(sql, Conn);
+                   tmp = new Recordset();
+              tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
 
-                    rd = cmd.ExecuteReader();
-
-
-
-                    if (rd.HasRows)
-                    {
+        if (tmp.RecordCount > 0)
+            {
 
 
                         DialogResult result = MessageBox.Show("This Item Already Existing!!, Do You want to Update?", "Item Found", MessageBoxButtons.YesNoCancel);
@@ -633,7 +702,7 @@ namespace FinOrg
                         if (result == DialogResult.Yes) isedit = true; else return;
 
                     }
-                    rd.Close();
+                   
                 }
 
 
@@ -729,12 +798,7 @@ namespace FinOrg
                 object retailprice =txtretailprice.Text;
                 if (retailprice == "") retailprice = "0";
 
-                row = grdmain.Rows
-                   .Cast<DataGridViewRow>()
-                   .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("AVG_PUR_PRICE"))
-                   .First();
-                if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "0";
-
+               
                 
                 if (txtcost == "") txtcost = "0";
 
@@ -771,15 +835,20 @@ namespace FinOrg
                 
                  if (txtcost == "")
                     lst_price = 0;
-                else
-                    lst_price = Convert.ToDouble(txtcost); // / Convert.ToDouble(txtfraction.Text);
-
-                if (txtlastprice.Text.Trim() == "")
-                    avg_price = 0;
-                else
-                    avg_price = Convert.ToDouble(txtlastprice.Text); /// Convert.ToDouble(txtfraction.Text);
+                //else
+                   // lst_price = Convert.ToDouble(txtcost); // / Convert.ToDouble(txtfraction.Text);
+                 avg_price = Convert.ToDouble(txtcost);
+                 if (txtlastprice.Text.Trim() == "") txtlastprice.Text = "0";
+               
+                 lst_price = Convert.ToDouble(txtlastprice.Text);
+                 if (txtlastprice.Text.Trim() == "0")
+                     // avg_price = 0;
+                     //else
+                     lst_price = avg_price;  //Convert.ToDouble(txtlastprice.Text); /// Convert.ToDouble(txtfraction.Text);
 
                 if (avg_price == 0) avg_price = lst_price;
+                if (lst_price == 0) lst_price = avg_price;
+                if (txtwhprice.Text == "") txtwhprice.Text = txtretailprice.Text;
 
                 row = grdmain.Rows
                    .Cast<DataGridViewRow>()
@@ -828,63 +897,67 @@ namespace FinOrg
                 if (txtvat == "")
                     txtvat = "0";
 
-                 row = grdmain.Rows
-                      .Cast<DataGridViewRow>()
-                      .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("ALIAS_NAME"))
-                      .First();
-                    if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "";
+                 //row = grdmain.Rows
+                 //     .Cast<DataGridViewRow>()
+                 //     .Where(r => r.Cells["fieldname"].Value.ToString().ToUpper().Equals("ALIAS_NAME"))
+                 //     .First();
+                 //   if (row.Cells["colvalue"].Value == null) row.Cells["colvalue"].Value = "";
 
-                    // object txtarabic = row.Cells["colvalue"].Value;
+                 //   // object txtarabic = row.Cells["colvalue"].Value;
 
 
-                    object txtalias = row.Cells["colvalue"].Value;
-                if (txtalias == "")
-                    txtalias= cmbcat.Text;
+                   // object txtalias = row.Cells["colvalue"].Value;
+                if (txtalias.Text == "")
+                    txtalias.Text= "";
 
 
                 iserror = false;
-
-                ADODB.Connection ADOconn = new ADODB.Connection();
+                object a;
+              
                 if(ADOconn.State==0)
-                ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
-
-
+               ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
+                ADOconn.BeginTrans();
+                iserror = false;
                 if (isedit == false)
                 {
 
                     sql = "INSERT INTO [HD_ITEMMASTER]([Item_Code],[DESCRIPTION],AR_DESC,[USER],[ITM_CAT_CODE],[UNIT],[FRACTION],[ALIAS_NAME],[BRN_CODE],BARCODE,[VAT_PERCENT])";
-                    sql = sql + " VALUES ('" + Txtitem.Text.Trim() + "','" + txtname.Text.Trim() + "','" + txtarname.Text + "','" + Gvar._Userid + "','" + cmbcat.SelectedValue + "','" + cmbunit.SelectedValue + "','" + txtfraction.Text + "','" + txtalias + "'," + cmbbranch.SelectedValue + ",'" + txtbarcode + "',"+txtvat + ")";
+                    sql = sql + " VALUES ('" + Txtitem.Text.Trim() + "','" + txtname.Text.Trim() + "','" + txtarname.Text + "','" + Gvar._Userid + "','" + cmbcat.SelectedValue + "','" + cmbunit.SelectedValue + "','" + txtfraction.Text + "','" + txtalias.Text + "'," + cmbbranch.SelectedValue + ",'" + txtbarcode + "',"+txtvat + ")";
 
-                    cmd = new SqlCommand(sql, Conn);
 
-                    cmd.ExecuteNonQuery();
+                    ADOconn.Execute(sql, out a, 1);
+
+                    //cmd = new SqlCommand(sql, Conn);
+
+                    //cmd.ExecuteNonQuery();
 
                     sql = "SELECT item_no FROM HD_ITEMMASTER where Item_Code ='" + Txtitem.Text.Trim() + "'";
 
-                    cmd = new SqlCommand(sql, Conn);
+                    //cmd = new SqlCommand(sql, Conn);
 
-                    rd = cmd.ExecuteReader();
+                   // rd = cmd.ExecuteReader();
+                    tmp = new Recordset();
+                  
+                    tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
 
 
-
-                    if (rd.HasRows)
+                    if (tmp.RecordCount>0)
                     {
-                        while (rd.Read())
-                        {
-                            txtitemno.Text = rd[0].ToString();
+                       
+                            txtitemno.Text = tmp.Fields[0].Value.ToString();
 
-                        }
+                       
                     }
-                    rd.Close();
+                    
 
                     //txtitemno.Text = rec.Fields[0].Value.ToString();
 
                     sql = " INSERT INTO [STOCK_MASTER]([Item_Code],[STOCK],[LAST_PUR_PRICE],[AVG_PUR_PRICE],[USER1],[RE_ORDER],[BRN_CODE],[OP_STOCK],sale_price,retail_price,profit,AVG_expense_amt,net_cost,SALES_PROFIT_PCNT)";
                     sql = sql + " VALUES ('" + Txtitem.Text.Trim() + "','" + txtstock.Text + "','" + lst_price + "','" + avg_price + "','" + Gvar._Userid + "','" + txtorder + "'," + cmbbranch.SelectedValue + ",'" + txtopstock.Text + "','" + txtsaleprice + "','" + retailprice + "','" + txtminprofit + "','" + txtlastexp + "','" + netcost + "','" + txtsaleprofit + "')";
+                    ADOconn.Execute(sql, out a, 1);
+                    //cmd = new SqlCommand(sql, Conn);
 
-                    cmd = new SqlCommand(sql, Conn);
-
-                    cmd.ExecuteNonQuery();
+                    //cmd.ExecuteNonQuery();
 
                 }
                 else
@@ -908,66 +981,57 @@ namespace FinOrg
                     {
                         sql = "SELECT item_no FROM HD_ITEMMASTER where Item_Code ='" + Txtitem.Text.Trim() + "'";
 
-                        cmd = new SqlCommand(sql, Conn);
-
-                        rd = cmd.ExecuteReader();
-
+                        tmp = new Recordset();
+                        tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
 
 
-                        if (rd.HasRows)
+                       // cmd = new SqlCommand(sql, Conn);
+
+                        //rd = cmd.ExecuteReader();
+
+                        if (tmp.RecordCount > 0)
                         {
-                            while (rd.Read())
-                            {
-                                txtitemno.Text = rd[0].ToString();
 
-                            }
+                            txtitemno.Text = tmp.Fields[0].Value.ToString();
+
+
                         }
-                        rd.Close();
+
+                       
                     }
                    
                    
 
 
-                    sql = "update  [HD_ITEMMASTER]  set [Item_Code]='" + Txtitem.Text.Trim() + "',[DESCRIPTION]='" + txtname.Text + "',[ar_desc]='" + txtarabic + "',[ITM_CAT_CODE]='" + cmbcat.SelectedValue + "',[UNIT]='" + cmbunit.SelectedValue + "',[FRACTION]='" + txtfraction.Text + "',[ALIAS_NAME]='" + txtalias + "',BARCODE ='" + txtbarcode + "',VAT_PERCENT=" + txtvat + "  where Item_Code ='" + txtolditm.Text + "'";
+                    sql = "update  [HD_ITEMMASTER]  set [Item_Code]='" + Txtitem.Text.Trim() + "',[DESCRIPTION]='" + txtname.Text + "',[ar_desc]='" + txtarabic + "',[ITM_CAT_CODE]='" + cmbcat.SelectedValue + "',[UNIT]='" + cmbunit.SelectedValue + "',[FRACTION]='" + txtfraction.Text + "',[ALIAS_NAME]='" + txtalias.Text + "',BARCODE ='" + txtbarcode + "',VAT_PERCENT=" + txtvat + "  where Item_Code ='" + txtolditm.Text + "'";
+                    ADOconn.Execute(sql, out a, 1);
 
-
-                    cmd = new SqlCommand(sql, Conn);
-
-                    cmd.ExecuteNonQuery();
+                    
 
 
 
 
                     sql = " update  [STOCK_MASTER] set [Item_Code]='" + Txtitem.Text.Trim() + "',[STOCK]='" + txtclstock.Text + "',[AVG_PUR_PRICE]='" + avg_price + "',[LAST_PUR_PRICE]='" + lst_price + "',[RE_ORDER]='" + txtorder + "',[OP_STOCK]='" + txtopstock.Text + "',sale_price='" + txtsaleprice + "',retail_price='" + retailprice + "', [profit]='" + txtminprofit + "',[AVG_expense_amt]='" + txtlastexp + "',[net_cost]='" + netcost + "',SALES_PROFIT_PCNT='" + txtsaleprofit + "' where Item_Code ='" + txtolditm.Text + "'";
 
+                    ADOconn.Execute(sql, out a, 1);
 
-
-                    cmd = new SqlCommand(sql, Conn);
-
-                    cmd.ExecuteNonQuery();
+                    
 
                     sql = " update  [wr_STOCK_MASTER] set [Item_Code]='" + Txtitem.Text.Trim() + "' where Item_Code ='" + txtolditm.Text + "'";
 
-
-                    cmd = new SqlCommand(sql, Conn);
-
-                    cmd.ExecuteNonQuery();
+                    ADOconn.Execute(sql, out a, 1);
+                   
 
 
                     sql = " update  [data_entry_grid] set [Item_Code]='" + Txtitem.Text.Trim() + "' where Item_Code ='" + txtolditm.Text + "'";
 
-
-                    cmd = new SqlCommand(sql, Conn);
-
-                    cmd.ExecuteNonQuery();
+                    ADOconn.Execute(sql, out a, 1);
 
 
                     sql = " update  [trn_itm_detail] set [Item_Code]='" + Txtitem.Text.Trim() + "' where Item_Code ='" + txtolditm.Text + "'";
 
 
-                    cmd = new SqlCommand(sql, Conn);
-
-                    cmd.ExecuteNonQuery();
+                    ADOconn.Execute(sql, out a, 1);
 
 
 
@@ -975,26 +1039,23 @@ namespace FinOrg
 
                 sql = "SELECT Item_Code FROM STOCK_MASTER where Item_Code ='" + Txtitem.Text.Trim() + "'";
 
-                cmd = new SqlCommand(sql, Conn);
-
-                rd = cmd.ExecuteReader();
-
+                tmp = new Recordset();
+                tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
 
 
-                if (!rd.HasRows)
+
+                if (tmp.RecordCount == 0)
+                        
                 {
 
-                    rd.Close();
+                    //rd.Close();
                     sql = " INSERT INTO [STOCK_MASTER]([Item_Code],[STOCK],[LAST_PUR_PRICE],[AVG_PUR_PRICE],[USER1],[RE_ORDER],[BRN_CODE],[OP_STOCK],sale_price,retail_price)";
                     sql = sql + " VALUES ('" + Txtitem.Text.Trim() + "','" + txtclstock.Text + "','" + lst_price + "','" + avg_price + "','" + Gvar._Userid + "','" + txtorder + "',"+ cmbbranch.SelectedValue + ",'" + txtopstock.Text + "','" + txtsaleprice + "','" + retailprice + "')";
 
-                    cmd = new SqlCommand(sql, Conn);
-
-                    cmd.ExecuteNonQuery();
-
+                    ADOconn.Execute(sql, out a, 1);
 
                 }
-                rd.Close();
+               // rd.Close();
                 string v1;
                 string v2;
 
@@ -1003,9 +1064,7 @@ namespace FinOrg
                 sql = " delete from item_supplier where Item_Code ='" + Txtitem.Text.Trim() + "'";
 
 
-                cmd = new SqlCommand(sql, Conn);
-
-                cmd.ExecuteNonQuery();
+                ADOconn.Execute(sql, out a, 1);
 
                 foreach (DataGridViewRow row1 in this.grdsup.Rows)
                 {
@@ -1016,9 +1075,7 @@ namespace FinOrg
                         v2 = row1.Cells[1].Value.ToString();
                         sql = " INSERT INTO [ITEM_SUPPLIER] ([Item_Code],[SUPLIER_CODE]) VALUES('" + Txtitem.Text.Trim() + "','" + v1 + "')";
 
-                        cmd = new SqlCommand(sql, Conn);
-
-                        cmd.ExecuteNonQuery();
+                        ADOconn.Execute(sql, out a, 1);
                     }
 
                     //if (dgv1.Rows[row.  cell.Size.IsEmpty)
@@ -1030,14 +1087,31 @@ namespace FinOrg
                 }
                 grdbarcode.EndEdit();
 
-                
-                    //add_barcode();
+                 string barcode = "'-9'";
+                 if (grdbarcode[0, 0].Value == null) grdbarcode[0, 0].Value = "";
+                if(grdbarcode[0,0].Value.ToString()=="")
+                    add_barcode();
 
+                if (grdbarcode.Rows.Count > 1)
+                {
+                     barcode = grdbarcode["barcode", 0].Value.ToString();
+
+                    for (int i = 1; i <= grdbarcode.Rows.Count - 1; i++)
+                    {
+                        if (grdbarcode["barcode", i].Value == null) grdbarcode["barcode", i].Value = "";
+
+                        if (grdbarcode["barcode", i].Value.ToString() == barcode)
+                        {
+                            grdbarcode["barcode", i].Value = grdbarcode["barcode", i].Value.ToString() +  grdbarcode["Unitid", i].Value.ToString() ;
+
+                        }
+                    }
+                }
                   
 
 
                 ADODB.Recordset bcode = new ADODB.Recordset();
-                string barcode = "'-9'";
+               barcode = "'-9'";
                 for (int i = 0; i <= grdbarcode.Rows.Count - 1; i++)
                 {
                     if (grdbarcode["barcode", i].Value != null && grdbarcode["barcode", i].Value != "")
@@ -1050,8 +1124,8 @@ namespace FinOrg
 
                         bcode.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
 
-                         grdbarcode["description", i].Value = txtname.Text + " " + cmbunit.Text;
-                         grdbarcode["descriptionAr", i].Value = txtarname.Text + " " + cmbunitaname.Text;
+                        grdbarcode["description", i].Value = txtname.Text; // +" " + cmbunit.Text;
+                         grdbarcode["descriptionAr", i].Value = txtarname.Text; // +" " + cmbunitaname.Text;
 
                        
                         if (grdbarcode["saleprice1", i].Value == "") grdbarcode["saleprice1", i].Value = 0;
@@ -1112,27 +1186,36 @@ namespace FinOrg
                 }
 
                 sql = "delete from barcode where item_code='" + Txtitem.Text + "' and barcode not in (" + barcode + ")";
-                if (Conn.State == 0) Conn.Open();
-                cmd = new SqlCommand(sql, Conn);
+                ADOconn.Execute(sql, out a, 1);
 
-                cmd.ExecuteNonQuery();
+                iserror = false;
                 update_stock();
+
+                if (!iserror)
+                    ADOconn.CommitTrans();
+                else
+                {
+                    ADOconn.RollbackTrans();
+                    MessageBox.Show("Data Not Saved : Error found ", "Error Occured",MessageBoxButtons.OK,MessageBoxIcon.Error);
+
+                    return;
+                }
 
                 isedit = true;
 
 
 
 
-                Conn.Close();
+                //Conn.Close();
 
-                if (pictureBox1.Image != null)
+                if (pictureBox1.Image != null && !iserror )
                 {
                     save_foto(isedit);
                 }
 
+               
+                load_grditem();
                 isini = false;
-
-
                // Load_data();
                 MessageBox.Show("Successfully Added/Updated Item", "Successfull");
 
@@ -1144,6 +1227,7 @@ namespace FinOrg
 
             catch (Exception excep)
             {
+                ADOconn.RollbackTrans();
 
                 MessageBox.Show(excep.Message);
 
@@ -1194,7 +1278,12 @@ namespace FinOrg
 
                     cmd.ExecuteNonQuery();
 
+                    sql = "delete from  barcode  where Item_Code ='" + txtolditm.Text + "'";
 
+
+                    cmd = new SqlCommand(sql, Conn);
+
+                    cmd.ExecuteNonQuery();
 
                     sql = "delete from   [STOCK_MASTER]  where Item_Code ='" + txtolditm.Text + "'";
 
@@ -1262,15 +1351,34 @@ namespace FinOrg
             if (cmbcat.Items.Count > 0) cmbcat.SelectedIndex = 0;
             if (cmbunit.Items.Count > 0) cmbunit.SelectedIndex = 0;
 
-
+            grdbarcode.DataSource = null;
             grdsup.Rows.Clear();
-            grdbarcode.Rows.Clear();
+            grdbarcode.EndEdit();
+            grdbarcode.DataSource = null;
+            try
+            {
+                grdbarcode.Rows.Clear();
+            }
+            catch 
+            {
+
+            }
+                try
+                {
+            grdbarcode.Rows.Add(3);
+                }
+                catch
+                { }
             grdstock.Rows.Clear();
             isedit = false;
             isini = true;
             pictureBox1.Image = null;
             _load_stock();
             isini = false;
+            grdbarcode.ClearSelection();
+            grdstock.ClearSelection();
+            grdmain.ClearSelection();
+          
 
 
         }
@@ -1342,8 +1450,8 @@ namespace FinOrg
             }
             txttrn_type.Text = trntype.ToString();
             if (cmbcat.Items.Count < 1) return;
-            cmbcat.SelectedIndex = -1;
-            cmbcat.SelectedIndex = 0;
+            //cmbcat.SelectedIndex = -1;
+            //cmbcat.SelectedIndex = 0;
 
             //lblrefund.Text = "";
 
@@ -1358,10 +1466,22 @@ namespace FinOrg
 
         private void newToolStripButton_Click(object sender, EventArgs e)
         {
-            issearch = true;
-            cmbcat.SelectedIndex = -1;
-            ini_form();
-            txtsearch.Focus();
+            try
+            {
+
+                issearch = true;
+                cmbcat.SelectedIndex = -1;
+                ini_form();
+                txtsearch.Focus();
+                isini = false;
+                cmbcat.SelectedIndex = -1;
+                cmbcat.SelectedIndex = 0;
+                grdbutton.CurrentCell = grdbutton[0, 2];
+            }
+            catch(Exception ex)
+            {
+
+            }
         }
 
         private void SearchToolStripButton_Click(object sender, EventArgs e)
@@ -1393,6 +1513,7 @@ namespace FinOrg
         {
             delete_Item();
             ini_form();
+            Load_data();
         }
 
         private void toolclose_Click(object sender, EventArgs e)
@@ -1537,7 +1658,7 @@ namespace FinOrg
 
         private void update_stock()
         {
-            ADODB.Connection ADOconn = new ADODB.Connection();
+            //ADODB.Connection ADOconn = new ADODB.Connection();
             ADODB.Recordset rs = new ADODB.Recordset();
             string sql;
             ADODB.Recordset cus = new ADODB.Recordset();
@@ -1545,7 +1666,7 @@ namespace FinOrg
             cus = new ADODB.Recordset();
             tmp = new ADODB.Recordset();
             double trn_no;
-            rd.Close();
+            //rd.Close();
             int k= 0;
             decimal rec_no = 0;
             string v1;
@@ -1556,15 +1677,16 @@ namespace FinOrg
                 //    "Provider=SQLOLEDB;Initial Catalog=[database];Data Source=[server];";
                 //conn.Open(strConn, [user], [pwd], 0);
                 //ADOconn.Close();
-                ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
-                Conn.Close();
-                Conn.Open();
+                //ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
+               // Conn.Close();
+               // Conn.Open();
                 grdstock.EndEdit();
                 trn_no = 1;
 
                 foreach (DataGridViewRow row in this.grdstock.Rows)
                 {
-                    
+                    if (row.Cells[0].Value == null) row.Cells[0].Value = "";
+                    if (row.Cells[2].Value == null) row.Cells[2].Value = "";
                     //foreach (DataGridViewCell cell in row.Cells)
                     if (!string.IsNullOrEmpty(row.Cells[0].Value.ToString()))
                     //if (!string.IsNullOrEmpty(row.Cells[0].Value.ToString()) && !string.IsNullOrEmpty(row.Cells[2].Value.ToString()))
@@ -1590,22 +1712,23 @@ namespace FinOrg
 
                                 sql = "SELECT TRNNO FROM TRN_NO";
 
-                                cmd = new SqlCommand(sql, Conn);
-
-                                rd = cmd.ExecuteReader();
-
+                                tmp = new Recordset();
+                                tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockReadOnly, -1);
 
 
-                                if (rd.HasRows)
-                                {
-                                    while (rd.Read())
+
+
+                              if (tmp.RecordCount > 0)
+                              {
+                                    while (!tmp.EOF)
                                     {
-                                        if (!string.IsNullOrEmpty(rd[0].ToString()))
+                                        if (!string.IsNullOrEmpty(tmp.Fields[0].Value.ToString()))
                                         {
 
-                                            trn_no = Convert.ToDouble(rd[0]);
+                                            trn_no = Convert.ToDouble(tmp.Fields[0].Value);
 
                                             fnd = true;
+                                            tmp.MoveNext();
                                         }
 
                                     }
@@ -1616,7 +1739,7 @@ namespace FinOrg
 
 
 
-                                rd.Close();
+                          
 
 
 
@@ -1763,7 +1886,7 @@ namespace FinOrg
 
                             sql = "SELECT max(ROWNUM) FROM DATA_ENTRY_GRID WHERE REC_NO ='" + rec_no + "'";
 
-                            tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
+                            tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockReadOnly, -1);
                             if (tmp.Fields[0].Value != DBNull.Value)
 
                                 rec.Fields["ROWNUM"].Value = Convert.ToInt32(tmp.Fields[0].Value) + 1;
@@ -1849,8 +1972,9 @@ namespace FinOrg
 
                         decimal amount;
                         amount = Convert.ToDecimal(v2) * Convert.ToDecimal(txtcost); ;
+                        iserror = false;
                         updat_accounts(Txtitem.Text.Trim(), amount);
-
+                        if (iserror) return;
 
 
                     }
@@ -1859,34 +1983,35 @@ namespace FinOrg
 
                 sql = "SELECT sum(STOCK) FROM  WR_STOCK_MASTER WHERE  Item_Code='" + Txtitem.Text.Trim() + "'";
 
-                cmd = new SqlCommand(sql, Conn);
-
-                rd = cmd.ExecuteReader();
+                tmp = new Recordset();
+                tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
                 sql = "";
-                if (rd.HasRows)
+                if (tmp.RecordCount > 0)
+               
+               
                 {
-                    while (rd.Read())
+                    while (!tmp.EOF)
                     {
-                        if (!string.IsNullOrEmpty(rd[0].ToString()))
+                        if (!string.IsNullOrEmpty(tmp.Fields[0].Value.ToString()))
                         {
 
-                            trn_no = Convert.ToDouble(rd[0]);
+                            trn_no = Convert.ToDouble(tmp.Fields[0].Value);
                             sql = "Update STOCK_MASTER set stock =" + trn_no + " where    Item_Code='" + Txtitem.Text.Trim() + "' AND BRN_CODE=" + cmbbranch.SelectedValue;
-
+                            tmp.MoveNext();
                             fnd = true;
                         }
 
                     }
                 }
-                rd.Close();
-
+                //rd.Close();
+                
                 if (sql != "")
                 {
+                    object a;
 
-                    cmd = new SqlCommand(sql, Conn);
-                    cmd.ExecuteNonQuery();
+                    ADOconn.Execute(sql, out a, 1);
                 }
-
+                iserror = false;
                 //Set TMP = New ADODB.Recordset
                 //TMP.Open "SELECT STOCK FROM  WR_STOCK_MASTER WHERE  Item_Code='" & Trim(Text1(0)) & "' AND BRN_CODE=" & brn_code, con, 2, 3
 
@@ -1900,11 +2025,12 @@ namespace FinOrg
 
             catch (Exception e)
             {
+                iserror = true;
                 MessageBox.Show(this, "Error" + e.Message);
             }
             finally
             {
-                Conn.Close();
+                //Conn.Close();
             }
         }
 
@@ -1923,7 +2049,7 @@ namespace FinOrg
                 saveToolStripButton.Enabled = true;
                 toolRefund.Enabled = true;
 
-                sql = "sELECT  h.Item_Code,h.DESCRIPTION,h.ITM_CAT_CODE,h.UNIT,h.FRACTION,h.ALIAS_NAME,s.AVG_PUR_PRICE,s.RE_OrdER,S.AVG_PUR_PRICE,H.BARCODE,H.AR_DESC,SALE_PRICE,RETAIL_PRICE,PART_NO,BRAND,SUB_CAT_CODE,h.item_no,H.VAT_PERCENT,SALES_PROFIT_PCNT,AVG_EXPENSE_AMT,profit from hd_ITEMMASTER h left join stock_master s on h.Item_Code=s.Item_Code where h.brn_code=" + cmbbranch.SelectedValue + "  and h.Item_Code='" + Item_Code + "'";
+                sql = "sELECT  h.Item_Code,h.DESCRIPTION,h.ITM_CAT_CODE,h.UNIT,h.FRACTION,h.ALIAS_NAME,s.AVG_PUR_PRICE,s.RE_OrdER,S.last_PUR_PRICE,H.BARCODE,H.AR_DESC,SALE_PRICE,RETAIL_PRICE,PART_NO,BRAND,SUB_CAT_CODE,h.item_no,H.VAT_PERCENT,SALES_PROFIT_PCNT,AVG_EXPENSE_AMT,profit from hd_ITEMMASTER h left join stock_master s on h.Item_Code=s.Item_Code where h.brn_code=" + cmbbranch.SelectedValue + "  and h.Item_Code='" + Item_Code + "'";
 
 
                 isini = true;
@@ -1952,12 +2078,13 @@ namespace FinOrg
 
                             Txtitem.Text = rditm[0].ToString();
                             txtarname.Text = rditm["AR_DESC"].ToString();
-                            //txtalias.Text = rditm["alias_name"].ToString();
+                            txtalias.Text = rditm["alias_name"].ToString();
                             txtolditm.Text = rditm[0].ToString();
                             string catval;
                             txtname.Text = rditm[1].ToString();
                             txtwhprice.Text = rditm[11].ToString();
                             txtretailprice.Text = rditm[12].ToString();
+                            txtlastprice.Text = rditm[8].ToString();
                             string ctcode = rditm[2].ToString();
 
                             
@@ -2018,7 +2145,7 @@ namespace FinOrg
 
                         //txtarabic.Text = rditm[5].ToString();
                         txtfraction.Text = rditm[4].ToString();
-                        txtlastprice.Text = rditm[6].ToString();
+                        txtlastprice.Text = rditm[8].ToString();
 
                         //txtorditmer.Text = rditm[7].ToString();
                       //  grdmain["colval", 0].Value = rditm[8].ToString();
@@ -2127,55 +2254,89 @@ namespace FinOrg
         {
             try
             {
-                if (string.IsNullOrEmpty(Txtitem.Text)) return;
-                Conn.Close();
-
-
-
-
-                Conn.Open();
-
-
-                sql = "SELECT barcode.*,unit_name  from barcode inner join unitmaster on unit = unit_id where item_code='" + Txtitem.Text.Trim() + "'";
-
-
-
-                SqlCommand cmd = new SqlCommand(sql, Conn);
-                SqlDataReader rd = cmd.ExecuteReader();
-                grdbarcode.Rows.Clear();
-                isini = true;
-                while (rd.Read())
+                try
                 {
-                    grdbarcode.Rows.Add();
+                    if (string.IsNullOrEmpty(Txtitem.Text)) return;
+                    Conn.Close();
 
 
 
-                    grdbarcode["barcode", grdbarcode.Rows.Count - 1].Value = rd["barcode"];
-                    grdbarcode["itemid", grdbarcode.Rows.Count - 1].Value = rd["item_id"];
-                    grdbarcode["description", grdbarcode.Rows.Count - 1].Value = rd["description"];
-                    grdbarcode["unit", grdbarcode.Rows.Count - 1].Value = rd["Unit_Name"];
-                    grdbarcode["Unitid", grdbarcode.Rows.Count - 1].Value = rd["Unit"];
-                    grdbarcode["fraction", grdbarcode.Rows.Count - 1].Value = rd["fraction"];
-                    grdbarcode["itemcode", grdbarcode.Rows.Count - 1].Value = rd["item_code"]; ;
-                    grdbarcode["saleprice1", grdbarcode.Rows.Count - 1].Value = rd["sale_price"];
-                    grdbarcode["saleprice2", grdbarcode.Rows.Count - 1].Value = rd["retail_price"];
-                    grdbarcode["descriptionAr", grdbarcode.Rows.Count - 1].Value = rd["description_ar"];
+
+                    Conn.Open();
 
 
-                    //dt1.Text = rd["Cur_date"].ToString();
+                    sql = "SELECT barcode.*,unit_name  from barcode inner join unitmaster on unit = unit_id where item_code='" + Txtitem.Text.Trim() + "'";
+
+                    grdbarcode.DataSource = null;
+
+                    SqlCommand cmd = new SqlCommand(sql, Conn);
+                    SqlDataReader rd = cmd.ExecuteReader();
+                    try
+                    {
+                        if (grdbarcode.Rows.Count> 0)
+                        {
+
+                            grdbarcode.Rows.Clear();
+                            grdbarcode.Rows.Add(3);
+                        }
+                    }
+                    catch(Exception e1)
+                    {
+
+                    }
+
+                    try
+                    {
+                        if (grdbarcode.Rows.Count== 0)
+                        {
+
+                           
+                            grdbarcode.Rows.Add(3);
+                        }
+                    }
+                    catch (Exception e1)
+                    {
+
+                    }
+                    isini = true;
+                    int i = 0;
+                    while (rd.Read())
+                    {
 
 
-                    fnd = true;
 
+
+                        grdbarcode["barcode", i].Value = rd["barcode"];
+                        grdbarcode["itemid", i].Value = rd["item_id"];
+                        grdbarcode["description", i].Value = rd["description"];
+                        grdbarcode["unit", i].Value = rd["Unit_Name"];
+                        grdbarcode["Unitid", i].Value = rd["Unit"];
+                        grdbarcode["fraction", i].Value = rd["fraction"];
+                        grdbarcode["itemcode", i].Value = rd["item_code"]; ;
+                        grdbarcode["saleprice1", i].Value = rd["sale_price"];
+                        grdbarcode["saleprice2", i].Value = rd["retail_price"];
+                        grdbarcode["descriptionAr", i].Value = rd["description_ar"];
+
+
+                        //dt1.Text = rd["Cur_date"].ToString();
+                        i++;
+
+                        fnd = true;
+
+                    }
+                    rd.Close();
+                    isini = false;
+
+                    Conn.Close();
                 }
-                rd.Close();
-                isini = false;
-
-                Conn.Close();
+                catch (SqlException ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
             }
-            catch (SqlException ex)
+            catch(Exception ex)
             {
-                MessageBox.Show(ex.Message);
+
             }
 
 
@@ -2233,7 +2394,11 @@ namespace FinOrg
             try
             {
                 string txt = txtsearch.Text.Trim();
-                if (txtsearch.Text.Trim() == "") return;
+                if (txtsearch.Text.Trim() == "")
+                {
+                    dv.RowFilter = "Item_Code <> '0'";
+                    return;
+                }
                 if (txt != "")
                 {
                     isini = true;
@@ -2251,8 +2416,8 @@ namespace FinOrg
                     dv.RowFilter = "Item_Code <> '0'";
 
                 grditem.Visible = true;
-                grditem.Top = txtsearch.Top + txtsearch.Height;
-                grditem.Left = txtsearch.Left;
+                grditem.Top = groupBox1.Top + txtsearch.Top + txtsearch.Height;
+                grditem.Left = groupBox1.Left + txtsearch.Left;
                 isini = false;
             }
             catch(Exception ex)
@@ -2280,6 +2445,7 @@ namespace FinOrg
 
                             search_data(txtsearch.Text.Trim());
                         grditem.Visible = false;
+                        Txtitem.Focus();
                     }
                     break;
                 case 38:
@@ -2312,8 +2478,8 @@ namespace FinOrg
 
                         grditem.CurrentCell = grditem.Rows[crow - 1].Cells[0];
 
-                    if (chksearch.Checked )
-                        search_data(grditem[0, crow].Value.ToString());
+                    if (chksearch.Checked)
+                        search_data(grditem.CurrentCell.Value.ToString());
 
 
                     break;
@@ -2344,8 +2510,8 @@ namespace FinOrg
                             grditem.CurrentCell = grditem.Rows[crow + 1].Cells[0];
                         }
                     }
-                      if (chksearch.Checked ) 
-                        search_data(grditem[0, crow].Value.ToString());
+                      if (chksearch.Checked )
+                          search_data(grditem.CurrentCell.Value.ToString());
 
                     break;
 
@@ -2427,76 +2593,108 @@ namespace FinOrg
         }
         private  void add_barcode()
         {
-           
             try
             {
-                tab1.SelectedTab = tab1.TabPages[0];
-                tab1.TabPages[0].Show();
-                if (string.IsNullOrEmpty(Txtitem.Text))
+
+                try
                 {
-                    MessageBox.Show("Invalid Itemcode");
-                    return;
-                }
+                    tab1.SelectedTab = tab1.TabPages[0];
+                    tab1.TabPages[0].Show();
+                    if (string.IsNullOrEmpty(Txtitem.Text))
+                    {
+                        MessageBox.Show("Invalid Itemcode");
+                        return;
+                    }
 
 
-                Conn.Close();
-                int i = -1;
+                    Conn.Close();
+                    int i = 0;
 
-                //foreach (DataGridViewRow row in this.grdbarcode.Rows)
-                //{
+                    //foreach (DataGridViewRow row in this.grdbarcode.Rows)
+                    //{
                     //foreach (DataGridViewCell cell in row.Cells)
-                    i = grdbarcode.Rows.Count - 1;
-                    for (int k = 0; k < grdbarcode.Rows.Count; k++)
+                    //i = grdbarcode.Rows.Count - 2;
+                    //for (int k = 0; k < grdbarcode.Rows.Count; k++)
+                    //{
+                    //    if (grdbarcode["unit", k].Value == null) break;
+                    //    if (grdbarcode["unit", k].Value.ToString() == cmbunit.Text)
+                    //    {
+
+                    //        i = k;
+                    //        break;
+                    //    }
+                    //}
+
+
+                    //}
+                    if (txtfraction.Text == "") txtfraction.Text = "1";
+                    //if (i == -1)
+                    //{
+                    //    for (int j = 0; j < grdbarcode.Rows.Count; j++)
+                    //    {
+                    //        if (grdbarcode["unit", j].Value == null) break;
+                    //        if (grdbarcode["fraction", j].Value.ToString() == txtfraction.Text)
+                    //        {
+                    //            MessageBox.Show("The Same Fraction is Already Selected, Please Confirm");
+
+                    //        }
+                    //    }
+                    //}
+
+
+
+                    fnd = true;
+                    while (fnd)
                     {
-                        if (grdbarcode["unit", k].Value.ToString() == cmbunit.Text)
-                        {
+                        //if (i == -1)
+                        //{
+                            if (grdbarcode.CurrentCell == null) grdbarcode.CurrentCell = grdbarcode[0, 0];
+                           // grdbarcode.Rows.Add();
+                            i = 0;
+                       // }
+                        grdbarcode["barcode", i].Value = Txtitem.Text;
+                        grdbarcode["description", i].Value = txtname.Text;
+                        grdbarcode["unit", i].Value = cmbunit.Text;
+                        grdbarcode["unitid", i].Value = cmbunit.SelectedValue.ToString();
+                        grdbarcode["fraction", i].Value = txtfraction.Text;
+                        grdbarcode["itemcode", i].Value = Txtitem.Text;
+                        // grdbarcode["item_id", i].Value = Txtitem.Text + "-" + cmbunit.SelectedValue;
+                        grdbarcode["description", i].Value = txtname.Text;
+                        grdbarcode["descriptionAr", i].Value = txtarname.Text;
+                        grdbarcode["saleprice1", i].Value = txtwhprice.Text;
+                        grdbarcode["saleprice2", i].Value = txtretailprice.Text;
 
-                            i = k;
-                            break;
-                        }
+
+                        //dt1.Text = rd["Cur_date"].ToString();
+
+
+                        fnd = false;
+                       
                     }
-
+                    Conn.Close();
+                    grdbarcode.ReadOnly = false;
+                    //if (grdbarcode.CurrentCell == null) grdbarcode.CurrentCell = grdbarcode[0, 0];
+                    //if (grdbarcode.CurrentCell.RowIndex == grdbarcode.Rows.Count - 1)
+                    //{
+                    //    grdbarcode.Rows.Add(1);
+                    //}
+                    //    grdbarcode.CurrentCell = grdbarcode[0, 1];
                     
-                //}
-
-
-                
-
-                fnd = true;
-                while (fnd)
-                {
-                    if (i == -1)
-                    {
-                        grdbarcode.Rows.Add();
-                        i = grdbarcode.Rows.Count-1 ;
-                    }
-                    grdbarcode["barcode",grdbarcode.Rows.Count - 1].Value = Txtitem.Text + cmbunit.SelectedValue;
-                    grdbarcode["description", i].Value = txtname.Text;
-                    grdbarcode["unit", i].Value = cmbunit.Text;
-                    grdbarcode["unitid", i].Value = cmbunit.SelectedValue.ToString();
-                    grdbarcode["fraction", i].Value = txtfraction.Text;
-                    grdbarcode["itemcode", i].Value = Txtitem.Text;
-                   // grdbarcode["item_id", i].Value = Txtitem.Text + "-" + cmbunit.SelectedValue;
-                    grdbarcode["description", i].Value = txtname.Text + " " + cmbunit.Text;
-                    grdbarcode["descriptionAr", i].Value = txtarname.Text + " " + cmbunitaname.Text;
-                    grdbarcode["saleprice1", i].Value = txtwhprice.Text;
-                    grdbarcode["saleprice2", i].Value = txtretailprice.Text;
-
-
-                    //dt1.Text = rd["Cur_date"].ToString();
-
-
-                    fnd = false;
+                    //grdbarcode.Focus();
+                    //grdbarcode.BeginEdit(false);
+                    //txtbarcode.Text = grdbarcode[0, e.RowIndex].Value.ToString();
 
                 }
-
-                grdbarcode.ReadOnly = false;
-                
-                Conn.Close();
-            }
+           
+        
             catch (SqlException ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+        }
+            catch(Exception ex)
+            {
+
             }
 
         }
@@ -2865,7 +3063,10 @@ namespace FinOrg
                             MessageBox.Show("Invalid Unit Selection,Please check and confirm!!");
                             return;
                         }
+                        grdbutton.Enabled = false;
                         saveToolStripButton_Click(sender, e);
+                        grdbutton.CurrentCell = grdbutton[2, 0];
+                        grdbutton.Enabled = true;
                         break;
                     }
                 case 2:
@@ -2899,6 +3100,18 @@ namespace FinOrg
                         //childForm.Text = "Window " + childFormNumber++;
                         childForm.Text = "Item Unit Entry Screen";
                         childForm.Show();
+                    }
+                    break;
+
+
+                case 5:
+                    {
+                        if(txtbarcode.Text=="")
+            {
+                MessageBox.Show("Please select the Barcode Item To Print from The barcode list","Invalid Barcode",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                return;
+            }
+                        print_Report(10);
                     }
                     break;
             }
@@ -3048,7 +3261,7 @@ namespace FinOrg
 
         private void grdbutton_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
-
+           // grdbutton_CellClick(sender, e);
         }
 
         private void grdmain_Enter(object sender, EventArgs e)
@@ -3074,34 +3287,44 @@ namespace FinOrg
 
         private void grdmain_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.KeyData & Keys.KeyCode)
+            try
             {
-                case Keys.Tab:
-                    grditem.Focus();
-                    break;
-                case Keys.Escape:
+                switch (e.KeyData & Keys.KeyCode)
+                {
+                    case Keys.Tab:
+                        grditem.Focus();
+                        break;
+                    case Keys.Escape:
 
-                    break;
-                case Keys.Enter:
-                    int i;
-                    for (i = grdmain.CurrentCell.RowIndex + 1; i < grdmain.Rows.Count - 1; i++)
-                    {
-                        if (i == grdmain.Rows.Count) break;
-                        if (grdmain[0, i].Visible) break;
-                    }
-                    if (i == grdmain.Rows.Count - 1)
-                        this.SelectNextControl(this.ActiveControl, true, true, true, true);
+                        break;
+                    case Keys.Enter:
+                        int i;
+                        for (i = grdmain.CurrentCell.RowIndex + 1; i < grdmain.Rows.Count - 1; i++)
+                        {
+                            if (i == grdmain.Rows.Count) break;
+                            if (grdmain[0, i].Visible) break;
+                        }
+                        if (i == grdmain.Rows.Count)
+                            btnaddbarcode.Focus();
+
+                            //this.SelectNextControl(this.ActiveControl, true, true, true, true);
 
 
 
-                    break;
+                        break;
+
+                }
+            }
+            catch (Exception ex)
+            {
 
             }
         }
 
         private void grdbutton_Enter(object sender, EventArgs e)
         {
-            grdbutton.CurrentCell = grdbutton[0, 0];
+            acntrl = "grdbutton";
+            grdbutton.CurrentCell = grdbutton["btsave", 0];
 
         }
 
@@ -3127,26 +3350,95 @@ namespace FinOrg
                     case "grdbutton":
                     case "grdbarcode":
                         {
-                            return (false);
+                            if (grdmain.CurrentCell == null) grdmain.CurrentCell = grdmain[0, 0];
+                            if (acntrl == "grdmain" && grdmain.CurrentCell.RowIndex == grdmain.Rows.Count - 1)
+                            {
+                                if (grdbarcode[0, 0].Value == null) grdbarcode[0, 0].Value = "";
+                                if (grdbarcode[0, 0].Value == "")
+                                {
+                                    add_barcode();
+                                    grdbarcode.Focus();
+                                    grdbarcode.CurrentCell = grdbarcode[0, 1];
+                                    grdbarcode.BeginEdit(false);
+                                    return (false);
+                                }
+
+                                else
+                                {
+                                    grdbarcode.Focus();
+                                    return (false);
+                                }
+
+                            }
+
+
+
+                            if (acntrl == "grdbarcode")
+                            {
+                                if(grdbarcode.CurrentCell==null) grdbarcode.CurrentCell=grdbarcode[0,0];
+                                if (grdbarcode.CurrentCell == grdbarcode["unit", grdbarcode.CurrentCell.RowIndex] && grdbarcode.CurrentCell == grdbarcode["barcode", grdbarcode.CurrentCell.RowIndex].Value == null)
+                                {
+                                    grdstock.CurrentCell = grdstock["opstock", 0];
+                                    grdstock.Focus();
+                                    return (false);
+
+                                }
+
+                                if (grdbarcode.CurrentCell == grdbarcode["saleprice2", grdbarcode.CurrentCell.RowIndex])
+                                {
+                                    if (grdbarcode.CurrentCell.RowIndex == grdbarcode.Rows.Count - 1)
+                                    {
+
+
+                                    }
+                                    else
+                                    {
+                                        grdbarcode.CurrentCell = grdbarcode[0, grdbarcode.CurrentCell.RowIndex + 1];
+                                        return (true);
+
+                                    }
+
+
+                                }
+                                else
+                                {
+                                    SendKeys.Send("{Right}");
+                                    return (true);
+                                }
+
+                            }
+                            if (acntrl == "grdstock" && grdstock.CurrentCell.RowIndex==grdstock.Rows.Count-1)
+                            {
+                                grdbutton.CurrentCell = grdbutton["btsave", 0];
+                                grdbutton.Focus();
+                            }
+
+
+                           return (false);
+
+
+
+
+
+
                         }
-                        break;
-
                 }
-                bool nextskip = false;
-                string btn;
-                btn = this.ActiveControl.GetType().ToString();
-                if (this.ActiveControl.GetType().ToString() == "System.Windows.Forms.Button") nextskip = true;
-                if (!nextskip)
-                    this.SelectNextControl(this.ActiveControl, true, true, true, true);
+                        bool nextskip = false;
+                        string btn;
+                        btn = this.ActiveControl.GetType().ToString();
+                        if (this.ActiveControl.GetType().ToString() == "System.Windows.Forms.Button") nextskip = true;
+                        if (!nextskip)
+                            this.SelectNextControl(this.ActiveControl, true, true, true, true);
 
-                keyData = Keys.Tab;
-
-
-                //   SendKeys.Send("{Tab}");
-                return true;
-                return base.ProcessCmdKey(ref msg, keyData);
+                        keyData = Keys.Tab;
 
 
+                        //   SendKeys.Send("{Tab}");
+                        return true;
+                        return base.ProcessCmdKey(ref msg, keyData);
+
+                
+                
                 //return true;
             }
             return base.ProcessCmdKey(ref msg, keyData);
@@ -3162,7 +3454,7 @@ namespace FinOrg
            // add_barcode();
             acntrl = "";
             grdmain.ClearSelection();
-            grdstock.Focus();
+            //btnaddbarcode.Focus();
         }
 
         private void grdsup_Enter(object sender, EventArgs e)
@@ -3196,8 +3488,8 @@ namespace FinOrg
         private void textBox1_DoubleClick(object sender, EventArgs e)
         {
             grditem.Visible = !grditem.Visible;
-            grditem.Top = txtsearch.Top + txtsearch.Height;
-            grditem.Left = txtsearch.Left;
+            grditem.Top = groupBox1.Top+ txtsearch.Top + txtsearch.Height;
+            grditem.Left = groupBox1.Left+ txtsearch.Left;
             isini = false;
         }
 
@@ -3243,12 +3535,17 @@ namespace FinOrg
 
         private void grdbutton_CellEnter(object sender, DataGridViewCellEventArgs e)
         {
-            acntrl = "grdbutton";
+
+            grdbutton.CurrentCell.Style.BackColor = Color.LightYellow;
+            grdbutton.CurrentCell.Style.ForeColor = Color.Red;
+            
         }
 
         private void grdbutton_Leave(object sender, EventArgs e)
         {
             acntrl = "";
+            grdbutton.CurrentCell.Style.BackColor = grdbutton[0,0].Style.BackColor;
+            grdbutton.CurrentCell.Style.ForeColor = grdbutton[0, 0].Style.ForeColor;
         }
 
         private void grdbutton_KeyDown(object sender, KeyEventArgs e)
@@ -3381,9 +3678,9 @@ namespace FinOrg
 
                     if (Convert.ToDecimal(TXTSRAMT) > 0)
                     {
-                        ADODB.Connection ADOconn = new ADODB.Connection();
+                        //ADODB.Connection ADOconn = new ADODB.Connection();
 
-                        ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
+                       // ADOconn.Open("Provider=SQLOLEDB;Initial Catalog= " + decoder.InitialCatalog + ";Data Source=" + decoder.DataSource + ";", decoder.UserID, decoder.Password, 0);
 
                         object TRNBY;
                         object DRCR;
@@ -3848,6 +4145,9 @@ namespace FinOrg
                 grditem.Visible = false;
                 grdbutton.Rows.Add(1);
                 grdmain.Focus();
+                grdbutton.CurrentCell.Style.BackColor = grdbutton[0, 0].Style.BackColor;
+                grdbutton.CurrentCell.Style.ForeColor = grdbutton[0, 0].Style.ForeColor;
+
                 first_grdrow = 0;
                 last_grdrow = 0;
                 for (int i = 0; i < grdmain.Rows.Count; i++)
@@ -3868,6 +4168,7 @@ namespace FinOrg
                 //    cmbcat.SelectedIndex = 1;
                 //cmbcat.SelectedIndex = 0;
                 isini = false;
+                grdbutton.CurrentCell = grdbutton[2, 0];
                 txtsearch.Focus();
             }
             catch(Exception ex)
@@ -3968,7 +4269,15 @@ namespace FinOrg
         {
             if (grdmain.CurrentCell == null) return;
 
-            if (grdmain.CurrentCell.ColumnIndex == grdmain["colvalue", e.RowIndex].ColumnIndex) return;
+             
+            if (grdmain.CurrentCell.ColumnIndex == grdmain["colvalue", e.RowIndex].ColumnIndex) 
+
+            {
+                 grdmain.BeginEdit(false);
+                return;
+            }
+           
+            else
             {
                 SendKeys.Send("{RIGHT}");
                 //grdmain.CellEnter -= grdmain_CellEnter;
@@ -3976,6 +4285,8 @@ namespace FinOrg
                 //grdmain.CellEnter += grdmain_CellEnter;
 
             }
+            
+            
         }
 
        
@@ -3983,12 +4294,190 @@ namespace FinOrg
         private void grdstock_CellEnter(object sender, DataGridViewCellEventArgs e)
 
         {
-            if (grdstock.CurrentCell == null) return;
+            try
+            {
+                if (isini) return;
+                if (grdstock.CurrentCell == null)
+                {
+                    grdstock.CurrentCell = grdstock["opstock", e.RowIndex];
+                    return;
+                }
 
-            if (grdstock.CurrentCell.ColumnIndex == grdstock["opstock", e.RowIndex].ColumnIndex) return;
-            SendKeys.Send("{RIGHT}");
+                if (grdstock.CurrentCell.ColumnIndex == grdstock["opstock", e.RowIndex].ColumnIndex)
+                {
+                    grdstock.BeginEdit(false);
+                    return;
+                }
+                SendKeys.Send("{RIGHT}");
+            }
+            catch(Exception ex)
+            {
+
+            }
+           
             //grdstock.CurrentCell = grdstock["opstock", e.RowIndex];
         }
+
+        private void FrmItemMaster_Resize(object sender, EventArgs e)
+        {
+            groupBox1.Left = (this.Width - groupBox1.Width) / 2;
+
+        }
+        public void SetKeyboardLayout(InputLanguage layout)
+        {
+            InputLanguage.CurrentInputLanguage = layout;
+        }
+
+        private void txtarname_Enter(object sender, EventArgs e)
+        {
+            //InputLanguageHelper.GetInputLanguageByName("arabic");
+            //InputLanguageHelper._arabicInput = 1;
+            InputLanguageHelper.LoadArabicKeyboardLayout("arbic");
+            
+           
+        }
+
+        private void txtarname_Leave(object sender, EventArgs e)
+        {
+            InputLanguageHelper.LoadEnglishKeyboardLayout(Languages.currentLanguage);
+
+        }
+
+        private void btnprint_Click(object sender, EventArgs e)
+        {
+            if(txtbarcode.Text=="")
+            {
+                MessageBox.Show("Please select the Barcode Item To Print from The barcode list","Invalid Barcode",MessageBoxButtons.OK,MessageBoxIcon.Information);
+                return;
+            }
+            print_Report(10);
+        }
+
+        private void grdbarcode_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (grdbarcode[0, e.RowIndex].Value == null) grdbarcode[0, e.RowIndex].Value = "";
+            txtbarcode.Text = grdbarcode[0, e.RowIndex].Value.ToString();
+        }
+
+        private void grdbarcode_CellEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            grdbarcode.BeginEdit(false);
+            if (grdbarcode[0, e.RowIndex].Value == null) grdbarcode[0, e.RowIndex].Value = "";
+            if (grdbarcode.CurrentCell.RowIndex > 0 && e.ColumnIndex == 2 &&  grdbarcode[0,e.RowIndex].Value!="")
+            {
+               
+                    var loc = grdbarcode.GetCellDisplayRectangle(2, e.RowIndex, true);
+                    cmbbarunit.Left = loc.Left + 2;
+                    cmbbarunit.Top = loc.Top + 2;
+                    cmbbarunit.Width = grdbarcode.Columns[2].Width;
+                    cmbbarunit.Visible = true;
+                    cmbbarunit.Focus();
+                
+            }
+
+            if ( e.ColumnIndex == 3 && grdbarcode[0, e.RowIndex].Value == "")
+            {
+                grdstock.Focus();
+                grdstock.CurrentCell = grdstock["opstock", 0];
+                grdstock.BeginEdit(false);
+            }
+        }
+
+        private void grdbarcode_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.Enter:
+
+                        //if (grdbarcode.CurrentCell == grdbarcode["unit", grdbarcode.CurrentCell.RowIndex] && grdbarcode.CurrentCell == grdbarcode["barcode", grdbarcode.CurrentCell.RowIndex].Value == null)
+                        //{
+                        //    grdstock.CurrentCell = grdstock["opstock", 0];
+                        //    grdstock.Focus();
+                        //    e.Handled = true;
+                        //    return;
+                        //    break;
+                        //}
+
+                        //if (grdbarcode.CurrentCell == grdbarcode["saleprice2", grdbarcode.CurrentCell.RowIndex])
+                        //{
+                        //    if (grdbarcode.CurrentCell.RowIndex == grdbarcode.Rows.Count - 1)
+                        //    {
+
+
+                        //    }
+                        //    else
+                        //    {
+                        //        grdbarcode.CurrentCell = grdbarcode[0, grdbarcode.CurrentCell.RowIndex + 1];
+
+                        //    }
+
+
+                        //}
+                        //else
+                        //{
+                        //    SendKeys.Send("{Right}");
+                        //}
+                        //e.Handled = true;
+                        break;
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
+        }
+
+        private void cmbbarunit_Leave(object sender, EventArgs e)
+        {
+           if(cmbbarunit.SelectedIndex>=0)
+           {
+               grdbarcode[2, grdbarcode.CurrentCell.RowIndex].Value = cmbbarunit.Text;
+               grdbarcode["Unitid", grdbarcode.CurrentCell.RowIndex].Value = cmbbarunit.SelectedValue;
+
+           }
+            cmbbarunit.Visible = false;
+            acntrl = "grdbarcode";
+        }
+
+        private void cmbbarunit_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.Enter:
+
+                        if (cmbbarunit.SelectedIndex >= 0)
+                        {
+                            grdbarcode[2, grdbarcode.CurrentCell.RowIndex].Value = cmbbarunit.Text;
+                            grdbarcode["Unitid", grdbarcode.CurrentCell.RowIndex].Value = cmbbarunit.SelectedValue;
+                            grdbarcode.CurrentCell = grdbarcode[3, grdbarcode.CurrentCell.RowIndex];
+                            //cmbbarunit.Visible = false;
+                        }
+                        break;
+                }
+            }
+            catch(Exception ex)
+            {
+                
+            }
+        }
+
+        private void grdbutton_CellLeave(object sender, DataGridViewCellEventArgs e)
+        {
+            grdbutton.CurrentCell.Style.BackColor = grdbutton[0, 0].Style.BackColor;
+            grdbutton.CurrentCell.Style.ForeColor = grdbutton[0, 0].Style.ForeColor;
+
+        }
+
+        private void Txtitem_Enter(object sender, EventArgs e)
+        {
+            if (grditem.Visible) txtsearch.Focus();
+        }
+
+       
     }
  }
 

@@ -309,33 +309,46 @@ namespace FinOrg
                         grpdate.Visible = false;
                         break;
 
-                    case 5: case 6: case 18: case 19:
+                   
+                    case 6:
+                    case 24:
+                    case 18:
+                    case 19:
                         grpdate.Visible = true;        
                 lblcmb1.Visible = true;
                         lblcmb1.Text = "Supplier";
                         cmb1.Visible = true;
-                        sql = "select top 1 sup_ac_type from ac_options WHERE  ac_options.ID =1";
-            
-            
-            //rd.Close();
-             cmd = new SqlCommand(sql, Conn);
-             rd = cmd.ExecuteReader();
-            find = false;
-             ac_code=0;
+                        if (Gvar.rptidx != 24)
+                        {
+                            sql = "select top 1 sup_ac_type from ac_options WHERE  ac_options.ID =1";
 
-            while (rd.Read())
-            {
 
-                ac_code = Convert.ToInt32(rd[0].ToString());
-                find = true;
+                            //rd.Close();
+                            cmd = new SqlCommand(sql, Conn);
+                            rd = cmd.ExecuteReader();
+                            find = false;
+                            ac_code = 0;
 
-            }
-            if (!find)
-            {
-                MessageBox.Show("Please Define the Supplier Account Type Code on Ac_option Table on Database", "Wrong Account Type Code");
-                return;
-            }
-            rd.Close();
+                            while (rd.Read())
+                            {
+
+                                ac_code = Convert.ToInt32(rd[0].ToString());
+                                find = true;
+
+                            }
+                            if (!find)
+                            {
+                                MessageBox.Show("Please Define the Supplier Account Type Code on Ac_option Table on Database", "Wrong Account Type Code");
+                                return;
+                            }
+                            rd.Close();
+                        }
+                        else
+                        {
+                            ac_code = 2;
+                            lblcmb1.Text = "Customer";
+
+                        }
 
 
             
@@ -959,6 +972,7 @@ namespace FinOrg
                         chkstock.Visible=false;;
                         break;
                   case 23:
+                  case 25:
                         grpdate.Visible = true;
 
                         chkdate.Checked = false;
@@ -3103,11 +3117,11 @@ namespace FinOrg
 
                                 string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
                                 string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
-                                crt1 = "1=1";
+                                crt1 = "{DATA_ENTRY.FLAG}<>'D'";
                                 RPTHEAD = "Transaction Summary Report  " ;
                                 if (!chkdate.Checked)
                                 {
-                                    crt1 = "  {DATA_ENTRY.CURDATE} in DateTime (" + sdt1 + ") to DateTime (" + sdt2 + ")";
+                                    crt1 = crt1 + " AND  {DATA_ENTRY.CURDATE} in DateTime (" + sdt1 + ") to DateTime (" + sdt2 + ")";
                                     RPTHEAD = "Transaction Summary Report  From " + rdt1 + " To " + rdt2;
                                 }
                                 string sql = "";
@@ -3150,6 +3164,175 @@ namespace FinOrg
 
                             }
                             break;
+
+
+
+                    
+                    case 24:
+                            {
+                               
+
+                                    rep_path = Gvar.report_path + "\\reports\\price_diff.rpt";
+                               
+
+
+                                CrRep.Load(rep_path);
+                                //DateTime edt1 = Convert.ToDateTime(Gvar.ArCalendar(dt1.Value, true,false));
+                                //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
+
+
+                                string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                                string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
+
+                                string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                                string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
+
+
+                                if (!chkdate.Checked)
+                                {
+                                    crt1 = "  {DATA_ENTRY.CURDATE} in DateTime (" + sdt1 + ") to DateTime (" + sdt2 + ")";
+                                    RPTHEAD = "Sales Price Diffrence Detail From " + rdt1 + " To " + rdt2;
+                                    crt1 = crt1 + " And ({DATA_ENTRY.TRN_TYPE} =6 OR {DATA_ENTRY.TRN_TYPE} =7)";
+                                }
+                                else
+                                {
+                                    crt1 = " ({DATA_ENTRY.TRN_TYPE} =6 OR {DATA_ENTRY.TRN_TYPE} =7)";
+                                    RPTHEAD = "Sales Price Diffrence Detail ";
+
+                                }
+
+
+
+
+
+                               
+
+                                crt2 = "00";
+                                if (cmb1.SelectedIndex < 1)
+                                {
+
+                                    crt2 = "{DATA_ENTRY.accode} <> -1";
+                                }
+                                else
+                                {
+                                    crt2 = "{DATA_ENTRY.accode} = " + cmb1.SelectedValue;
+                                    RPTHEAD = "Sales Price Diffrence Detail for "+  cmb1.Text;
+                                }
+
+
+
+
+                                fnd = false;
+                                crt4 = "'00'";
+                                lst1.EndEdit();
+                                i = 0;
+                                if (chklst1.Checked)
+                                {
+                                    crt4 = "{DATA_ENTRY_GRID.Item_Code} <> '-1'";
+                                    fnd = true;
+                                }
+                                else
+                                {
+                                    for (i = 0; i < lst1.RowCount; i++)
+                                    {
+                                        if (lst1[0, i].Value != null)
+                                        {
+
+                                            if ((bool)lst1[0, i].Value)
+                                            {
+                                                if (crt4 == "")
+                                                {
+                                                    crt4 = "'" + lst1[2, i].Value.ToString() + "'";
+                                                }
+                                                else
+                                                {
+                                                    crt4 = crt4 + ",'" + lst1[2, i].Value.ToString() + "'";
+                                                }
+                                                fnd = true;
+                                            }
+                                        }
+
+                                    }
+                                    crt4 = "{DATA_ENTRY_GRID.Item_Code}  in [" + crt4 + "]";
+                                }
+
+                                if (!fnd)
+                                {
+                                    MessageBox.Show("There is No Item selected, Please Try AGain", "Wrong Selection");
+                                    return;
+                                }
+
+                                crt = crt1 + " aND " + crt2 + " aND " + crt4 + " AND {DATA_ENTRY_GRID.QTY}<>0";
+
+                                CrRep.SummaryInfo.ReportTitle = "Sales Price Diffrence  Report from " + rdt1 + " To " + rdt2;
+
+                            }
+                            break;
+                    case 25:
+                            {
+
+
+                                rep_path = Gvar.report_path + "\\reports\\edit_det.rpt";
+
+
+                                CrRep.Load(rep_path);
+                                //DateTime edt1 = Convert.ToDateTime(Gvar.ArCalendar(dt1.Value, true,false));
+                                //DateTime edt2 = Convert.ToDateTime(Gvar.ArCalendar(dt2.Value, true,false));
+
+
+                                string sdt1 = repdt1.Value.ToString("yyyy,MM,dd,00,00,00");
+                                string sdt2 = repdt2.Value.ToString("yyyy,MM,dd,23,59,59");
+
+                                string rdt1 = repdt1.Value.ToString("dd/MM/yyyy");
+                                string rdt2 = repdt2.Value.ToString("dd/MM/yyyy");
+                                crt1 = "{edt_trn_master.FLAG}<>'D'";
+                                RPTHEAD = "Edited Invoice Summary Report  ";
+                                if (!chkdate.Checked)
+                                {
+                                    crt1 = crt1 + " AND  {edt_trn_master.DATE_TIME} in DateTime (" + sdt1 + ") to DateTime (" + sdt2 + ")";
+                                    RPTHEAD = "Edited Invoice  Summary Report  From " + rdt1 + " To " + rdt2;
+                                }
+                                string sql = "";
+
+
+
+
+                                crt3 = "1=1";
+                                crt2 = "1=1";
+                                if (cmb1.SelectedIndex == 0)
+                                {
+
+
+                                }
+                                else
+                                {
+                                    crt3 = "{edt_trn_master.WR_CODE} = " + cmb1.SelectedValue;
+                                    RPTHEAD = RPTHEAD + " for WareHouse " + cmb1.Text;
+                                }
+
+                                if (cmb2.SelectedIndex == 0)
+                                {
+
+
+                                }
+                                else
+                                {
+                                    crt2 = "{edt_trn_master.TRN_TYPE} in [ " + cmb2.SelectedValue + "]";
+                                    RPTHEAD = RPTHEAD + " for Transactions " + cmb2.Text;
+                                }
+
+
+
+
+                                crt = crt1 + " aND " + crt2 + " aND " + crt3;
+
+
+
+                                CrRep.SummaryInfo.ReportTitle = RPTHEAD;
+
+                            }
+                            break;
+
                             
                             
                 }

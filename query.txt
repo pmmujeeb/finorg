@@ -1,0 +1,69 @@
+332	&Inventory	productMenuItem	1	&Product 		A
+334	&Inventory	itemCostMenuItem	1	&Product Item Stock		A
+
+add PROD_AC_NO on ac_options
+
+
+INSERT INTO [Finance].[dbo].[TRN_ACCOUNTS]
+           ([TRN_NO]
+           ,[DR_CR]
+           ,[ACC_NO]
+           ,[PAY_AMOUNT]
+           ,[PAY_DATE]
+           ,[NARRATION]
+           ,[DOC_NO]
+           ,[PAYBY]
+           ,[TRN_BY]
+           ,[USER_ID]
+           ,[SNO]
+           ,[TRN_TYPE]
+           ,[ENTRY_NO]
+           ,[TRN_NO2]
+           
+           ,[VOUCHER_NO]
+           ,[Cost_Code]
+           ,[Dept_Code]
+           ,[NYEAR]
+           ,[ENTRY_STATUS]
+           ,[BRN_CODE]
+           ,[F_PAY_AMOUNT]
+           ,[F_RATE])
+     VALUES
+     SELECT     
+     (SELECT MAX(TRN_NO)+1 FROM TRN_ACCOUNTS)+ rank() OVER (ORDER BY rec_no)  AS TRN_NO
+     , CASE WHEN TRN_TYPE < 5 THEN 'D' ELSE 'C' END AS DRCR
+     , 5020 AS ACC_NO, NET_AMOUNT, CURDATE,ABRV + ISNULL(REMARKS,''), INVOICE_NO,
+      ACCODE, TRN_TYPE, 1, 0 , TRN_TYPE, INVOICE_NO,[TRAN_NO],0,0,0, NYEAR,
+                      ENTRY_STATUS, DATA_ENTRY.BRN_CODE, NET_AMOUNT,1
+FROM         DATA_ENTRY INNER JOIN TRN_TYPE ON DATA_ENTRY.TRN_TYPE=TRN_TYPE.TRN_CODE
+WHERE FLAG <>'D' And trn_type in (1,2,8,9)
+
+
+ SELECT --rank() OVER (   ORDER BY rec_no),    
+     (SELECT MAX(TRN_NO)+1 FROM TRN_ACCOUNTS)+ rank() OVER (ORDER BY rec_no)  AS TRN_NO
+     , CASE WHEN TRN_TYPE < 5 THEN 'D' ELSE 'C' END AS DRCR
+     , 5020 AS ACC_NO, 0 as cost_AMT, CURDATE,ABRV + ISNULL(REMARKS,''), INVOICE_NO,
+      ACCODE, TRN_TYPE, 1, 0 , TRN_TYPE, INVOICE_NO,[TRAN_NO],0,0,0, NYEAR,
+                      ENTRY_STATUS, DATA_ENTRY.BRN_CODE, NET_AMOUNT,1
+FROM         DATA_ENTRY 
+--INNER JOIN (select rec_no,sum(sale_pur_amt) as cost_amt from data_entry_grid group by rec_no) as det on data_entry.rec_no=det.rec_no 
+inner join TRN_TYPE ON DATA_ENTRY.TRN_TYPE=TRN_TYPE.TRN_CODE
+WHERE FLAG <>'D' And trn_type in (6,7,3,4)
+
+
+
+
+select trn_by,doc_no,pay_amount,net_amt from TRN_ACCOUNTS 
+FULL OUTER JOIN 
+(
+select DATA_ENTRY_grid.trn_type,DATA_ENTRY_grid.invoice_no,SUM(itm_total) as net_amt from data_entry_grid inner join DATA_ENTRY 
+on data_entry_grid.REC_NO=data_entry.REC_NO where FLAG<>'D'  group by  DATA_ENTRY_grid.trn_type,DATA_ENTRY_grid.invoice_no) ITM
+
+ON TRN_ACCOUNTS.TRN_BY=ITM.TRN_TYPE AND TRN_ACCOUNTS.DOC_NO=ITM.INVOICE_NO 
+where DR_CR='D' AND TRN_BY < 100 AND ACC_NO < 500
+
+
+
+select DATA_ENTRY_grid.trn_type,DATA_ENTRY_grid.invoice_no,SUM(itm_total) as net_amt from data_entry_grid inner join DATA_ENTRY 
+on data_entry_grid.REC_NO=data_entry.REC_NO where FLAG<>'D'  group by  DATA_ENTRY_grid.trn_type,DATA_ENTRY_grid.invoice_no
+ORDER BY TRN_TYPE,CAST(DATA_ENTRY_grid.INVOICE_NO AS NUMERIC)

@@ -30,6 +30,7 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            this.btnView = new System.Windows.Forms.Button();
             this.maintab1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.txtstat = new System.Windows.Forms.TextBox();
@@ -65,7 +66,6 @@
             this.lbllevel = new System.Windows.Forms.Label();
             this.cmdclose = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.btnView = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.cmbowner = new System.Windows.Forms.ComboBox();
             this.maintab1.SuspendLayout();
@@ -76,6 +76,17 @@
             ((System.ComponentModel.ISupportInitialize)(this.lst1)).BeginInit();
             this.grpdate.SuspendLayout();
             this.SuspendLayout();
+            // 
+            // btnView
+            // 
+            this.btnView.Font = new System.Drawing.Font("Tahoma", 12F);
+            this.btnView.Location = new System.Drawing.Point(671, 539);
+            this.btnView.Name = "btnView";
+            this.btnView.Size = new System.Drawing.Size(121, 29);
+            this.btnView.TabIndex = 0;
+            this.btnView.Text = "&Load Report";
+            this.btnView.UseVisualStyleBackColor = true;
+            this.btnView.Click += new System.EventHandler(this.btnView_Click);
             // 
             // maintab1
             // 
@@ -256,14 +267,13 @@
             // 
             // chklst2
             // 
-            this.chklst2.AutoSize = true;
             this.chklst2.Checked = true;
             this.chklst2.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chklst2.Font = new System.Drawing.Font("Tahoma", 12F);
             this.chklst2.ForeColor = System.Drawing.Color.Red;
             this.chklst2.Location = new System.Drawing.Point(24, 102);
             this.chklst2.Name = "chklst2";
-            this.chklst2.Size = new System.Drawing.Size(93, 23);
+            this.chklst2.Size = new System.Drawing.Size(129, 23);
             this.chklst2.TabIndex = 20;
             this.chklst2.Text = "Select All";
             this.chklst2.UseVisualStyleBackColor = true;
@@ -317,7 +327,6 @@
             // 
             // lblacheader
             // 
-            this.lblacheader.AutoSize = true;
             this.lblacheader.Font = new System.Drawing.Font("Tahoma", 12F);
             this.lblacheader.ForeColor = System.Drawing.Color.RoyalBlue;
             this.lblacheader.ImeMode = System.Windows.Forms.ImeMode.On;
@@ -344,22 +353,20 @@
             // 
             // chkinvoice
             // 
-            this.chkinvoice.AutoSize = true;
-            this.chkinvoice.Location = new System.Drawing.Point(30, 147);
+            this.chkinvoice.Location = new System.Drawing.Point(32, 134);
             this.chkinvoice.Name = "chkinvoice";
-            this.chkinvoice.Size = new System.Drawing.Size(95, 17);
+            this.chkinvoice.Size = new System.Drawing.Size(125, 27);
             this.chkinvoice.TabIndex = 21;
             this.chkinvoice.Text = "Show Invoices";
             this.chkinvoice.UseVisualStyleBackColor = true;
             // 
             // chkcurrency
             // 
-            this.chkcurrency.AutoSize = true;
             this.chkcurrency.Font = new System.Drawing.Font("Tahoma", 9F);
             this.chkcurrency.ForeColor = System.Drawing.Color.Red;
             this.chkcurrency.Location = new System.Drawing.Point(30, 170);
             this.chkcurrency.Name = "chkcurrency";
-            this.chkcurrency.Size = new System.Drawing.Size(117, 18);
+            this.chkcurrency.Size = new System.Drawing.Size(125, 28);
             this.chkcurrency.TabIndex = 20;
             this.chkcurrency.Text = "Default Currency";
             this.chkcurrency.UseVisualStyleBackColor = true;
@@ -368,14 +375,13 @@
             // 
             // chklst1
             // 
-            this.chklst1.AutoSize = true;
             this.chklst1.Checked = true;
             this.chklst1.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chklst1.Font = new System.Drawing.Font("Tahoma", 12F);
             this.chklst1.ForeColor = System.Drawing.Color.Red;
             this.chklst1.Location = new System.Drawing.Point(32, 105);
             this.chklst1.Name = "chklst1";
-            this.chklst1.Size = new System.Drawing.Size(93, 23);
+            this.chklst1.Size = new System.Drawing.Size(123, 23);
             this.chklst1.TabIndex = 20;
             this.chklst1.Text = "Select All";
             this.chklst1.UseVisualStyleBackColor = true;
@@ -417,13 +423,12 @@
             // 
             // lbldept
             // 
-            this.lbldept.AutoSize = true;
             this.lbldept.Font = new System.Drawing.Font("Tahoma", 12F);
             this.lbldept.ForeColor = System.Drawing.Color.RoyalBlue;
             this.lbldept.ImeMode = System.Windows.Forms.ImeMode.On;
             this.lbldept.Location = new System.Drawing.Point(423, 55);
             this.lbldept.Name = "lbldept";
-            this.lbldept.Size = new System.Drawing.Size(92, 19);
+            this.lbldept.Size = new System.Drawing.Size(105, 19);
             this.lbldept.TabIndex = 32;
             this.lbldept.Text = "Department";
             // 
@@ -502,12 +507,11 @@
             // 
             // lbllevel
             // 
-            this.lbllevel.AutoSize = true;
             this.lbllevel.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbllevel.ForeColor = System.Drawing.Color.RoyalBlue;
             this.lbllevel.Location = new System.Drawing.Point(31, 93);
             this.lbllevel.Name = "lbllevel";
-            this.lbllevel.Size = new System.Drawing.Size(104, 19);
+            this.lbllevel.Size = new System.Drawing.Size(123, 19);
             this.lbllevel.TabIndex = 14;
             this.lbllevel.Text = "GL Acc. Level";
             this.lbllevel.Visible = false;
@@ -525,25 +529,13 @@
             // 
             // label5
             // 
-            this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label5.ForeColor = System.Drawing.Color.RoyalBlue;
             this.label5.Location = new System.Drawing.Point(33, 55);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(56, 19);
+            this.label5.Size = new System.Drawing.Size(120, 19);
             this.label5.TabIndex = 14;
             this.label5.Text = "Owner";
-            // 
-            // btnView
-            // 
-            this.btnView.Font = new System.Drawing.Font("Tahoma", 12F);
-            this.btnView.Location = new System.Drawing.Point(671, 539);
-            this.btnView.Name = "btnView";
-            this.btnView.Size = new System.Drawing.Size(121, 29);
-            this.btnView.TabIndex = 0;
-            this.btnView.Text = "&Load Report";
-            this.btnView.UseVisualStyleBackColor = true;
-            this.btnView.Click += new System.EventHandler(this.btnView_Click);
             // 
             // button1
             // 
@@ -579,7 +571,6 @@
             this.ClientSize = new System.Drawing.Size(875, 652);
             this.Controls.Add(this.maintab1);
             this.Name = "frmReport";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Frmreport";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.frmReport_Load);

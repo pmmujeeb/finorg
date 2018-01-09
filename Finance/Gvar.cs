@@ -31,6 +31,8 @@ namespace FinOrg
         public static int usr_wrcode;
         public static string brn_name;
         public static string cmp_name;
+        public static string cmp_aname;
+        
         public static string Glb_strval;
         public static string lang_letter;
         public static string report_path;
@@ -499,7 +501,10 @@ catch (Exception ex)
                 ADODB.Recordset tmp1 = new Recordset();
                 tmp.Open(sql, ADOconn, ADODB.CursorTypeEnum.adOpenStatic, ADODB.LockTypeEnum.adLockOptimistic, -1);
                 do
-                {
+                { 
+                    
+                    Application.DoEvents();
+                    
                     object ST = 0;
                     object itm = "";
                     ST = 0;
@@ -537,7 +542,7 @@ catch (Exception ex)
                     object a;
                    
                     ADOconn.Execute(sql, out a, -1);
-
+                    Application.DoEvents();
 
                     tmp.MoveNext();
                 } while (!tmp.EOF);

@@ -490,13 +490,12 @@
             // 
             // lbltrntype
             // 
-            this.lbltrntype.AutoSize = true;
             this.lbltrntype.Font = new System.Drawing.Font("Tahoma", 12F, System.Drawing.FontStyle.Bold);
             this.lbltrntype.ForeColor = System.Drawing.Color.Purple;
             this.lbltrntype.ImeMode = System.Windows.Forms.ImeMode.On;
             this.lbltrntype.Location = new System.Drawing.Point(787, 32);
             this.lbltrntype.Name = "lbltrntype";
-            this.lbltrntype.Size = new System.Drawing.Size(89, 19);
+            this.lbltrntype.Size = new System.Drawing.Size(155, 19);
             this.lbltrntype.TabIndex = 58;
             this.lbltrntype.Text = "Sale Type";
             // 

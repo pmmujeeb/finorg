@@ -108,6 +108,7 @@ namespace FinOrg
 
                         }
                         Gvar.Userid = Convert.ToInt32(rd["userid"].ToString());
+                        Gvar.username = txtuser.Text;
                        Gvar. report_path = Application.StartupPath;
                     }
 

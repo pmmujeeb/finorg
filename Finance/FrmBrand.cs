@@ -309,7 +309,7 @@ namespace FinOrg
                 case 4:
                     {
 
-                        ada = new SqlDataAdapter("select Type,Description from PurOrder_Options where [Type]='ShipTerm' ", Conn);
+                        ada = new SqlDataAdapter("select Type,Description,Code from PurOrder_Options where [Type]='ShipTerm' ", Conn);
 
 
                         ///ada.TableMappings.Add("Table", "Leaders");
@@ -330,7 +330,7 @@ namespace FinOrg
                         dgv1.DataMember = "PurOrder_Option";
                         dgv1.Columns[1].HeaderText = "Description";
                         dgv1.Columns[0].HeaderText = "Type";
-
+                        dgv1.Columns[2].Visible = false;
                         //dgv1.Columns[0].Width = 300;
                         dgv1.Columns[0].Visible = false;
                     }
@@ -338,7 +338,7 @@ namespace FinOrg
                 case 5:
                     {
 
-                        ada = new SqlDataAdapter("select Type,Description from PurOrder_Options  where [Type]='PayTerm' ", Conn);
+                        ada = new SqlDataAdapter("select Type,Description,Code from PurOrder_Options  where [Type]='PayTerm' ", Conn);
 
 
                         ///ada.TableMappings.Add("Table", "Leaders");
@@ -359,7 +359,7 @@ namespace FinOrg
                         dgv1.DataMember = "PurOrder_Option";
                         dgv1.Columns[1].HeaderText = "Description";
                         dgv1.Columns[0].HeaderText = "Type";
-
+                        dgv1.Columns[2].Visible = false;
                         //dgv1.Columns[0].Width = 300;
                         dgv1.Columns[0].Visible = false;
                     }
@@ -368,7 +368,7 @@ namespace FinOrg
                 case 6:
                     {
 
-                        ada = new SqlDataAdapter("select Type,Description from PurOrder_Options  where [Type]='Mode' ", Conn);
+                        ada = new SqlDataAdapter("select Type,Description,Code from PurOrder_Options  where [Type]='Mode' ", Conn);
 
 
                         ///ada.TableMappings.Add("Table", "Leaders");
@@ -390,7 +390,7 @@ namespace FinOrg
                         dgv1.Columns[0].HeaderText = "Description";
                         dgv1.Columns[1].HeaderText = "Description";
                         dgv1.Columns[0].HeaderText = "Type";
-
+                        dgv1.Columns[2].Visible = false;
                         //dgv1.Columns[0].Width = 300;
                         dgv1.Columns[0].Visible = false;
                     }
@@ -399,7 +399,7 @@ namespace FinOrg
                 case 7:
                     {
 
-                        ada = new SqlDataAdapter("select Type,Description from PurOrder_Options  where [Type]='Port'", Conn);
+                        ada = new SqlDataAdapter("select Type,Description,Code from PurOrder_Options  where [Type]='Port'", Conn);
 
 
                         ///ada.TableMappings.Add("Table", "Leaders");
@@ -420,7 +420,7 @@ namespace FinOrg
                         dgv1.DataMember = "PurOrder_Option";
                         dgv1.Columns[1].HeaderText = "Description";
                         dgv1.Columns[0].HeaderText = "Type";
-
+                        dgv1.Columns[2].Visible = false;
                         //dgv1.Columns[0].Width = 300;
                         dgv1.Columns[0].Visible = false;
                     }

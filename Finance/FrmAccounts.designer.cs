@@ -35,8 +35,8 @@
             this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.SearchToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
-            this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolRefund = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.tooldelete = new System.Windows.Forms.ToolStripButton();
@@ -92,10 +92,12 @@
             this.txtbankdet = new System.Windows.Forms.TextBox();
             this.txtaddress = new System.Windows.Forms.TextBox();
             this.label8 = new System.Windows.Forms.Label();
+            this.txtvatno = new System.Windows.Forms.TextBox();
             this.txtiban = new System.Windows.Forms.TextBox();
             this.txtcontact = new System.Windows.Forms.TextBox();
             this.label7 = new System.Windows.Forms.Label();
             this.txtemailid = new System.Windows.Forms.TextBox();
+            this.label12 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
             this.txtfaxno = new System.Windows.Forms.TextBox();
@@ -113,8 +115,6 @@
             this.cmblevel = new System.Windows.Forms.ComboBox();
             this.lbllevel = new System.Windows.Forms.Label();
             this.txtheadac = new System.Windows.Forms.TextBox();
-            this.label12 = new System.Windows.Forms.Label();
-            this.txtvatno = new System.Windows.Forms.TextBox();
             this.tlbmenu.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgv1)).BeginInit();
             this.tabControl1.SuspendLayout();
@@ -166,16 +166,16 @@
             this.toolStripSeparator3.Name = "toolStripSeparator3";
             resources.ApplyResources(this.toolStripSeparator3, "toolStripSeparator3");
             // 
+            // printToolStripButton
+            // 
+            resources.ApplyResources(this.printToolStripButton, "printToolStripButton");
+            this.printToolStripButton.Name = "printToolStripButton";
+            // 
             // saveToolStripButton
             // 
             resources.ApplyResources(this.saveToolStripButton, "saveToolStripButton");
             this.saveToolStripButton.Name = "saveToolStripButton";
             this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
-            // 
-            // printToolStripButton
-            // 
-            resources.ApplyResources(this.printToolStripButton, "printToolStripButton");
-            this.printToolStripButton.Name = "printToolStripButton";
             // 
             // toolRefund
             // 
@@ -405,7 +405,6 @@
             this.cmbtbno.FormattingEnabled = true;
             resources.ApplyResources(this.cmbtbno, "cmbtbno");
             this.cmbtbno.Name = "cmbtbno";
-            this.cmbtbno.DropDown += new System.EventHandler(this.cmbGroupac_DropDown);
             // 
             // cmbGroupac
             // 
@@ -612,6 +611,11 @@
             this.label8.ForeColor = System.Drawing.Color.Black;
             this.label8.Name = "label8";
             // 
+            // txtvatno
+            // 
+            resources.ApplyResources(this.txtvatno, "txtvatno");
+            this.txtvatno.Name = "txtvatno";
+            // 
             // txtiban
             // 
             resources.ApplyResources(this.txtiban, "txtiban");
@@ -632,6 +636,12 @@
             // 
             resources.ApplyResources(this.txtemailid, "txtemailid");
             this.txtemailid.Name = "txtemailid";
+            // 
+            // label12
+            // 
+            resources.ApplyResources(this.label12, "label12");
+            this.label12.ForeColor = System.Drawing.Color.Black;
+            this.label12.Name = "label12";
             // 
             // label6
             // 
@@ -751,17 +761,6 @@
             // 
             resources.ApplyResources(this.txtheadac, "txtheadac");
             this.txtheadac.Name = "txtheadac";
-            // 
-            // label12
-            // 
-            resources.ApplyResources(this.label12, "label12");
-            this.label12.ForeColor = System.Drawing.Color.Black;
-            this.label12.Name = "label12";
-            // 
-            // txtvatno
-            // 
-            resources.ApplyResources(this.txtvatno, "txtvatno");
-            this.txtvatno.Name = "txtvatno";
             // 
             // frmAccounts
             // 

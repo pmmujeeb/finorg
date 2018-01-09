@@ -34,6 +34,7 @@ namespace FinOrg
         DataTable itemdt = new DataTable();
         string acntrl;
         bool isini;
+        bool autosearch;
         bool isedit;
         string sql;
         bool fnd;
@@ -203,6 +204,7 @@ namespace FinOrg
                             dgv1.Columns["DocNo"].Visible = Convert.ToBoolean(rd["SH_docno"].ToString());
 
                         }
+                       
 
                     }
 
@@ -215,6 +217,7 @@ namespace FinOrg
                     cmbbranch.Visible = false;
                     dgv1.Columns["branch"].Visible = false;
                 }
+                rd.Close();
 
                 //if (Gvar._SuperUserid != 1) dgv1.Columns["Approved"].ReadOnly = true;
 
@@ -1295,7 +1298,8 @@ namespace FinOrg
                 // dataGrid1.DataContext = dt.DefaultView;
                 //GrdLookup.Left = dgv1.Left + dgv1.CurrentCell.ContentBounds.Left;
                 //GrdLookup.Top = dgv1.Top + dgv1.CurrentCell.Size.Height + cellRectangle.Top;
-                GrdLookup.Left = cellRectangle.Left + cellRectangle.Width+dgv1.Left;
+                //GrdLookup.Left = cellRectangle.Left + cellRectangle.Width+dgv1.Left;
+                GrdLookup.Left = textBox1.Left;
                 GrdLookup.Top = textBox1.Top + textBox1.Height;
                 last_col = dgv1.Columns[dgv1.CurrentCell.ColumnIndex].Name;
                 if (dgv1.CurrentCell == dgv1["accno1", cur_row])
@@ -1707,9 +1711,9 @@ namespace FinOrg
                         rec1.Fields["pay_date"].Value = dt1.Value;
                         rec1.Fields["doc_no"].Value = doc_no;
                         rec1.Fields["NYEAR"].Value = dt1.Value.Year;
-                        rec.Fields["trn_type"].Value = txttrn_type.Text;
+                        rec1.Fields["trn_type"].Value = txttrn_type.Text;
                         if (!dgv1["DocNo", 0].Visible || dgv1["DocNo", i].Value == null)
-                            rec.Fields["BRN_CODE"].Value = cmbbranch.SelectedValue; 
+                            rec1.Fields["BRN_CODE"].Value = cmbbranch.SelectedValue; 
                         // ALTERNATIVE ACCOUUNT NUMBER
                         //rec1.Fields["CostCode"].Value = dgv1["CostCode", i].Value;
                         rec1.Fields["Voucher_No"].Value = dgv1["DocNo", i].Value;
@@ -2202,7 +2206,7 @@ namespace FinOrg
             private void frmAccTran_KeyUp(object sender, KeyEventArgs e)
             {
                 if (dgv1.CurrentCell == null) return;
-                if (dgv1.CurrentCell.IsInEditMode && (cur_col  == "accno1" || cur_col  == "accno2") && !GrdLookup.Visible && acntrl == "dgv1")
+                if (dgv1.CurrentCell.IsInEditMode && (cur_col == "accno1" || cur_col == "accno2") && !GrdLookup.Visible && acntrl == "dgv1" && autosearch)
                 {
                     dgv1_CellDoubleClick(null, null);
                     dgv1.EndEdit();

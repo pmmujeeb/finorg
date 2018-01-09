@@ -37,7 +37,18 @@ namespace FinOrg
                 //    MessageBox.Show("Your 90 Days Grace Period will expire soon..For support, pmmujeeb@hotmailcom", "Expiring License");
                 
                 //}
+                if (DateTime.Now > Convert.ToDateTime("31-dec-2018"))
+                {
+                    MessageBox.Show("Please Contact For support, pmmujeeb@hotmailcom", "Expired License");
+                    Environment.Exit(0);
 
+                }
+                if (DateTime.Now > Convert.ToDateTime("01-May-2018"))
+                {
+                    MessageBox.Show("Your 90 Days Grace Period will expire soon..For support, pmmujeeb@hotmailcom", "Expiring License");
+
+
+                }
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);

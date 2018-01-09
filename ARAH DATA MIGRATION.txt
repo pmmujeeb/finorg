@@ -1,0 +1,127 @@
+CUSTOMER
+INSERT INTO [Finance].[dbo].[ACCOUNTS]
+           ([ACC_NO]
+           ,[ACC_NAME]
+           ,[ACC_TYPE_CODE]
+           ,[ACC_CLASS]
+           ,[ID_NUMBER]
+           ,[FLAG]
+           ,[CREATE_TIME]
+           ,[UPDATE_TIME]
+           ,[SUB_TYPE_CODE]
+           ,[ACC_ANAME]
+           ,[ACCOUNT_LINK]
+           ,[GROUP_AC]
+           ,[DEF_CURRENCY])
+    SELECT 6000+[s_type] ,
+    
+      case when charindex('0',stype_n) >0 then substring(stype_n,0,charindex('0',stype_n)) else stype_n end,
+      2,
+      1,0,'A',GETDATE(),GETDATE(),0,
+       case when charindex('0',stype_n) >0 then substring(stype_n,0,charindex('0',stype_n)) else stype_n end,
+       NULL,
+       NULL,'SR'
+     -- case when charindex('0',stype_n) >0 then substring(stype_n,charindex('0',stype_n),20) else '0' end
+     
+  FROM [targetpos].[dbo].[customer_acc]
+GO
+
+
+ACCOUNT INFO
+INSERT INTO [Finance].[dbo].[ACCOUNTS_INFO]
+           ([ACC_NO]
+           ,[ACC_TELE_NO]
+           ,[ACC_MOBILE_NO]
+           ,[ACC_FAX_NO]
+           ,[ACC_ADDRESS]
+           ,[CREDIT_LIMIT]
+           ,[CONTACT_PERSON]
+           ,[ID_NUMBER]
+           ,[FLAG]
+           ,[EMAIL]
+           ,[AREA_NAME])
+   SELECT 1000+[vend_id],0,0,0,addr,0,descr,0,'A',Null,''
+     
+  FROM [targetpos].[dbo].[vend_master]
+GO
+
+ITEM MASTER
+INSERT INTO [Finance].[dbo].[HD_ITEMMASTER]
+           ([ITEM_CODE]
+           ,[DESCRIPTION]
+           ,[USER]
+           ,[ITM_CAT_CODE]
+           ,[UNIT]
+           ,[FRACTION]
+           ,[FLAG]
+           ,[PART_NO]
+           ,[BRAND]
+           ,[ALIAS_NAME]
+           ,[BRN_CODE]
+           ,[SUB_CAT_CODE]
+           ,[AR_DESC]
+           ,[UPD_FLAG]
+           ,[BARCODE])
+    SELECT     prd_id,  prd_desc,'Admin',dep_id,unit_m_name ,1,'A',upc_code,'','',1,0,prd_desc,'N',prd_id
+FROM   [targetpos].[dbo].[prod] where prd_id <> ''
+GO
+INSERT INTO [Finance].[dbo].[BARCODE]
+           ([BARCODE]
+           ,[UNIT]
+           ,[FRACTION]
+           ,[SALE_PRICE]
+           ,[RETAIL_PRICE]
+           ,[ITEM_CODE]
+           ,[BRN_CODE]
+           ,[ITEM_ID]
+           ,[MAIN_ID]
+           ,[DESCRIPTION]
+           ,[DESCRIPTION_AR]
+           ,[ITM_CAT_CODE])
+    SELECT     prd_id,unit_m_name ,1,[sale_p],[sale_p],[prd_id],1,[prd_id] + '01',1, prd_desc,prd_desc,dep_id
+FROM   [targetpos].[dbo].[prod] where prd_id <> ''
+
+GO
+
+INSERT INTO [Finance].[dbo].[STOCK_MASTER]
+           ([ITEM_CODE]
+           ,[STOCK]
+           ,[LAST_PUR_PRICE]
+           ,[SALE_PRICE]
+           ,[USER1]
+           ,[LOCATION]
+           ,[RE_ORDER]
+           ,[PROFIT]
+           
+           ,[RETAIL_PRICE]
+           ,[BRN_CODE]
+           ,[SALE_PRICE_EX]
+           ,[OP_STOCK]
+           ,[W_MIN_PC]
+           ,[UPD_FLAG]
+           ,[AVG_PUR_PRICE])
+    SELECT [prd_id],0,[cost_p],[sale_p],'aDMIN',nULL,10,20,[sale_p],1,[sale_p],0,0,'U',[cost_p]
+     
+  FROM [targetpos].[dbo].[prod] WHERE prd_id<> ''
+GO
+
+WRSTOCK
+
+INSERT INTO [Finance].[dbo].[WR_STOCK_MASTER]
+           ([ITEM_CODE]
+           ,[STOCK]
+           ,[USER]
+           ,[LOCATION]
+           ,[BRN_CODE]
+           ,[OP_STOCK]
+           ,[WR_CODE]
+           ,[UPD_FLAG])
+    SELECT [prd_id],0,'aDMIN',nULL,1,0,1,'U'
+     
+  FROM [targetpos].[dbo].[prod] WHERE prd_id<> ''
+GO
+
+
+
+
+

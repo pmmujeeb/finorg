@@ -28,12 +28,12 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frmAccTran));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label5 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
@@ -67,6 +67,21 @@
             this.toolclose = new System.Windows.Forms.ToolStripButton();
             this.txttotal = new System.Windows.Forms.TextBox();
             this.dgv1 = new System.Windows.Forms.DataGridView();
+            this.accno1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Accname1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.accamt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DocNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CostCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeptCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.branch = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.trntype = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.accno2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.accname2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.narration = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.trnno1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Trnno2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CostName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.gpfile = new System.Windows.Forms.GroupBox();
             this.button2 = new System.Windows.Forms.Button();
             this.btnsaveload = new System.Windows.Forms.Button();
@@ -85,21 +100,6 @@
             this.lblcurrency = new System.Windows.Forms.Label();
             this.chksms = new System.Windows.Forms.CheckBox();
             this.cmbbranch = new System.Windows.Forms.ComboBox();
-            this.accno1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Accname1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.accamt = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DocNo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CostCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DeptCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.branch = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.trntype = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.accno2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.accname2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.narration = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.trnno1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Trnno2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CostName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DeptName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.btnsavetofile.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.GrdLookup)).BeginInit();
             this.toolStrip.SuspendLayout();
@@ -294,8 +294,8 @@
             // 
             this.GrdLookup.AllowUserToAddRows = false;
             this.GrdLookup.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.GrdLookup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.GrdLookup.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.GrdLookup.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.GrdLookup.Location = new System.Drawing.Point(234, 188);
             this.GrdLookup.Name = "GrdLookup";
@@ -461,17 +461,17 @@
             // 
             // dgv1
             // 
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            this.dgv1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.dgv1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle2;
             this.dgv1.BackgroundColor = System.Drawing.Color.White;
-            dataGridViewCellStyle8.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle8.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("Tahoma", 8F);
-            dataGridViewCellStyle8.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle8.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle8.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle8.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle3.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle3.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Tahoma", 8F);
+            dataGridViewCellStyle3.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle3.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle3;
             this.dgv1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.accno1,
@@ -489,24 +489,24 @@
             this.Trnno2,
             this.CostName,
             this.DeptName});
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.SystemColors.Window;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("Tahoma", 8F);
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.ControlText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle9.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dgv1.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle4.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle4.BackColor = System.Drawing.SystemColors.Window;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("Tahoma", 8F);
+            dataGridViewCellStyle4.ForeColor = System.Drawing.SystemColors.ControlText;
+            dataGridViewCellStyle4.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle4.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle4.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
+            this.dgv1.DefaultCellStyle = dataGridViewCellStyle4;
             this.dgv1.Location = new System.Drawing.Point(12, 161);
             this.dgv1.Name = "dgv1";
-            dataGridViewCellStyle10.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle10.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("Tahoma", 8F);
-            dataGridViewCellStyle10.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle10.SelectionBackColor = System.Drawing.SystemColors.Highlight;
-            dataGridViewCellStyle10.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle10.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.dgv1.RowHeadersDefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle5.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("Tahoma", 8F);
+            dataGridViewCellStyle5.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle5.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle5.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle5.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dgv1.RowHeadersDefaultCellStyle = dataGridViewCellStyle5;
             this.dgv1.RowHeadersWidth = 35;
             this.dgv1.Size = new System.Drawing.Size(1236, 379);
             this.dgv1.StandardTab = true;
@@ -516,6 +516,94 @@
             this.dgv1.CellEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv1_CellEnter);
             this.dgv1.CellLeave += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv1_CellLeave);
             this.dgv1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.dgv1_KeyDown);
+            // 
+            // accno1
+            // 
+            this.accno1.HeaderText = "From Acc#";
+            this.accno1.Name = "accno1";
+            // 
+            // Accname1
+            // 
+            this.Accname1.HeaderText = "Name";
+            this.Accname1.Name = "Accname1";
+            this.Accname1.ReadOnly = true;
+            this.Accname1.Width = 200;
+            // 
+            // accamt
+            // 
+            this.accamt.HeaderText = "Amount";
+            this.accamt.Name = "accamt";
+            // 
+            // DocNo
+            // 
+            this.DocNo.HeaderText = "DocNo";
+            this.DocNo.Name = "DocNo";
+            // 
+            // CostCode
+            // 
+            this.CostCode.HeaderText = "CostCode";
+            this.CostCode.Name = "CostCode";
+            // 
+            // DeptCode
+            // 
+            this.DeptCode.HeaderText = "Division";
+            this.DeptCode.Name = "DeptCode";
+            // 
+            // branch
+            // 
+            this.branch.HeaderText = "Branch";
+            this.branch.Name = "branch";
+            this.branch.Visible = false;
+            // 
+            // trntype
+            // 
+            this.trntype.HeaderText = "Trn Type";
+            this.trntype.Name = "trntype";
+            this.trntype.Visible = false;
+            // 
+            // accno2
+            // 
+            this.accno2.HeaderText = "To Acc#";
+            this.accno2.Name = "accno2";
+            // 
+            // accname2
+            // 
+            this.accname2.HeaderText = "Acc Name";
+            this.accname2.Name = "accname2";
+            this.accname2.ReadOnly = true;
+            this.accname2.Width = 200;
+            // 
+            // narration
+            // 
+            this.narration.HeaderText = "Narration";
+            this.narration.Name = "narration";
+            this.narration.Width = 200;
+            // 
+            // trnno1
+            // 
+            this.trnno1.HeaderText = "Tran.No";
+            this.trnno1.Name = "trnno1";
+            this.trnno1.ReadOnly = true;
+            this.trnno1.Visible = false;
+            this.trnno1.Width = 80;
+            // 
+            // Trnno2
+            // 
+            this.Trnno2.HeaderText = "Tranno2";
+            this.Trnno2.Name = "Trnno2";
+            this.Trnno2.Visible = false;
+            // 
+            // CostName
+            // 
+            this.CostName.HeaderText = "CostName";
+            this.CostName.Name = "CostName";
+            this.CostName.Visible = false;
+            // 
+            // DeptName
+            // 
+            this.DeptName.HeaderText = "DeptName";
+            this.DeptName.Name = "DeptName";
+            this.DeptName.Visible = false;
             // 
             // gpfile
             // 
@@ -686,13 +774,12 @@
             // 
             // chksms
             // 
-            this.chksms.AutoSize = true;
             this.chksms.Checked = true;
             this.chksms.CheckState = System.Windows.Forms.CheckState.Checked;
             this.chksms.ImeMode = System.Windows.Forms.ImeMode.NoControl;
             this.chksms.Location = new System.Drawing.Point(481, 549);
             this.chksms.Name = "chksms";
-            this.chksms.Size = new System.Drawing.Size(118, 17);
+            this.chksms.Size = new System.Drawing.Size(123, 24);
             this.chksms.TabIndex = 103;
             this.chksms.Text = "Send SMS Message";
             this.chksms.UseVisualStyleBackColor = true;
@@ -711,98 +798,11 @@
             this.cmbbranch.Size = new System.Drawing.Size(174, 21);
             this.cmbbranch.TabIndex = 3;
             // 
-            // accno1
-            // 
-            this.accno1.HeaderText = "From Acc#";
-            this.accno1.Name = "accno1";
-            // 
-            // Accname1
-            // 
-            this.Accname1.HeaderText = "Name";
-            this.Accname1.Name = "Accname1";
-            this.Accname1.ReadOnly = true;
-            this.Accname1.Width = 200;
-            // 
-            // accamt
-            // 
-            this.accamt.HeaderText = "Amount";
-            this.accamt.Name = "accamt";
-            // 
-            // DocNo
-            // 
-            this.DocNo.HeaderText = "DocNo";
-            this.DocNo.Name = "DocNo";
-            // 
-            // CostCode
-            // 
-            this.CostCode.HeaderText = "CostCode";
-            this.CostCode.Name = "CostCode";
-            // 
-            // DeptCode
-            // 
-            this.DeptCode.HeaderText = "Division";
-            this.DeptCode.Name = "DeptCode";
-            // 
-            // branch
-            // 
-            this.branch.HeaderText = "Branch";
-            this.branch.Name = "branch";
-            this.branch.Visible = false;
-            // 
-            // trntype
-            // 
-            this.trntype.HeaderText = "Trn Type";
-            this.trntype.Name = "trntype";
-            this.trntype.Visible = false;
-            // 
-            // accno2
-            // 
-            this.accno2.HeaderText = "To Acc#";
-            this.accno2.Name = "accno2";
-            // 
-            // accname2
-            // 
-            this.accname2.HeaderText = "Acc Name";
-            this.accname2.Name = "accname2";
-            this.accname2.ReadOnly = true;
-            this.accname2.Width = 200;
-            // 
-            // narration
-            // 
-            this.narration.HeaderText = "Narration";
-            this.narration.Name = "narration";
-            this.narration.Width = 200;
-            // 
-            // trnno1
-            // 
-            this.trnno1.HeaderText = "Tran.No";
-            this.trnno1.Name = "trnno1";
-            this.trnno1.ReadOnly = true;
-            this.trnno1.Visible = false;
-            this.trnno1.Width = 80;
-            // 
-            // Trnno2
-            // 
-            this.Trnno2.HeaderText = "Tranno2";
-            this.Trnno2.Name = "Trnno2";
-            this.Trnno2.Visible = false;
-            // 
-            // CostName
-            // 
-            this.CostName.HeaderText = "CostName";
-            this.CostName.Name = "CostName";
-            this.CostName.Visible = false;
-            // 
-            // DeptName
-            // 
-            this.DeptName.HeaderText = "DeptName";
-            this.DeptName.Name = "DeptName";
-            this.DeptName.Visible = false;
-            // 
             // frmAccTran
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.ClientSize = new System.Drawing.Size(1276, 633);
+            this.Controls.Add(this.GrdLookup);
             this.Controls.Add(this.chksms);
             this.Controls.Add(this.label21);
             this.Controls.Add(this.btncurrency);
@@ -810,7 +810,6 @@
             this.Controls.Add(this.cmbcurrency);
             this.Controls.Add(this.lblcurrency);
             this.Controls.Add(this.gpfile);
-            this.Controls.Add(this.GrdLookup);
             this.Controls.Add(this.chkcustomer);
             this.Controls.Add(this.dgv1);
             this.Controls.Add(this.txttotal);
